@@ -11,9 +11,9 @@ The fundus images are not included on MAPLES-DR because they are the property of
 
 ## MAPLES-DR Python Library
 
-_The python library is still under developpement and will be released once MAPLES-DR paper is published._
+_The MAPLES-DR python library is still under developpement and will be released once MAPLES-DR paper is published._
 
-### -_Install
+### Install
 
 ```bash
 git clone https://github.com/LIV4D/MAPLES-DR.git
