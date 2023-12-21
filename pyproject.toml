@@ -11,15 +11,19 @@ readme = 'README.md'
 requires-python = '>=3.10'
 dependencies = [
     'numpy',
-    'pandas',
     'opencv-python-headless',
+    'pandas',
+    'yaml',
 ]
 
 [project.optional-dependencies]
 examples = [
     'jppype', 
+    'plotly',
     'scikit-image', 
+    'scikit-learn', 
     'scipy'
+    'tqdm'
 ]
 
 [project.urls]
