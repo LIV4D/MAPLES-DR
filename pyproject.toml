@@ -11,7 +11,7 @@ readme = 'README.md'
 requires-python = '>=3.10'
 dependencies = [
     'numpy',
-    'PIL',
+    'Pillow',
     'pandas',
     'pyyaml',
     'rich',
@@ -31,6 +31,7 @@ dev = [
     'sphinx',
     'sphinx-rtd-theme',
     'nbsphinx',
+    'ipython',
 ]
 
 [project.urls]
