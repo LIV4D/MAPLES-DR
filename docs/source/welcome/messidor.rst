@@ -9,7 +9,7 @@ Download MESSIDOR fundus images
 
 The MESSIDOR fundus images can be downloaded from the `Consortium's website <https://www.adcis.net/en/third-party/messidor/>`_. The Consortium requires you to fill a form with your personal informations, agree to the terms of license agreement, and verify your email address before downloading the images. 
 
-The download page contains links to several zip files. The 12 links named `Base__ images (zip)` must be downloaded to the same directory. This directory should therefore contains the 12 archives: `Base11.zip`, `Base12.zip`, ...,  `Base34.zip`.
+The download page contains links to files. The fundus images are divided into 12 archives named ``Base__ images (zip)``. Make sure to download all 12 archives (`Base11.zip`, `Base12.zip`, ...,  `Base34.zip`) to the same directory.
 
 
 Configure MESSIDOR local path

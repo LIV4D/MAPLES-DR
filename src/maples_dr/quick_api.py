@@ -1,6 +1,6 @@
 __all__ = ["configure", "export_test_set", "export_train_set", "load_test_set", "load_train_set"]
 from pathlib import Path
-from typing import Optional
+from typing import Dict, List, Optional
 
 from .dataset import Dataset, ImageField
 from .loader import DatasetLoader
@@ -69,7 +69,7 @@ def load_test_set() -> Dataset:
 
 
 def export_train_set(
-    path: str | Path, fields: Optional[ImageField | list[ImageField] | dict[ImageField, str]] = None
+    path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None
 ) -> None:
     """Save the training set to a folder.
 
@@ -77,11 +77,12 @@ def export_train_set(
 
     Parameters
     ----------
-    path : str | Path
+    path :
         The path to the directory where
-    fields : Optional[ImageField  |  list[ImageField]  |  dict[ImageField, str]], optional
-        The fields to save. If None, all fields will be saved.
-        By default None.
+    fields :
+        The field or list of fields to save. If None (by default), all fields will be saved.
+
+        See :class:`maples_dr.dataset.ImageField` for the list of available fields.
 
 
     Examples
@@ -93,18 +94,19 @@ def export_train_set(
     return GLOBAL_LOADER.dataset("train").export(path, fields)
 
 
-def export_test_set(path: str | Path, fields: Optional[ImageField | list[ImageField] | dict[ImageField, str]] = None):
+def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None):
     """Save the testing set to a folder.
 
 
 
     Parameters
     ----------
-    path : str | Path
+    path :
         The path to save the dataset to.
-    fields : Optional[ImageField  |  list[ImageField]  |  dict[ImageField, str]], optional
-        The fields to save. If None, all fields will be saved.
-        By default None.
+    fields :
+        The field or list of fields to save. If None (by default), all fields will be saved.
+
+        See :class:`maples_dr.dataset.ImageField` for the list of available fields.
 
 
     Examples

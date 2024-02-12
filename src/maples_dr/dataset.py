@@ -67,11 +67,12 @@ maples_dr_labels_correspondances: Dict[BiomarkerField, Tuple[str]] = {
 
 
 class FundusField(str, Enum):
-    """
-    Valid name for fields concerning fundus images
+    """Valid names for fields concerning fundus images
 
-    - ``fundus`` : The preprocessed fundus image.
-    - ``raw_fundus`` : The raw fundus image.
+    Path to MESSIDOR fundus images **must** be configured to use these fields!
+
+    - ``fundus`` : The preprocessed fundus image (or the original fundus image if no preprocessing is applied).
+    - ``raw_fundus`` : The raw fundus image. (If no preprocessing is applied, this is the same as ``fundus``.)
     """
 
     FUNDUS = "fundus"
@@ -193,9 +194,9 @@ class Dataset:
             fields += ["dr", "me"]
         if "fundus" in self._data.columns:
             if fundus:
-                fields.append("fundus")
-            if raw_fundus and self._cfg.preprocessing != "none":
-                fields.append("raw_fundus")
+                fields += ["fundus"]
+            if raw_fundus:
+                fields += ["raw_fundus"]
         return fields
 
     def read_fundus(self, idx: str | int, preprocess=True, image_format: Optional[ImageFormat] = None):
@@ -344,7 +345,7 @@ class Dataset:
             Name of the field to read. If None, read the whole sample.
         """
         if field is None:
-            field = self.available_fields(aggregated_biomarkers=False)
+            field = self.available_fields(aggregated_biomarkers=False, raw_fundus=False)
 
         fundus = None
         sample = {"name": self.get_sample_infos(idx).name}
@@ -354,7 +355,7 @@ class Dataset:
             elif f == "fundus":
                 if fundus is None:
                     fundus = self.read_fundus(idx, preprocess=False, image_format=image_format)
-                sample[f] = self.preprocess_fundus(fundus)
+                sample[f] = self.preprocess_fundus(fundus) if self._cfg.preprocessing != Preprocessing.NONE else fundus
             elif f == "raw_fundus":
                 if fundus is None:
                     fundus = self.read_fundus(idx, preprocess=False, image_format=image_format)

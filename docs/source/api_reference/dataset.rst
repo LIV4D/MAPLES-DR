@@ -3,7 +3,7 @@ Datasets
 ********
 
 
-.. autoclass:: maples_dr.dataset.Dataset
+.. autoclass:: maples_dr.Dataset
     :members:
     :exclude-members: __init__
     :special-members: __getitem__, __len__

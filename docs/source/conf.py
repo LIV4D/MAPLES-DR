@@ -36,7 +36,7 @@ add_module_names = False
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-napoleon
 napoleon_numpy_docstring = True
 # napoleon_preprocess_types = True
-napoleon_use_rtype = False
+# napoleon_use_rtype = False
 
 # -- intersphinx configuration ------------------------------------------
 intersphinx_mapping = {

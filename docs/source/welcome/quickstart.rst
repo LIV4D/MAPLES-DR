@@ -24,7 +24,7 @@ Once imported, MAPLES-DR train or test sets can be loaded in memory with a singl
     train_set = maples_dr.load_train_set()
     test_set = maples_dr.load_test_set()
 
-If necessary, the dataset archive is automatically downloaded from `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extracted and cached locally. The data is then returned as a `Dataset` object assimilable to a list of samples stored as dictionnaries containing all MAPLES-DR labels (for more information, see the :doc:`../api_reference/dataset` class documentation). 
+If necessary, the dataset archive is automatically downloaded from `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extracted and cached locally. The data is then returned as a :class:`maples_dr.Dataset`: an object assimilable to a list of samples stored as dictionnaries containing all MAPLES-DR labels. (For more information, see the :doc:`../api_reference/dataset` class documentation). 
 
 For example, the vessel map of the first sample of the train set can be accessed with:
 
@@ -81,7 +81,7 @@ The following example shows how to configure the dataset to return images as num
 
 .. code-block:: python
 
-    maples_dr.confige(resize=512, image_format="rgb")
+    maples_dr.configure(resize=512, image_format="rgb")
 
 
 
