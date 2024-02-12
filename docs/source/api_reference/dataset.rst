@@ -14,12 +14,13 @@ Datasets
 Datasets Fields
 ===============
 
-.. autodata:: maples_dr.dataset.Field
 
-.. autodata:: maples_dr.dataset.DiagnosisField
+.. autoclass:: maples_dr.dataset.Field
 
-.. autodata:: maples_dr.dataset.ImageField
+.. autoclass:: maples_dr.dataset.DiagnosisField
 
-.. autodata:: maples_dr.dataset.FundusField
+.. autoclass:: maples_dr.dataset.ImageField
 
-.. autodata:: maples_dr.dataset.BiomarkerField
+.. autoclass:: maples_dr.dataset.FundusField
+
+.. autoclass:: maples_dr.dataset.BiomarkerField

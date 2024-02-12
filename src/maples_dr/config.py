@@ -9,9 +9,9 @@ from typing import Optional
 class ImageFormat(str, Enum):
     """Image formats for fundus images.
 
-    - ``PIL``: Images are formatted as :class:`PIL.Image.Image`.
-    - ``rgb`: Images are formatted as numpy array of shape: (height, width, 3). The channel order is RGB.
-    - ``bgr``: Images are formatted as numpy array of shape: (height, width, 3). The channel order is BGR.
+    - ``PIL`` : Images are formatted as :class:`PIL.Image.Image`.
+    - ``rgb`` : Images are formatted as numpy array of shape: (height, width, 3). The channel order is RGB.
+    - ``bgr`` : Images are formatted as numpy array of shape: (height, width, 3). The channel order is BGR.
 
     """
 

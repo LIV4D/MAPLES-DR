@@ -133,8 +133,9 @@ class Dataset:
 
         This method is a shortcut for :meth:`read_sample`.
         It returns the sample as a dictionary with the keys:
-            - ``name`` containing the name of the image (e.g. "20051116_44816_0400_PP").
-            - every :class:`Field` except ``bright_lesions`` and ``red_lesions``.
+
+        - ``name`` containing the name of the image (e.g. "20051116_44816_0400_PP").
+        - every :class:`Field` except ``bright_lesions`` and ``red_lesions``.
 
         The image are formatted following the default configuration (see :func:`maples_dr.configure`).
 
