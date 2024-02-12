@@ -7,8 +7,8 @@
    width="1632"
    height="775.20001"
    viewBox="0 0 1632 775.20001"
-   sodipodi:docname="MAPLES-DR Overview.svg"
-   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
+   sodipodi:docname="MAPLES-DR_Overview.svg"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -506,11 +506,6 @@
      inkscape:groupmode="layer"
      inkscape:label="1"
      transform="translate(0,-140.41335)">
-    <path
-       id="path1"
-       d="M 0,140.32001 H 1632 V 915.52002 H 0 Z"
-       style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none"
-       transform="translate(0,0.09333333)" />
     <path
        id="path2"
        d="M 0,0 C 0,-27.68 22.24,-50.080002 49.919998,-50.080002 H 1538.08 C 1565.76,-50.080002 1588,-27.68 1588,0 v 664.96002 c 0,27.51996 -22.24,49.91998 -49.92,49.91998 H 49.919998 C 22.24,714.88 0,692.47998 0,664.96002 Z"
