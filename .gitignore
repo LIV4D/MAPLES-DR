@@ -12,3 +12,7 @@ node_modules/
 # IDE
 .idea/
 .vscode/settings.json
+
+# Build folder
+build/
+
