@@ -39,7 +39,7 @@ train_set = maples_dr.load_train_set()
 test_set = maples_dr.load_test_set()
 ```
 
-If necessary, the dataset archive is automatically downloaded from `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extracted and cached locally. The data is then returned as a `Dataset` object assimilable to a list of samples stored as dictionnaries containing all MAPLES-DR labels. 
+If necessary, the dataset archive is automatically downloaded from [Figshare](https://doi.org/10.6084/m9.figshare.24328660), extracted and cached locally. The data is then returned as a `Dataset` object assimilable to a list of samples stored as dictionnaries containing all MAPLES-DR labels. 
 
 For example, the vessel map of the first sample of the train set can be accessed with:
 
