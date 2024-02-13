@@ -36,6 +36,7 @@ dev = [
 
 [project.urls]
 Homepage = 'https://github.com/LIV4D/MAPlES-DR'
+Documentation = 'https://liv4d.github.io/MAPLES-DR/'
 Source = 'https://github.com/LIV4D/MAPlES-DR'
 
 
