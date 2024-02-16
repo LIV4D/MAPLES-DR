@@ -41,6 +41,7 @@ If you use the MAPLES-DR dataset, please cite the following paper:
    api_reference/quick_api
    api_reference/loader
    api_reference/dataset
+   api_reference/preprocessing
 
 
 
