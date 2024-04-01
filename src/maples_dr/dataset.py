@@ -1,93 +1,234 @@
 from __future__ import annotations
 
+from collections.abc import Mapping, Sequence
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple, TypeAlias, Union
+from typing import Dict, Generator, Iterable, List, Optional, Tuple, TypeAlias, Union
 
 import numpy as np
 import pandas as pd
 from PIL import Image
+from PIL.Image import Resampling
 
-from .config import DatasetConfig, ImageFormat, Preprocessing
-from .utilities import Rect, RichProgress
+from .config import DatasetConfig, ImageFormat, InvalidConfigError, Preprocessing
+from .preprocessing import fundus_roi, preprocess_fundus
+from .utilities import Rect, RichProgress, caseless_parse_str_enum
 
 
 class BiomarkerField(str, Enum):
-    """Valid name of MAPLES-DR biomarkers
+    """String Enum of MAPLES-DR biomarkers fields."""
 
-    - ``bright_lesions`` : Union of all the bright lesions masks (CWS, exudates, drusens).
-    - ``bright_uncertains`` : The mask of bright lesions with uncertain type (CWS, exudates or drusens).
-    - ``cotton_wool_spots`` : The cotton wool spots mask.
-    - ``drusens`` : The drusens mask.
-    - ``exudates`` : The exudates mask.
-    - ``hemorrhages`` : The hemorrhages mask.
-    - ``macula`` : The macula mask.
-    - ``microaneurysms`` : The microaneurysms mask.
-    - ``neovascularization`` : The neovascularization mask.
-    - ``optic_cup`` : The optic cup mask.
-    - ``optic_disc`` : The optic disc mask.
-    - ``red_lesions`` : Union of all the red lesions masks (microaneuryms, hemorrhages).
-    - ``red_uncertains`` : The mask of red lesions with uncertain type (microaneuryms, hemorrhages).
-    - ``vessels`` : The vessels mask.
-    """
+    #: The optic cup mask.
+    OPTIC_CUP = "opticCup"
 
-    BRIGHT_LESIONS = "bright_lesions"
-    BRIGHT_UNCERTAINS = "bright_uncertains"
-    COTTON_WOOL_SPOTS = "cotton_wool_spots"
-    DRUSENS = "drusens"
-    EXUDATES = "exudates"
-    HEMORRHAGES = "hemorrhages"
+    #: The optic disc mask.
+    OPTIC_DISC = "opticDisc"
+
+    #: The macula mask.
     MACULA = "macula"
-    MICROANEURYSMS = "microaneurysms"
-    NEOVASCULARIZATION = "neovascularization"
-    OPTIC_CUP = "optic_cup"
-    OPTIC_DISC = "optic_disc"
-    RED_LESIONS = "red_lesions"
-    RED_UNCERTAINS = "red_uncertains"
+
+    #: The vessels mask.
     VESSELS = "vessels"
 
+    #: Union of all the bright lesions masks (CWS, exudates, drusens and uncertain).
+    BRIGHT_LESIONS = "brightLesions"
 
-# Correspondance between Biomarkers and their effective MAPLES-DR labels.
-maples_dr_labels_correspondances: Dict[BiomarkerField, Tuple[str]] = {
-    BiomarkerField.BRIGHT_LESIONS: ("CottonWoolSpots", "Exudates", "Drusens", "BrightUncertains"),
-    BiomarkerField.BRIGHT_UNCERTAINS: ("BrightUncertains",),
-    BiomarkerField.COTTON_WOOL_SPOTS: ("CottonWoolSpots",),
-    BiomarkerField.DRUSENS: ("Drusens",),
-    BiomarkerField.EXUDATES: ("Exudates",),
-    BiomarkerField.HEMORRHAGES: ("Hemorrhages",),
-    BiomarkerField.MACULA: ("Macula",),
-    BiomarkerField.MICROANEURYSMS: ("Microaneurysms",),
-    BiomarkerField.NEOVASCULARIZATION: ("Neovascularization",),
-    BiomarkerField.OPTIC_CUP: ("OpticCup",),
-    BiomarkerField.OPTIC_DISC: ("OpticDisc",),
-    BiomarkerField.RED_LESIONS: ("Hemorrhages", "Microaneurysms", "RedUncertains"),
-    BiomarkerField.RED_UNCERTAINS: ("RedUncertains",),
-    BiomarkerField.VESSELS: ("Vessels",),
+    #: The cotton wool spots mask.
+    COTTON_WOOL_SPOTS = "cottonWoolSpots"
+
+    #: The drusens mask.
+    DRUSENS = "drusens"
+
+    #: The exudates mask.
+    EXUDATES = "exudates"
+
+    #: The mask of bright lesions with uncertain type (either CWS, exudates or drusens).
+    BRIGHT_UNCERTAINS = "brightUncertains"
+
+    #: Union of all the red lesions masks (microaneuryms, hemorrhages and uncertain).
+    RED_LESIONS = "redLesions"
+
+    #: The hemorrhages mask.
+    HEMORRHAGES = "hemorrhages"
+
+    #: The microaneurysms mask.
+    MICROANEURYSMS = "microaneurysms"
+
+    #: The neovascularization mask.
+    NEOVASCULARIZATION = "neovascularization"
+
+    #: The mask of red lesions with uncertain type (either microaneuryms or hemorrhages).
+    RED_UNCERTAINS = "redUncertains"
+
+    @classmethod
+    def parse(cls, biomarker: str | BiomarkerField) -> BiomarkerField:
+        """Parse a biomarker from a string.
+
+        This method accept case insensitive biomarker names and the following aliases:
+        - ``red`` for :attr:`BiomarkerField.RED_LESIONS`;
+        - ``bright`` for :attr:`BiomarkerField.BRIGHT_LESIONS`;
+        - ``cup`` for :attr:`BiomarkerField.OPTIC_CUP`;
+        - ``opticDisk``, ``disc`` or ``disk``  for :attr:`BiomarkerField.OPTIC_DISC`;
+        - ``cws`` for :attr:`BiomarkerField.COTTON_WOOL_SPOTS`;
+        - ``neovessels`` for :attr:`BiomarkerField.NEOVASCULARIZATION`.
+
+        Parameters
+        ----------
+        biomarker :
+            The name of the biomarker.
+
+        Returns
+        -------
+        BiomarkerField
+            The corresponding biomarker field.
+        """
+        return caseless_parse_str_enum(
+            cls,
+            biomarker,
+            alias={
+                "red": BiomarkerField.RED_LESIONS,
+                "bright": BiomarkerField.BRIGHT_LESIONS,
+                "cup": BiomarkerField.OPTIC_CUP,
+                "opticdisk": BiomarkerField.OPTIC_DISC,
+                "disc": BiomarkerField.OPTIC_DISC,
+                "disk": BiomarkerField.OPTIC_DISC,
+                "cws": BiomarkerField.COTTON_WOOL_SPOTS,
+                "neovessels": BiomarkerField.NEOVASCULARIZATION,
+            },
+        )
+
+
+AGGREGATED_BIOMARKERS = {
+    BiomarkerField.BRIGHT_LESIONS: (BiomarkerField.COTTON_WOOL_SPOTS, BiomarkerField.EXUDATES, BiomarkerField.DRUSENS),
+    BiomarkerField.RED_LESIONS: (BiomarkerField.MICROANEURYSMS, BiomarkerField.HEMORRHAGES),
 }
 
 
 class FundusField(str, Enum):
-    """Valid names for fields concerning fundus images
+    """String Enum of MAPLES-DR fields associated with fundus images.
 
-    Path to MESSIDOR fundus images **must** be configured to use these fields!
-
-    - ``fundus`` : The preprocessed fundus image (or the original fundus image if no preprocessing is applied).
-    - ``raw_fundus`` : The raw fundus image. (If no preprocessing is applied, this is the same as ``fundus``.)
+    .. warning::
+        Path to MESSIDOR fundus images **must** be configured to use these fields!
+        See :func:`maples_dr.configure` for more informations.
     """
 
+    #: The preprocessed fundus image (or the original fundus image if no preprocessing is applied).
     FUNDUS = "fundus"
-    RAW_FUNDUS = "raw_fundus"
+
+    #: The raw fundus image. (If no preprocessing is applied, this is the same as :attr:`FundusField.FUNDUS`.)
+    RAW_FUNDUS = "rawFundus"
+
+    #: The mask of the fundus image.
+    MASK = "mask"
+
+    @classmethod
+    def parse(cls, field: str | FundusField) -> FundusField:
+        """Parse a field from a string.
+
+        Parameters
+        ----------
+        field :
+            The name of the field.
+
+        Returns
+        -------
+        FundusField
+            The corresponding field.
+        """
+        return caseless_parse_str_enum(cls, field)
 
 
 class DiagnosisField(str, Enum):
-    """
-    Valid name for fields concerning MAPLES-DR diagnosis labels
+    """String Enum of MAPLES-DR diagnosis fields."""
 
-    - ``dr`` : The Diabetic Retinopathy grade. ('R0', 'R1', 'R2', 'R3', 'R4A')
-    - ``me`` : The Macular Edema grade. ('M0', 'M1', 'M2')
-    """
-
+    #: The Diabetic Retinopathy grade.
+    #:
+    #:  - ``R0`` : No DR.
+    #:  - ``R1`` : Mild NPDR.
+    #:  - ``R2`` : Moderate NPDR.
+    #:  - ``R3`` : Severe NPDR.
+    #:  - ``R4A`` : PDR.
     DR = "dr"
+
+    #: The Macular Edema grade.
+    #:
+    #:  - ``M0`` : No ME.
+    #:  - ``M1`` : ME without center involvement.
+    #:  - ``M2`` : ME with center involvement.
+    ME = "me"
+
+    @classmethod
+    def parse(cls, field: str | DiagnosisField) -> DiagnosisField:
+        """Parse a field from a string.
+
+        Parameters
+        ----------
+        field :
+            The name of the field.
+
+        Returns
+        -------
+        DiagnosisField
+            The corresponding field.
+        """
+        return caseless_parse_str_enum(cls, field)
+
+
+class BiomarkersAnnotationInfos(str, Enum):
+    """Valid name for the additional informations collected during the biomarkers annotations process."""
+
+    #: The name of the retinologist who annotated the series of biomarkers.
+    RETINOLOGIST = "retinologist"
+
+    #: A comment from the retinologist.
+    COMMENT = "comment"
+
+    #: The time at which the annotation was made.
+    ANNOTATION_TIME = "annotationTime"
+
+    #: The id of the annotation. (1 is the first image to be annotated, 200 is the last one.)
+    ANNOTATION_ID = "annotationID"
+
+    @classmethod
+    def parse(cls, infos: str | BiomarkersAnnotationInfos) -> BiomarkersAnnotationInfos:
+        """Parse a field from a string.
+
+        Parameters
+        ----------
+        infos :
+            The name of the infos field.
+
+        Returns
+        -------
+        BiomarkersAnnotationInfos
+            The corresponding infos field.
+        """
+        return caseless_parse_str_enum(cls, infos)
+
+
+class BiomarkersAnnotationTasks(str, Enum):
+    """Valid name for the different annotation tasks in MAPLES-DR."""
+
+    #: The annotation task for bright lesions (CWS, exudates, drusens).
+    BRIGHT = "brightLesions"
+
+    #: The annotation task for red lesions (microaneuryms, hemorrhages, neovessels).
+    RED = "redLesions"
+
+    #: The annotation task for the optic disc, optic cup and the macula.
+    DISC_MACULA = "discMacula"
+
+    #: The annotation task for the vessels.
+    VESSELS = "vessels"
+
+
+class Pathology(str, Enum):
+    """Valid name for the different pathology in MAPLES-DR."""
+
+    #: The Diabetic Retinopathy.
+    DR = "dr"
+
+    #: The Macular Edema.
     ME = "me"
 
 
@@ -102,7 +243,29 @@ ImageField: TypeAlias = Union[FundusField, BiomarkerField]
 Field: TypeAlias = Union[DiagnosisField, ImageField]
 
 
-class Dataset:
+def check_field(field: Field | str) -> Field:
+    try:
+        return DiagnosisField.parse(field)
+    except ValueError:
+        pass
+    try:
+        return BiomarkerField.parse(field)
+    except ValueError:
+        pass
+    try:
+        return FundusField.parse(field)
+    except ValueError:
+        pass
+
+    raise ValueError(
+        f"Unknown field: {field}. Must be one of:\n"
+        f"  - DiagnosisField: {', '.join(_.value for _ in DiagnosisField)}\n"
+        f"  - BiomarkerField: {', '.join(_.value for _ in BiomarkerField)}\n"
+        f"  - FundusField: {', '.join(_.value for _ in FundusField)}\n"
+    )
+
+
+class Dataset(Sequence):
     """A set of samples from the MAPLES-DR dataset.
 
     Datasets are a utility class to access and export samples from the MAPLES-DR dataset.
@@ -111,7 +274,12 @@ class Dataset:
     See :obj:`Field` for the list of available fields.
     """
 
-    def __init__(self, data: pd.DataFrame, cfg: DatasetConfig, rois: Optional[Dict[str, Rect]] = None):
+    def __init__(
+        self,
+        data: pd.DataFrame,
+        cfg: DatasetConfig,
+        rois: Optional[Dict[str, Rect]] = None,
+    ):
         """Create a new dataset. (Internal use only)
 
         :meta private:
@@ -119,17 +287,18 @@ class Dataset:
         Parameters
         ----------
         data : pd.DataFrame
-            The data of the dataset including the name of the samples and the paths to the images.
+            The data of the dataset. It should match :attr:`Dataset.data` format.
+
         cfg : DatasetConfig
             The configuration of the dataset.
-        rois : Optional[Dict[str, Rect]], optional
+        rois : Dict[str, Rect], optional
             The region of interest in MESSIDOR fundus images.
         """
-        self._cfg = cfg
+        self._cfg: DatasetConfig = cfg
         self._data: pd.DataFrame = data
         self._rois = rois
 
-    def __getitem__(self, idx: int | str) -> dict:
+    def __getitem__(self, idx: int | str) -> DataSample:
         """Get a sample from the dataset.
 
         This method is a shortcut for :meth:`read_sample`.
@@ -150,10 +319,95 @@ class Dataset:
         dict
             The sample as a dictionary.
         """
-        return self.read_sample(idx)
+        sample_infos = self.get_sample_infos(idx)
+        return DataSample(sample_infos, self._cfg, self._rois.get(sample_infos.name, None))
+
+    def __contains__(self, idx: str | int) -> bool:
+        try:
+            self.get_sample_infos(idx)
+            return True
+        except ValueError:
+            return False
 
     def __len__(self) -> int:
         return len(self._data)
+
+    @property
+    def data(self) -> pd.DataFrame:
+        """The data of the dataset.
+
+        A dataframe containing the informations of each sample. It has the following columns:
+            - index: the name of the sample.
+            - ``fundus``: the path to the fundus image.
+            - [:class:`BiomarkerField`] (accept aggregated): the path to the biomarkers masks.
+            - [:class:`BiomarkersAnnotationTasks` ``_`` :class:`BiomarkersAnnotationInfos`]: the additional annotations informations.
+            - ``dr``: the consensus DR grade.
+            - ``me``: the consensus ME grade.
+            - ``dr_{A|B|C}``: the DR grade given by one retinologist.
+            - ``me_{A|B|C}``: the ME grade given by one retinologist.
+            - ``dr_{A|B|C}_comment``: comments from the retinologist when grading the DR diagnosis.
+        """
+        return self._data
+
+    def subset(self, *arg, start: Optional[int] = None, end: Optional[int] = None) -> Dataset:
+        """Get a subset of the dataset.
+
+        Parameters
+        ----------
+        start : int
+            The index of the first sample of the subset.
+        end : int
+            The index of the last sample of the subset.
+
+        Returns
+        -------
+        Dataset
+            The subset of the dataset.
+        """
+        if start is None and end is None:
+            if len(arg) == 2:
+                start, end = arg
+            elif len(arg) == 1:
+                start = 0
+                end = arg[0]
+            else:
+                raise ValueError("Invalid number of arguments: only expect start and end indexes.")
+        elif start is None and len(arg) == 1:
+            start = arg[0]
+        else:
+            raise ValueError("Invalid number of arguments: only expect start and end indexes.")
+
+        return Dataset(self._data.iloc[start:end], self._cfg, self._rois)
+
+    def diagnosis(self, pathology: Optional[Pathology] = None):
+        """Get the diagnosis of the dataset.
+
+        Parameters
+        ----------
+        pathology : Pathology, optional
+            The pathology to get the diagnosis for. If None, get the diagnosis for both pathologies.
+
+        Returns
+        -------
+        pd.Series
+            The diagnosis of the dataset.
+        """
+        retinologist = ("A", "B", "C")
+
+        if pathology is None:
+            diagnosis_fields = ["dr"] + [f"dr_{r}" for r in retinologist]
+            diagnosis_fields += ["me"] + [f"me_{r}" for r in retinologist]
+            diagnosis_fields += [f"dr_{r}_comment" for r in retinologist]
+            return self._data[diagnosis_fields]
+
+        pathology = Pathology(pathology)
+        if pathology is Pathology.DR:
+            diagnosis_fields = {"dr": "Consensus"} | {f"dr_{r}": r for r in retinologist}
+        else:
+            diagnosis_fields = {"me": "Consensus"} | {f"me_{r}": r for r in retinologist}
+        diagnosis_fields |= {f"dr_{r}_comment": f"{r}_comment" for r in retinologist}
+
+        return self._data[list(diagnosis_fields.keys())].rename(columns=diagnosis_fields)
 
     def available_fields(
         self, biomarkers=None, aggregated_biomarkers=None, diagnosis=None, fundus=None, raw_fundus=None
@@ -174,29 +428,16 @@ class Dataset:
 
         fields = []
         if biomarkers:
-            fields += [
-                "optic_disc",
-                "optic_cup",
-                "macula",
-                "vessels",
-                "bright_uncertains",
-                "exudates",
-                "cotton_wool_spots",
-                "drusens",
-                "red_uncertains",
-                "neovascularization",
-                "microaneurysms",
-                "hemorrhages",
-            ]
+            fields += [_.value for _ in BiomarkerField if _ not in AGGREGATED_BIOMARKERS]
         if aggregated_biomarkers:
-            fields += ["red_lesions", "bright_lesions"]
+            fields += list(AGGREGATED_BIOMARKERS.keys())
         if diagnosis:
-            fields += ["dr", "me"]
+            fields += [_.value for _ in DiagnosisField]
         if "fundus" in self._data.columns:
             if fundus:
-                fields += ["fundus"]
+                fields += [FundusField.FUNDUS.value]
             if raw_fundus:
-                fields += ["raw_fundus"]
+                fields += [FundusField.RAW_FUNDUS.value]
         return fields
 
     def read_fundus(self, idx: str | int, preprocess=True, image_format: Optional[ImageFormat] = None):
@@ -215,10 +456,12 @@ class Dataset:
             Format of the image to return. If None, use the format defined in the configuration.
         """
         if "fundus" not in self._data.columns:
-            raise RuntimeError(
+            raise InvalidConfigError(
                 "Impossible to read fundus images, path to MESSIDOR dataset is unkown.\n"
                 "Download MESSIDOR and use maples_dr.configure(messidor_path='...')."
             )
+        if self._rois is None:
+            raise RuntimeError("Impossible to read fundus images, region of interest is unkown.")
 
         # Read the image
         path = self.get_sample_infos(idx)["fundus"]
@@ -229,8 +472,9 @@ class Dataset:
             roi = self._rois[path.stem]
             img = img.crop(roi.box())
 
-        # Resize the image
-        img = img.resize((self._cfg.resize,) * 2)
+        if self._cfg.resize:
+            # Resize the image
+            img = img.resize((self._cfg.resize,) * 2)
 
         if preprocess:
             img = self.preprocess_fundus(img)
@@ -280,6 +524,7 @@ class Dataset:
             BiomarkerField | List[BiomarkerField] | Dict[int, BiomarkerField | List[BiomarkerField]]
         ] = None,
         image_format: Optional[ImageFormat] = None,
+        pre_annotation: bool = False,
     ):
         """
         Read biomarkers from the dataset.
@@ -289,39 +534,47 @@ class Dataset:
         # Read the paths of the biomarkers
         paths = self.get_sample_infos(idx)
 
-        # Initialize the resulting biomarkers map
-
         # Cast the biomarkers definition to a dictionary
+        VALID_BIOMARKERS = self.available_fields(biomarkers=True)
         if biomarkers is None:
-            biomarkers = {i + 1: b for i, b in enumerate(self.available_fields(biomarkers=True))}
-        if isinstance(biomarkers, (list, str)):
-            biomarkers = {1: biomarkers}
-            biomarkers_map = np.zeros(self._target_image_size, dtype=bool)
-        elif isinstance(biomarkers, dict):
-            biomarkers_map = np.zeros(self._target_image_size, dtype=np.uint8)
+            biomarkers_specs = {i + 1: b for i, b in enumerate(VALID_BIOMARKERS)}
         else:
-            raise ValueError(
-                f"Unknown biomarkers: {biomarkers}." "Must be either a string, a list of strings or a dictionary."
-            )
+            if isinstance(biomarkers, (list, str)):
+                biomarkers = {1: biomarkers}
+                biomarkers_map = np.zeros(self._target_image_size, dtype=bool)
+            elif isinstance(biomarkers, dict):
+                biomarkers_map = np.zeros(self._target_image_size, dtype=np.uint8)
+            else:
+                raise ValueError(
+                    f"Unknown biomarkers: {biomarkers}." "Must be either a string, a list of strings or a dictionary."
+                )
 
-        # Check the validity of the biomarkers definition and expand merged biomarkers)
-        valid_biomarkers = {}
-        for i, ith_biomarkers in biomarkers.items():
-            ith_valid_biomarkers = set()
-            if isinstance(ith_biomarkers, str):
-                ith_biomarkers = [ith_biomarkers]
-            for b in ith_biomarkers:
-                if b not in maples_dr_labels_correspondances:
-                    raise ValueError(f"Unknown biomarker: {b}.")
-                ith_valid_biomarkers.update(maples_dr_labels_correspondances[b])
-            valid_biomarkers[i] = ith_valid_biomarkers
+            # Check the validity of the biomarkers definition and expand merged biomarkers)
+            biomarkers_specs = {}
+            for i, ith_biomarkers in biomarkers.items():
+                ith_valid_biomarkers = set()
+                if isinstance(ith_biomarkers, str):
+                    ith_biomarkers = [ith_biomarkers]
+                for biomarker in ith_biomarkers:
+                    if biomarker not in self.available_fields(biomarkers=True):
+                        raise ValueError(f"Unknown biomarker: {biomarker}.")
+                    if biomarker in AGGREGATED_BIOMARKERS:
+                        ith_valid_biomarkers.update(AGGREGATED_BIOMARKERS[biomarker])
+                    else:
+                        ith_valid_biomarkers.add(biomarker)
+                biomarkers_specs[i] = ith_valid_biomarkers
 
         # Read the biomarkers
-        for i, ith_biomarkers in valid_biomarkers.items():
-            for b in ith_biomarkers:
-                path = paths[b]
-                img = Image.open(path).resize(self._target_image_size)
-                biomarkers_map[np.array(img) > 0] = i
+        for i, ith_biomarkers in biomarkers_specs.items():
+            for biomarker in ith_biomarkers:
+                if pre_annotation:
+                    biomarker = biomarker + "_pre"
+                path = paths[biomarker]
+                if Path(path).exists():
+                    img = Image.open(path).resize(self._target_image_size)
+                    biomarkers_map[np.array(img) > 0] = i
+                else:
+                    biomarkers_map = np.zeros(self._target_image_size, dtype=np.uint8)
 
         # Apply format conversion
         if image_format is None:
@@ -367,22 +620,64 @@ class Dataset:
         return sample
 
     def get_sample_infos(self, idx: str | int) -> pd.Series:
-        """
-        Get the informations of a sample.
+        """Get the informations of a sample.
 
-        :param idx: Index of the sample.
+        Parameters
+        ----------
+        idx : str | int
+            Index of the sample. Can be an integer or the name of the sample (i.e. "20051116_44816_0400_PP").
 
-        :meta private:
+        Returns
+        -------
+        pd.Series
+            The informations of the sample.
+
+
+        Raises
+        ------
+        IndexError
+            If the index is out of range.
+
+        KeyError
+            If the image name is unknown.
         """
         if isinstance(idx, int):
+            if idx < 0 or idx >= len(self):
+                raise IndexError(f"Unknown sample: {idx}.")
             return self._data.iloc[idx]
         else:
             infos = self._data.loc[self._data.index == idx]
             if len(infos) == 0:
-                raise ValueError(f"Unknown sample: {idx}.")
+                raise KeyError(f"Unknown sample: {idx}.")
             return infos.iloc[0]
 
-    def export(self, path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None):
+    def annotations_infos(self) -> pd.DataFrame:
+        """Get the annotations informations of the dataset.
+
+        Returns
+        -------
+        pd.DataFrame
+            The annotations informations of the dataset.
+        """
+        tasks = [_.value for _ in BiomarkersAnnotationTasks]
+        infos = [_.value for _ in BiomarkersAnnotationInfos]
+        columns = pd.MultiIndex.from_product([tasks, infos], names=["Task", "Infos"])
+
+        df = pd.DataFrame(index=self._data.index, columns=columns)
+        for task in tasks:
+            for info in infos:
+                df[(task, info)] = self._data[task + "_" + info]
+                if info == "comment":
+                    df[(task, info)] = df[(task, info)].astype(str).replace("nan", "")
+
+        return df
+
+    def export(
+        self,
+        path: str | Path,
+        fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
+        optimize: bool = False,
+    ):
         """Export the dataset to a folder.
 
         Parameters
@@ -394,6 +689,8 @@ class Dataset:
             If ``fields`` is a string or list, export only the given fields.
             If ``fields`` is a dictionary, export the fields given by the keys
             and rename their folder to their corresponding dictionnary values.
+        optimize :
+            If True, optimize the images when exporting them.
         """
         if fields is None:
             fields = {f: f for f in self.available_fields(biomarkers=True, fundus=True, raw_fundus=True)}
@@ -405,28 +702,316 @@ class Dataset:
         if isinstance(path, str):
             path = Path(path)
 
+        for field in fields.values():
+            field_folder = path / field
+            field_folder.mkdir(parents=True, exist_ok=True)
+
         with RichProgress.iteration("Exporting Maples-DR...", len(self), "Maples-DR exported in {t} seconds.") as p:
             for i in range(len(self)):
-                sample = self.read_sample(i, list(fields.values()), image_format="PIL")
+                sample = self.read_sample(i, list(fields.keys()), image_format="PIL")
 
                 for field, img in sample.items():
                     if field not in fields:
                         continue
 
-                    field_folder = path / field
-                    field_folder.mkdir(parents=True, exist_ok=True)
+                    field_folder = path / fields[field]
 
                     opt = {}
                     if field not in ("fundus", "raw_fundus"):
                         opt["bits "] = 1
-                        opt["optimize"] = True
+                        opt["optimize"] = optimize
 
                     img.save(field_folder / f"{sample['name']}.png", **opt)
                     p.update(1 / len(fields))
 
+
+class DataSample(Mapping):
+    """A sample from the MAPLES-DR dataset.
+
+    A sample is a dictionary containing the informations of a single sample from the dataset.
+
+    """
+
+    def __init__(self, data: pd.Series, cfg: DatasetConfig, roi: Optional[Rect] = None):
+        self._data: pd.Series = data
+        self._cfg: DatasetConfig = cfg
+        self._fundus: Optional[np.ndarray] = None
+        self._roi: Optional[Rect] = roi
+
+    def __len__(self) -> int:
+        return len(self._data)
+
+    def __getitem__(self, key: Field | str) -> Union[Image.Image, np.ndarray, str]:
+        key = check_field(key)
+        if isinstance(key, BiomarkerField):
+            return self.read_biomarker(key)
+        elif isinstance(key, DiagnosisField):
+            return self._data[key.value]
+        elif key is FundusField.FUNDUS:
+            return self.read_fundus()
+        elif key is FundusField.RAW_FUNDUS:
+            return self.read_fundus(preprocess=False)
+        elif key is FundusField.MASK:
+            return self.read_roi_mask()
+
+    def __iter__(self) -> Generator[Field]:
+        if FundusField.FUNDUS.value in self._data:
+            if self._cfg.preprocessing != Preprocessing.NONE:
+                yield FundusField.RAW_FUNDUS
+            yield [FundusField.FUNDUS]
+
+        yield from (_ for _ in BiomarkerField if _ not in AGGREGATED_BIOMARKERS)
+        yield from DiagnosisField
+
+    def __repr__(self) -> str:
+        return f"<DataSample name={self.name}>"
+
     @property
-    def _target_image_size(self):
+    def name(self) -> str:
+        """The name of the sample."""
+        return self._data.name
+
+    def read_biomarker(
+        self,
+        biomarkers: BiomarkerField | str | Iterable[BiomarkerField | str],
+        image_format: Optional[ImageFormat] = None,
+        resize: Optional[int | bool] = None,
+        pre_annotation: bool = False,
+    ) -> any:
+        """Read a biomarker from the sample.
+
+        Parameters
+        ----------
+        biomarkers :
+            Name of the biomarker(s) to read.
+            If multiple biomarkers are given, the corresponding masks will be merged.
+
+        image_format :
+            Format of the image to return. If None, use the format defined in the configuration.
+
+        resize :
+            Resize the image to the given size.
+
+            - If ``True``, keep the original MAPLES-DR resolution of 1500x1500 px;
+            - If ``False``, use the original MESSIDOR resolution if MESSIDOR path is configured, otherwise fallback to
+            MAPLES-DR original resolution.
+            - If ``None`` (by default), use the size defined in the configuration.
+
+        pre_annotation :
+            If True, read the pre-annotation biomarkers instead of the final ones.
+
+            .. warning::
+                Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.
+
+        Returns
+        -------
+            The biomarker mask under the format specified.
         """
-        Size of the images in the dataset.
+        # Check arguments validity
+        image_format = self._check_image_format(image_format)
+        target_size = self._target_size(resize)
+
+        if isinstance(biomarkers, (str, BiomarkerField)):
+            biomarkers = [biomarkers]
+        biomarkers = [BiomarkerField.parse(b) for b in biomarkers]
+        assert len(biomarkers), "No biomarker to read."
+
+        # Expand aggregated biomarkers
+        for i in range(len(biomarkers) - 1, -1, -1):
+            bio = biomarkers[i]
+            if bio in AGGREGATED_BIOMARKERS:
+                del biomarkers[i]
+                biomarkers.extend(AGGREGATED_BIOMARKERS[bio])
+
+        # Read the paths of the biomarkers
+        paths = []
+        for bio in biomarkers:
+            key = bio.value + ("_pre" if pre_annotation else "")
+            if key in self._data:
+                paths.append(self._data[key])
+
+        # Read the biomarkers
+        biomarkers_map = np.zeros(target_size, dtype=bool)
+        for path in paths:
+            if Path(path).exists():
+                img = Image.open(path).resize(target_size, Resampling.NEAREST)
+                biomarkers_map[np.array(img) > 0] = 1
+
+        # Apply format conversion
+        if image_format is ImageFormat.PIL:
+            return Image.fromarray(biomarkers_map)
+        else:
+            return biomarkers_map
+
+    def read_biomarkers(
+        self,
+        biomarkers: Mapping[int, BiomarkerField | str | List[BiomarkerField | str]],
+        image_format: Optional[ImageFormat] = None,
+        pre_annotation: bool = False,
+        resize: Optional[int | bool] = None,
+    ):
         """
-        return (self._cfg.resize,) * 2
+        Read multiple biomarkers, assigning a class to a biomarker or a group of them.
+
+        Parameters
+        ----------
+        biomarkers :
+            Name of the biomarker(s) to read.
+
+        image_format :
+            Format of the image to return. If None, use the format defined in the configuration.
+
+        pre_annotation :
+            If True, read the pre-annotation biomarkers instead of the final ones.
+
+            .. warning::
+                Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.
+
+        """
+        image_format = self._check_image_format(image_format)
+        target_size = self._target_size(resize)
+
+        biomarkers_map = np.zeros(target_size, dtype=np.uint8)
+        for i, bio in biomarkers.items():
+            biomarkers_map[self.read_biomarker(bio, image_format="bgr", pre_annotation=pre_annotation)] = i
+
+        # Apply format conversion
+        if image_format is ImageFormat.PIL:
+            return Image.fromarray(biomarkers_map)
+        else:
+            return biomarkers_map
+
+    def read_fundus(
+        self,
+        preprocess: Optional[Preprocessing | str | bool] = None,
+        image_format: Optional[ImageFormat] = None,
+        resize: Optional[int | bool] = None,
+    ) -> Union[Image.Image, np.ndarray]:
+        """Read the fundus image of the sample.
+
+        Parameters
+        ----------
+        preprocess :
+            If is a :class:`Preprocessing` (or a string), the image is preprocessed with the given preprocessing.
+            If ``True``, the image is preprocessed with the preprocessing defined in the configuration.
+            If ``False``, the image is not preprocessed.
+            If ``None``, use the preprocessing defined in the configuration.
+
+        image_format :
+            Format of the image to return. If None, use the format defined in the configuration.<
+
+        resize :
+            Resize the image to the given size.
+
+            - If ``True``, use the original MAPLES-DR resolution of 1500x1500 px;
+            - If ``False``, keep the original MESSIDOR resolution.
+            - If ``None`` (by default), use the size defined in the configuration.
+
+        Returns
+        -------
+            The fundus image under the format specified.
+        """
+
+        assert "fundus" in self._data, "Impossible to read fundus images, path to MESSIDOR dataset is unkown."
+        assert self._roi is not None, "Impossible to read fundus images, region of interest is unkown."
+
+        # Check arguments
+        preprocess = self._check_preprocessing(preprocess)
+        image_format = self._check_image_format(image_format)
+        target_size = self._target_size(resize)
+
+        # Read the image
+        if self._fundus is None:
+            path = self._data[FundusField.FUNDUS.value]
+            fundus = Image.open(path)
+            fundus_format = ImageFormat.PIL
+
+            # Crop the image to the proper region of interest
+            if fundus.height != fundus.width:
+                fundus = fundus.crop(self._roi.box())
+        else:
+            fundus = self._fundus
+            fundus_format = ImageFormat.BGR
+
+        # Resize the image
+        if fundus_format is ImageFormat.BGR and fundus.shape[:2] != target_size:
+            fundus = self._apply_image_format(fundus, fundus_format, ImageFormat.PIL)
+            fundus_format = ImageFormat.PIL
+            fundus = fundus.resize(target_size, Resampling.LANCZOS if target_size[0] < 1000 else Resampling.BILINEAR)
+        elif fundus_format is ImageFormat.PIL and fundus.size != target_size:
+            fundus = fundus.resize(target_size, Resampling.LANCZOS if target_size[0] < 1000 else Resampling.BILINEAR)
+
+        # Preprocess the image
+        if preprocess is not Preprocessing.NONE:
+            # If required, cast the image to a numpy array
+            fundus = self._apply_image_format(fundus, fundus_format, ImageFormat.BGR)
+            fundus_format = ImageFormat.BGR
+            self._fundus = fundus
+
+            fundus = preprocess_fundus(fundus, preprocess)
+
+        return self._apply_image_format(fundus, fundus_format, image_format)
+
+    def read_roi_mask(self, image_format: Optional[ImageFormat] = None) -> np.ndarray | Image.Image:
+        """Read the region of interest of the fundus image.
+
+        Parameters
+        ----------
+
+        image_format :
+            Format of the image to return. If None, use the format defined in the configuration.
+
+        Returns
+        -------
+        np.ndarray
+            The region of interest of the fundus image.
+        """
+        fundus = self.read_fundus(preprocess=False, image_format=ImageFormat.BGR)
+        mask = fundus_roi(fundus)
+
+        return self._apply_image_format(mask, ImageFormat.BGR, image_format)
+
+    def _apply_image_format(
+        self, image: Image.Image | np.ndarray, input_format: ImageFormat, target_format: str | ImageFormat | None
+    ) -> Image.Image | np.ndarray:
+        target_format = self._check_image_format(target_format)
+        input_format = ImageFormat(input_format)
+
+        if input_format is ImageFormat.PIL:
+            if target_format is ImageFormat.PIL:
+                return image
+            else:  # Target format is numpy array
+                image = np.array(image)
+                if len(image.shape) == 2 or target_format is ImageFormat.RGB:
+                    return image
+                else:
+                    return image[..., ::-1]
+        else:  # Input format is numpy array
+            if target_format is ImageFormat.PIL:
+                return Image.fromarray(image)
+            else:  # Target format is numpy array
+                same_channel_order = len(image.shape) == 2 or target_format is input_format
+                return image if same_channel_order else image[..., ::-1]
+
+    def _check_image_format(self, image_format: Optional[ImageFormat | str] = None) -> ImageFormat:
+        if image_format is None:
+            return ImageFormat(self._cfg.image_format)
+        return ImageFormat(image_format)
+
+    def _check_preprocessing(self, preprocess: str | Preprocessing | bool | None) -> Preprocessing:
+        if preprocess is None or preprocess is True:
+            return Preprocessing(self._cfg.preprocessing)
+        if preprocess is False:
+            return Preprocessing.NONE
+        return Preprocessing(preprocess)
+
+    def _target_size(self, size: Optional[int | bool] = None) -> Tuple[int, int]:
+        if size is None:
+            size = self._cfg.resize
+
+        if size is False and self._roi is not None:
+            return self._roi.shape
+        elif size is True:
+            return (1500, 1500)
+        else:
+            return (self._cfg.resize,) * 2

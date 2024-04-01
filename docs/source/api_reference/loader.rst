@@ -2,8 +2,8 @@
 Datasets Loader
 ****************
 
-.. automodule:: maples_dr.config
+.. autoclass:: maples_dr.loader.DatasetLoader
     :members:
 
-.. automodule:: maples_dr.loader
-    :members:
+.. autoclass:: maples_dr.loader.NotConfiguredError
+    :exclude-members: __init__, __new__

@@ -2,9 +2,10 @@ from __future__ import annotations
 
 __all__ = ["RichProgress"]
 
+from enum import Enum
 from functools import reduce
 from time import time
-from typing import Iterable, NamedTuple, Tuple, TypeGuard
+from typing import Iterable, Mapping, NamedTuple, Optional, Tuple, TypeGuard, TypeVar
 
 from rich.progress import (
     BarColumn,
@@ -71,6 +72,36 @@ class RichProgress:
                 TimeRemainingColumn(),
             ),
         )
+
+
+EnumT = TypeVar("EnumT", bound=Enum)
+
+
+def caseless_parse_str_enum(
+    enum_type: type, value: any, ignore_underscore=True, alias: Optional[Mapping[str, EnumT]] = None
+) -> EnumT:
+    try:
+        return enum_type(value)
+    except ValueError:
+        pass
+    if not isinstance(value, str):
+        raise ValueError(f"Invalid enum identifier: must be a string or a {type(enum_type)}, not {type(value)}.")
+    if ignore_underscore:
+        value = value.replace("_", "")
+
+    for enum in enum_type:
+        name = enum.value.lower()
+        if ignore_underscore:
+            name = name.replace("_", "")
+        if name == value.lower():
+            return enum
+    if alias is not None:
+        for name, enum in alias.items():
+            if name == value.lower():
+                return enum
+    raise ValueError(
+        f"Invalid {type(enum_type)}: {value}.\n Valid values are: {', '.join(_.value for _ in enum_type)}."
+    )
 
 
 class Rect(NamedTuple):

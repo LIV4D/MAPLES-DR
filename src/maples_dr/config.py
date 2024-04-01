@@ -3,34 +3,40 @@ from __future__ import annotations
 __all__ = ["DatasetConfig", "InvalidConfigError", "ImageFormat", "Preprocessing"]
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
+from typing import Any, Mapping
 
 
 class ImageFormat(str, Enum):
-    """Image formats for fundus images.
+    """String Enum of possible image formats for fundus images and biomarker masks."""
 
-    - ``PIL`` : Images are formatted as :class:`PIL.Image.Image`.
-    - ``rgb`` : Images are formatted as numpy array of shape: (height, width, 3). The channel order is RGB.
-    - ``bgr`` : Images are formatted as numpy array of shape: (height, width, 3). The channel order is BGR.
-
-    """
-
+    #: Images are formatted as :class:`PIL.Image.Image`.
     PIL = "PIL"
+
+    #: Images are formatted as numpy array.
+    #: Biomarkers masks have a shape of ``(height, width)`` and
+    #: fundus image have a shape of ``(height, width, 3)`` with a ``RGB`` channel order.
     RGB = "rgb"
+
+    #: Images are formatted as numpy array.
+    #: Biomarkers masks have a shape of ``(height, width)`` and
+    #: fundus image have a shape of ``(height, width, 3)`` with a ``BGR`` channel order.
     BGR = "bgr"
 
 
 class Preprocessing(str, Enum):
-    """Preprocessing algorithms for fundus images.
+    """String Enum of possible preprocessing algorithms applied on the fundus images."""
 
-    - ``none``: No preprocessing is applied.
-    - ``clahe``: Contrast Limited Adaptive Histogram Equalization.
-    - ``median``: Median filter.
-
-    """
-
+    #: No preprocessing.
     NONE = "none"
+
+    #: Preprocessing based on Contrast Limited Adaptive Histogram Equalization (CLAHE).
+    #:
+    #: See :func:`maples_dr.preprocessing.clahe_preprocessing`.
     CLAHE = "clahe"
+
+    #: Preprocessing based on median filtering.
+    #:
+    #: See :func:`maples_dr.preprocessing.median_preprocessing`.
     MEDIAN = "median"
 
 
@@ -40,40 +46,44 @@ DOWNLOAD = "DOWNLOAD"
 @dataclass
 class DatasetConfig:
     """
-    Configuration of the MAPLES-DR dataset.
+    Dataclass storing the configuration of the dataset.
+
+
     """
 
     #: Size of the generated images.
-    #: By default, keep the original image size of 1500x1500.
-    resize: Optional[int] = None
+    #:
+    #: - If ``int``: the images are resized to a square of the given size;
+    #: - if ``True``: the original MAPLES-DR resolution of 1500x1500 px is kept;
+    #: - if ``False``: keep the original MESSIDOR resolution if MESSIDOR path is configured,
+    #:   otherwise fallback to MAPLES-DR original resolution.
+    #:
+    #: By default: ``True`` (use MAPLES-DR 1500x1500 px resolution).
+    resize: int | bool = True
 
-    #: Python format of the generated images. Must be either "PIL", "rgb" or "bgr".
-    #: If "rgb" or "bgr" is selected, images will be formatted as numpy array of shape: (height, width, channel).
-    #: By default, "PIL" is used.
-    image_format: Optional[ImageFormat] = None
+    #: Python format of the generated images. See :class:`ImageFormat` for the available options.
+    #:
+    #: By default: :attr:`ImageFormat.PIL` is used.
+    image_format: ImageFormat = ImageFormat.PIL
 
-    #: Preprocessing aglorithm applied on the fundus images.
-    #: Must be either "clahe", "median" or None (no preprocessing).
-    #: By default, no preprocessing is applied.
-    preprocessing: Optional[Preprocessing] = None
+    #: Preprocessing algorithm applied on the fundus images.
+    #: See :class:`Preprocessing` for the available options.
+    #:
+    #: By default: :attr:`Preprocessing.NONE` (no preprocessing) is applied.
+    preprocessing: Preprocessing = Preprocessing.NONE
 
-    #: Path to permanently cache the formatted dataset. If None (by default), then the cache is disabled.
-    cache: Optional[str] = None
+    #: Path to permanently cache the formatted dataset. If False (by default), then the cache is disabled.
+    cache: str | bool = False
 
-    def update(self, cfg: Optional[DatasetConfig] = None, **kwargs):
+    def update(self, cfg: Mapping[str, Any]):
         """
         Update the configuration with the given values.
 
-        :param cfg: Configuration to update with.
         :param kwargs: Configuration to update with.
 
         :meta private:
         """
-        if cfg is not None:
-            for k, v in cfg.__dict__.items():
-                if v is not None:
-                    setattr(self, k, v)
-        for k, v in kwargs.items():
+        for k, v in cfg.items():
             if v is not None:
                 setattr(self, k, v)
 

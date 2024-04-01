@@ -52,7 +52,7 @@ def load_train_set() -> Dataset:
     >>>     vessels = sample["vessels"]         # The vessels mask
     >>>     dr = sample["dr"]                   # The Diabetic Retinopathy grade
     """
-    return GLOBAL_LOADER.dataset("train")
+    return GLOBAL_LOADER.load_dataset("train")
 
 
 def load_test_set() -> Dataset:
@@ -65,7 +65,7 @@ def load_test_set() -> Dataset:
     Dataset
         The testing set.
     """
-    return GLOBAL_LOADER.dataset("test")
+    return GLOBAL_LOADER.load_dataset("test")
 
 
 def export_train_set(
@@ -91,7 +91,7 @@ def export_train_set(
     >>> maples_dr.configure(messidor_path="path/to/messidor.zip")
     >>> export_train_set("path/to/save", fields=["fundus", "red_lesions", "vessels"])
     """
-    return GLOBAL_LOADER.dataset("train").export(path, fields)
+    return GLOBAL_LOADER.load_dataset("train").export(path, fields)
 
 
 def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None):
@@ -115,4 +115,4 @@ def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageFi
     >>> maples_dr.configure(messidor_path="path/to/messidor.zip")
     >>> export_test_set("path/to/save", fields=["fundus", "red_lesions", "vessels"])
     """
-    return GLOBAL_LOADER.dataset("test").export(path, fields)
+    return GLOBAL_LOADER.load_dataset("test").export(path, fields)

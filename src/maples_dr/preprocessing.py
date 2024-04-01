@@ -8,13 +8,16 @@ from .config import Preprocessing
 def preprocess_fundus(fundus: np.ndarray, preprocessing: Preprocessing | str) -> np.ndarray:
     """Preprocess a fundus image.
 
-    Args:
-        fundus: The fundus image to preprocess.
-        preprocessing: The preprocessing algorithm to apply.
+    Parameters
+    ----------
+    fundus:
+        The fundus image to preprocess.
+    preprocessing:
+        The preprocessing algorithm to apply.
+        See :class:`maples_dr.config.Preprocessing` for the available options.
 
-            See :class:`maples_dr.config.Preprocessing` for the available options.
-
-    Returns:
+    Returns
+    -------
         The preprocessed fundus image.
 
     """
@@ -33,15 +36,22 @@ def clahe_preprocessing(fundus: np.ndarray, mask: Optional[np.ndarray] = None) -
 
     This algorithm was used to annotate MAPLES-DR anatomical and pathological structures.
 
-    Args:
-        fundus: The fundus image as a BGR numpy array (height, width, 3).
+    Parameters
+    ----------
+    fundus:
+        The fundus image as a BGR numpy array (height, width, 3).
 
-    Returns:
+    Returns
+    -------
         The preprocessed fundus image.
 
     """
     # Initial checks
-    assert len(fundus.shape) == 3 and fundus.shape[2] == 3, "Fundus image must be a 3-channel RGB image."
+    assert isinstance(fundus, np.ndarray), f"Fundus image must be a numpy array instead of {type(fundus)}."
+    assert fundus.dtype == np.uint8, f"Fundus image must be a 8-bit unsigned integer array instead of {fundus.dtype}."
+    assert (
+        len(fundus.shape) == 3 and fundus.shape[2] == 3
+    ), "Fundus image must be a 3-channel RGB image with shape (height, width, 3) instead of {fundus.shape}."
     mask = fundus_roi(fundus) if mask is None else mask
     assert mask.shape == fundus.shape[:2], "Mask must have the same shape as the fundus image."
 
@@ -75,13 +85,23 @@ def median_preprocessing(fundus: np.ndarray) -> np.ndarray:
 
     This algorithm is often used as a preprocessing step for automatic vessel segmentation.
 
-    Args:
-        fundus: The fundus image as a BGR numpy array (height, width, 3).
+    Parameters
+    ----------
+    fundus:
+        The fundus image as a BGR numpy array (height, width, 3).
 
-    Returns:
+    Returns
+    -------
         The preprocessed fundus image.
 
     """
+    assert isinstance(fundus, np.ndarray), f"Fundus image must be a numpy array instead of {type(fundus)}."
+    assert fundus.dtype == np.uint8, f"Fundus image must be a 8-bit unsigned integer array instead of {fundus.dtype}."
+    assert (
+        len(fundus.shape) == 3 and fundus.shape[2] == 3
+    ), "Fundus image must be a 3-channel RGB image with shape (height, width, 3) instead of {fundus.shape}."
+
+    # CV2 is required for this preprocessing
     import cv2
 
     k = np.max(fundus.shape) // 20 * 2 + 1
@@ -89,11 +109,22 @@ def median_preprocessing(fundus: np.ndarray) -> np.ndarray:
     return cv2.addWeighted(fundus, 4, bg, -4, 128)
 
 
-def fundus_roi(fundus: np.ndarray) -> np.ndarray:
+def fundus_roi(fundus: np.ndarray, blur_radius=5, morphological_clean=False, smoothing_radius=0) -> np.ndarray:
     """Compute the region of interest (ROI) of a fundus image.
 
-    Args:
-        fundus: The fundus image.
+    Parameters:
+    -----------
+    fundus:
+        The fundus image.
+    blur_radius:
+        The radius of the median blur filter.
+        By default: 5.
+    morphological_clean:
+        Whether to perform morphological cleaning. (small objects removal and filling of the holes not on the border)
+        By default: False.
+    smoothing_radius:
+        The radius of the Gaussian blur filter.
+        By default: 0.
 
     Returns:
         The ROI mask.
@@ -101,5 +132,36 @@ def fundus_roi(fundus: np.ndarray) -> np.ndarray:
     """
     import cv2
 
-    g = fundus[..., 1]
-    return cv2.medianBlur(g, 5) > 10
+    fundus = cv2.medianBlur(fundus[..., 1], blur_radius * 2 - 1)
+    mask = fundus > 10
+
+    if morphological_clean:
+        from skimage import measure as skmeasure
+        from skimage import morphology as skmorph
+
+        # Remove small objects
+        mask = skmorph.remove_small_objects(mask, 5000)
+
+        # Remove holes that are not on the border
+        MASK_BORDER = np.zeros_like(mask)
+        MASK_BORDER[0, :] = 1
+        MASK_BORDER[-1, :] = 1
+        MASK_BORDER[:, 0] = 1
+        MASK_BORDER[:, -1] = 1
+        labelled_holes = skmeasure.label(mask == 0)
+        for i in range(1, labelled_holes.max() + 1):
+            hole_mask = labelled_holes == i
+            if not np.any(MASK_BORDER & hole_mask):
+                mask[hole_mask] = 1
+
+    if smoothing_radius > 0:
+        mask = (
+            cv2.GaussianBlur(
+                mask.astype(np.uint8) * 255,
+                (smoothing_radius * 6 + 1, smoothing_radius * 6 + 1),
+                smoothing_radius,
+                borderType=cv2.BORDER_CONSTANT,
+            )
+            > 200
+        )
+    return mask
