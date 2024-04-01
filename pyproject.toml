@@ -15,7 +15,6 @@ dependencies = [
     'pandas',
     'pyyaml',
     'rich',
-    'jppype',
 ]
 
 [project.optional-dependencies]
@@ -26,6 +25,7 @@ examples = [
     'scikit-learn', 
     'scipy',
     'tqdm',
+    'jppype',
 ]
 dev = [
     'sphinx',
