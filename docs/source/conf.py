@@ -95,29 +95,28 @@ nbsphinx_prolog = """
 gettext_uuid = True
 gettext_compact = False
 
-language = "en"
 for t in tags:
     if t.startswith("locales_"):
         language = t[8:]
+        break
+else:
+    language = None
 
+if language is not None:
+    try:
+        html_context
+    except NameError:
+        html_context = dict()
+    html_context["display_lower_left"] = True
 
-############################
-# SETUP THE RTD LOWER-LEFT #
-############################
-try:
-    html_context
-except NameError:
-    html_context = dict()
-html_context["display_lower_left"] = True
+    # tell the theme which language to we're currently building
+    html_context["current_language"] = language
 
-# tell the theme which language to we're currently building
-html_context["current_language"] = language
+    # POPULATE LINKS TO OTHER LANGUAGES
+    html_context["languages"] = [("en", "../en/")]
 
-# POPULATE LINKS TO OTHER LANGUAGES
-html_context["languages"] = [("en", "../en/")]
-
-languages = [lang.name for lang in os.scandir("locales") if lang.is_dir()]
-for lang in languages:
-    html_context["languages"].append((lang, "../" + lang + "/"))
-
-print("languages: ", html_context["languages"])
+    languages = [lang.name for lang in os.scandir("locales") if lang.is_dir()]
+    for lang in languages:
+        html_context["languages"].append((lang, "../" + lang + "/"))
+else:
+    language = "en"
