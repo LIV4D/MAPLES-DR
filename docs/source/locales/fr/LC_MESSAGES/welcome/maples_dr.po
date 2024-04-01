@@ -1,0 +1,48 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, Gabriel Lepetit-Aimon
+# This file is distributed under the same license as the MAPLES-DR package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MAPLES-DR \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../welcome/maples_dr.rst:3 a3932a3bed1543118f421cd13219412e
+msgid "MAPLES-DR Dataset"
+msgstr ""
+
+#: ../../welcome/maples_dr.rst:5 939ce14bf70f451f9417278a89a357b6
+msgid ""
+"**MAPLES-DR** *(MESSIDOR Anatomical and Pathological Labels for "
+"Explainable Screening of Diabetic Retinopathy)* is a public dataset which"
+" provides annotations 198 fundus images from the public dataset MESSIDOR."
+" For each image, a team of canadian retinologist graded DR (Diabetic "
+"Retinopathy) and ME (Macular Eudema), and segmented 10 anatomical and "
+"pathological retinal structures. By releasing this dataset, we hope to "
+"help the community of AI researcher improve the explainability and "
+"reliability of AI models for DR screening."
+msgstr ""
+
+#: ../../welcome/maples_dr.rst:8 8eb0d3677a9f434c942fcfa82d810dc4
+msgid ""
+"The dataset is available for download at the following link: `MAPLES-DR "
+"<https://doi.org/10.6084/m9.figshare.24328660>`_ or directly through the "
+"python library: :doc:`maples_dr <quickstart>`."
+msgstr ""
+
+#: ../../welcome/maples_dr.rst:11 6b8f795979a545efafc5ad8766559d08
+msgid "MAPLES-DR Label Overview"
+msgstr ""
+

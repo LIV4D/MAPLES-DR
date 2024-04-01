@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, Gabriel Lepetit-Aimon
+# This file is distributed under the same license as the MAPLES-DR package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MAPLES-DR \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../examples/visualisation.ipynb:9 59ef6d2490564f5fab01b1cdbc81bb5a
+msgid "Visualisation Example"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:81 a3d3a9d053bf4bfa8241d704d285a9e8
+msgid "Configure Maples-DR"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:92 63160c8564dd47b287c9c024584d9710
+msgid "Configure the images resolution and format."
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:423 927b047e7fd64264b8af1c87cadc793f
+msgid "Load dataset"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:434 b8c3bacb7b704642850f300ddb7261a0
+msgid "Load the train set in memory."
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:455 6ca6502c78bd4bd0bb120f7e932bdc13
+msgid "Read the first sample"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:609 6f26cddcd50a46869b4d623543b9b877
+msgid "Visualise Anatomic biomarkers"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:621 7cdc4abf1ed2472a83f5a58006a007a8
+msgid "Vessels"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:652 ff9eaa2756034107a7add15800d59a74
+msgid "Optic Disk"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:683 5fb4684952ad4bcaba334507aba6f117
+msgid "Macula"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:725 3831130f8bbb4f458b68700624fc8bd1
+msgid "Visualise Pathological biomarkers"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:737 d5de987ea6f54194a0cb107e6ce6aa92
+msgid "Hemorrhages"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:768 8ac7bda3efa348299958511078c7ebc8
+msgid "Microaneurysms"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:799 b113b73aa2c648618af5c6e92a9b57a3
+msgid "Exudates"
+msgstr ""
+
+#: ../../examples/visualisation.ipynb:830 dc7f24d8313041f5b44212b5d8bb4504
+msgid "Cotton Wool Spots"
+msgstr ""
+

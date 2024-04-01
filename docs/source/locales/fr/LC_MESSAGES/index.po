@@ -1,0 +1,79 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, Gabriel Lepetit-Aimon
+# This file is distributed under the same license as the MAPLES-DR package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MAPLES-DR \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../index.rst:16
+msgid "Welcome"
+msgstr "Bienvenue"
+
+#: ../../index.rst:24
+msgid "Examples"
+msgstr "Exemples"
+
+#: ../../index.rst:31
+msgid "Configuration"
+msgstr "Configuration"
+
+#: ../../index.rst:31
+msgid "API Reference"
+msgstr "Définition de l'API"
+
+#: ../../index.rst:3 50990a82e8674c08b477036f40d4f563
+msgid "Welcome to MAPLES-DR's documentation!"
+msgstr ""
+
+#: ../../index.rst:5 0387210763ca480e9913be68e5672ac1
+msgid ""
+"**MAPLES-DR** *(MESSIDOR Anatomical and Pathological Labels for "
+"Explainable Screening of Diabetic Retinopathy)* is a public dataset which"
+" provides diagnoses for DR and ME as well as pixel-wise segmentation maps"
+" for 10 retinal structures of 198 fundus images from the public dataset "
+"MESSIDOR."
+msgstr ""
+
+#: ../../index.rst:8 2e4803714a9340c08384774f859a8364
+msgid ""
+"The `maples_dr <https://github.com/LIV4D/MAPLES-DR/>`_ package documented"
+" here provides a python library to ease the use of MAPLES-DR dataset, "
+"especially for machine learning applications."
+msgstr ""
+
+#: ../../index.rst:10 eda7da0dcd9545d3b48d3f3de744a89d
+msgid ""
+"If you use the MAPLES-DR dataset, please cite the following paper: "
+"``https://arxiv.org/abs/2402.04258``."
+msgstr ""
+
+#: ../../index.rst:44 ed62269beed44a37b781ebb382beaa4a
+msgid "Indices and tables"
+msgstr ""
+
+#: ../../index.rst:46 0ad6e4435b68482fa3b9427b5e092bca
+msgid ":ref:`genindex`"
+msgstr ""
+
+#: ../../index.rst:47 81cc20fe929d4e63b8022ea436893a1f
+msgid ":ref:`modindex`"
+msgstr ""
+
+#: ../../index.rst:48 181134d4d02d43758fa9b57ce60f8b7d
+msgid ":ref:`search`"
+msgstr ""
+

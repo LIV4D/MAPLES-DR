@@ -2,6 +2,7 @@
 #
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
+import os
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -61,7 +62,6 @@ html_theme_options = {
 }
 
 # -- Sphinx Prolog -----------------------------------------------------------
-
 rst_prolog = """
 .. # define a hard line break for HTML
 .. |br| raw:: html
@@ -89,3 +89,35 @@ nbsphinx_prolog = """
         }
     </style>
 """
+
+# -- Multi-language support --------------------------------------------------
+# https://docs.readthedocs.io/en/stable/guides/manage-translations-sphinx.html
+gettext_uuid = True
+gettext_compact = False
+
+language = "en"
+for t in tags:
+    if t.startswith("locales_"):
+        language = t[8:]
+
+
+############################
+# SETUP THE RTD LOWER-LEFT #
+############################
+try:
+    html_context
+except NameError:
+    html_context = dict()
+html_context["display_lower_left"] = True
+
+# tell the theme which language to we're currently building
+html_context["current_language"] = language
+
+# POPULATE LINKS TO OTHER LANGUAGES
+html_context["languages"] = [("en", "../en/")]
+
+languages = [lang.name for lang in os.scandir("locales") if lang.is_dir()]
+for lang in languages:
+    html_context["languages"].append((lang, "../" + lang + "/"))
+
+print("languages: ", html_context["languages"])

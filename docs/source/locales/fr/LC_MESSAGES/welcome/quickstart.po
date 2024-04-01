@@ -1,0 +1,123 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, Gabriel Lepetit-Aimon
+# This file is distributed under the same license as the MAPLES-DR package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MAPLES-DR \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../welcome/quickstart.rst:3 bc1013dea4fc4cc2ac74f9ce5b8e06e4
+msgid "Quick Start"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:5 101ca44b55e84062a5f5b11e49513767
+msgid ""
+"Thanks for using MAPLES-DR python package! This page will guide you "
+"through the installation process and simple usage of the package: loading"
+" the dataset in memory or saving it in a local folder."
+msgstr ""
+
+#: ../../welcome/quickstart.rst:8 7b0748a2027841f894492eff25b765df
+msgid "Installation"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:10 042d4840188349f89c907efb539db752
+msgid ""
+"The `maples-dr` package is avalaible on PyPI and can be installed using "
+"pip:"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:18 ac974269b5844fcd8a82974d80be924f
+msgid "Simple Usage"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:19 8223495dc05b449cbb82f4ff2b165def
+msgid ""
+"Once imported, MAPLES-DR train or test sets can be loaded in memory with "
+"a single line of Python code."
+msgstr ""
+
+#: ../../welcome/quickstart.rst:27 e799574298c3405fbcbe0af65242551b
+msgid ""
+"If necessary, the dataset archive is automatically downloaded from "
+"`Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extracted and"
+" cached locally. The data is then returned as a "
+":class:`maples_dr.Dataset` which is assimilable to a list of "
+"dictionnaries containing all MAPLES-DR labels. (For more information, see"
+" the :doc:`../api_reference/dataset` class documentation)."
+msgstr ""
+
+#: ../../welcome/quickstart.rst:29 d36d8414367b428885a0cec1bd8c5e20
+msgid ""
+"For example, the vessel map of the first sample of the train set can be "
+"accessed with:"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:37 1fac1d5cffa84803b40a21dd0f4551be
+msgid ""
+"Alternatively, if you'd rather rely on your own code for data loading, "
+"MAPLES-DR images can be saved in local folders:"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:44 a9b0460c226944a885c8edd022a41761
+msgid ""
+"As a result of these commands, all the labels of MAPLES-DR are saved as "
+"image files in their appropriate folders: ::"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:76 3f502b81019f4046930d0151db2ae9d1
+msgid "Configure the datasets behavior"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:78 68e1df461e5b4d3d80bb30dfac2cb451
+msgid ""
+"The dataset behavior can be tailored to ease the integration with your "
+"code or you specific application. For instance, you might need the images"
+" and biomarkers map to have a specific resolution, a specific format (PIL"
+" image or numpy array), a specific channel order (`rgb` or `bgr`)...  The"
+" default behavior of the library is configured with the "
+":func:`maples_dr.configure` method, and the configuration options are "
+"documented in details in :class:`maples_dr.config.DatasetConfig` "
+"documentation."
+msgstr ""
+
+#: ../../welcome/quickstart.rst:80 2ed8f7893d4340818c06f6f1da118b3f
+msgid ""
+"The following example shows how to configure the dataset to return images"
+" as numpy arrays (instead of PIL image) and with a resolution of 512x512 "
+"pixels:"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:88 7a14b0c61fa24fa98de5655cdc7a05eb
+msgid ""
+"The same method can be used to specify a local path from where the "
+"library should read MAPLES-DR data, instead of downloading them from "
+"Figshare."
+msgstr ""
+
+#: ../../welcome/quickstart.rst:97 9d6b469cd49c42b4b916516f23baad25
+msgid ""
+"Finally, a local path to MESSIDOR-2 dataset can also be specified with "
+"this function in order to include the fundus images from MESSIDOR along "
+"MAPLES-DR labels. (See :doc:`../welcome/messidor` for more details.)"
+msgstr ""
+
+#: ../../welcome/quickstart.rst:105 cc43060b838b45be8498780137546aa1
+msgid ""
+"For more information on all the methods presented in this quick start, "
+"please refer to :doc:`../api_reference/quick_api` documentation."
+msgstr ""
+

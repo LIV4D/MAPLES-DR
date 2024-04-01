@@ -1,0 +1,154 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, Gabriel Lepetit-Aimon
+# This file is distributed under the same license as the MAPLES-DR package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MAPLES-DR \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../api_reference/preprocessing.rst:3 9921d29b9040476aa167dca6875868df
+msgid "Fundus Preprocessing"
+msgstr ""
+
+#: ../../api_reference/preprocessing.rst:5 449ee623720d4045a7ba946cfd4ed7cc
+msgid ""
+"A few algorithm to enhance fundus images are included in "
+"`maples_dr.preprocessing`."
+msgstr ""
+
+#: ../../api_reference/preprocessing.rst:8 f13296be67d34b898d55180d78c66bed
+msgid ""
+"The preprocessing algorithms require the `opencv-python` package to be "
+"installed."
+msgstr ""
+
+#: cf6f1c7bb80e4d17a2b2d3eea6b5cf8a
+#: maples_dr.preprocessing.clahe_preprocessing:1 of
+msgid ""
+"Preprocessing based on Contrast Limited Adaptive Histogram Equalization "
+"(CLAHE)."
+msgstr ""
+
+#: 4c3e13d6dadc47acab2d0cb6013ae12a
+#: maples_dr.preprocessing.clahe_preprocessing:3 of
+msgid ""
+"This algorithm was used to annotate MAPLES-DR anatomical and pathological"
+" structures."
+msgstr ""
+
+#: 3e519482470844eeaaab1778cec08c6f 71d7767149614112a878720b568dce5d
+#: b314e88d845c44528fa8a5056399d8ef b9f8c2d539e94c26964f3383e25fcc97
+#: maples_dr.preprocessing.clahe_preprocessing
+#: maples_dr.preprocessing.fundus_roi
+#: maples_dr.preprocessing.median_preprocessing
+#: maples_dr.preprocessing.preprocess_fundus of
+msgid "Parameters"
+msgstr ""
+
+#: a8b352f1600a4772b6998e64c80fb6b8 b683eb7eb1854654866626e12d9c5afa
+#: maples_dr.preprocessing.clahe_preprocessing:5
+#: maples_dr.preprocessing.median_preprocessing:5 of
+msgid "The fundus image as a BGR numpy array (height, width, 3)."
+msgstr ""
+
+#: 067903d3e4ed49278f62cd8b30b6ac27 5f87b709c9844f5f97dd3d25a0702a15
+#: 73c715450b0f4c6fa89c3d73772fceb2 a04226eea81c452fb6a9990e42152106
+#: maples_dr.preprocessing.clahe_preprocessing
+#: maples_dr.preprocessing.fundus_roi
+#: maples_dr.preprocessing.median_preprocessing
+#: maples_dr.preprocessing.preprocess_fundus of
+msgid "Return type"
+msgstr ""
+
+#: 3b7767dec9a047e4a0b06e84af7bf223 maples_dr.preprocessing.fundus_roi:1 of
+msgid "Compute the region of interest (ROI) of a fundus image."
+msgstr ""
+
+#: 79f4ceda56614d06ad7e153b460a83fd maples_dr.preprocessing.fundus_roi:4 of
+msgid "Parameters:"
+msgstr ""
+
+#: 93f0631521d94884b7eca8af065520ac maples_dr.preprocessing.fundus_roi:5 of
+msgid "fundus:"
+msgstr ""
+
+#: 3a63dea8710b404490b77bbb6e61d2d2 maples_dr.preprocessing.fundus_roi:6 of
+msgid "The fundus image."
+msgstr ""
+
+#: 1fc976bf6ae040f5b1de8b1654ae5ee8 maples_dr.preprocessing.fundus_roi:8 of
+msgid "blur_radius:"
+msgstr ""
+
+#: b5fa64815c0b4696bf03203d3bbace6f maples_dr.preprocessing.fundus_roi:8 of
+msgid "The radius of the median blur filter. By default: 5."
+msgstr ""
+
+#: bf3102dfedd24b02afda7e8c877d6576 maples_dr.preprocessing.fundus_roi:11 of
+msgid "morphological_clean:"
+msgstr ""
+
+#: 08f92f037b354f66987e9a5be0d51ec6 maples_dr.preprocessing.fundus_roi:11 of
+msgid ""
+"Whether to perform morphological cleaning. (small objects removal and "
+"filling of the holes not on the border) By default: False."
+msgstr ""
+
+#: 2d26b44edd5f4a4fae5058a7c1e9b2b6 maples_dr.preprocessing.fundus_roi:15 of
+msgid "smoothing_radius:"
+msgstr ""
+
+#: 5eef01ab5bbe429a8d9b6d3de1afce40 maples_dr.preprocessing.fundus_roi:14 of
+msgid "The radius of the Gaussian blur filter. By default: 0."
+msgstr ""
+
+#: 90eb5d808a3e460087439ce40e927b70 maples_dr.preprocessing.fundus_roi of
+msgid "returns"
+msgstr ""
+
+#: 7dcf376599004cdab70ba9a2fda9e9f4 maples_dr.preprocessing.fundus_roi:17 of
+msgid "The ROI mask."
+msgstr ""
+
+#: 71aa759fd67049338f4dfcf42d7b1968
+#: maples_dr.preprocessing.median_preprocessing:1 of
+msgid "Preprocessing based on median filtering."
+msgstr ""
+
+#: c07305a24cae40c3a3c434e55ff7c5f1
+#: maples_dr.preprocessing.median_preprocessing:3 of
+msgid ""
+"This algorithm is often used as a preprocessing step for automatic vessel"
+" segmentation."
+msgstr ""
+
+#: ac17d58ce36c4cf5b6835fc93751eca1 maples_dr.preprocessing.preprocess_fundus:1
+#: of
+msgid "Preprocess a fundus image."
+msgstr ""
+
+#: 7e3e9f4d51394dd2a13ef356e612c2b3 maples_dr.preprocessing.preprocess_fundus:3
+#: of
+msgid "The fundus image to preprocess."
+msgstr ""
+
+#: ea0327349bd04923aa6854e3ab5c32bf maples_dr.preprocessing.preprocess_fundus:4
+#: of
+msgid ""
+"The preprocessing algorithm to apply. See "
+":class:`maples_dr.config.Preprocessing` for the available options."
+msgstr ""
+

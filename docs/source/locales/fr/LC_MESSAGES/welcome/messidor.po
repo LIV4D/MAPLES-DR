@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, Gabriel Lepetit-Aimon
+# This file is distributed under the same license as the MAPLES-DR package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MAPLES-DR \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../welcome/messidor.rst:3 523e8ea990cf4346b9f85cbf26bf2d62
+msgid "Using MESSIDOR fundus images"
+msgstr ""
+
+#: ../../welcome/messidor.rst:5 7fe01e2dcdb04bc0bf907e164105a747
+msgid ""
+"The fundus images corresponding to the diagnostic labels and biomarker "
+"segmentation maps of MAPLES-DR are the property of the MESSIDOR "
+"consortium and are therefore not included in the dataset. However they "
+"are freely available to any research team who requires them on the "
+"`Consortium's website <https://www.adcis.net/en/third-party/messidor/>`_."
+" This page will guide you through the setup of including MESSIDOR fundus "
+"images along MAPLES-DR labels."
+msgstr ""
+
+#: ../../welcome/messidor.rst:8 90ae79853733417caf9d45b15b951ea4
+msgid "Download MESSIDOR fundus images"
+msgstr ""
+
+#: ../../welcome/messidor.rst:10 48f462d889de4374a7de73e13a02b978
+msgid ""
+"The MESSIDOR fundus images can be downloaded from the `Consortium's "
+"website <https://www.adcis.net/en/third-party/messidor/>`_. The "
+"Consortium requires you to fill a form with your personal informations, "
+"agree to the terms of license agreement, and verify your email address "
+"before downloading the images."
+msgstr ""
+
+#: ../../welcome/messidor.rst:12 ad81b56ca65b4935930fffaf59ea17f9
+msgid ""
+"The download page contains links to files. The fundus images are divided "
+"into 12 archives named ``Base__ images (zip)``. Make sure to download all"
+" 12 archives (`Base11.zip`, `Base12.zip`, ...,  `Base34.zip`) to the same"
+" directory."
+msgstr ""
+
+#: ../../welcome/messidor.rst:16 736a4b9bdf5a41ceb6b8e3049fbf6066
+msgid "Configure MESSIDOR local path"
+msgstr ""
+
+#: ../../welcome/messidor.rst:18 d5719a5bac76450d972b33f298f94c34
+msgid ""
+"Once you have downloaded the images, you can include them in the dataset "
+"by calling:"
+msgstr ""
+
+#: ../../welcome/messidor.rst:26 ab71ca8989e2497cbba961e516dbde6c
+msgid ""
+"Upon calling :func:`maples_dr.load_train_set` or "
+":func:`maples_dr.load_test_set`, the 200 fundus images related to MAPLES-"
+"DR will be extracted, cropped and resized to the appropriate resolution, "
+"and finally included along the MAPLES-DR biomarkers under the name "
+"`fundus`."
+msgstr ""
+
+#: ../../welcome/messidor.rst:35 dc0d18a4df3449898e4f07290f072343
+msgid ""
+"Similarly, if you export the dataset to local files with "
+":func:`maples_dr.export_train_set` or  :func:`maples_dr.export_test_set`,"
+" a folder named `fundus` will be created in the same directory as the "
+"other biomarker, containing the fundus images."
+msgstr ""
+

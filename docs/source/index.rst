@@ -7,13 +7,6 @@ Welcome to MAPLES-DR's documentation!
 
 The `maples_dr <https://github.com/LIV4D/MAPLES-DR/>`_ package documented here provides a python library to ease the use of MAPLES-DR dataset, especially for machine learning applications.
 
-MAPLES-DR Dataset Content
-=========================
-
-.. figure:: _static/MAPLES-DR_Overview.svg
-   :width: 800px
-   :align: center
-
 If you use the MAPLES-DR dataset, please cite the following paper:
 ``https://arxiv.org/abs/2402.04258``.
 
@@ -24,6 +17,7 @@ If you use the MAPLES-DR dataset, please cite the following paper:
    :maxdepth: 1
    :caption: Welcome
 
+   welcome/maples_dr
    welcome/quickstart
    welcome/messidor
 

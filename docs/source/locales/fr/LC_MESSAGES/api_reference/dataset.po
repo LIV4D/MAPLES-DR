@@ -1,0 +1,560 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, Gabriel Lepetit-Aimon
+# This file is distributed under the same license as the MAPLES-DR package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MAPLES-DR \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../api_reference/dataset.rst:3 7503596ac2e74948b7cb09b1c8618573
+msgid "Datasets"
+msgstr ""
+
+#: 2d7c326291984220a3ed37639d3340c1 maples_dr.dataset.Dataset:1 of
+msgid "A set of samples from the MAPLES-DR dataset."
+msgstr ""
+
+#: e9d795a8f1a8454dab6191f72d74ca7b maples_dr.dataset.Dataset:3 of
+msgid ""
+"Datasets are a utility class to access and export samples from the "
+"MAPLES-DR dataset."
+msgstr ""
+
+#: d672e2c9c7214a0f8459a9cfb03f6e71 maples_dr.dataset.Dataset:5 of
+msgid ""
+"They are equivalent to a list of samples, each sample being stored as a "
+"dictionary­. See :obj:`Field` for the list of available fields."
+msgstr ""
+
+#: ef93442cca4746be8f0d90fd047f0bb5 maples_dr.dataset.Dataset.__getitem__:1 of
+msgid "Get a sample from the dataset."
+msgstr ""
+
+#: 5497a872daaa4a5f91f1b6dedf979a49 maples_dr.dataset.Dataset.__getitem__:3 of
+msgid ""
+"This method is a shortcut for :meth:`read_sample`. It returns the sample "
+"as a dictionary with the keys:"
+msgstr ""
+
+#: d53e8dfba6eb4914bd1949d30d623a45 maples_dr.dataset.Dataset.__getitem__:6 of
+msgid ""
+"``name`` containing the name of the image (e.g. "
+"\"20051116_44816_0400_PP\")."
+msgstr ""
+
+#: 0ce34665842c4fa6acb30272d9684925 maples_dr.dataset.Dataset.__getitem__:7 of
+msgid "every :class:`Field` except ``bright_lesions`` and ``red_lesions``."
+msgstr ""
+
+#: d3de0f47169241748f3090fe0ea07bf7 maples_dr.dataset.Dataset.__getitem__:9 of
+msgid ""
+"The image are formatted following the default configuration (see "
+":func:`maples_dr.configure`)."
+msgstr ""
+
+#: 006ee350dbd44dc3a7a049c0667f90f7 10e7f3b89a494c089a70c9e8aa8bd31d
+#: 1a12c80ce4f5427a8903123a17336a27 1b4fa2c5d5db4dc5b88e7db15956ceba
+#: 26d12a938b6f4a37b0447c93d636c50e 4c8bf1c8e6094ea3b0af2d2d58ed9007
+#: 7bc77685d0764f74a5014362ab2c1a3c 96e5f89769ac4c93a54085db5fcdaf46
+#: 9ad59444330a4a99b70ffea31c2cad2e caad4acc2d51458cb203c84221e0076e
+#: d199edf6c1034b21a9e0beba3ae99698 ff29d15f7dcf48e0b3dbfbfa6766762f
+#: maples_dr.dataset.BiomarkerField.parse maples_dr.dataset.Dataset.__getitem__
+#: maples_dr.dataset.Dataset.diagnosis maples_dr.dataset.Dataset.export
+#: maples_dr.dataset.Dataset.get_sample_infos
+#: maples_dr.dataset.Dataset.preprocess_fundus
+#: maples_dr.dataset.Dataset.read_biomarkers
+#: maples_dr.dataset.Dataset.read_fundus maples_dr.dataset.Dataset.read_sample
+#: maples_dr.dataset.Dataset.subset maples_dr.dataset.DiagnosisField.parse
+#: maples_dr.dataset.FundusField.parse of
+msgid "Parameters"
+msgstr ""
+
+#: 14d324a60c2d41fe9850f2f92d1e30eb maples_dr.dataset.Dataset.__getitem__:11 of
+msgid ""
+"Index of the sample. Can be an integer or the name of the sample (e.g. "
+"\"20051116_44816_0400_PP\")."
+msgstr ""
+
+#: 08645730402e40e5b1e2acb6a97db2d2 1c7050330ca04b608ceac81a026549e4
+#: 3518fb7796844ac097725eb89383f468 9899d85ab57b4741927bf8202328542e
+#: c57789e0ccd749cc895f0ce7cd682ad1 cb17a94b274c4071b0d0247d47b1f84a
+#: df58877089d84df3832d93879e261072 e38983ed8916466abec4a9c3259bcc3e
+#: maples_dr.dataset.BiomarkerField.parse maples_dr.dataset.Dataset.__getitem__
+#: maples_dr.dataset.Dataset.annotations_infos
+#: maples_dr.dataset.Dataset.diagnosis
+#: maples_dr.dataset.Dataset.get_sample_infos maples_dr.dataset.Dataset.subset
+#: maples_dr.dataset.DiagnosisField.parse maples_dr.dataset.FundusField.parse
+#: of
+msgid "Returns"
+msgstr ""
+
+#: c140550359444cc2bc5fa63cca20470c maples_dr.dataset.Dataset.__getitem__:14 of
+msgid "The sample as a dictionary."
+msgstr ""
+
+#: 1889e7d1d1584007820785885a8dacdd 40857c91a1294347b3da15c3721a9a36
+#: 6d1d892e9afb460ea42aaf1e39b0ca3e 896f62750c394588be16884ed9ef99bb
+#: a9d580570f4c4e79b4e38df2fa05cc0e afbaeb734bd046fba5c89b3dda85df93
+#: db2c17eec0e34a0a9223385da0c382e4 dfe726d37f394f38a321a2ff4f8ecec7
+#: e8052f1b908442b9b0d6aeacf26832e3 maples_dr.dataset.BiomarkerField.parse
+#: maples_dr.dataset.Dataset.__getitem__
+#: maples_dr.dataset.Dataset.annotations_infos
+#: maples_dr.dataset.Dataset.diagnosis
+#: maples_dr.dataset.Dataset.get_sample_infos
+#: maples_dr.dataset.Dataset.read_sample maples_dr.dataset.Dataset.subset
+#: maples_dr.dataset.DiagnosisField.parse maples_dr.dataset.FundusField.parse
+#: of
+msgid "Return type"
+msgstr ""
+
+#: c48bd152e1c8455d97a188bc44aed09f
+#: maples_dr.dataset.Dataset.annotations_infos:1 of
+msgid "Get the annotations informations of the dataset."
+msgstr ""
+
+#: c2c98b5d06e3433dbcd3a5c2a1493bcd
+#: maples_dr.dataset.Dataset.annotations_infos:3 of
+msgid "The annotations informations of the dataset."
+msgstr ""
+
+#: 089bd6dc1b5f42f8b26a912d4e1dde61 maples_dr.Dataset.data:1 of
+msgid "The data of the dataset."
+msgstr ""
+
+#: 6ce2719ae2d54cd49c83fba7739766cb maples_dr.Dataset.data:11 of
+msgid ""
+"A dataframe containing the informations of each sample. It has the "
+"following columns:"
+msgstr ""
+
+#: 1be5cc2b4bad4292a27a60350c3c3212 maples_dr.Dataset.data:4 of
+msgid "index: the name of the sample."
+msgstr ""
+
+#: dad73be95eb14a39bfff70e316ccfd16 maples_dr.Dataset.data:5 of
+msgid "``fundus``: the path to the fundus image."
+msgstr ""
+
+#: d279053774a740a2996adeb389a78f19 maples_dr.Dataset.data:6 of
+msgid ""
+"[:class:`BiomarkerField`] (accept aggregated): the path to the biomarkers"
+" masks."
+msgstr ""
+
+#: fc1ede0e6750486daa2e497e196bf3cf maples_dr.Dataset.data:7 of
+msgid ""
+"[:class:`BiomarkersAnnotationTasks` ``_`` "
+":class:`BiomarkersAnnotationInfos`]: the additional annotations "
+"informations."
+msgstr ""
+
+#: b22948328ad34705a878d811b967dc14 maples_dr.Dataset.data:8 of
+msgid "``dr``: the consensus DR grade."
+msgstr ""
+
+#: 5056add615934f8bbbae14cd531d565b maples_dr.Dataset.data:9 of
+msgid "``me``: the consensus ME grade."
+msgstr ""
+
+#: 3a48197336e04fd2843a40cefb1b6060 maples_dr.Dataset.data:10 of
+msgid "``dr_{A|B|C}``: the DR grade given by one retinologist."
+msgstr ""
+
+#: 1a78f33189ff471e9a58735dd8690cae maples_dr.Dataset.data:11 of
+msgid "``me_{A|B|C}``: the ME grade given by one retinologist."
+msgstr ""
+
+#: 4a5f41c9af7d40c7b9316e411a74cd13 maples_dr.Dataset.data:12 of
+msgid ""
+"``dr_{A|B|C}_comment``: comments from the retinologist when grading the "
+"DR diagnosis."
+msgstr ""
+
+#: 1e691c273d0f4df0b6290e9b4160322e maples_dr.dataset.Dataset.diagnosis:1 of
+msgid "Get the diagnosis of the dataset."
+msgstr ""
+
+#: d0eff2bb815449de93c1d73fba8454da maples_dr.dataset.Dataset.diagnosis:3 of
+msgid ""
+"The pathology to get the diagnosis for. If None, get the diagnosis for "
+"both pathologies."
+msgstr ""
+
+#: 9385f59e6b2e4715ad3ef3e278e77f8e maples_dr.dataset.Dataset.diagnosis:6 of
+msgid "The diagnosis of the dataset."
+msgstr ""
+
+#: f4611109716048b7bad78fbd17f48176 maples_dr.dataset.Dataset.export:1 of
+msgid "Export the dataset to a folder."
+msgstr ""
+
+#: 7afd6dd877054c1caa8c013b34944fd3 maples_dr.dataset.Dataset.export:3 of
+msgid "Path of the folder where to export the dataset."
+msgstr ""
+
+#: 44a43ca516a94686bc1ed301dfcc7d86 maples_dr.dataset.Dataset.export:4 of
+msgid ""
+"Fields to export. If None, export the whole dataset. If ``fields`` is a "
+"string or list, export only the given fields. If ``fields`` is a "
+"dictionary, export the fields given by the keys and rename their folder "
+"to their corresponding dictionnary values."
+msgstr ""
+
+#: 98e67fbeeeb14be1be7cbf521ae32cf5 maples_dr.dataset.Dataset.export:8 of
+msgid "If True, optimize the images when exporting them."
+msgstr ""
+
+#: 76a7d7a9576a44a6bbfea54bf818fe53
+#: maples_dr.dataset.Dataset.get_sample_infos:1 of
+msgid "Get the informations of a sample."
+msgstr ""
+
+#: 5eb6b2895096489ca0b377e09b8cd23a
+#: maples_dr.dataset.Dataset.get_sample_infos:3 of
+msgid ""
+"Index of the sample. Can be an integer or the name of the sample (i.e. "
+"\"20051116_44816_0400_PP\")."
+msgstr ""
+
+#: 4bb75d90a0334185bce164f969cf386c
+#: maples_dr.dataset.Dataset.get_sample_infos:6 of
+msgid "The informations of the sample."
+msgstr ""
+
+#: abe555ea37ed44d7a22cfdd4c0df0778 maples_dr.dataset.Dataset.get_sample_infos
+#: of
+msgid "Raises"
+msgstr ""
+
+#: 759561e7837f4d718abaf5c0bbd494cf
+#: maples_dr.dataset.Dataset.get_sample_infos:9 of
+msgid "If the index is out of range."
+msgstr ""
+
+#: 0c93901c237b4e95a0ebe97d1cd44692
+#: maples_dr.dataset.Dataset.get_sample_infos:10 of
+msgid "If the image name is unknown."
+msgstr ""
+
+#: 8026f6d8928d49c5aa0c5e386a317240
+#: maples_dr.dataset.Dataset.preprocess_fundus:1 of
+msgid "Preprocess a fundus image."
+msgstr ""
+
+#: 03d3698618964d7b98cbbcb4e5e8ef6b
+#: maples_dr.dataset.Dataset.preprocess_fundus:3 of
+msgid "Image to preprocess."
+msgstr ""
+
+#: 66f631d4e6b749e39dd6f40edd299b22
+#: maples_dr.dataset.Dataset.preprocess_fundus:4 of
+msgid ""
+"Name of the preprocessing to apply. If None, use the preprocessing "
+"defined in the configuration."
+msgstr ""
+
+#: 8699b568d93f45608a3af9c3e30d65f9 maples_dr.dataset.Dataset.read_biomarkers:1
+#: of
+msgid "Read biomarkers from the dataset."
+msgstr ""
+
+#: e9574b406d2f47188c0256bb23236800 maples_dr.dataset.Dataset.read_fundus:1 of
+msgid "Read a fundus image from the dataset."
+msgstr ""
+
+#: 82b07b383d2e4b53918d0a213bba46cd maples_dr.dataset.Dataset.read_fundus:3 of
+msgid ""
+"This requires the path to the MESSIDOR dataset to be configured. The "
+"image is cropped and resized to the size defined in the configuration "
+"(default: 1500x1500)."
+msgstr ""
+
+#: afdb4b83d9f04d758cfdecc5b6ca5b0e maples_dr.dataset.Dataset.read_fundus:6 of
+msgid "Index of the image. Can be an integer or the name of the image."
+msgstr ""
+
+#: f69f06359c174a67afdbcbdfaf359712 maples_dr.dataset.Dataset.read_fundus:7 of
+msgid ""
+"If True, the image is preprocessed with the preprocessing defined in the "
+"configuration."
+msgstr ""
+
+#: dcdf6e9961f54b71b51e2f2836ab648e maples_dr.dataset.Dataset.read_fundus:8 of
+msgid ""
+"Format of the image to return. If None, use the format defined in the "
+"configuration."
+msgstr ""
+
+#: 817a6e10841c4d22a9ecb756d7a5b0fa maples_dr.dataset.Dataset.read_sample:1 of
+msgid "Read a sample from the dataset."
+msgstr ""
+
+#: 081c9f80e487467596c1d4967d1334a8 maples_dr.dataset.Dataset.read_sample:3 of
+msgid "Index of the sample."
+msgstr ""
+
+#: 64bf47baf8f246fcbc34c2f863ad10e1 maples_dr.dataset.Dataset.read_sample:4 of
+msgid "Name of the field to read. If None, read the whole sample."
+msgstr ""
+
+#: 9a37f11da94647feb06f0652ed35364c maples_dr.dataset.Dataset.subset:1 of
+msgid "Get a subset of the dataset."
+msgstr ""
+
+#: 28822a4c70be40dda59f094735bcc725 maples_dr.dataset.Dataset.subset:3 of
+msgid "The index of the first sample of the subset."
+msgstr ""
+
+#: d57b8785018d4fdf85b8e18bac10eb32 maples_dr.dataset.Dataset.subset:5 of
+msgid "The index of the last sample of the subset."
+msgstr ""
+
+#: 72c4df6cc24e432cbafa165fcf0d0156 maples_dr.dataset.Dataset.subset:8 of
+msgid "The subset of the dataset."
+msgstr ""
+
+#: ../../api_reference/dataset.rst:15 0cbfaab0e36747f0996806fc6bfaf24d
+msgid "Datasets Fields"
+msgstr ""
+
+#: 576cd2a1fae142d4832e92eb969d888d of typing.Union:1
+msgid "The name of a valid field in MAPLES-DR."
+msgstr ""
+
+#: 2762b8102ecd411782bf6b28e007f60f of typing.Union:3
+msgid ""
+"This type alias is a union of :class:`DiagnosisField`, "
+":class:`BiomarkerField`, and :class:`FundusField`."
+msgstr ""
+
+#: a402e7738c4e47388d5afda88717c369 maples_dr.dataset.DiagnosisField:1 of
+msgid "String Enum of MAPLES-DR diagnosis fields."
+msgstr ""
+
+#: ../../docstring efe742700a7442b5948d0808f0280463
+#: maples_dr.dataset.DiagnosisField.DR:1 of
+msgid "The Diabetic Retinopathy grade."
+msgstr ""
+
+#: ../../docstring c124591258a24fd18abd86f000917886
+#: maples_dr.dataset.DiagnosisField.DR:3 of
+msgid "``R0`` : No DR."
+msgstr ""
+
+#: ../../docstring 000cb1e97a3a4dadb5be7fce7f25e90b
+#: maples_dr.dataset.DiagnosisField.DR:4 of
+msgid "``R1`` : Mild NPDR."
+msgstr ""
+
+#: ../../docstring e39a2e6d6b024ecd964724200655c133
+#: maples_dr.dataset.DiagnosisField.DR:5 of
+msgid "``R2`` : Moderate NPDR."
+msgstr ""
+
+#: ../../docstring 51892a4b9a0d4adb968bdf9adceafb9e
+#: maples_dr.dataset.DiagnosisField.DR:6 of
+msgid "``R3`` : Severe NPDR."
+msgstr ""
+
+#: ../../docstring 84014232092643ba954d2ec7e6fd19a3
+#: maples_dr.dataset.DiagnosisField.DR:7 of
+msgid "``R4A`` : PDR."
+msgstr ""
+
+#: ../../docstring eb7b97e8549447ffad5cb58e4c69d28f
+#: maples_dr.dataset.DiagnosisField.ME:1 of
+msgid "The Macular Edema grade."
+msgstr ""
+
+#: ../../docstring f54fb5d95884468fb74871835aff7c92
+#: maples_dr.dataset.DiagnosisField.ME:3 of
+msgid "``M0`` : No ME."
+msgstr ""
+
+#: ../../docstring 2f3e5d57eaba434886cf2c3266589329
+#: maples_dr.dataset.DiagnosisField.ME:4 of
+msgid "``M1`` : ME without center involvement."
+msgstr ""
+
+#: ../../docstring f5ebb9a6450b4b7184b711f073ea890b
+#: maples_dr.dataset.DiagnosisField.ME:5 of
+msgid "``M2`` : ME with center involvement."
+msgstr ""
+
+#: cf9c6d1bfcdb433d83994eff35a56c69 d1f8c272d0e94f69b576a69b3adc72f4
+#: maples_dr.dataset.DiagnosisField.parse:1
+#: maples_dr.dataset.FundusField.parse:1 of
+msgid "Parse a field from a string."
+msgstr ""
+
+#: 90f452a92f134847a3c103cb28e744ee d46144c4c7de4c908b1e177a59a3922b
+#: maples_dr.dataset.DiagnosisField.parse:3
+#: maples_dr.dataset.FundusField.parse:3 of
+msgid "The name of the field."
+msgstr ""
+
+#: a233fb3938084ccba2872e2a81b951ff e96cf675ae8d4383aa67ff0ed2b141e1
+#: maples_dr.dataset.DiagnosisField.parse:5
+#: maples_dr.dataset.FundusField.parse:5 of
+msgid "The corresponding field."
+msgstr ""
+
+#: ad94a928ce0f421997ec7ca5c023bf43 of typing.Union:1
+msgid "The name of a valid image field in MAPLES-DR."
+msgstr ""
+
+#: 9d03e864d3da4e25af4e02ac14f9a72e of typing.Union:3
+msgid ""
+"This type alias is a union of :class:`BiomarkerField` and "
+":class:`FundusField`."
+msgstr ""
+
+#: 32b70db57fa041e987433544e935688f maples_dr.dataset.FundusField:1 of
+msgid "String Enum of MAPLES-DR fields associated with fundus images."
+msgstr ""
+
+#: 584beef0a6f144a1aa977d46107f0b6d maples_dr.dataset.FundusField:4 of
+msgid ""
+"Path to MESSIDOR fundus images **must** be configured to use these "
+"fields! See :func:`maples_dr.configure` for more informations."
+msgstr ""
+
+#: ../../docstring 2efd9762583f41afad82688c7bd46158
+#: maples_dr.dataset.FundusField.FUNDUS:1 of
+msgid ""
+"The preprocessed fundus image (or the original fundus image if no "
+"preprocessing is applied)."
+msgstr ""
+
+#: ../../docstring a0610129094e403995707ac834969725
+#: maples_dr.dataset.FundusField.RAW_FUNDUS:1 of
+msgid ""
+"The raw fundus image. (If no preprocessing is applied, this is the same "
+"as :attr:`FundusField.FUNDUS`.)"
+msgstr ""
+
+#: ../../docstring 97fd4e5cb28c4826a45fb039f463fb73
+#: maples_dr.dataset.FundusField.MASK:1 of
+msgid "The mask of the fundus image."
+msgstr ""
+
+#: 4b2f7053177646d7b446254e91bee427 maples_dr.dataset.BiomarkerField:1 of
+msgid "String Enum of MAPLES-DR biomarkers fields."
+msgstr ""
+
+#: ../../docstring 047b3644f40644beb97bca64e952926a
+#: maples_dr.dataset.BiomarkerField.OPTIC_CUP:1 of
+msgid "The optic cup mask."
+msgstr ""
+
+#: ../../docstring ed1bfba2be5c410a84bbeff136f33728
+#: maples_dr.dataset.BiomarkerField.OPTIC_DISC:1 of
+msgid "The optic disc mask."
+msgstr ""
+
+#: ../../docstring 747dfc816e1543c99c6d3f0aaf34466f
+#: maples_dr.dataset.BiomarkerField.MACULA:1 of
+msgid "The macula mask."
+msgstr ""
+
+#: ../../docstring 8fc8a429ef87431aa23fd73c369bf58e
+#: maples_dr.dataset.BiomarkerField.VESSELS:1 of
+msgid "The vessels mask."
+msgstr ""
+
+#: ../../docstring 330e78d97d1041abb86cf181baa9e536
+#: maples_dr.dataset.BiomarkerField.BRIGHT_LESIONS:1 of
+msgid ""
+"Union of all the bright lesions masks (CWS, exudates, drusens and "
+"uncertain)."
+msgstr ""
+
+#: ../../docstring 44f99084a56543af96c2204ea81a8e36
+#: maples_dr.dataset.BiomarkerField.COTTON_WOOL_SPOTS:1 of
+msgid "The cotton wool spots mask."
+msgstr ""
+
+#: ../../docstring 5100d4467d9547fd9e582c951ba82033
+#: maples_dr.dataset.BiomarkerField.DRUSENS:1 of
+msgid "The drusens mask."
+msgstr ""
+
+#: ../../docstring a3180b79c099424c8a06de3422a701b5
+#: maples_dr.dataset.BiomarkerField.EXUDATES:1 of
+msgid "The exudates mask."
+msgstr ""
+
+#: ../../docstring ce988fe79d944ab085ad3ba8a66e7528
+#: maples_dr.dataset.BiomarkerField.BRIGHT_UNCERTAINS:1 of
+msgid ""
+"The mask of bright lesions with uncertain type (either CWS, exudates or "
+"drusens)."
+msgstr ""
+
+#: ../../docstring b4f25707100a4096807778d176485d74
+#: maples_dr.dataset.BiomarkerField.RED_LESIONS:1 of
+msgid ""
+"Union of all the red lesions masks (microaneuryms, hemorrhages and "
+"uncertain)."
+msgstr ""
+
+#: ../../docstring 98f598be1f954e3f8268ec0597ff6e67
+#: maples_dr.dataset.BiomarkerField.HEMORRHAGES:1 of
+msgid "The hemorrhages mask."
+msgstr ""
+
+#: ../../docstring 0cf01ab250c44226b815b9ccc6aa95e6
+#: maples_dr.dataset.BiomarkerField.MICROANEURYSMS:1 of
+msgid "The microaneurysms mask."
+msgstr ""
+
+#: ../../docstring b1b5a38de7914e06b5cad0c06a6261e3
+#: maples_dr.dataset.BiomarkerField.NEOVASCULARIZATION:1 of
+msgid "The neovascularization mask."
+msgstr ""
+
+#: ../../docstring fbc63d9f1d1b48f2b3873da2f2f0e2ea
+#: maples_dr.dataset.BiomarkerField.RED_UNCERTAINS:1 of
+msgid ""
+"The mask of red lesions with uncertain type (either microaneuryms or "
+"hemorrhages)."
+msgstr ""
+
+#: a9f2cde781784fc28a102887bc0c51b6 maples_dr.dataset.BiomarkerField.parse:1 of
+msgid "Parse a biomarker from a string."
+msgstr ""
+
+#: 7ef04d379e89492d89458009292fc98a maples_dr.dataset.BiomarkerField.parse:3 of
+msgid ""
+"This method accept case insensitive biomarker names and the following "
+"aliases: - ``red`` for :attr:`BiomarkerField.RED_LESIONS`; - ``bright`` "
+"for :attr:`BiomarkerField.BRIGHT_LESIONS`; - ``cup`` for "
+":attr:`BiomarkerField.OPTIC_CUP`; - ``opticDisk``, ``disc`` or ``disk``  "
+"for :attr:`BiomarkerField.OPTIC_DISC`; - ``cws`` for "
+":attr:`BiomarkerField.COTTON_WOOL_SPOTS`; - ``neovessels`` for "
+":attr:`BiomarkerField.NEOVASCULARIZATION`."
+msgstr ""
+
+#: f8cbd3b74b934a739045a3c6372c51a3 maples_dr.dataset.BiomarkerField.parse:11
+#: of
+msgid "The name of the biomarker."
+msgstr ""
+
+#: dcccef43a0b144be81d2e7117cc1c607 maples_dr.dataset.BiomarkerField.parse:13
+#: of
+msgid "The corresponding biomarker field."
+msgstr ""
+

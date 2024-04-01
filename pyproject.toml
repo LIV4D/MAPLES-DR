@@ -31,6 +31,7 @@ dev = [
     'sphinx',
     'sphinx-rtd-theme',
     'nbsphinx',
+    'sphinx-intl',
     'ipython',
     'pytest',
 ]
