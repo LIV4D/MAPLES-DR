@@ -95,6 +95,11 @@ nbsphinx_prolog = """
 gettext_uuid = True
 gettext_compact = False
 
+try:
+    html_context
+except NameError:
+    html_context = dict()
+
 for t in tags:
     if t.startswith("locales_"):
         language = t[8:]
@@ -103,12 +108,6 @@ else:
     language = None
 
 if language is not None:
-    try:
-        html_context
-    except NameError:
-        html_context = dict()
-    html_context["display_lower_left"] = True
-
     # tell the theme which language to we're currently building
     html_context["current_language"] = language
 
@@ -120,3 +119,4 @@ if language is not None:
         html_context["languages"].append((lang, "../" + lang + "/"))
 else:
     language = "en"
+    html_context["languages"] = []

@@ -21,61 +21,61 @@ msgstr ""
 
 #: ../../examples/visualisation.ipynb:9 59ef6d2490564f5fab01b1cdbc81bb5a
 msgid "Visualisation Example"
-msgstr ""
+msgstr "Exemples de Visualisation"
 
 #: ../../examples/visualisation.ipynb:81 a3d3a9d053bf4bfa8241d704d285a9e8
 msgid "Configure Maples-DR"
-msgstr ""
+msgstr "Configuration de MAPLES-DR"
 
 #: ../../examples/visualisation.ipynb:92 63160c8564dd47b287c9c024584d9710
 msgid "Configure the images resolution and format."
-msgstr ""
+msgstr "Configuration de la résolution et du format des images."
 
 #: ../../examples/visualisation.ipynb:423 927b047e7fd64264b8af1c87cadc793f
 msgid "Load dataset"
-msgstr ""
+msgstr "Chargement du dataset"
 
 #: ../../examples/visualisation.ipynb:434 b8c3bacb7b704642850f300ddb7261a0
 msgid "Load the train set in memory."
-msgstr ""
+msgstr "Chargement en mémoire de l'ensemble d'entrainement"
 
 #: ../../examples/visualisation.ipynb:455 6ca6502c78bd4bd0bb120f7e932bdc13
 msgid "Read the first sample"
-msgstr ""
+msgstr "Lecture du premier échantillon"
 
 #: ../../examples/visualisation.ipynb:609 6f26cddcd50a46869b4d623543b9b877
 msgid "Visualise Anatomic biomarkers"
-msgstr ""
+msgstr "Visualisation des biomarqueurs anatomiques"
 
 #: ../../examples/visualisation.ipynb:621 7cdc4abf1ed2472a83f5a58006a007a8
 msgid "Vessels"
-msgstr ""
+msgstr "Vaisseaux"
 
 #: ../../examples/visualisation.ipynb:652 ff9eaa2756034107a7add15800d59a74
 msgid "Optic Disk"
-msgstr ""
+msgstr "Disque Optique"
 
 #: ../../examples/visualisation.ipynb:683 5fb4684952ad4bcaba334507aba6f117
 msgid "Macula"
-msgstr ""
+msgstr "Macula"
 
 #: ../../examples/visualisation.ipynb:725 3831130f8bbb4f458b68700624fc8bd1
 msgid "Visualise Pathological biomarkers"
-msgstr ""
+msgstr "Visualisation des biomarqueurs pathologiques"
 
 #: ../../examples/visualisation.ipynb:737 d5de987ea6f54194a0cb107e6ce6aa92
 msgid "Hemorrhages"
-msgstr ""
+msgstr "Hémorragies"
 
 #: ../../examples/visualisation.ipynb:768 8ac7bda3efa348299958511078c7ebc8
 msgid "Microaneurysms"
-msgstr ""
+msgstr "Micro-anévrismes"
 
 #: ../../examples/visualisation.ipynb:799 b113b73aa2c648618af5c6e92a9b57a3
 msgid "Exudates"
-msgstr ""
+msgstr "Exudats"
 
 #: ../../examples/visualisation.ipynb:830 dc7f24d8313041f5b44212b5d8bb4504
 msgid "Cotton Wool Spots"
-msgstr ""
+msgstr "Nodules cottoneuses"
 

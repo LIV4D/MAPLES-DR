@@ -6,11 +6,11 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: MAPLES-DR \n"
+"Project-Id-Version:  MAPLES-DR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-01 15:21-0400\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2024-04-02 13:51-0400\n"
+"PO-Revision-Date: 2024-04-02 13:44-0400\n"
+"Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: ../../welcome/maples_dr.rst:3 a3932a3bed1543118f421cd13219412e
+#: ../../source/welcome/maples_dr.rst:3 44ca4b911a794801beafadeff96af08b
 msgid "MAPLES-DR Dataset"
-msgstr ""
+msgstr "Jeu de données MAPLES-DR"
 
-#: ../../welcome/maples_dr.rst:5 939ce14bf70f451f9417278a89a357b6
+#: ../../source/welcome/maples_dr.rst:5 f1d0a0f33864469a878befd1002656a6
 msgid ""
 "**MAPLES-DR** *(MESSIDOR Anatomical and Pathological Labels for "
 "Explainable Screening of Diabetic Retinopathy)* is a public dataset which"
@@ -34,15 +34,42 @@ msgid ""
 "help the community of AI researcher improve the explainability and "
 "reliability of AI models for DR screening."
 msgstr ""
+"**MAPLES-DR** (*MESSIDOR Anatomical and Pathological Labels for "
+"Explainable Screening of Diabetic Retinopathy*, annotations anatomiques "
+"et pathologique de MESSIDOR pour le dépistage explicable de la "
+"rétinopathie diabétique) est un jeu de données publique contenant des "
+"annotations pour 198 images de fond d'œil issue du jeu de données "
+"publique MESSIDOR. Pour chaque image, une équipe de rétinologue canadiens"
+" ont évalué le grade de DR (Rétinopathie Diabétique) et de ME (Eudème "
+"Maculaire), et ont aussi segmenté 10 structures anatomiques et "
+"pathologiques de la rétine. En publiant ce jeu de données, nous espérons "
+"assister la communauté scientifique dans sa quête d'algorithme explicable"
+" et fiable pour le dépistage de la DR."
 
-#: ../../welcome/maples_dr.rst:8 8eb0d3677a9f434c942fcfa82d810dc4
+#: ../../source/welcome/maples_dr.rst:9 ed29c8e562664a71b8d81c01cc741f00
+msgid "Usage"
+msgstr "Utilisation"
+
+#: ../../source/welcome/maples_dr.rst:11 1919f008c68e4ba489f2932922efee4d
 msgid ""
 "The dataset is available for download at the following link: `MAPLES-DR "
 "<https://doi.org/10.6084/m9.figshare.24328660>`_ or directly through the "
 "python library: :doc:`maples_dr <quickstart>`."
 msgstr ""
+"Le jeu de données est disponible au téléchargement avec le lien suivant: "
+"`MAPLES-DR <https://doi.org/10.6084/m9.figshare.24328660>`_ ou "
+"directement grâce au paquet python : :doc:`maples_dr <quickstart>`."
 
-#: ../../welcome/maples_dr.rst:11 6b8f795979a545efafc5ad8766559d08
-msgid "MAPLES-DR Label Overview"
+#: ../../source/welcome/maples_dr.rst:13 7d80b5d88a744459bb6a249a21cdc3c0
+#, fuzzy
+msgid ""
+"If you use this dataset in academic works, please cite the following "
+"paper::"
 msgstr ""
+"Si vous utilisez ce papier dans le cadre de travaux académiques, nous "
+"vous prions de citer ::"
+
+#: ../../source/welcome/maples_dr.rst:25 bb6c7331bb254cdea41cb5ae6ba511f5
+msgid "MAPLES-DR Label Overview"
+msgstr "Vue d'ensemble des annotations de MAPLES-DR"
 
