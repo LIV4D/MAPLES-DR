@@ -65,14 +65,14 @@ class DatasetLoader:
             preprocessing="none",
             cache=None,
         )
-        self.maples_dr_infos: Optional[dict] = None
+        self.dataset_record: Optional[dict] = None
         self._maples_dr_path: Optional[Path] = None
         self._diagnosis: Optional[pd.DataFrame] = None
         self._annotations_infos: Optional[Dict[str, pd.DataFrame]] = None
         self._is_maples_dr_folder_temporary: bool = False
 
         self._messidor_paths: Optional[dict[str, str]] = None
-        self._messidor_ROIs: Optional[dict[str, Rect]] = None
+        self._messidor_ROIs: Optional[pd.DataFrame] = None
 
     def __del__(self):
         if self._is_maples_dr_folder_temporary:
@@ -134,7 +134,7 @@ class DatasetLoader:
             maples_dr_path = self._change_maples_dr_path(maples_dr_path)
 
             # Load the dataset infos.
-            self.maples_dr_infos, self._messidor_ROIs = self.load_dataset_infos_and_rois(maples_dr_path)
+            self.dataset_record, self._messidor_ROIs = self.load_dataset_record_and_rois(maples_dr_path)
             self._annotations_infos = self.load_biomarkers_annotation_infos(
                 maples_dr_path / "biomarkers_annotation_infos.xls"
             )
@@ -143,7 +143,7 @@ class DatasetLoader:
             if not disable_check:
                 self.check_maples_dr_integrity()
 
-            self._diagnosis = self.load_maples_dr_diagnosis(maples_dr_path / "diagnosis.xls")
+            self._diagnosis = self.load_maples_dr_diagnosis(maples_dr_path / "diagnosis_infos.xls")
 
         # === Prepare MESSIDOR ===
         if messidor_path is not UNSET:
@@ -163,7 +163,7 @@ class DatasetLoader:
         """
         Check if the dataset is initialized.
         """
-        return self.maples_dr_infos is not None
+        return self.dataset_record is not None
 
     def ensure_configured(self):
         """
@@ -206,14 +206,13 @@ class DatasetLoader:
             if not path.exists():
                 path.mkdir(parents=True)
             # and check if the folder contains the dataset infos.
-            if not (path / "biomarkers-export-config.yaml").exists():
+            if not (path / "dataset_record.yaml").exists():
                 # If not, download the dataset.
                 zip_path = path / "maples_dr.zip"
                 download(MAPLES_DR_ADDITIONAL_URL, zip_path, "MAPLES-DR segmentation maps")
                 with ZipFile(path / "maples_dr.zip", "r") as zip_file:
                     zip_file.extractall(path)
                 (path / "maples_dr.zip").unlink()
-                path = path / "AdditionalData"
 
         elif path.name.endswith(".zip"):
             # === If the path is a zip file, unzip it to a temporary folder ===
@@ -225,24 +224,30 @@ class DatasetLoader:
                 raise InvalidConfigError(f"Invalid Maples DR archive: {zip_path} doesn't exist.")
             try:
                 with ZipFile(zip_path, "r") as zip_file:
-                    zip_file.extractall(path)
                     path = path / "AdditionalData"
+                    zip_file.extractall(path)
             except Exception as e:
                 raise InvalidConfigError(
                     f"Invalid Maples DR archive: {zip_path}:" "\n\t the provided archive is impossible to unzip."
                 ) from e
             else:
                 # Test if the zip file contains maples_dr folder.
-                if not (path / "biomarkers-export-config.yaml").exists():
+                if not (path / "dataset_record.yaml").exists():
                     raise InvalidConfigError(
                         f"Invalid Maples DR archive:  {path}:"
-                        '\n\t the provided archive doesn\'t contains the file "biomarkers-export-config.yaml".'
+                        '\n\t the provided archive doesn\'t contains the file "dataset_record.yaml".'
                     )
-                if not (path / "MESSIDOR-rois.yaml").exists():
+                if not (path / "MESSIDOR-ROIs.csv").exists():
                     raise InvalidConfigError(
                         f"Invalid Maples DR archive:  {path}:"
-                        '\n\t the provided archive doesn\'t contains the file "MESSIDOR-rois.yaml".'
+                        '\n\t the provided archive doesn\'t contains the file "MESSIDOR-ROIs.csv".'
                     )
+                if not (path / "diagnosis_infos.xls").exists():
+                    raise InvalidConfigError(
+                        f"Invalid Maples DR archive:  {path}:"
+                        '\n\t the provided archive doesn\'t contains the file "diagnosis_infos.xls".'
+                    )
+
                 if not (path / "biomarkers_annotation_infos.xls").exists():
                     raise InvalidConfigError(
                         f"Invalid Maples DR archive:  {path}:"
@@ -253,9 +258,9 @@ class DatasetLoader:
         return path
 
     @staticmethod
-    def load_dataset_infos_and_rois(path: str | Path) -> Tuple[Dict, Dict]:
+    def load_dataset_record_and_rois(path: str | Path) -> Tuple[Dict, Dict]:
         """
-        Load the MAPLES-DR dataset infos and the rois in MESSIDOR images.
+        Load the MAPLES-DR dataset record and the rois in MESSIDOR images.
 
         Parameters
         ----------
@@ -263,22 +268,13 @@ class DatasetLoader:
             Path to the MAPLES-DR dataset folder.
         """
 
-        def stem(name):
-            """Remove the extension of the image name."""
-            return name.rsplit(".", 1)[0]
+        with open(path / "dataset_record.yaml", "r") as infos_file:
+            record = yaml.safe_load(infos_file)
 
-        with open(path / "biomarkers-export-config.yaml", "r") as infos_file:
-            infos = yaml.safe_load(infos_file)
+        with open(path / "MESSIDOR-ROIs.csv", "r") as rois_file:
+            rois = pd.read_csv(rois_file).set_index("name")
 
-            for subset in ("train", "test"):
-                infos[subset] = [stem(name) for name in infos[subset]]
-            infos["duplicates"] = {stem(name): stem(dupli) for name, dupli in infos["duplicates"].items()}
-
-        with open(path / "MESSIDOR-rois.yaml", "r") as rois_file:
-            rois = yaml.safe_load(rois_file)
-            rois = {stem(k): Rect(*v) for k, v in rois.items()}
-
-        return infos, rois
+        return record, rois
 
     @staticmethod
     def load_biomarkers_annotation_infos(path: str | Path) -> pd.DataFrame:
@@ -293,7 +289,7 @@ class DatasetLoader:
 
         annotation_infos_data = pd.read_excel(path, index_col=0, sheet_name=None)
 
-        biomarker_infos = ["name", "Retinologist", "Comment", "Time", "Annotation #"]
+        biomarker_infos = ["Retinologist", "Comment", "Time", "Annotation #"]
         biomarker_tasks = {
             "bright": BiomarkersAnnotationTasks.BRIGHT,
             "red": BiomarkersAnnotationTasks.RED,
@@ -312,7 +308,7 @@ class DatasetLoader:
                     "Time": task + "_" + BiomarkersAnnotationInfos.ANNOTATION_TIME,
                     "Annotation #": task + "_" + BiomarkersAnnotationInfos.ANNOTATION_ID,
                 },
-            ).set_index("name")
+            )
 
             if annotation_infos is None:
                 annotation_infos = infos
@@ -327,24 +323,14 @@ class DatasetLoader:
         """
         maples_root = self.maples_dr_folder
         missing_images = 0
-        for biomarker in self.maples_dr_infos["biomarkers"]:
-            for img in self.image_names(DatasetSubset.ALL, extension=True):
+        for biomarker in self.dataset_record["biomarkers"]:
+            for img in self.image_names(DatasetSubset.ALL_WITH_DUPLICATES, extension=True):
                 if not (maples_root / "annotations" / biomarker / img).exists():
                     missing_images += 1
         if missing_images > 0:
             raise InvalidConfigError(
                 f"The provided folder to the Maples-DR dataset is incomplete: "
                 f"{missing_images} segmentation maps are missing."
-            )
-
-        for biomarker in self.maples_dr_infos["biomarkers"]:
-            for img in self.image_names(DatasetSubset.DUPLICATES, extension=True):
-                if not (maples_root / "duplicates" / "annotations" / biomarker / img).exists():
-                    missing_images += 1
-        if missing_images > 0:
-            raise InvalidConfigError(
-                f"The provided folder to the Maples-DR dataset is incomplete: "
-                f"{missing_images} duplicates segmentation maps are missing."
             )
 
     @staticmethod
@@ -362,15 +348,11 @@ class DatasetLoader:
                 download(MAPLES_DR_DIAGNOSTIC_URL, tmp.name, "MAPLES-DR diagnostic file")
                 return DatasetLoader.load_maples_dr_diagnosis(tmp)
 
-        dr_diagnosis = (
-            pd.read_excel(path, sheet_name="DR", index_col=0)
-            .rename(columns={"Consensus": "dr"} | {f"Retinologist{r}": f"dr_{r}" for r in "ABC"})
-            .drop(columns="MajorityVoting")
+        dr_diagnosis = pd.read_excel(path, sheet_name="DR", index_col=0).rename(
+            columns={"Consensus": "dr"} | {f"Retinologist{r}": f"dr_{r}" for r in "ABC"}
         )
-        me_diagnosis = (
-            pd.read_excel(path, sheet_name="ME", index_col=0)
-            .rename(columns={"Consensus": "me"} | {f"Retinologist{r}": f"me_{r}" for r in "ABC"})
-            .drop(columns="MajorityVoting")
+        me_diagnosis = pd.read_excel(path, sheet_name="ME", index_col=0).rename(
+            columns={"Consensus": "me"} | {f"Retinologist{r}": f"me_{r}" for r in "ABC"}
         )
         dr_me_comments = (
             pd.read_excel(path, sheet_name="Comment", index_col=0)
@@ -443,17 +425,25 @@ class DatasetLoader:
             )
 
     # === DATASETS FACTORIES ===
-    def load_dataset(self, subset: DatasetSubset | str = DatasetSubset.ALL) -> Dataset:
+    def load_dataset(self, subset: DatasetSubset | str | list[str] = DatasetSubset.ALL) -> Dataset:
         """
         Return the MAPLES-DR dataset.
 
         :param subset: Subset of the dataset to return. If None, return the whole dataset.
-                       Must be either None, "train" or "test".
+                       Must be either None, "train" or "test" or a list of valid image name.
         """
         if not self.is_configured():
             self.configure()
-        names = self.image_names(subset)
-        duplicates_names = self.image_names(DatasetSubset.DUPLICATES)
+        if isinstance(subset, list):
+            # Check that all images are valid.
+            valid_images = set(self.image_names(DatasetSubset.ALL_WITH_DUPLICATES))
+            for img in subset:
+                if img not in valid_images:
+                    raise ValueError(f"Invalid image name: {img} is not a valid image name.")
+            names = subset
+        else:
+            names = self.image_names(subset)
+
         paths = {}
         if self._messidor_paths is not None:
             paths[FundusField.FUNDUS.value] = [self._messidor_paths[name] for name in names]
@@ -474,11 +464,7 @@ class DatasetLoader:
         }
         for biomarker, bio_folder in biomarkers_folder.items():
             folder = self.maples_dr_folder / "annotations" / bio_folder
-            duplicates_folder = self.maples_dr_folder / "duplicates" / "annotations" / bio_folder
-            paths[biomarker] = [
-                folder / (name + ".png") if name not in duplicates_names else duplicates_folder / (name + ".png")
-                for name in names
-            ]
+            paths[biomarker] = [folder / (name + ".png") for name in names]
 
         preannotations_folder = {
             BiomarkerField.EXUDATES.value: "Exudates",
@@ -521,11 +507,11 @@ class DatasetLoader:
 
         names = []
         if subset in (DatasetSubset.TRAIN, DatasetSubset.ALL, DatasetSubset.ALL_WITH_DUPLICATES):
-            names += self.maples_dr_infos["train"]
+            names += self.dataset_record["train"]
         if subset in (DatasetSubset.TEST, DatasetSubset.ALL, DatasetSubset.ALL_WITH_DUPLICATES):
-            names += self.maples_dr_infos["test"]
+            names += self.dataset_record["test"]
         if subset in (DatasetSubset.DUPLICATES, DatasetSubset.ALL_WITH_DUPLICATES):
-            names += list(self.maples_dr_infos["duplicates"].values())
+            names += list(self.dataset_record["duplicates"].values())
         if extension:
             if isinstance(extension, bool):
                 extension = "png"

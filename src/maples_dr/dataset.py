@@ -12,7 +12,7 @@ from PIL.Image import Resampling
 
 from .config import DatasetConfig, ImageFormat, InvalidConfigError, Preprocessing
 from .preprocessing import fundus_roi, preprocess_fundus
-from .utilities import Rect, RichProgress, caseless_parse_str_enum
+from .utilities import Point, Rect, RichProgress, caseless_parse_str_enum
 
 
 class BiomarkerField(str, Enum):
@@ -278,7 +278,7 @@ class Dataset(Sequence):
         self,
         data: pd.DataFrame,
         cfg: DatasetConfig,
-        rois: Optional[Dict[str, Rect]] = None,
+        messidor_rois: pd.DataFrame,
     ):
         """Create a new dataset. (Internal use only)
 
@@ -291,14 +291,38 @@ class Dataset(Sequence):
 
         cfg : DatasetConfig
             The configuration of the dataset.
-        rois : Dict[str, Rect], optional
-            The region of interest in MESSIDOR fundus images.
+        messidor_rois : pd.DataFrame
+            A dataframe with the same index as ``data`` containing the columns:
+            - x0: the x coordinate of the top-left corner of the region of interest;
+            - y0: the y coordinate of the top-left corner of the region of interest;
+            - x1: the x coordinate of the bottom-right corner of the region of interest;
+            - y1: the y coordinate of the bottom-right corner of the region of interest;
+            - W: the width of the original MESSIDOR fundus image;
+            - H: the height of the original MESSIDOR fundus image.
+
         """
         self._cfg: DatasetConfig = cfg
-        self._data: pd.DataFrame = data
-        self._rois = rois
 
-    def __getitem__(self, idx: int | str) -> DataSample:
+        assert isinstance(data, pd.DataFrame), "Invalid type for 'data'."
+        assert all(isinstance(_, str) for _ in data.index), "Invalid index type for 'data'."
+        assert all(
+            col.value in data.columns for col in BiomarkerField if col not in AGGREGATED_BIOMARKERS
+        ), "Missing biomarker columns in the dataset."
+        assert all(col.value in data.columns for col in DiagnosisField), "Missing diagnosis columns in the dataset."
+        self._data: pd.DataFrame = data
+
+        if messidor_rois is not None:
+            assert isinstance(messidor_rois, pd.DataFrame), "Invalid type for 'messidor_rois'."
+            assert data.index.isin(messidor_rois.index).all(), "Invalid index for 'messidor_rois'."
+            assert "x0" in messidor_rois.columns, "Missing 'x0' column in the MESSIDOR ROIs dataframe."
+            assert "y0" in messidor_rois.columns, "Missing 'y0' column in the MESSIDOR ROIs dataframe."
+            assert "x1" in messidor_rois.columns, "Missing 'x1' column in the MESSIDOR ROIs dataframe."
+            assert "y1" in messidor_rois.columns, "Missing 'y1' column in the MESSIDOR ROIs dataframe."
+            assert "W" in messidor_rois.columns, "Missing 'W' column in the MESSIDOR ROIs dataframe."
+            assert "H" in messidor_rois.columns, "Missing 'H' column in the MESSIDOR ROIs dataframe."
+        self._rois: pd.DataFrame = messidor_rois
+
+    def __getitem__(self, idx: int | str | slice[int] | list[str]) -> DataSample:
         """Get a sample from the dataset.
 
         This method is a shortcut for :meth:`read_sample`.
@@ -319,8 +343,16 @@ class Dataset(Sequence):
         dict
             The sample as a dictionary.
         """
-        sample_infos = self.get_sample_infos(idx)
-        return DataSample(sample_infos, self._cfg, self._rois.get(sample_infos.name, None))
+        if isinstance(idx, (str, int)):
+            sample_infos = self.get_sample_infos(idx)
+            rois = self._rois.loc[sample_infos.name]
+            return DataSample(sample_infos, self._cfg, rois)
+        elif isinstance(idx, slice):
+            return self.subset(idx)
+        elif isinstance(idx, list):
+            return self.subset_by_name(idx)
+        else:
+            raise ValueError(f"Invalid index type: {type(idx)}.")
 
     def __contains__(self, idx: str | int) -> bool:
         try:
@@ -348,6 +380,16 @@ class Dataset(Sequence):
             - ``dr_{A|B|C}_comment``: comments from the retinologist when grading the DR diagnosis.
         """
         return self._data
+
+    def keys(self) -> List[str]:
+        """Get the names of the samples in the dataset.
+
+        Returns
+        -------
+        List[str]
+            The names of the samples.
+        """
+        return self._data.index.tolist()
 
     def subset(self, *arg, start: Optional[int] = None, end: Optional[int] = None) -> Dataset:
         """Get a subset of the dataset.
@@ -377,7 +419,26 @@ class Dataset(Sequence):
         else:
             raise ValueError("Invalid number of arguments: only expect start and end indexes.")
 
-        return Dataset(self._data.iloc[start:end], self._cfg, self._rois)
+        subset_data = self._data.iloc[start:end]
+        subset_rois = self._rois.iloc[start:end]
+        return Dataset(subset_data, self._cfg, subset_rois)
+
+    def subset_by_name(self, names: List[str]) -> Dataset:
+        """Get a subset of the dataset by names.
+
+        Parameters
+        ----------
+        names : List[str]
+            The names of the samples to keep.
+
+        Returns
+        -------
+        Dataset
+            The subset of the dataset.
+        """
+        subset_data = self._data.loc[names]
+        subset_rois = self._rois.loc[names]
+        return Dataset(subset_data, self._cfg, subset_rois)
 
     def diagnosis(self, pathology: Optional[Pathology] = None):
         """Get the diagnosis of the dataset.
@@ -439,185 +500,6 @@ class Dataset(Sequence):
             if raw_fundus:
                 fields += [FundusField.RAW_FUNDUS.value]
         return fields
-
-    def read_fundus(self, idx: str | int, preprocess=True, image_format: Optional[ImageFormat] = None):
-        """Read a fundus image from the dataset.
-
-        This requires the path to the MESSIDOR dataset to be configured.
-        The image is cropped and resized to the size defined in the configuration (default: 1500x1500).
-
-        Parameters
-        ----------
-        idx :
-            Index of the image. Can be an integer or the name of the image.
-        preprocess :
-            If True, the image is preprocessed with the preprocessing defined in the configuration.
-        image_format :
-            Format of the image to return. If None, use the format defined in the configuration.
-        """
-        if "fundus" not in self._data.columns:
-            raise InvalidConfigError(
-                "Impossible to read fundus images, path to MESSIDOR dataset is unkown.\n"
-                "Download MESSIDOR and use maples_dr.configure(messidor_path='...')."
-            )
-        if self._rois is None:
-            raise RuntimeError("Impossible to read fundus images, region of interest is unkown.")
-
-        # Read the image
-        path = self.get_sample_infos(idx)["fundus"]
-        img = Image.open(path)
-
-        # Crop the image to the proper region of interest (stored in AdditionalData.zip/MESSIDOR-rois.yaml )
-        if img.height != img.width:
-            roi = self._rois[path.stem]
-            img = img.crop(roi.box())
-
-        if self._cfg.resize:
-            # Resize the image
-            img = img.resize((self._cfg.resize,) * 2)
-
-        if preprocess:
-            img = self.preprocess_fundus(img)
-
-        # Apply format conversion
-        if image_format is None:
-            image_format = self._cfg.image_format
-        if image_format == "PIL":
-            return img
-        else:
-            img = np.array(img)
-            if image_format == "rgb":
-                return img
-            elif image_format == "bgr":
-                return img[..., ::-1]
-
-        return img
-
-    def preprocess_fundus(self, img: Image.Image, preprocessing: Optional[Preprocessing] = None):
-        """Preprocess a fundus image.
-
-        Parameters
-        ----------
-        img :
-            Image to preprocess.
-        preprocessing :
-            Name of the preprocessing to apply.
-            If None, use the preprocessing defined in the configuration.
-        """
-        if preprocessing is None:
-            preprocessing = self._cfg.preprocessing
-        if preprocessing == "none":
-            return img
-        elif preprocessing == "clahe":
-            ...
-        elif preprocessing == "median":
-            ...
-        else:
-            raise ValueError(f"Unknown preprocessing: {preprocessing}. Must be either 'none', 'clahe' or 'median'.")
-
-        return img
-
-    def read_biomarkers(
-        self,
-        idx: str | int,
-        biomarkers: Optional[
-            BiomarkerField | List[BiomarkerField] | Dict[int, BiomarkerField | List[BiomarkerField]]
-        ] = None,
-        image_format: Optional[ImageFormat] = None,
-        pre_annotation: bool = False,
-    ):
-        """
-        Read biomarkers from the dataset.
-
-        """
-
-        # Read the paths of the biomarkers
-        paths = self.get_sample_infos(idx)
-
-        # Cast the biomarkers definition to a dictionary
-        VALID_BIOMARKERS = self.available_fields(biomarkers=True)
-        if biomarkers is None:
-            biomarkers_specs = {i + 1: b for i, b in enumerate(VALID_BIOMARKERS)}
-        else:
-            if isinstance(biomarkers, (list, str)):
-                biomarkers = {1: biomarkers}
-                biomarkers_map = np.zeros(self._target_image_size, dtype=bool)
-            elif isinstance(biomarkers, dict):
-                biomarkers_map = np.zeros(self._target_image_size, dtype=np.uint8)
-            else:
-                raise ValueError(
-                    f"Unknown biomarkers: {biomarkers}." "Must be either a string, a list of strings or a dictionary."
-                )
-
-            # Check the validity of the biomarkers definition and expand merged biomarkers)
-            biomarkers_specs = {}
-            for i, ith_biomarkers in biomarkers.items():
-                ith_valid_biomarkers = set()
-                if isinstance(ith_biomarkers, str):
-                    ith_biomarkers = [ith_biomarkers]
-                for biomarker in ith_biomarkers:
-                    if biomarker not in self.available_fields(biomarkers=True):
-                        raise ValueError(f"Unknown biomarker: {biomarker}.")
-                    if biomarker in AGGREGATED_BIOMARKERS:
-                        ith_valid_biomarkers.update(AGGREGATED_BIOMARKERS[biomarker])
-                    else:
-                        ith_valid_biomarkers.add(biomarker)
-                biomarkers_specs[i] = ith_valid_biomarkers
-
-        # Read the biomarkers
-        for i, ith_biomarkers in biomarkers_specs.items():
-            for biomarker in ith_biomarkers:
-                if pre_annotation:
-                    biomarker = biomarker + "_pre"
-                path = paths[biomarker]
-                if Path(path).exists():
-                    img = Image.open(path).resize(self._target_image_size)
-                    biomarkers_map[np.array(img) > 0] = i
-                else:
-                    biomarkers_map = np.zeros(self._target_image_size, dtype=np.uint8)
-
-        # Apply format conversion
-        if image_format is None:
-            image_format = self._cfg.image_format
-        if image_format == "PIL":
-            return Image.fromarray(biomarkers_map)
-        else:
-            return biomarkers_map
-
-    def read_sample(
-        self, idx: str | int, field: Optional[Field | List[Field]] = None, image_format: Optional[ImageFormat] = None
-    ) -> dict:
-        """
-        Read a sample from the dataset.
-
-        Parameters
-        ----------
-        idx :
-            Index of the sample.
-        field :
-            Name of the field to read. If None, read the whole sample.
-        """
-        if field is None:
-            field = self.available_fields(aggregated_biomarkers=False, raw_fundus=False)
-
-        fundus = None
-        sample = {"name": self.get_sample_infos(idx).name}
-        for f in field:
-            if f in self.available_fields(biomarkers=True):
-                sample[f] = self.read_biomarkers(idx, f, image_format=image_format)
-            elif f == "fundus":
-                if fundus is None:
-                    fundus = self.read_fundus(idx, preprocess=False, image_format=image_format)
-                sample[f] = self.preprocess_fundus(fundus) if self._cfg.preprocessing != Preprocessing.NONE else fundus
-            elif f == "raw_fundus":
-                if fundus is None:
-                    fundus = self.read_fundus(idx, preprocess=False, image_format=image_format)
-                sample[f] = fundus
-            elif f in ["dr", "me"]:
-                sample[f] = self.get_sample_infos(idx)[f]
-            else:
-                raise ValueError(f"Unknown field: {f}.")
-        return sample
 
     def get_sample_infos(self, idx: str | int) -> pd.Series:
         """Get the informations of a sample.
@@ -732,11 +614,17 @@ class DataSample(Mapping):
 
     """
 
-    def __init__(self, data: pd.Series, cfg: DatasetConfig, roi: Optional[Rect] = None):
+    def __init__(
+        self,
+        data: pd.Series,
+        cfg: DatasetConfig,
+        roi: pd.Series,
+    ):
         self._data: pd.Series = data
         self._cfg: DatasetConfig = cfg
         self._fundus: Optional[np.ndarray] = None
-        self._roi: Optional[Rect] = roi
+        self._roi: Rect = Rect.from_points(int(roi["y0"]), int(roi["x0"]), int(roi["y1"]), int(roi["x1"]))
+        self._messidor_shape: Point = Point(int(roi["H"]), int(roi["W"]))
 
     def __len__(self) -> int:
         return len(self._data)
@@ -809,7 +697,7 @@ class DataSample(Mapping):
         """
         # Check arguments validity
         image_format = self._check_image_format(image_format)
-        target_size = self._target_size(resize)
+        target_size, crop = self._target_size(resize)
 
         if isinstance(biomarkers, (str, BiomarkerField)):
             biomarkers = [biomarkers]
@@ -832,10 +720,17 @@ class DataSample(Mapping):
 
         # Read the biomarkers
         biomarkers_map = np.zeros(target_size, dtype=bool)
+        window = biomarkers_map
+
+        if not crop:
+            # Align the image to the original MESSIDOR resolution
+            window = biomarkers_map[self._roi.slice()]
+            target_size = self._roi.shape
+
         for path in paths:
             if Path(path).exists():
                 img = Image.open(path).resize(target_size, Resampling.NEAREST)
-                biomarkers_map[np.array(img) > 0] = 1
+                window[np.array(img) > 0] = 1
 
         # Apply format conversion
         if image_format is ImageFormat.PIL:
@@ -869,7 +764,7 @@ class DataSample(Mapping):
 
         """
         image_format = self._check_image_format(image_format)
-        target_size = self._target_size(resize)
+        target_size, _ = self._target_size(resize)
 
         biomarkers_map = np.zeros(target_size, dtype=np.uint8)
         for i, bio in biomarkers.items():
@@ -913,12 +808,11 @@ class DataSample(Mapping):
         """
 
         assert "fundus" in self._data, "Impossible to read fundus images, path to MESSIDOR dataset is unkown."
-        assert self._roi is not None, "Impossible to read fundus images, region of interest is unkown."
 
         # Check arguments
         preprocess = self._check_preprocessing(preprocess)
         image_format = self._check_image_format(image_format)
-        target_size = self._target_size(resize)
+        target_size, crop = self._target_size(resize)
 
         # Read the image
         if self._fundus is None:
@@ -927,7 +821,7 @@ class DataSample(Mapping):
             fundus_format = ImageFormat.PIL
 
             # Crop the image to the proper region of interest
-            if fundus.height != fundus.width:
+            if crop and fundus.height != fundus.width:
                 fundus = fundus.crop(self._roi.box())
         else:
             fundus = self._fundus
@@ -1005,13 +899,13 @@ class DataSample(Mapping):
             return Preprocessing.NONE
         return Preprocessing(preprocess)
 
-    def _target_size(self, size: Optional[int | bool] = None) -> Tuple[int, int]:
+    def _target_size(self, size: Optional[int | bool] = None) -> Tuple[Point, bool]:
         if size is None:
             size = self._cfg.resize
 
-        if size is False and self._roi is not None:
-            return self._roi.shape
+        if size is False:
+            return self._messidor_shape, False
         elif size is True:
-            return (1500, 1500)
+            return Point(1500, 1500), True
         else:
-            return (self._cfg.resize,) * 2
+            return Point(size, size), True
