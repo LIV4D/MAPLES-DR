@@ -30,6 +30,8 @@ examples = [
 dev = [
     'sphinx',
     'sphinx-rtd-theme',
+    'sphinx-copybutton',
+    'sphinxcontrib-bibtex',
     'nbsphinx',
     'sphinx-intl',
     'ipython',

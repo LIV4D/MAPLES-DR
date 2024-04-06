@@ -58,7 +58,7 @@ Alternatively, MAPLES-DR images can be saved in local folders:
 ```
 
 
-For more information on how to configure image resolution and format, how to include the fundus images along the labels, and more advanced functionalities, have a look at [the documentation of `maples_dr`](https://liv4d.github.io/MAPLES-DR/index.html)!
+For more information on how to configure image resolution and format, how to include the fundus images along the labels, and more advanced functionalities, have a look at [the documentation of `maples_dr`](https://liv4d.github.io/MAPLES-DR/en/index.html)!
 
 ### Examples
 The `examples/` folder contains Jupyter Notebooks that demonstrate how to use the `maples_dr` python library.

@@ -21,7 +21,7 @@ jobs:
           sphinx-build -b html -t locales_fr docs/source docs/build/html/fr
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }} 
+        if: ${{ github.event_name == 'push' }} 
         with:
           publish_branch: gh-pages-docs
           github_token: ${{ secrets.GITHUB_TOKEN }}

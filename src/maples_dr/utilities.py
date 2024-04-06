@@ -2,6 +2,7 @@ from __future__ import annotations
 
 __all__ = ["RichProgress"]
 
+import re
 from enum import Enum
 from functools import reduce
 from time import time
@@ -80,7 +81,7 @@ EnumT = TypeVar("EnumT", bound=Enum)
 
 
 def caseless_parse_str_enum(
-    enum_type: type, value: any, ignore_underscore=True, alias: Optional[Mapping[str, EnumT]] = None
+    enum_type: type, value: any, ignored_characters: Optional[str] = " -_", alias: Optional[Mapping[str, EnumT]] = None
 ) -> EnumT:
     try:
         return enum_type(value)
@@ -88,12 +89,12 @@ def caseless_parse_str_enum(
         pass
     if not isinstance(value, str):
         raise ValueError(f"Invalid enum identifier: must be a string or a {type(enum_type)}, not {type(value)}.")
-    if ignore_underscore:
-        value = value.replace("_", "")
+    if ignored_characters:
+        value = re.sub(f"[{ignored_characters}]", "", value)
 
     for enum in enum_type:
         name = enum.value.lower()
-        if ignore_underscore:
+        if ignored_characters:
             name = name.replace("_", "")
         if name == value.lower():
             return enum

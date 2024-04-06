@@ -2,12 +2,15 @@
 Quick Start
 ************
 
-Thanks for using MAPLES-DR python package! This page will guide you through the installation process and simple usage of the package: loading the dataset in memory or saving it in a local folder.
+MAPLES-DR dataset is available for download on `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_. But in the 
+context of training machine learning algorithm we strongly recommend to directly use the `maples_dr` python package to easily download, format and manipulate the dataset.
+
+This page will guide you through the installation process and simple usage of the package: loading the dataset in memory or saving it in a local folder.
 
 Installation
 ============
 
-The `maples-dr` package is avalaible on PyPI and can be installed using pip:
+The `maples-dr` package is available on PyPI and can be installed using pip:
 
 .. code-block:: console
 
@@ -24,7 +27,7 @@ Once imported, MAPLES-DR train or test sets can be loaded in memory with a singl
     train_set = maples_dr.load_train_set()
     test_set = maples_dr.load_test_set()
 
-If necessary, the dataset archive is automatically downloaded from `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extracted and cached locally. The data is then returned as a :class:`maples_dr.Dataset` which is assimilable to a list of dictionnaries containing all MAPLES-DR labels. (For more information, see the :doc:`../api_reference/dataset` class documentation). 
+If necessary, the dataset archive is automatically downloaded from `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extracted and cached locally. The data is then returned as a :class:`maples_dr.Dataset` which is assimilable to a list of dictionaries containing all MAPLES-DR labels. (For more information, see the :doc:`../api_reference/dataset` class documentation). 
 
 For example, the vessel map of the first sample of the train set can be accessed with:
 
@@ -94,11 +97,11 @@ The same method can be used to specify a local path from where the library shoul
         maples_dr_diagnosis_path="path/to/MAPLES-DR/diagnosis.xls"
     )
 
-Finally, a local path to MESSIDOR-2 dataset can also be specified with this function in order to include the fundus images from MESSIDOR along MAPLES-DR labels. (See :doc:`../welcome/messidor` for more details.)
+Finally, a local path to MESSIDOR dataset can also be specified with this function in order to include the fundus images from MESSIDOR along MAPLES-DR labels. (See :doc:`../welcome/messidor` for more details.)
 
 .. code-block:: python
 
-    maples_dr.configure(messidor_path="path/to/Messidor2/")
+    maples_dr.configure(messidor_path="path/to/Messidor/")
 
 ------------
 

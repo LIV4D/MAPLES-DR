@@ -4,8 +4,8 @@ from functools import partial
 from itertools import chain
 from pathlib import Path
 from shutil import rmtree
-from tempfile import NamedTemporaryFile, mkdtemp
-from typing import Dict, Literal, Optional, Tuple
+from tempfile import mkdtemp
+from typing import Dict, Optional, Tuple
 from urllib.request import urlopen
 from zipfile import ZipFile
 
@@ -14,12 +14,11 @@ import yaml
 
 from .config import DOWNLOAD, DatasetConfig, ImageFormat, InvalidConfigError, Preprocessing
 from .dataset import BiomarkerField, BiomarkersAnnotationInfos, BiomarkersAnnotationTasks, Dataset, FundusField
-from .utilities import Rect, RichProgress
+from .utilities import RichProgress
 
 #   === CONSTANTS ===
 # Figshare public urls of the MAPLES DR dataset
 MAPLES_DR_ADDITIONAL_URL = "https://figshare.com/ndownloader/files/43695822"
-MAPLES_DR_DIAGNOSTIC_URL = "https://figshare.com/ndownloader/files/43654878"
 
 #: Unset constant
 UNSET = "UNSET"
@@ -209,7 +208,7 @@ class DatasetLoader:
             if not (path / "dataset_record.yaml").exists():
                 # If not, download the dataset.
                 zip_path = path / "maples_dr.zip"
-                download(MAPLES_DR_ADDITIONAL_URL, zip_path, "MAPLES-DR segmentation maps")
+                download(MAPLES_DR_ADDITIONAL_URL, zip_path, "MAPLES-DR labels")
                 with ZipFile(path / "maples_dr.zip", "r") as zip_file:
                     zip_file.extractall(path)
                 (path / "maples_dr.zip").unlink()
@@ -334,20 +333,15 @@ class DatasetLoader:
             )
 
     @staticmethod
-    def load_maples_dr_diagnosis(path: Optional[str | Path] = None) -> pd.DataFrame:
+    def load_maples_dr_diagnosis(path: str | Path) -> pd.DataFrame:
         """
         Load the MAPLES-DR diagnostic file.
 
         Parameters
         ----------
         path : str
-            Path to the MAPLES-DR diagnostic file. If None, download the file from Figshare.
+            Path to the MAPLES-DR diagnostic file.
         """
-        if path is None or path is DOWNLOAD:
-            with NamedTemporaryFile() as tmp:
-                download(MAPLES_DR_DIAGNOSTIC_URL, tmp.name, "MAPLES-DR diagnostic file")
-                return DatasetLoader.load_maples_dr_diagnosis(tmp)
-
         dr_diagnosis = pd.read_excel(path, sheet_name="DR", index_col=0).rename(
             columns={"Consensus": "dr"} | {f"Retinologist{r}": f"dr_{r}" for r in "ABC"}
         )

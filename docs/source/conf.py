@@ -20,7 +20,9 @@ extensions = [
     "sphinx_rtd_theme",
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
+    "sphinxcontrib.bibtex",
     "nbsphinx",
+    "sphinx_copybutton",
 ]
 
 
@@ -89,6 +91,10 @@ nbsphinx_prolog = """
         }
     </style>
 """
+
+# -- Options for sphinxcontrib-bibtex -----------------------------------------
+bibtex_bibfiles = ["bibliography.bib"]
+bibtex_default_style = "unsrt"
 
 # -- Multi-language support --------------------------------------------------
 # https://docs.readthedocs.io/en/stable/guides/manage-translations-sphinx.html
