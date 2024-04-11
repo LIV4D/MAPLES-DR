@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"POT-Creation-Date: 2024-04-10 20:02-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,70 +19,104 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: ../../welcome/quickstart.rst:3 bc1013dea4fc4cc2ac74f9ce5b8e06e4
+#: ../../source/welcome/quickstart.rst:3 48ed4c79972d4521accadf177f07abdb
 msgid "Quick Start"
-msgstr ""
+msgstr "Démarrage Rapide"
 
-#: ../../welcome/quickstart.rst:5 101ca44b55e84062a5f5b11e49513767
+#: ../../source/welcome/quickstart.rst:5 f3630a6f2a0e4bffb0af0dc511de0164
 msgid ""
-"Thanks for using MAPLES-DR python package! This page will guide you "
-"through the installation process and simple usage of the package: loading"
-" the dataset in memory or saving it in a local folder."
+"MAPLES-DR dataset is available for download on `Figshare "
+"<https://doi.org/10.6084/m9.figshare.24328660>`_. But in the context of "
+"training machine learning algorithm we strongly recommend to directly use"
+" the `maples_dr` python package to easily download, format and manipulate"
+" the dataset."
 msgstr ""
+"Le jeu de données |MAPLES-DR| est disponible en téléchargement sur "
+"`Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_. Cependant, "
+"pour les applications de l'entraînement d'algorithmes d'apprentissage automatique, "
+"nous recommandons fortement d'utiliser directement le paquet python `maples_dr` "
+"pour télécharger, formater et manipuler facilement ce jeu de données."
 
-#: ../../welcome/quickstart.rst:8 7b0748a2027841f894492eff25b765df
+#: ../../source/welcome/quickstart.rst:8 3663b50d7b9b419fa7d3a5157a19ee1e
+msgid ""
+"This page will guide you through the installation process and simple "
+"usage of the package: loading the dataset in memory or saving it in a "
+"local folder."
+msgstr ""
+"Cette page vous guidera à travers le processus d'installation et les cas d'utilisation "
+"courants du paquet: charger le jeu de données en mémoire ou le sauvegarder localement."
+
+#: ../../source/welcome/quickstart.rst:11 bd20f6cd145c4b83a681a4d968e19f0c
 msgid "Installation"
-msgstr ""
+msgstr "Installation"
 
-#: ../../welcome/quickstart.rst:10 042d4840188349f89c907efb539db752
+#: ../../source/welcome/quickstart.rst:13 f2b261124c7a46e1b5ea506e6c67d0d9
 msgid ""
-"The `maples-dr` package is avalaible on PyPI and can be installed using "
+"The `maples-dr` package is available on PyPI and can be installed using "
 "pip:"
 msgstr ""
+"Le paquet `maples-dr` est disponible sur PyPI et peut être installé avec:"
 
-#: ../../welcome/quickstart.rst:18 ac974269b5844fcd8a82974d80be924f
+#: ../../source/welcome/quickstart.rst:21 4fe24dc915d64c529e5f3c19a7c8c6b9
 msgid "Simple Usage"
-msgstr ""
+msgstr "Utilisation Simple"
 
-#: ../../welcome/quickstart.rst:19 8223495dc05b449cbb82f4ff2b165def
+#: ../../source/welcome/quickstart.rst:22 f874aff915f34d229afa8d5907e05feb
 msgid ""
 "Once imported, MAPLES-DR train or test sets can be loaded in memory with "
 "a single line of Python code."
 msgstr ""
+"Une fois importé, les ensembles d'entraînement ou de test de |MAPLES-DR| "
+"peuvent être chargés en mémoire avec une seule ligne de code Python."
 
-#: ../../welcome/quickstart.rst:27 e799574298c3405fbcbe0af65242551b
+#: ../../source/welcome/quickstart.rst:30 dff5bf7ac14a48c9abc62d1f610ef349
 msgid ""
 "If necessary, the dataset archive is automatically downloaded from "
 "`Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extracted and"
 " cached locally. The data is then returned as a "
-":class:`maples_dr.Dataset` which is assimilable to a list of "
-"dictionnaries containing all MAPLES-DR labels. (For more information, see"
-" the :doc:`../api_reference/dataset` class documentation)."
+":class:`maples_dr.Dataset` which is assimilable to a list of dictionaries"
+" containing all MAPLES-DR labels. (For more information, see the "
+":doc:`../api_reference/dataset` class documentation)."
 msgstr ""
+"Si nécessaire, l'archive du jeu de données est automatiquement téléchargée "
+"depuis `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extraite "
+"et mise en cache localement. Les données sont ensuite retournées sous forme "
+"d'un :class:`maples_dr.Dataset` (assimilable à une liste de dictionnaires "
+"contenant toutes les étiquettes de |MAPLES-DR|, voir :doc:`../api_reference/dataset`"
+" pour plus de détails)."
 
-#: ../../welcome/quickstart.rst:29 d36d8414367b428885a0cec1bd8c5e20
+
+#: ../../source/welcome/quickstart.rst:32 0695821b798c4957b89578d4dab795d1
 msgid ""
 "For example, the vessel map of the first sample of the train set can be "
 "accessed with:"
 msgstr ""
+"Par exemple, la carte des vaisseaux de la première image de l'ensemble "
+"d'entraînement peut être accédée avec:"
 
-#: ../../welcome/quickstart.rst:37 1fac1d5cffa84803b40a21dd0f4551be
+#: ../../source/welcome/quickstart.rst:40 2637e5fb6607406d8bd2acba12371fbf
 msgid ""
 "Alternatively, if you'd rather rely on your own code for data loading, "
 "MAPLES-DR images can be saved in local folders:"
 msgstr ""
+"Sinon, si vous préférez utiliser votre propre code pour le chargement des "
+"données, les images de |MAPLES-DR| peuvent être sauvegardées dans des "
+"dossiers locaux:"
 
-#: ../../welcome/quickstart.rst:44 a9b0460c226944a885c8edd022a41761
+#: ../../source/welcome/quickstart.rst:47 f632f7aeefb743988936fc57545a8181
 msgid ""
 "As a result of these commands, all the labels of MAPLES-DR are saved as "
 "image files in their appropriate folders: ::"
 msgstr ""
+"Suite à ces commandes, toutes les cartes de segmentations de |MAPLES-DR| "
+"seront sauvegardées sous forme d'image png, chaque structure rétinienne "
+"ayant son dossier dédié: ::"
 
-#: ../../welcome/quickstart.rst:76 3f502b81019f4046930d0151db2ae9d1
+#: ../../source/welcome/quickstart.rst:79 c5b88f8e541d4d69aaaeb8b4ea62264c
 msgid "Configure the datasets behavior"
-msgstr ""
+msgstr "Configurer le comportement de la bibliothèque python"
 
-#: ../../welcome/quickstart.rst:78 68e1df461e5b4d3d80bb30dfac2cb451
+#: ../../source/welcome/quickstart.rst:81 9950386cca4043a9b5a47288586d697e
 msgid ""
 "The dataset behavior can be tailored to ease the integration with your "
 "code or you specific application. For instance, you might need the images"
@@ -93,31 +127,48 @@ msgid ""
 "documented in details in :class:`maples_dr.config.DatasetConfig` "
 "documentation."
 msgstr ""
+"Le comportement de `maples_dr` peut être ajusté pour faciliter son "
+"intégration avec votre code. Par exemple, vous pourriez avoir besoin que "
+"les images et les cartes de biomarqueurs aient une résolution spécifique, "
+"un format spécifique (image PIL ou tableau numpy), un ordre spécifique des "
+"canaux de couleurs (`rgb` ou `bgr`)... Le comportement par défaut de la "
+"bibliothèque est configuré avec la méthode :func:`maples_dr.configure`, et "
+"les options de configuration sont documentées en détail dans la documentation "
+"de :class:`maples_dr.config.DatasetConfig`."
 
-#: ../../welcome/quickstart.rst:80 2ed8f7893d4340818c06f6f1da118b3f
+#: ../../source/welcome/quickstart.rst:83 fa568389cf224b2f9e98b7f3b5cc416e
 msgid ""
 "The following example shows how to configure the dataset to return images"
 " as numpy arrays (instead of PIL image) and with a resolution of 512x512 "
 "pixels:"
 msgstr ""
+"L'exemple suivant montre comment configurer le jeu de données pour retourner "
+"les images sous forme de tableaux numpy (au lieu d'images PIL) et avec une "
+"résolution de 512x512 pixels:"
 
-#: ../../welcome/quickstart.rst:88 7a14b0c61fa24fa98de5655cdc7a05eb
+#: ../../source/welcome/quickstart.rst:91 be62bbe9add849adbf2dfd6209562706
 msgid ""
 "The same method can be used to specify a local path from where the "
 "library should read MAPLES-DR data, instead of downloading them from "
 "Figshare."
 msgstr ""
+"La même méthode peut être utilisée pour spécifier un chemin local où seront lues"
+" les données de |MAPLES-DR|, au lieu de les télécharger depuis Figshare."
 
-#: ../../welcome/quickstart.rst:97 9d6b469cd49c42b4b916516f23baad25
+#: ../../source/welcome/quickstart.rst:100 740e308fc11749dcb28ceac70b044f9a
 msgid ""
-"Finally, a local path to MESSIDOR-2 dataset can also be specified with "
-"this function in order to include the fundus images from MESSIDOR along "
+"Finally, a local path to MESSIDOR dataset can also be specified with this"
+" function in order to include the fundus images from MESSIDOR along "
 "MAPLES-DR labels. (See :doc:`../welcome/messidor` for more details.)"
 msgstr ""
+"Enfin, un chemin local vers le jeu de données MESSIDOR peut également être "
+"spécifié avec cette fonction pour inclure les images de fond d'oeil de MESSIDOR."
+" (Voir :doc:`../welcome/messidor` pour plus de détails.)"
 
-#: ../../welcome/quickstart.rst:105 cc43060b838b45be8498780137546aa1
+#: ../../source/welcome/quickstart.rst:108 fc67b14979cf488fa1d2739c7dcb118f
 msgid ""
 "For more information on all the methods presented in this quick start, "
 "please refer to :doc:`../api_reference/quick_api` documentation."
 msgstr ""
-
+"Pour plus d'informations sur toutes les méthodes présentées dans ce guide de démarrage,"
+" veuillez vous référer à la documentation de :doc:`../api_reference/quick_api`."

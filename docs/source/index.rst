@@ -3,7 +3,7 @@ MAPLES-DR Dataset Documentation
 *******************************
 
 
-**MAPLES-DR** *(MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy)* is a public dataset which provides expert-level diagnosis of DR and pixel-wise segmentation maps of 10 retinal structures.
+**MAPLES-DR** *(MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy)* is a public dataset which provides expert-level diagnosis of |DR| and pixel-wise segmentation maps of 10 retinal structures.
 
 For **198 fundus image** of the public dataset :doc:`MESSIDOR <welcome/messidor>`, our team of seven canadian senior retinologists graded :abbr:`DR (Diabetic Retinopathy)` and :abbr:`ME (Macular Edema)`, and segmented ten retinal structures related to those pathologies: **optic disc** and **cup**, **macula**, **vessels**, **micro-aneurysms**, **hemorrhages**, **neo-vessels**, **exudates**, **cotton wool spots** and **drusens**. A detailed description of those biomarkers and their implication in the diagnosis of DR can be found in the :doc:`dataset description section <welcome/dataset_description>` of this documentation. 
 By releasing this dataset, we hope to help the AI community improves the explainability and reliability of machine learning models for DR screening.
@@ -15,18 +15,15 @@ By releasing this dataset, we hope to help the AI community improves the explain
    Overview of MAPLES-DR content and annotation process. (Credit: :cite:t:`maples_dr`)
 
 
-Note that, in the interest of time, some of the retinal structures were annotated by correcting AI generated segmentation map instead of labelling them from scratch. The complete annotation process is documented in `this paper <https://arxiv.org/abs/2402.04258>`_ :cite:`maples_dr` *(the URL currently refers to a temporary arxiv preprint, while our manuscript is under revisions.)*.
+The annotation procedure relied on AI generated pre-segmentation of some retinal structures and a custom web-based annotation platform. The complete annotation process is documented in `this paper <https://arxiv.org/abs/2402.04258>`_ :cite:`maples_dr` *(the URL currently refers to a temporary arxiv preprint, while our manuscript is under revisions.)*.
 
 
 Usage
 =====
 
-The dataset is freely available for download through `MAPLES-DR Figshare repository <https://doi.org/10.6084/m9.figshare.24328660>`_. 
+The dataset is freely available for download on `MAPLES-DR Figshare repository <https://doi.org/10.6084/m9.figshare.24328660>`_. 
 
-However, for machine learning usage we encourage researcher to directly download MAPLES-DR labels through ``maples_dr`` :doc:`python library <welcome/python_library>`. This library provides a simple API to load MAPLES-DR labels, and ease their integration with MESSIDOR original fundus images by automating the process of matching, cropping and resizing them to a uniform format.
-
-
-
+However, for machine learning usage we encourage researcher to directly download MAPLES-DR labels through :doc:`the python library <welcome/python_library>`: ``maples_dr``. This library provides a simple API to load MAPLES-DR labels, and eases their integration with the original fundus images of MESSIDOR, by automating the process of matching, cropping and resizing them to a uniform format.
 
 If you wish to use this dataset in an academic work, we kindly ask you to cite the following `paper <https://arxiv.org/abs/2402.04258>`_ :cite:`maples_dr`::
 
@@ -36,7 +33,6 @@ If you wish to use this dataset in an academic work, we kindly ask you to cite t
          year={2024},
          eprint={2402.04258},
          archivePrefix={arXiv},
-         primaryClass={eess.IV},
          doi={10.48550/arXiv.2402.04258}
       }
 
@@ -60,12 +56,19 @@ Annotation Platform
 *******************
 The web-based annotation platform used to annotate MAPLES-DR is available on `github <https://github.com/LIV4D/AnnotationPlatform>`_.
 
-
 Reference
 =========
 
 .. bibliography::
    :filter: docname in docnames
+
+
+Acknowledgements
+================
+This study was funded by the Natural Science and Engineering Research Council of Canada as well as Diabetes Action Canada and FROUM (Fonds de recherche en ophtalmologie de l'Université de Montréal).
+
+The original MESSIDOR dataset  was kindly provided by the Messidor program partners (see `https://www.adcis.net/en/third-party/messidor/ <https://www.adcis.net/en/third-party/messidor/>`_).
+
 
 .. toctree::
    :hidden:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"POT-Creation-Date: 2024-04-10 20:02-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,84 +19,92 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: ../../api_reference/config.rst:3 7f9b0f79619a4244a9459c03ed37ac12
+#: ../../source/api_reference/config.rst:3 7157b2e2763f422b9b3c08adabba918b
 msgid "MAPLES-DR Configuration"
 msgstr ""
 
-#: fc78206617bb405eb84a9739faf0ee84 maples_dr.config.DatasetConfig:1 of
+#: 81a025f1c99b46fa83fbb11f6277eb9c maples_dr.config.DatasetConfig:1 of
 msgid "Dataclass storing the configuration of the dataset."
 msgstr ""
 
-#: ../../docstring f5b841736d734d45bbf10ecdd0cb7bd1
-#: maples_dr.config.DatasetConfig.cache:1 of
-msgid ""
-"Path to permanently cache the formatted dataset. If False (by default), "
-"then the cache is disabled."
+#: 1db9c70c7b6741b3931ec4ac792af44d maples_dr.config.DatasetConfig.cache_path:1
+#: of
+msgid "Return the path to the cache directory."
 msgstr ""
 
-#: ../../docstring 77592988efbb442aafc53211ff41b8d5
+#: 0ff83708d4474c95aa8803c972df7db1 maples_dr.config.DatasetConfig.cache_path
+#: of
+msgid "Returns"
+msgstr ""
+
+#: aed333aa69d54a67a277dceb5e13801b maples_dr.config.DatasetConfig.cache_path:3
+#: of
+msgid "The path to the cache directory or None if the cache is disabled."
+msgstr ""
+
+#: ../../docstring 7df527a956b2421b8a3145c10f2bae02
 #: maples_dr.config.DatasetConfig.image_format:1 of
 msgid ""
 "Python format of the generated images. See :class:`ImageFormat` for the "
 "available options."
 msgstr ""
 
-#: ../../docstring d5442b7db5e24c2695fb914259b0c485
+#: ../../docstring c5daaac1b6654081b456ea7d86c70f53
 #: maples_dr.config.DatasetConfig.image_format:3 of
 msgid "By default: :attr:`ImageFormat.PIL` is used."
 msgstr ""
 
-#: ../../docstring ba4d5b9d747c489e860b13d17d69578f
+#: ../../docstring 82f5148233a140789a41371c0c604411
 #: maples_dr.config.DatasetConfig.preprocessing:1 of
 msgid ""
 "Preprocessing algorithm applied on the fundus images. See "
 ":class:`Preprocessing` for the available options."
 msgstr ""
 
-#: ../../docstring fd82d13b85ca4e6c9184f15bb134f0fa
+#: ../../docstring e49b706761c74dbdadb0923155e44c8a
 #: maples_dr.config.DatasetConfig.preprocessing:4 of
 msgid "By default: :attr:`Preprocessing.NONE` (no preprocessing) is applied."
 msgstr ""
 
-#: ../../docstring 702ab8ccee8f4e01832b5af01458d40e
+#: ../../docstring ae8e0e94e34948b991fb2cd28f269809
 #: maples_dr.config.DatasetConfig.resize:1 of
 msgid "Size of the generated images."
 msgstr ""
 
-#: ../../docstring 31f4b8dfdeb7480b991c30dedf6802e3
+#: ../../docstring dda721df3af44ac68e37fd4c0f0670e2
 #: maples_dr.config.DatasetConfig.resize:3 of
 msgid "If ``int``: the images are resized to a square of the given size;"
 msgstr ""
 
-#: ../../docstring 895cc491677146e3b15cdb3a1b2f4407
+#: ../../docstring 2ee2eac3c829490fb2c4420598ecebf0
 #: maples_dr.config.DatasetConfig.resize:4 of
 msgid "if ``True``: the original MAPLES-DR resolution of 1500x1500 px is kept;"
 msgstr ""
 
-#: ../../docstring 78c0e4bb1cec45c3bc130f7ea300c384
+#: ../../docstring 3dc21afd91254acaba1b49804c91eb26
 #: maples_dr.config.DatasetConfig.resize:5 of
 msgid ""
 "if ``False``: keep the original MESSIDOR resolution if MESSIDOR path is "
 "configured, otherwise fallback to MAPLES-DR original resolution."
 msgstr ""
 
-#: ../../docstring 0d943cbee5e647e5963b3752f95c739e
+#: ../../docstring 0eafb020d79a4ae79f7ef1daebb684fc
 #: maples_dr.config.DatasetConfig.resize:8 of
 msgid "By default: ``True`` (use MAPLES-DR 1500x1500 px resolution)."
 msgstr ""
 
-#: 601def3b330247d6a159bb5123093dfd maples_dr.config.ImageFormat:1 of
+#: d19d340f50f84b8c8dd8f0f794a8863b maples_dr.config.ImageFormat:1 of
 msgid ""
 "String Enum of possible image formats for fundus images and biomarker "
 "masks."
 msgstr ""
 
-#: ../../docstring a0384f4b698344bda17f4e6b2967719e
+#: ../../docstring 4c7214124e774423b82c60ef94b35f52
 #: maples_dr.config.ImageFormat.PIL:1 of
 msgid "Images are formatted as :class:`PIL.Image.Image`."
 msgstr ""
 
-#: ../../docstring 2552c9ea460e45d592be08b0d6284b9f
+#: ../../docstring 6b2039721a1f4667a72c7d3e5a955b77
 #: maples_dr.config.ImageFormat.RGB:1 of
 msgid ""
 "Images are formatted as numpy array. Biomarkers masks have a shape of "
@@ -104,7 +112,7 @@ msgid ""
 "3)`` with a ``RGB`` channel order."
 msgstr ""
 
-#: ../../docstring d050022256f44960a33e6e732d63605a
+#: ../../docstring d3fd285a92fc4dcbbd312272e8f1e578
 #: maples_dr.config.ImageFormat.BGR:1 of
 msgid ""
 "Images are formatted as numpy array. Biomarkers masks have a shape of "
@@ -112,40 +120,40 @@ msgid ""
 "3)`` with a ``BGR`` channel order."
 msgstr ""
 
-#: 7f9cba135ff84c0da73a9e2b314cd074 maples_dr.config.Preprocessing:1 of
+#: 2a40e90994ca4e4fbfa3a512aa115b64 maples_dr.config.Preprocessing:1 of
 msgid ""
 "String Enum of possible preprocessing algorithms applied on the fundus "
 "images."
 msgstr ""
 
-#: ../../docstring fbbc8903579b49eba49d8655e5e2862e
+#: ../../docstring 20ae08e2e3234b1abfa9b585982e4756
 #: maples_dr.config.Preprocessing.NONE:1 of
 msgid "No preprocessing."
 msgstr ""
 
-#: ../../docstring d87c916b0c6c415a95e7e9d166ccaaf1
+#: ../../docstring c885f3c1d13d4199ad909ac14a191e0d
 #: maples_dr.config.Preprocessing.CLAHE:1 of
 msgid ""
 "Preprocessing based on Contrast Limited Adaptive Histogram Equalization "
 "(CLAHE)."
 msgstr ""
 
-#: ../../docstring 451c514424cf4f619f46dee6b1031f51
+#: ../../docstring d739c1377b6b47c69a92e3e03431ecde
 #: maples_dr.config.Preprocessing.CLAHE:3 of
 msgid "See :func:`maples_dr.preprocessing.clahe_preprocessing`."
 msgstr ""
 
-#: ../../docstring a8eee0517bc440ce8c5a78be85d7cacf
+#: ../../docstring 9e1343143f6e419bb12dd7c5a74db5aa
 #: maples_dr.config.Preprocessing.MEDIAN:1 of
 msgid "Preprocessing based on median filtering."
 msgstr ""
 
-#: ../../docstring 22b37f4035fa4b0f8bd208d00f4f32ba
+#: ../../docstring e8cd2dfc886240c5bf95382ba7ab48cc
 #: maples_dr.config.Preprocessing.MEDIAN:3 of
 msgid "See :func:`maples_dr.preprocessing.median_preprocessing`."
 msgstr ""
 
-#: a26fa810bb54442181a7febdcd369c17 maples_dr.config.InvalidConfigError:1 of
+#: 88600b41769b48e1b7ac808fe804e32d maples_dr.config.InvalidConfigError:1 of
 msgid "Exception raised when the configuration is invalid."
 msgstr ""
 

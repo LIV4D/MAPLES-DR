@@ -69,6 +69,11 @@ rst_prolog = """
 .. |br| raw:: html
 
    <br />
+
+.. # GLOBAL SUBSTITUTIONS
+.. |MAPLES-DR| replace:: :abbr:`MAPLES-DR (MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy)`
+.. |DR| replace:: :abbr:`DR (Diabetic Retinopathy)`
+.. |ME| replace:: :abbr:`ME (Macular Edema)`
 """
 
 # -- Options for nbsphinx ----------------------------------------------------

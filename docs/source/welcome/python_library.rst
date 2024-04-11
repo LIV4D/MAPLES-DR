@@ -32,7 +32,7 @@ API Reference
    :maxdepth: 1
 
    ../api_reference/quick_api
-   <../api_reference/config>
+   ../api_reference/config
    ../api_reference/dataset
    ../api_reference/loader
    ../api_reference/preprocessing

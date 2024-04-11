@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"POT-Creation-Date: 2024-04-10 20:02-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,38 +19,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: ../../api_reference/loader.rst:3 a50079ecd5564bfc8e68e9f5f3a013f7
+#: ../../source/api_reference/loader.rst:3 d27faad14031446dadaa56216b915cae
 msgid "Datasets Loader"
 msgstr ""
 
-#: 5014a43ca49a421c905a922ce9b1d4e8 maples_dr.loader.DatasetLoader:1 of
+#: e2ab65ca9cf74203bc9fc9d356fd2bdc maples_dr.loader.DatasetLoader:1 of
 msgid "Loader for MAPLES-DR dataset."
 msgstr ""
 
-#: 76ebd5aaa7a34883abacd90dd7a42fcd
+#: 1e6bbc14e64d4c56b8c16930bafaed3c maples_dr.loader.DatasetLoader.cfg:1 of
+msgid "Return the default configuration of the loaded dataset."
+msgstr ""
+
+#: 089229d858b44434b1221fe4ba71b4cf
 #: maples_dr.loader.DatasetLoader.check_maples_dr_integrity:1 of
 msgid "Check if the MAPLES-DR dataset contains all segmentation maps."
 msgstr ""
 
-#: 3e437e502bb0498782347e4eac78604e maples_dr.loader.DatasetLoader.configure:1
-#: of
-msgid "Configure the default behavior of the MAPLES-DR dataset."
-msgstr ""
-
-#: 0ea3453f455c48769e7da2a5dd3a73f1 43c9cb11198b486a8b8019f3a95875d6
-#: 4ceb451b5c61401cbfdc3b00cd8c4e94 4d54fd40d7784fd0aecc5c72ae35d9a1
-#: 5e7c2a8615fe4291ae6df25523d62383 97f1e2ed0db34d2290e5a6268fe05d96
-#: e3fce680165a4c49bca4e6e6bd71e0c7 maples_dr.loader.DatasetLoader.configure
+#: 01b9db89645f4362a7ca48163b46faaf 12fd019ed25344589a3abe72865bef9f
+#: 2e3d9b89ab8c40d0b87a07ad9d2acec5 a97ee699daa6494a8a80d40f43803973
+#: c5e7a42f4b2b4fdaa6c8ecc3ee90622b d9b08f88d81944cba34dc0896a5ac00c
+#: ef66a5e015e44cdbbf72dc8584ae95db fbcf9a76ac1b404682597ed49c415692
+#: maples_dr.loader.DatasetLoader.check_maples_dr_integrity
+#: maples_dr.loader.DatasetLoader.configure
 #: maples_dr.loader.DatasetLoader.discover_messidor_images
 #: maples_dr.loader.DatasetLoader.image_names
 #: maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos
 #: maples_dr.loader.DatasetLoader.load_dataset
-#: maples_dr.loader.DatasetLoader.load_dataset_infos_and_rois
+#: maples_dr.loader.DatasetLoader.load_dataset_record_and_rois
 #: maples_dr.loader.DatasetLoader.load_maples_dr_diagnosis of
 msgid "Parameters"
 msgstr ""
 
-#: 1f0563342ef34116b343bfa9b2e84afb maples_dr.loader.DatasetLoader.configure:3
+#: c583952bd00346799b60bfce8154c322 maples_dr.loader.DatasetLoader.configure:1
+#: of
+msgid "Configure the default behavior of the MAPLES-DR dataset."
+msgstr ""
+
+#: 123aaa35ffd2483ca149945a786a3737 maples_dr.loader.DatasetLoader.configure:3
 #: of
 msgid ""
 "Path to the MAPLES-DR additional data. Must point to the directory or to "
@@ -58,21 +64,21 @@ msgid ""
 "figshare."
 msgstr ""
 
-#: 0e25b2f9c42046c69a6d61a0357ca4ca maples_dr.loader.DatasetLoader.configure:6
+#: 6af8c342a784465b81f4fc3f8984d6b0 maples_dr.loader.DatasetLoader.configure:6
 #: of
 msgid ""
 "Path to the MESSIDOR dataset. Must point to a directory containing the "
 "\"Base11\", \"Base12\", ... subdirectories or zip files."
 msgstr ""
 
-#: 226da9d67b9e4de1aeb2ec5850459f80 maples_dr.loader.DatasetLoader.configure:9
+#: 167b10a8e6bb4257bf9d0818a54bf46e maples_dr.loader.DatasetLoader.configure:9
 #: of
 msgid ""
 "Size of the generated images. By default, keep the original image size of"
 " 1500x1500."
 msgstr ""
 
-#: c72f8b537dfd470aae4da2e57ed960e2 maples_dr.loader.DatasetLoader.configure:11
+#: a53c37d94a34434884c7e6529a272aaf maples_dr.loader.DatasetLoader.configure:11
 #: of
 msgid ""
 "Python format of the generated images. Must be either \"PIL\", \"rgb\" or"
@@ -81,66 +87,75 @@ msgid ""
 "used."
 msgstr ""
 
-#: 7a46c64dfb974a2a845a0bed05e58dda maples_dr.loader.DatasetLoader.configure:15
+#: 4553727024394ab6b1de7eb895ef41a5 maples_dr.loader.DatasetLoader.configure:15
 #: of
 msgid ""
-"Preprocessing aglorithm applied on the fundus images. Must be either "
+"Preprocessing algorithm applied on the fundus images. Must be either "
 "\"clahe\", \"median\" or None (no preprocessing). By default, no "
 "preprocessing is applied."
 msgstr ""
 
-#: d9e7882b4cfd44ceb068390522eb42cb maples_dr.loader.DatasetLoader.configure:19
+#: 73048e55f4fa444e8ace55cfc9b27f18 maples_dr.loader.DatasetLoader.configure:19
 #: of
 msgid ""
 "Path to permanently cache the formatted dataset. If None (by default), "
 "then the cache is disabled."
 msgstr ""
 
-#: 8796126484704561a0713f1064c2d083 maples_dr.loader.DatasetLoader.configure:21
+#: c4e47afb8fdc47f6b47be156fad23020 maples_dr.loader.DatasetLoader.configure:21
 #: of
 msgid "If True, disable the integrity check of the dataset."
 msgstr ""
 
-#: c37fa8def7eb46969007ba0fdc31b758
-#: maples_dr.loader.DatasetLoader.datasets_config:1 of
-msgid "Return the default configuration of the loaded dataset."
-msgstr ""
-
-#: 9378dc8b319547d6ad9c023993646028
+#: ec6fe8c04d454661a61122baefdfa93d
 #: maples_dr.loader.DatasetLoader.discover_messidor_images:1 of
 msgid "Discover the MESSIDOR images corresponding to the given MAPLES-DR images."
 msgstr ""
 
-#: 5acb47f6e94d467491455fd229eaa082
+#: 7e8fc3d159ab4c2e88dcd713a0f93f88
 #: maples_dr.loader.DatasetLoader.discover_messidor_images:3 of
 msgid ""
 "List of MAPLES-DR images names. The image name should not contain the "
 "extension."
 msgstr ""
 
-#: c0d0d893e62747dfb8154a5d2983df84
+#: ee09995725dc4f2a9c12acc98ace923d
 #: maples_dr.loader.DatasetLoader.discover_messidor_images:4 of
 msgid "Path to the MESSIDOR dataset."
 msgstr ""
 
-#: 3ca346ba2eb240f281aeec47a8412dcc
+#: 08b5e66dff584c188a12b40d41bdd2eb 9dad99948ff2460bbc257ce946cfbde2
+#: b716a62be41448b89eec1f1a2ec02d25 c4752dfb67ff47a8963a2042101725f0
+#: cd599e272d2241aabc32a8c0ca2a9002 e44c0963af0a42648f1888345d45e7a9
+#: f9876ea4e5544d408169add777393ea2
+#: maples_dr.loader.DatasetLoader.discover_messidor_images
+#: maples_dr.loader.DatasetLoader.image_names
+#: maples_dr.loader.DatasetLoader.is_configured
+#: maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos
+#: maples_dr.loader.DatasetLoader.load_dataset
+#: maples_dr.loader.DatasetLoader.load_dataset_record_and_rois
+#: maples_dr.loader.DatasetLoader.load_maples_dr_diagnosis of
+msgid "Return type"
+msgstr ""
+
+#: 06fe5d111fce4e6cb3ee641365de9224
 #: maples_dr.loader.DatasetLoader.ensure_configured:1 of
 msgid "Ensure the dataset is initialized."
 msgstr ""
 
-#: bdab83f08c914ddda41742d27d471895
+#: 3dcbbad9b77b49f59f4a1a251ebdf043
 #: maples_dr.loader.DatasetLoader.image_names:1 of
 msgid "Return the list of images names of the given subset."
 msgstr ""
 
-#: 7d0031b5cbab454787b991c728957b76
+#: 2e3475ba2428450ab6b97784319e0db6
 #: maples_dr.loader.DatasetLoader.image_names:3 of
 msgid ""
 "Subset to return the images names from. If None, return all images names."
 " Must be either None, \"train\", \"test\" or \"duplicates\"."
 msgstr ""
 
-#: 62eeb8ff28f140aeab068cdb00824d1a
+#: 0b7f58df19994be884d66d9a337590f6
 #: maples_dr.loader.DatasetLoader.image_names:5 of
 msgid ""
 "Control whether the images names should include the extension or not. - "
@@ -149,73 +164,59 @@ msgid ""
 " the images names with the given extension."
 msgstr ""
 
-#: 1e49e02670664f0cacf60055409421af 4de0eb885ec64d848c7e156df39c1a25
-#: 5dec208903eb48d6804b9c210febfd4f b1e49e01078a4989b28fbf1f7c5c3fc3
-#: ccf8e89f2cfe4a8ea499f094c9aadfc7 fc885a2deb0b47b495afc1aef2756147
-#: maples_dr.loader.DatasetLoader.image_names
-#: maples_dr.loader.DatasetLoader.is_configured
-#: maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos
-#: maples_dr.loader.DatasetLoader.load_dataset
-#: maples_dr.loader.DatasetLoader.load_dataset_infos_and_rois
-#: maples_dr.loader.DatasetLoader.load_maples_dr_diagnosis of
-msgid "Return type"
-msgstr ""
-
-#: 7d649fdd7ac3467ea9bcad25b8eb501c
+#: 0d5a61d4d2a94597a4537f0075ebf934
 #: maples_dr.loader.DatasetLoader.is_configured:1 of
 msgid "Check if the dataset is initialized."
 msgstr ""
 
-#: 1509ad88343248bfa9c737dcd4534571
+#: 2a9c2bf0b81d407498014c8680ea7357
 #: maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos:1 of
 msgid "Load the MAPLES-DR biomarkers annotation infos file."
 msgstr ""
 
-#: b2bb6b132de84b8ba93bd0cc9d509d12
+#: a99ca879dded404fb37f4a34c3593a64
 #: maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos:3 of
 msgid "Path to the MAPLES-DR biomarkers annotation infos file."
 msgstr ""
 
-#: c6ab4865476c4a9db480d31ef508e3f3
+#: 7a9e66dc391c4488a767c4965328a66d
 #: maples_dr.loader.DatasetLoader.load_dataset:1 of
 msgid "Return the MAPLES-DR dataset."
 msgstr ""
 
-#: ec49a80f92f249e0b8403780b06d8f17
+#: bd8e7ab0832f45b4b2e85813db09f62c
 #: maples_dr.loader.DatasetLoader.load_dataset:3 of
 msgid ""
 "Subset of the dataset to return. If None, return the whole dataset. Must "
-"be either None, \"train\" or \"test\"."
+"be either None, \"train\" or \"test\" or a list of valid image name."
 msgstr ""
 
-#: 1dfea1a3e99f4257abe4304decd83e03
-#: maples_dr.loader.DatasetLoader.load_dataset_infos_and_rois:1 of
-msgid "Load the MAPLES-DR dataset infos and the rois in MESSIDOR images."
+#: ce54387cd19d4c849f4a69b9f9ee171d
+#: maples_dr.loader.DatasetLoader.load_dataset_record_and_rois:1 of
+msgid "Load the MAPLES-DR dataset record and the rois in MESSIDOR images."
 msgstr ""
 
-#: c41f941ddc114f5c8e66fcf2beb47eaf
-#: maples_dr.loader.DatasetLoader.load_dataset_infos_and_rois:3 of
+#: 7e9d7d01777c4d0b827a10fd718dd3ef
+#: maples_dr.loader.DatasetLoader.load_dataset_record_and_rois:3 of
 msgid "Path to the MAPLES-DR dataset folder."
 msgstr ""
 
-#: dd22f33284434106a24daa408fff9a80
+#: f361123d63654b449412f8e82d29ca8c
 #: maples_dr.loader.DatasetLoader.load_maples_dr_diagnosis:1 of
 msgid "Load the MAPLES-DR diagnostic file."
 msgstr ""
 
-#: 45e338f88d02484eada85ffe3910d6a2
+#: 4f1a28bc0e1b41e2ad0a5a59f83df04c
 #: maples_dr.loader.DatasetLoader.load_maples_dr_diagnosis:3 of
-msgid ""
-"Path to the MAPLES-DR diagnostic file. If None, download the file from "
-"Figshare."
+msgid "Path to the MAPLES-DR diagnostic file."
 msgstr ""
 
-#: 6bac71d972ad4158a5c8e7fc57081337
+#: 4f9a10a483204516b7903350e8f335cc
 #: maples_dr.loader.DatasetLoader.maples_dr_folder:1 of
 msgid "Return the path to the MAPLES-DR dataset folder."
 msgstr ""
 
-#: 999daaefe45c424abbc212ecf82a5890 maples_dr.loader.NotConfiguredError:1 of
+#: 75d3701de94a46d7b8ada192ecf63498 maples_dr.loader.NotConfiguredError:1 of
 msgid "Exception raised when the dataset loader is not configured."
 msgstr ""
 

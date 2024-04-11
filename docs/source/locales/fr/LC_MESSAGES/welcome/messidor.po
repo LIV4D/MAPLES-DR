@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"POT-Creation-Date: 2024-04-10 20:02-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: ../../welcome/messidor.rst:3 523e8ea990cf4346b9f85cbf26bf2d62
+#: ../../source/welcome/messidor.rst:3 81c5cf6a07ba4daa89bc6e94624893b2
 msgid "Using MESSIDOR fundus images"
-msgstr ""
+msgstr "Utiliser les images de MESSIDOR"
 
-#: ../../welcome/messidor.rst:5 7fe01e2dcdb04bc0bf907e164105a747
+#: ../../source/welcome/messidor.rst:5 2e8c8296d11d403fb1de632e9fbb631e
 msgid ""
 "The fundus images corresponding to the diagnostic labels and biomarker "
 "segmentation maps of MAPLES-DR are the property of the MESSIDOR "
@@ -33,12 +33,18 @@ msgid ""
 " This page will guide you through the setup of including MESSIDOR fundus "
 "images along MAPLES-DR labels."
 msgstr ""
+"Les images de fond d'oeil annotées dans |MAPLES-DR| sont la propriété "
+"du consortium MESSIDOR et ne sont donc pas inclues dans le jeu de données. "
+"Cependant elles sont accessible librement à toute équipe de recherche qui "
+"les demande sur le `site du consortium <https://www.adcis.net/en/third-party/messidor/>`_."
+" Cette page décrit les instructions pour inclure les images de MESSIDOR avec "
+"les annotations de MAPLES-DR."
 
-#: ../../welcome/messidor.rst:8 90ae79853733417caf9d45b15b951ea4
+#: ../../source/welcome/messidor.rst:8 48492aaf5bac4ac8a33358e88e184cf2
 msgid "Download MESSIDOR fundus images"
-msgstr ""
+msgstr "Télécharger les images de fond d'oeil de MESSIDOR"
 
-#: ../../welcome/messidor.rst:10 48f462d889de4374a7de73e13a02b978
+#: ../../source/welcome/messidor.rst:10 1115bda91ae241cf9680250059b28200
 msgid ""
 "The MESSIDOR fundus images can be downloaded from the `Consortium's "
 "website <https://www.adcis.net/en/third-party/messidor/>`_. The "
@@ -46,39 +52,83 @@ msgid ""
 "agree to the terms of license agreement, and verify your email address "
 "before downloading the images."
 msgstr ""
+"Les images de MESSIDOR peuvent-être téléchargées depuis le `site "
+"du consortium <https://www.adcis.net/en/third-party/messidor/>`_. Vous "
+"devrez remplir un formulaire avec vos informations personelles, "
+"accepter les termes de licence, et vérifier votre adresse email avant "
+"pour accéder à la page de téléchargement."
 
-#: ../../welcome/messidor.rst:12 ad81b56ca65b4935930fffaf59ea17f9
+#: ../../source/welcome/messidor.rst:12 0a1f5b66778a42b197296c88018d9556
 msgid ""
-"The download page contains links to files. The fundus images are divided "
-"into 12 archives named ``Base__ images (zip)``. Make sure to download all"
-" 12 archives (`Base11.zip`, `Base12.zip`, ...,  `Base34.zip`) to the same"
-" directory."
+"The download page contains links to several files. The fundus images are "
+"divided into 12 zip archives named ``Base__ images (zip)``. Make sure to "
+"download all 12 archives (`Base11.zip`, `Base12.zip`, ...,  `Base34.zip`)"
+" to the same directory."
 msgstr ""
+"La page de téléchargement contient des liens vers de plusieurs fichiers. "
+"Les images de fond d'oeil ont été divisées en 12 archives zip appelées ``Base__ "
+"images (zip)``. Assurez-vous de télécharger les 12 archvies (`Base11.zip`, "
+"`Base12.zip`, ...,  `Base34.zip`) dans un dossier unique."
 
-#: ../../welcome/messidor.rst:16 736a4b9bdf5a41ceb6b8e3049fbf6066
+#: ../../source/welcome/messidor.rst:16 dab200393b4a415192dda05d476411e7
 msgid "Configure MESSIDOR local path"
-msgstr ""
+msgstr "Configurer le chemin vers MESSIDOR"
 
-#: ../../welcome/messidor.rst:18 d5719a5bac76450d972b33f298f94c34
+#: ../../source/welcome/messidor.rst:18 4015be939daa420388d8af9137ae38a9
 msgid ""
 "Once you have downloaded the images, you can include them in the dataset "
 "by calling:"
 msgstr ""
+"Une fois les images téléchargées, vous pouvez les inclures dans le "
+"dataset avec:"
 
-#: ../../welcome/messidor.rst:26 ab71ca8989e2497cbba961e516dbde6c
+#: ../../source/welcome/messidor.rst:26 d04e0f8511bd47e29821d1eb353c858e
 msgid ""
 "Upon calling :func:`maples_dr.load_train_set` or "
 ":func:`maples_dr.load_test_set`, the 200 fundus images related to MAPLES-"
-"DR will be extracted, cropped and resized to the appropriate resolution, "
-"and finally included along the MAPLES-DR biomarkers under the name "
-"`fundus`."
+"DR will be extracted, cropped and resized to match MAPLES-DR resolution. "
+"They will be accessible under the field ``\"fundus\"`` along the other "
+"MAPLES-DR biomarkers."
 msgstr ""
+"Lors de l'appel de :func:`maples_dr.load_train_set` ou de "
+":func:`maples_dr.load_test_set`, les 200 images de fond d'oeil "
+"annotées dans MAPLES-DR seront extraites, découpées et redimenssionées "
+"pour correspondre à la résolution des cartes de segmentation de MAPLES-DR. "
+"Ces images de fond d'oeil seront accessibles sous le ``\"fundus\"``,"
+"comme les autres biomarqueurs de |MAPLES-DR|."
 
-#: ../../welcome/messidor.rst:35 dc0d18a4df3449898e4f07290f072343
+#: ../../source/welcome/messidor.rst:35 6db29a2566514a5f8b31ff7735741aa4
 msgid ""
 "Similarly, if you export the dataset to local files with "
 ":func:`maples_dr.export_train_set` or  :func:`maples_dr.export_test_set`,"
-" a folder named `fundus` will be created in the same directory as the "
-"other biomarker, containing the fundus images."
+" a folder named ``fundus`` will be created in the same directory as the "
+"other biomarkers, containing the fundus images at the appropriate "
+"resolution."
 msgstr ""
+"De façon analogue, lors d'un export de |MAPLES-DR| vers des dossiers locaux "
+"avec :func:`maples_dr.export_train_set` ou  :func:`maples_dr.export_test_set`,"
+" un dossier appelé ``fundus```sera créé à coté de ceux des autres biomarqueurs, "
+"contenant les images de fond d'oeil à la résolution adéquate".
 
+#: ../../source/welcome/messidor.rst:38 f8dd358abdf6491ab388197d54efd18c
+msgid "Acknowledgements"
+msgstr "Remerciements"
+
+#: ../../source/welcome/messidor.rst:40 327bad1b46cc48f193922620ae8b068f
+msgid ""
+"The MESSIDOR dataset was kindly provided by the Messidor program partners"
+" (see `https://www.adcis.net/en/third-party/messidor/ "
+"<https://www.adcis.net/en/third-party/messidor/>`_)."
+msgstr ""
+"Le jeu de données d'images de fond d'œil est fourni par les partenaires "
+"du programme Messidor (voir `https://www.adcis.net/fr/logiciels-tiers/"
+"messidor-fr/ <https://www.adcis.net/fr/logiciels-tiers/messidor-fr/>`_)."
+
+#: ../../source/welcome/messidor.rst:42 5013befa287f4730b8db23404cdbee01
+msgid ""
+"We remind that users of the MESSIDOR database (and therefore MAPLES-DR "
+"users) are encouraged to reference the following article::"
+msgstr ""
+"Nous rappelons que les utilisateurs de la base de données MESSIDOR "
+"(et donc les utilisateurs de |MAPLES-DR|) sont encouragés à citer "
+"l'article suivant::"

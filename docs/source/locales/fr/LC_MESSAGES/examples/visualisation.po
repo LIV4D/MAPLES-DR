@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"POT-Creation-Date: 2024-04-10 20:02-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,63 +19,77 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: ../../examples/visualisation.ipynb:9 59ef6d2490564f5fab01b1cdbc81bb5a
+#: ../../source/examples/visualisation.ipynb:9 f47cb72c009e4e09b2c40d7b4c2d2368
 msgid "Visualisation Example"
-msgstr "Exemples de Visualisation"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:81 a3d3a9d053bf4bfa8241d704d285a9e8
+#: ../../source/examples/visualisation.ipynb:81
+#: b455dc8b4ca04cff997d690efe0ef3b6
 msgid "Configure Maples-DR"
-msgstr "Configuration de MAPLES-DR"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:92 63160c8564dd47b287c9c024584d9710
+#: ../../source/examples/visualisation.ipynb:92
+#: 9745b9c151e74c098e4b58426e5e9c73
 msgid "Configure the images resolution and format."
-msgstr "Configuration de la résolution et du format des images."
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:423 927b047e7fd64264b8af1c87cadc793f
+#: ../../source/examples/visualisation.ipynb:423
+#: 75573c6065a34550b3aa497552ffc096
 msgid "Load dataset"
-msgstr "Chargement du dataset"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:434 b8c3bacb7b704642850f300ddb7261a0
+#: ../../source/examples/visualisation.ipynb:434
+#: f1946f39d6334fd093ccf11d8e8d10d9
 msgid "Load the train set in memory."
-msgstr "Chargement en mémoire de l'ensemble d'entrainement"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:455 6ca6502c78bd4bd0bb120f7e932bdc13
+#: ../../source/examples/visualisation.ipynb:455
+#: 28a7732a83524b55b2dfecb6af2a148f
 msgid "Read the first sample"
-msgstr "Lecture du premier échantillon"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:609 6f26cddcd50a46869b4d623543b9b877
+#: ../../source/examples/visualisation.ipynb:609
+#: 120f60c3c8b345b581c71f04b5e432ad
 msgid "Visualise Anatomic biomarkers"
-msgstr "Visualisation des biomarqueurs anatomiques"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:621 7cdc4abf1ed2472a83f5a58006a007a8
+#: ../../source/examples/visualisation.ipynb:621
+#: a5748534cf4e4d17bf01053ecec117e6
 msgid "Vessels"
-msgstr "Vaisseaux"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:652 ff9eaa2756034107a7add15800d59a74
+#: ../../source/examples/visualisation.ipynb:652
+#: 0b0a4161d5ae4bf5b9ab6c3299afaedd
 msgid "Optic Disk"
-msgstr "Disque Optique"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:683 5fb4684952ad4bcaba334507aba6f117
+#: ../../source/examples/visualisation.ipynb:683
+#: 1c86751c8efe43ad9c16ba16142b6cc3
 msgid "Macula"
-msgstr "Macula"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:725 3831130f8bbb4f458b68700624fc8bd1
+#: ../../source/examples/visualisation.ipynb:725
+#: 9e5b69adc1054696b3437307be8f1e74
 msgid "Visualise Pathological biomarkers"
-msgstr "Visualisation des biomarqueurs pathologiques"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:737 d5de987ea6f54194a0cb107e6ce6aa92
+#: ../../source/examples/visualisation.ipynb:737
+#: 93e38c1402cc4e76a0e9f04ff1301194
 msgid "Hemorrhages"
-msgstr "Hémorragies"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:768 8ac7bda3efa348299958511078c7ebc8
+#: ../../source/examples/visualisation.ipynb:768
+#: b0f2b52335f54e1987dbc42030772e3e
 msgid "Microaneurysms"
-msgstr "Micro-anévrismes"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:799 b113b73aa2c648618af5c6e92a9b57a3
+#: ../../source/examples/visualisation.ipynb:799
+#: acaf1adcd6324087b012aa9210def79c
 msgid "Exudates"
-msgstr "Exudats"
+msgstr ""
 
-#: ../../examples/visualisation.ipynb:830 dc7f24d8313041f5b44212b5d8bb4504
+#: ../../source/examples/visualisation.ipynb:830
+#: e882fa5cee1148ce8a06168bee1c7754
 msgid "Cotton Wool Spots"
-msgstr "Nodules cottoneuses"
+msgstr ""
 

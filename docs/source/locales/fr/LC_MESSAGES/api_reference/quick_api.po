@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-01 15:21-0400\n"
+"POT-Creation-Date: 2024-04-10 20:02-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,34 +19,34 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: ../../api_reference/quick_api.rst:3 fddaf28a79fa46a4b05f0e3da78749fd
+#: ../../source/api_reference/quick_api.rst:3 38978a0f99ab4c82bb8ec5c531c2976e
 msgid "MAPLES-DR Quick API"
 msgstr ""
 
-#: ../../api_reference/quick_api.rst:5 8b4b54f4339b4c9d8899b0ef9d9f0347
+#: ../../source/api_reference/quick_api.rst:5 46d18b9a042946f3a3a585082c8b2203
 msgid ""
 "Downloading, formating and saving MAPLES-DR data in memory or on the disk"
 " can be done quite simply using `maples_dr` quick API."
 msgstr ""
 
-#: ../../api_reference/quick_api.rst:7 03b198b5e2dc43a7b718eee31e701cfb
+#: ../../source/api_reference/quick_api.rst:7 9959c4621ab94d0eb4f43c860894a5dd
 msgid ""
 "All the following function are imported either from `maples_dr.quick_api`"
 " or directly from the `maples_dr` module:"
 msgstr ""
 
-#: 8cd3de16942c48a9bacddc645ad06d8a maples_dr.loader.DatasetLoader.configure:1
+#: d3c4b9526a0e41fea739774b17aefe28 maples_dr.loader.DatasetLoader.configure:1
 #: of
 msgid "Configure the default behavior of the MAPLES-DR dataset."
 msgstr ""
 
-#: 082aed08978a4a63ad00e782c15ab26e 17d7af1797bf471891a6d5ef7defb405
-#: dc073a18f7d44f6ab885a73df7c77a66 maples_dr.loader.DatasetLoader.configure
+#: a95227ae72f74218b2d041b934e0182f b4df7463095842f19bf8ec0962fdddda
+#: c65e36289f164d20b56606c949d2599a maples_dr.loader.DatasetLoader.configure
 #: maples_dr.quick_api.export_test_set maples_dr.quick_api.export_train_set of
 msgid "Parameters"
 msgstr ""
 
-#: f5165c36386943719f47903acd1a677d maples_dr.loader.DatasetLoader.configure:3
+#: a01750d5cada4429aee4885b77af9f41 maples_dr.loader.DatasetLoader.configure:3
 #: of
 msgid ""
 "Path to the MAPLES-DR additional data. Must point to the directory or to "
@@ -54,21 +54,21 @@ msgid ""
 "figshare."
 msgstr ""
 
-#: 0a9d65a85009480e9f6b5b8096631f15 maples_dr.loader.DatasetLoader.configure:6
+#: 953aa683e7d64bbbae7a58b818bd84c1 maples_dr.loader.DatasetLoader.configure:6
 #: of
 msgid ""
 "Path to the MESSIDOR dataset. Must point to a directory containing the "
 "\"Base11\", \"Base12\", ... subdirectories or zip files."
 msgstr ""
 
-#: 46cb995e813c47a59f18541f0c631b4a maples_dr.loader.DatasetLoader.configure:9
+#: 4f7c6ecd33304c398682bf1edcc84a7d maples_dr.loader.DatasetLoader.configure:9
 #: of
 msgid ""
 "Size of the generated images. By default, keep the original image size of"
 " 1500x1500."
 msgstr ""
 
-#: 325d133a6f78498a90ed1a19b05bdf6a maples_dr.loader.DatasetLoader.configure:11
+#: d6abc20693b14d26975d92d60731e84f maples_dr.loader.DatasetLoader.configure:11
 #: of
 msgid ""
 "Python format of the generated images. Must be either \"PIL\", \"rgb\" or"
@@ -77,31 +77,31 @@ msgid ""
 "used."
 msgstr ""
 
-#: 5015e1187e8d4ba383e0b7b5d642784b maples_dr.loader.DatasetLoader.configure:15
+#: 990b94df232a4f1eacbd3112be8d9b95 maples_dr.loader.DatasetLoader.configure:15
 #: of
 msgid ""
-"Preprocessing aglorithm applied on the fundus images. Must be either "
+"Preprocessing algorithm applied on the fundus images. Must be either "
 "\"clahe\", \"median\" or None (no preprocessing). By default, no "
 "preprocessing is applied."
 msgstr ""
 
-#: 8053fe585c204b068e04fd2194c2afb7 maples_dr.loader.DatasetLoader.configure:19
+#: a0e6c2e0d9844a3482e865599f689188 maples_dr.loader.DatasetLoader.configure:19
 #: of
 msgid ""
 "Path to permanently cache the formatted dataset. If None (by default), "
 "then the cache is disabled."
 msgstr ""
 
-#: 9f07eeda43fa48d5a2a654e0fa789b0a maples_dr.loader.DatasetLoader.configure:21
+#: d22efa960dff471aa94eec823a392ff4 maples_dr.loader.DatasetLoader.configure:21
 #: of
 msgid "If True, disable the integrity check of the dataset."
 msgstr ""
 
-#: d6fb0b2801c44b419e6980b534d1a6b3 maples_dr.quick_api.load_train_set:1 of
+#: 5296ccfbe3b34c44994aea90929dccc6 maples_dr.quick_api.load_train_set:1 of
 msgid "Load the training set in memory."
 msgstr ""
 
-#: 68fc5aa7d0304e4a9b6c6c2620b0ff85 maples_dr.quick_api.load_train_set:3 of
+#: c5edc555236c40c5b860daeb86d214b9 maples_dr.quick_api.load_train_set:3 of
 msgid ""
 "MAPLES-DR training set contains labels of pathological and anatomical "
 "structures for 138 fundus images. The dataset is return as a "
@@ -110,109 +110,109 @@ msgid ""
 "\"fundus\": The fundus image. (MESSIDOR path must have been configured!)"
 msgstr ""
 
-#: d99f8a4c459c4e07b0c3678d02464777 maples_dr.quick_api.load_train_set:8 of
+#: 2586e18fb27640e083942f01a9963c0b maples_dr.quick_api.load_train_set:8 of
 msgid "\"optic_cup\": The optic cup mask."
 msgstr ""
 
-#: 16d8b8e04b6a4576a07a70e777e48c88 maples_dr.quick_api.load_train_set:9 of
+#: 0fa7537264a34a119ae2725b3fdd729f maples_dr.quick_api.load_train_set:9 of
 msgid "\"optic_disc\": The optic disc mask."
 msgstr ""
 
-#: 0b852d7216284f6aad820a815ba5ba06 maples_dr.quick_api.load_train_set:10 of
+#: a78677a362a646b291f4112467e53eef maples_dr.quick_api.load_train_set:10 of
 msgid "\"macula\": The macula mask."
 msgstr ""
 
-#: db5f53618174465cbd7e28111dbf474a maples_dr.quick_api.load_train_set:11 of
+#: 82e6db6a123b4e2ea8b11c90404fbbff maples_dr.quick_api.load_train_set:11 of
 msgid "\"vessels\": The red lesions mask."
 msgstr ""
 
-#: de21b44044ee4ac7b5ef906ea438347b maples_dr.quick_api.load_train_set:13 of
+#: f4b6f570903c4ff0ac013f584ce4fc3b maples_dr.quick_api.load_train_set:13 of
 msgid "\"cotton_wool_spots\": The cotton wool spots mask."
 msgstr ""
 
-#: 8f63dfd29c3845f6b9fd509862ce1782 maples_dr.quick_api.load_train_set:14 of
+#: 38cedea93d95437387c1f800ff3b8b24 maples_dr.quick_api.load_train_set:14 of
 msgid "\"exudates\": The exudates mask."
 msgstr ""
 
-#: d3675813f71f4c989fe1735efb9d81f1 maples_dr.quick_api.load_train_set:15 of
+#: ed1b3f85b20c4250b8e7371ec671e679 maples_dr.quick_api.load_train_set:15 of
 msgid "\"drusens\": The drusens mask."
 msgstr ""
 
-#: 2c26f070a14644d6abc190ec243c7c5f maples_dr.quick_api.load_train_set:16 of
+#: ca2d5e22348f498abd97ad4a1d32d17a maples_dr.quick_api.load_train_set:16 of
 msgid ""
 "\"bright_uncertain\": The mask of bright lesions with uncertain type "
 "(CWS, exudates or drusens)."
 msgstr ""
 
-#: 626843f293a94f999a77e97760f2fb9a maples_dr.quick_api.load_train_set:18 of
+#: f4149e3426f14f7e9e53e8440fa258b9 maples_dr.quick_api.load_train_set:18 of
 msgid "\"microaneurysms\": The microaneurysms mask."
 msgstr ""
 
-#: 8d31b34241bb48b8934f4f047a3e4764 maples_dr.quick_api.load_train_set:19 of
+#: 9e9e91db488e457282b808fa8fb73e4a maples_dr.quick_api.load_train_set:19 of
 msgid "\"hemorrhages\": The hemorrhages mask."
 msgstr ""
 
-#: 34528391f252431681251caa4b16d88b maples_dr.quick_api.load_train_set:20 of
+#: a2f13e7d6c784715a05e39773ec16e28 maples_dr.quick_api.load_train_set:20 of
 msgid "\"neovascularization\": The neovascularization mask."
 msgstr ""
 
-#: 426bdde74e9d4496ae947fa248e24abd maples_dr.quick_api.load_train_set:21 of
+#: 99bca0941bc449439d6e785f449f1c03 maples_dr.quick_api.load_train_set:21 of
 msgid ""
 "\"red_uncertains\": The mask of red lesions with uncertain type "
 "(microaneuryms or hemorrhages)."
 msgstr ""
 
-#: f906a621b6504c42b3cfbdea6ebee31f maples_dr.quick_api.load_train_set:23 of
+#: a2f62049bc2e40069e1c2db0d19d1948 maples_dr.quick_api.load_train_set:23 of
 msgid "\"dr\": The Diabetic Retinopathy grade ('R0', 'R1', 'R2', 'R3', 'R4A')."
 msgstr ""
 
-#: 7fa4687e18b4411b9382cd58ffe23598 maples_dr.quick_api.load_train_set:24 of
+#: 08c8a56487f84a779854178e81cca906 maples_dr.quick_api.load_train_set:24 of
 msgid "\"me\": The Macular Edema grade ('M0', 'M1', 'M2')."
 msgstr ""
 
-#: 0ea10f243bd74a2e972f56fc78123df3 2839f51754754e7e905844c20ae0780f
+#: a9d7d892074d40d5bf24e1ea63723b39 bb4871dd23cf48cfae1acddbc8c472a1
 #: maples_dr.quick_api.load_test_set maples_dr.quick_api.load_train_set of
 msgid "Returns"
 msgstr ""
 
-#: cd454d6d29814dd693d6aac538ddf348 maples_dr.quick_api.load_train_set:27 of
+#: bf3eda8e4aa348eba210396ec3a85680 maples_dr.quick_api.load_train_set:27 of
 msgid "The training set."
 msgstr ""
 
-#: 9e377055e9ea420aa6cf77e04a11f824 e4c12037b090430c848761b80017def6
-#: ed196a943a9348bfb76afbb27a70733a maples_dr.quick_api.export_train_set
+#: 1549c95aa21a421b8e29f514866d6ff3 3cddef2e886e47409a2422e13083c792
+#: efe66be449a046a5947aa38ec43ad223 maples_dr.quick_api.export_train_set
 #: maples_dr.quick_api.load_test_set maples_dr.quick_api.load_train_set of
 msgid "Return type"
 msgstr ""
 
-#: 54235a4383bb4ee5b67a99a8e63afefb 6699c37e643c4c2e8ffe33d46ef3d2bd
-#: 9982d395523648a19eeccdf9e3967f05 maples_dr.quick_api.export_test_set:11
+#: 6655838b652f4a639a5c38282e25ab65 7b7c614a7fc04828b4fc20dd0b9e0df9
+#: a07d448abff54035b0a3453fb79210e6 maples_dr.quick_api.export_test_set:11
 #: maples_dr.quick_api.export_train_set:11
 #: maples_dr.quick_api.load_train_set:31 of
 msgid "Examples"
 msgstr ""
 
-#: 103e07ef6d3e449f8ac22177d9b2b6fc maples_dr.quick_api.load_test_set:1 of
+#: 3ae3e03f49d94181973b733d7655aa68 maples_dr.quick_api.load_test_set:1 of
 msgid "Load the testing set in memory."
 msgstr ""
 
-#: 6a7f8d2176134c7792380fe8865a8079 maples_dr.quick_api.load_test_set:3 of
+#: 4ffef197ef774edca35a2f4473c7863c maples_dr.quick_api.load_test_set:3 of
 msgid "See :func:`load_train_set` for more details."
 msgstr ""
 
-#: 9176e5eac69a481c8b011f8eb8fddb1c maples_dr.quick_api.load_test_set:5 of
+#: b9dc9f1117a94be49cc237496ffdd9c8 maples_dr.quick_api.load_test_set:5 of
 msgid "The testing set."
 msgstr ""
 
-#: 5b843bfa3b1f49c5bc82f9d03cfbf601 maples_dr.quick_api.export_train_set:1 of
+#: 78f7b0af11634abcbe321ed2ddea54eb maples_dr.quick_api.export_train_set:1 of
 msgid "Save the training set to a folder."
 msgstr ""
 
-#: c038d03d542749cda31eab6190a3be9d maples_dr.quick_api.export_train_set:5 of
+#: 54267b1feb604f9c8d853966758e9a5b maples_dr.quick_api.export_train_set:5 of
 msgid "The path to the directory where"
 msgstr ""
 
-#: 403f39aa219f48cba5e2612a01825157 b358c50dfb1943bdaae602d7bcb5e630
+#: 1dab9b43d123423693cadab9b10ca150 75cf956ccec9497cae626fb4f98580d8
 #: maples_dr.quick_api.export_test_set:6 maples_dr.quick_api.export_train_set:6
 #: of
 msgid ""
@@ -221,7 +221,7 @@ msgid ""
 " available fields."
 msgstr ""
 
-#: 489564eac7544905a939c5b6144aeebc 9e8bcb7e92df4337b1631c56ba798b48
+#: 12148df0fda442cfbab87ca7cfd8ab86 2b835e34ec834081a3a4673e3acd2bc4
 #: maples_dr.quick_api.export_test_set:6 maples_dr.quick_api.export_train_set:6
 #: of
 msgid ""
@@ -229,7 +229,7 @@ msgid ""
 "will be saved."
 msgstr ""
 
-#: 146b4265e4a4485da0119dfc54905247 e621385988c94830b147fe6866b6c21e
+#: 4d68b0837a724fc68b96c3f90509895a e12964df80de4f2c846bd6c31613eb80
 #: maples_dr.quick_api.export_test_set:8 maples_dr.quick_api.export_train_set:8
 #: of
 msgid ""
@@ -237,11 +237,11 @@ msgid ""
 "fields."
 msgstr ""
 
-#: 4bdc68093a3b4f1a95a999c547950030 maples_dr.quick_api.export_test_set:1 of
+#: 7b55a9e11ce6441f9d9f88fa6c084653 maples_dr.quick_api.export_test_set:1 of
 msgid "Save the testing set to a folder."
 msgstr ""
 
-#: b6634fc0101146bca9c60b58ea088286 maples_dr.quick_api.export_test_set:5 of
+#: 097ba9fd38aa40c686bb7cfb269475f4 maples_dr.quick_api.export_test_set:5 of
 msgid "The path to save the dataset to."
 msgstr ""
 

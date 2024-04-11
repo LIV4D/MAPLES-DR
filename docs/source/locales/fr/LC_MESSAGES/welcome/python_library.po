@@ -1,0 +1,55 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2024, Gabriel Lepetit-Aimon
+# This file is distributed under the same license as the MAPLES-DR package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: MAPLES-DR \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-04-10 20:02-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.11.0\n"
+
+#: ../../source/welcome/python_library.rst:14
+msgid "Quick Start with MAPLES-DR library"
+msgstr "Guide simplifié du paquet `maples_dr`"
+
+#: ../../source/welcome/python_library.rst:3 c8f2acf4dfba49e0be09b0e7b3555393
+msgid "MAPLES-DR Python Library"
+msgstr "Paquet Python de MAPLES-DR"
+
+#: ../../source/welcome/python_library.rst:5 93d86a299ccf4971b46d4bd86e4bd1d5
+msgid ""
+"The `maples_dr <https://github.com/LIV4D/MAPLES-DR/>`_ package documented"
+" here provides a python library to ease the use of MAPLES-DR dataset, "
+"especially for machine learning applications."
+msgstr ""
+"Le paquet `maples_dr <https://github.com/LIV4D/MAPLES-DR/>`_ documenté ici "
+"fournit une bibliothèque python pour faciliter l'utilisation de |MAPLES-DR|, "
+"en particulier pour les applications d'apprentissage automatique."
+
+#: ../../source/welcome/python_library.rst:9 b70697bb77f54308a6efecc70e90480f
+msgid "Documentation"
+msgstr "Documentation"
+
+#: ../../source/welcome/python_library.rst:13 541eef35362a4a3f8c9ba42c67331fc5
+msgid "Quick Start"
+msgstr "Guide de démarrage rapide"
+
+#: ../../source/welcome/python_library.rst:22 e4b30f0e41c64c24bd9c1d6511a216b5
+msgid "Examples"
+msgstr "Exemples"
+
+#: ../../source/welcome/python_library.rst:30 43d6f5795926499c85cbac02cf77357c
+msgid "API Reference"
+msgstr "Définition de l'API (non-traduite)"
+

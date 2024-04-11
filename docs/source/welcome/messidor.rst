@@ -35,7 +35,7 @@ Upon calling :func:`maples_dr.load_train_set` or :func:`maples_dr.load_test_set`
 Similarly, if you export the dataset to local files with :func:`maples_dr.export_train_set` or  :func:`maples_dr.export_test_set`, a folder named ``fundus`` will be created in the same directory as the other biomarkers, containing the fundus images at the appropriate resolution.
 
 Acknowledgements
-===============
+================
 
 The MESSIDOR dataset was kindly provided by the Messidor program partners (see `https://www.adcis.net/en/third-party/messidor/ <https://www.adcis.net/en/third-party/messidor/>`_).
 

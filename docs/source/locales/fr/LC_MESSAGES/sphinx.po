@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-02 13:26-0400\n"
+"POT-Creation-Date: 2024-04-10 20:02-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -19,25 +19,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: ../../source/_templates/versions.html:11 e34717b4a517438bae4109cef5d5760e
+#: ../../source/_templates/versions.html:11 140ed2f713804c5ca8418bde48018e3d
 msgid "Languages"
-msgstr ""
-
-#: ../../source/_templates/versions.html:21 6aad23c511ef4224a8d29a4eee4b77b6
-msgid "On Read the Docs"
-msgstr ""
-
-#: ../../source/_templates/versions.html:23 32581c27f14747b4b370118015cdf390
-msgid "Project Home"
-msgstr ""
-
-#: ../../source/_templates/versions.html:26 b13e9cf9d4ab4e738da0a2bced417b8e
-msgid "Builds"
-msgstr ""
-
-#: ../../source/_templates/versions.html:31 99ead1f22afe4d15a81a548fb8055597
-msgid ""
-"Free document hosting provided by <a "
-"href=\"http://www.readthedocs.org\">Read the Docs</a>."
 msgstr ""
 
