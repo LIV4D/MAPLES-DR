@@ -14,7 +14,7 @@ from pytest import fixture
 @fixture
 def train_set():
     maples_dr.configure(
-        maples_dr_path="examples/PATH/TO/MAPLES-DR/MAPLES-DR_v2.zip",
+        maples_dr_path="examples/PATH/TO/MAPLES-DR/AdditionalData.zip",
         messidor_path="examples/PATH/TO/MESSIDOR/",
     )
     return maples_dr.load_train_set()
@@ -46,14 +46,24 @@ def test_dataset_properties(train_set):
     # Diagnosis
     for r in "ABC":
         for pathology in ("dr", "me"):
+            grades = ["R0", "R1", "R2", "R3", "R4A", "R4S", "R6"] if pathology == "dr" else ["M0", "M1", "M2", "M6"]
+
             assert pathology in train_set.data
+            invalid_values = set(train_set.data[pathology].unique()) - set(grades)
+            assert not invalid_values, f"Invalid values for {pathology}: {invalid_values}"
+
             assert f"{pathology}_{r}" in train_set.data
+            invalid_values = set(train_set.data[f"{pathology}_{r}"].unique()) - set(grades)
+            assert not invalid_values, f"Invalid values for {pathology}_{r}: {invalid_values}"
+
         assert f"dr_{r}_comment" in train_set.data
 
 
 def test_dataset_samples(train_set):
     sample = train_set[0]
     sample._cfg.image_format = "bgr"
+
+    assert sample[BiomarkerField.VESSELS].sum() > 200
 
     # Test equivalence of __getitem__ and actual read methods for fundus and mask
     assert np.all(sample.read_fundus(preprocess=False) == sample[FundusField.RAW_FUNDUS])
@@ -79,13 +89,18 @@ def test_dataset_samples(train_set):
     assert np.all(sample["CUP"] == sample["OPTIC_CUP"])
     assert np.all(sample["Disk"] == sample["opticDisk"])
 
-    # Test existance of diagnosis fields
+    # Test existence of diagnosis fields
     assert sample[DiagnosisField.DR] in ("R0", "R1", "R2", "R3", "R4A")
     assert sample[DiagnosisField.ME] in ("M0", "M1", "M2")
 
-    # Test existance of diagnosis infos fields
+    # Test existence of diagnosis infos fields
     for r in "ABC":
         for pathology in ("dr", "me"):
             assert pathology in train_set.data
             assert f"{pathology}_{r}" in train_set.data
         assert f"dr_{r}_comment" in train_set.data
+
+
+def test_cached_samples(train_set):
+    maples_dr.configure(cache="examples/PATH/TO/CACHE")
+    test_dataset_samples(train_set)

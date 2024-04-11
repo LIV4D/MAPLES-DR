@@ -3,7 +3,7 @@ import maples_dr
 
 def test_configure():
     maples_dr.configure(
-        maples_dr_path="examples/PATH/TO/MAPLES-DR/MAPLES-DR_v2.zip",
+        maples_dr_path="examples/PATH/TO/MAPLES-DR/AdditionalData.zip",
         messidor_path="examples/PATH/TO/MESSIDOR/",
         resize=512,
     )

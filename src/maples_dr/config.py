@@ -3,7 +3,10 @@ from __future__ import annotations
 __all__ = ["DatasetConfig", "InvalidConfigError", "ImageFormat", "Preprocessing"]
 from dataclasses import dataclass
 from enum import Enum
-from typing import Any, Mapping
+from pathlib import Path
+from typing import Any, Mapping, Optional
+
+from .utilities import xdg_data_home
 
 
 class ImageFormat(str, Enum):
@@ -72,8 +75,7 @@ class DatasetConfig:
     #: By default: :attr:`Preprocessing.NONE` (no preprocessing) is applied.
     preprocessing: Preprocessing = Preprocessing.NONE
 
-    #: Path to permanently cache the formatted dataset. If False (by default), then the cache is disabled.
-    cache: str | bool = False
+    _cache: str | bool = False
 
     def update(self, cfg: Mapping[str, Any]):
         """
@@ -86,6 +88,18 @@ class DatasetConfig:
         for k, v in cfg.items():
             if v is not None:
                 setattr(self, k, v)
+
+    @property
+    def cache_path(self) -> Optional[Path]:
+        """
+        Return the path to the cache directory.
+
+        :return: The path to the cache directory or None if the cache is disabled.
+        """
+        path = self._cache
+        if path is False:
+            return None
+        return Path(path)
 
 
 class InvalidConfigError(Exception):

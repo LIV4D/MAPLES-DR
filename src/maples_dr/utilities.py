@@ -5,6 +5,7 @@ __all__ = ["RichProgress"]
 import re
 from enum import Enum
 from functools import reduce
+from pathlib import Path
 from time import time
 from typing import Iterable, List, Mapping, NamedTuple, Optional, Tuple, TypeGuard, TypeVar, overload
 
@@ -80,7 +81,7 @@ class RichProgress:
 EnumT = TypeVar("EnumT", bound=Enum)
 
 
-def caseless_parse_str_enum(
+def case_less_parse_str_enum(
     enum_type: type, value: any, ignored_characters: Optional[str] = " -_", alias: Optional[Mapping[str, EnumT]] = None
 ) -> EnumT:
     try:
@@ -90,6 +91,10 @@ def caseless_parse_str_enum(
     if not isinstance(value, str):
         raise ValueError(f"Invalid enum identifier: must be a string or a {type(enum_type)}, not {type(value)}.")
     if ignored_characters:
+        ignored_characters = (
+            ignored_characters.replace("-", "\-").replace("]", "\]").replace("^", "\^").replace("\\", "\\\\")
+        )
+
         value = re.sub(f"[{ignored_characters}]", "", value)
 
     for enum in enum_type:
@@ -503,3 +508,13 @@ class Point(NamedTuple):
         elif isinstance(other, list):
             return [self.distance(p) for p in other]
         return ((self.y - other.y) ** 2 + (self.x - other.x) ** 2) ** 0.5
+
+
+def xdg_data_home() -> str:
+    import os
+
+    if os.name == "nt":
+        path = os.environ.get("APPDATA")
+    else:
+        path = os.environ.get("XDG_DATA_HOME")
+    return Path.home() / ".cache" if path is None else Path(path).absolute()

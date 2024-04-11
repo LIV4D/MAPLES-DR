@@ -1,4 +1,5 @@
 __all__ = ["DatasetLoader", "NotConfiguredError", "UNSET"]
+import shutil
 from enum import Enum
 from functools import partial
 from itertools import chain
@@ -14,7 +15,7 @@ import yaml
 
 from .config import DOWNLOAD, DatasetConfig, ImageFormat, InvalidConfigError, Preprocessing
 from .dataset import BiomarkerField, BiomarkersAnnotationInfos, BiomarkersAnnotationTasks, Dataset, FundusField
-from .utilities import RichProgress
+from .utilities import RichProgress, xdg_data_home
 
 #   === CONSTANTS ===
 # Figshare public urls of the MAPLES DR dataset
@@ -62,7 +63,6 @@ class DatasetLoader:
             resize=1500,
             image_format="PIL",
             preprocessing="none",
-            cache=None,
         )
         self.dataset_record: Optional[dict] = None
         self._maples_dr_path: Optional[Path] = None
@@ -80,12 +80,12 @@ class DatasetLoader:
     # === CONFIGURATION ===
     def configure(
         self,
-        maples_dr_path: Optional[str] = UNSET,
-        messidor_path: Optional[str] = UNSET,
+        maples_dr_path: Optional[str | Path] = UNSET,
+        messidor_path: Optional[str | Path] = UNSET,
         resize: Optional[int] = None,
         image_format: Optional[ImageFormat] = None,
         preprocessing: Optional[Preprocessing] = None,
-        cache: Optional[str] = None,
+        cache: Optional[str | Path] = UNSET,
         disable_check: bool = False,
     ):
         """Configure the default behavior of the MAPLES-DR dataset.
@@ -105,7 +105,7 @@ class DatasetLoader:
             If "rgb" or "bgr" is selected, images will be formatted as numpy array of shape: (height, width, channel).
             By default, "PIL" is used.
         preprocessing : Optional[Preprocessing], optional
-            Preprocessing aglorithm applied on the fundus images.
+            Preprocessing algorithm applied on the fundus images.
             Must be either "clahe", "median" or None (no preprocessing).
             By default, no preprocessing is applied.
         cache : Optional[str], optional
@@ -119,14 +119,22 @@ class DatasetLoader:
                 resize=resize,
                 image_format=image_format,
                 preprocessing=preprocessing,
-                cache=cache,
             )
         )
 
+        # === Set Maples-DR cache ===
+        if cache is not UNSET and self.cfg._cache != cache:
+            cache = self._change_cache_path(cache)
+        else:
+            cache = self.cfg.cache_path
+
         # === Prepare Maples-DR ===
-        # If configure is called the first time with no path, download the dataset.
+        # If configure is called the first time with no path, download the dataset or use the cache.
         if maples_dr_path is UNSET and self._maples_dr_path is None:
-            maples_dr_path = DOWNLOAD
+            if cache is None:
+                maples_dr_path = DOWNLOAD
+            else:
+                maples_dr_path = cache / "AdditionalData"
 
         if maples_dr_path is not UNSET and self._maples_dr_path != maples_dr_path:
             # Set the path and download the dataset if needed.
@@ -140,19 +148,29 @@ class DatasetLoader:
 
             # Check the integrity of the dataset.
             if not disable_check:
-                self.check_maples_dr_integrity()
+                self.check_maples_dr_integrity(
+                    path=maples_dr_path,
+                    biomarkers=list(self.dataset_record["biomarkers"]),
+                    images_names=self.image_names(DatasetSubset.ALL_WITH_DUPLICATES),
+                )
 
             self._diagnosis = self.load_maples_dr_diagnosis(maples_dr_path / "diagnosis_infos.xls")
 
         # === Prepare MESSIDOR ===
+        if messidor_path is UNSET:
+            if self._messidor_paths is None and cache is not None and (cache / "MESSIDOR").is_dir():
+                messidor_path = cache / "MESSIDOR"
+
         if messidor_path is not UNSET:
             if messidor_path is None:
                 self._messidor_paths = None
             else:
-                self.discover_messidor_images(self.image_names(subset=DatasetSubset.ALL_WITH_DUPLICATES), messidor_path)
+                self._messidor_paths = self.discover_messidor_images(
+                    self.image_names(subset=DatasetSubset.ALL_WITH_DUPLICATES), messidor_path
+                )
 
     @property
-    def datasets_config(self) -> DatasetConfig:
+    def cfg(self) -> DatasetConfig:
         """
         Return the default configuration of the loaded dataset.
         """
@@ -170,6 +188,35 @@ class DatasetLoader:
         """
         if not self.is_initialized():
             self.configure()
+
+    # --- Cache path configuration ---
+    def _change_cache_path(self, path: Optional[str | Path | bool] = None) -> Path:
+        if path is None or path is False:
+            self.cfg._cache = False
+            return None
+
+        if path is True:
+            path = xdg_data_home() / "maples_dr"
+
+        # Ensure the path exists and is a directory.
+        path = Path(path)
+        if path.exists() and not path.is_dir():
+            raise InvalidConfigError(f"Invalid cache path: {path} is not a directory.")
+        path.mkdir(parents=True, exist_ok=True)
+
+        previous_cache = self.cfg.cache_path
+        if previous_cache is not None and path.absolute() == previous_cache.absolute():
+            return path
+
+        # If a cache already existed, copy the MAPLES-DR original dataset to the new cache path.
+        if previous_cache is not None:
+            if (previous_cache / "AdditionalData").is_dir():
+                shutil.copytree(previous_cache / "AdditionalData", path / "AdditionalData")
+            if (previous_cache / "MESSIDOR").is_dir():
+                shutil.copytree(previous_cache / "MESSIDOR", path / "MESSIDOR")
+
+        self.cfg._cache = path
+        return path
 
     # --- Maples-DR path configuration ---
     @property
@@ -192,8 +239,8 @@ class DatasetLoader:
 
         self._maples_dr_path = None
 
-        # If no path is given, create a temporary folder to download the dataset
         if path is None or path is DOWNLOAD:
+            # If no path is given, prepare the dataset download to...
             path = mkdtemp()
             self._is_maples_dr_folder_temporary = True
 
@@ -204,7 +251,7 @@ class DatasetLoader:
             # Ensure it exists ...
             if not path.exists():
                 path.mkdir(parents=True)
-            # and check if the folder contains the dataset infos.
+            # and check if the folder contains the dataset record.
             if not (path / "dataset_record.yaml").exists():
                 # If not, download the dataset.
                 zip_path = path / "maples_dr.zip"
@@ -216,14 +263,17 @@ class DatasetLoader:
         elif path.name.endswith(".zip"):
             # === If the path is a zip file, unzip it to a temporary folder ===
             zip_path = path
-            # Create a temporary folder.
-            path = Path(mkdtemp())
-            # Unzip the dataset to the temporary folder.
             if not zip_path.exists():
                 raise InvalidConfigError(f"Invalid Maples DR archive: {zip_path} doesn't exist.")
+
+            # Create a temporary folder.
+            if self.cfg.cache_path is not None:
+                path = self.cfg.cache_path / "AdditionalData"
+            else:
+                path = Path(mkdtemp())
+            # Unzip the dataset to the temporary folder.
             try:
                 with ZipFile(zip_path, "r") as zip_file:
-                    path = path / "AdditionalData"
                     zip_file.extractall(path)
             except Exception as e:
                 raise InvalidConfigError(
@@ -252,6 +302,8 @@ class DatasetLoader:
                         f"Invalid Maples DR archive:  {path}:"
                         '\n\t the provided archive doesn\'t contains the file "biomarkers_annotation_infos.xls".'
                     )
+            if self.cfg.cache_path is not None:
+                self._is_maples_dr_folder_temporary = True
 
         self._maples_dr_path = path
         return path
@@ -316,15 +368,15 @@ class DatasetLoader:
 
         return annotation_infos
 
-    def check_maples_dr_integrity(self):
+    @staticmethod
+    def check_maples_dr_integrity(path: Path, biomarkers: list[str], images_names: list[str]):
         """
         Check if the MAPLES-DR dataset contains all segmentation maps.
         """
-        maples_root = self.maples_dr_folder
         missing_images = 0
-        for biomarker in self.dataset_record["biomarkers"]:
-            for img in self.image_names(DatasetSubset.ALL_WITH_DUPLICATES, extension=True):
-                if not (maples_root / "annotations" / biomarker / img).exists():
+        for biomarker in biomarkers:
+            for img in images_names:
+                if not (path / "annotations" / biomarker / (img + ".png")).exists():
                     missing_images += 1
         if missing_images > 0:
             raise InvalidConfigError(
@@ -357,7 +409,8 @@ class DatasetLoader:
         return dr_diagnosis.join(me_diagnosis).join(dr_me_comments)
 
     # --- MESSIDOR path configuration ---
-    def discover_messidor_images(self, images: list[str], path: Optional[str | Path] = None):
+    @staticmethod
+    def discover_messidor_images(images: list[str], path: Optional[str | Path] = None) -> Dict[str, Path]:
         """
         Discover the MESSIDOR images corresponding to the given MAPLES-DR images.
 
@@ -365,10 +418,10 @@ class DatasetLoader:
         :param path: Path to the MESSIDOR dataset.
         """
         path = Path(path)
-        self._messidor_paths = {}
+        messidor_paths = {}
 
         if not path.is_dir():
-            raise InvalidConfigError(f"Invalid MESSIDOR path: {self.cfg.messidor_path} is not a folder.")
+            raise InvalidConfigError(f"Invalid MESSIDOR path: {path} is not a folder.")
 
         # Scan the MESSIDOR subfolders and list images.
 
@@ -380,9 +433,9 @@ class DatasetLoader:
             except KeyError:
                 pass
             else:
-                self._messidor_paths[jpg.stem] = jpg.absolute()
+                messidor_paths[jpg.stem] = jpg.absolute()
                 if len(missing_images) == 0:
-                    return
+                    break
 
         # If some images are missing, try to unzip the MESSIDOR subfolders.
         unzip_folder = path / "maples_dr"
@@ -406,10 +459,10 @@ class DatasetLoader:
                                 unzip_folder.mkdir(parents=True, exist_ok=True)
                                 unzip_path = unzip_folder / (stem + ".tif")
                                 zip_file.extract(zip_content, unzip_folder)
-                                self._messidor_paths[stem] = unzip_path.absolute()
+                                messidor_paths[stem] = unzip_path.absolute()
                                 progress.update(1)
                                 if len(missing_images) == 0:
-                                    return
+                                    break
 
         # If some images are still missing, raise an error.
         if len(missing_images) > 0:
@@ -417,6 +470,8 @@ class DatasetLoader:
                 f"The provided folder to the MESSIDOR dataset is incomplete: "
                 f"{len(missing_images)} images included in MAPLES-DR are missing."
             )
+
+        return messidor_paths
 
     # === DATASETS FACTORIES ===
     def load_dataset(self, subset: DatasetSubset | str | list[str] = DatasetSubset.ALL) -> Dataset:
@@ -476,7 +531,7 @@ class DatasetLoader:
         # Add the diagnosis and annotations infos.
         data = data.join(self._diagnosis).join(self._annotations_infos)
 
-        return Dataset(data, self.datasets_config, self._messidor_ROIs)
+        return Dataset(data, self.cfg, self._messidor_ROIs)
 
     # === UTILITIES ===
     def image_names(self, subset: DatasetSubset | str = DatasetSubset.ALL, extension: bool | str = False) -> list[str]:

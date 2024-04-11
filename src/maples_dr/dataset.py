@@ -12,7 +12,7 @@ from PIL.Image import Resampling
 
 from .config import DatasetConfig, ImageFormat, InvalidConfigError, Preprocessing
 from .preprocessing import fundus_roi, preprocess_fundus
-from .utilities import Point, Rect, RichProgress, caseless_parse_str_enum
+from .utilities import Point, Rect, RichProgress, case_less_parse_str_enum
 
 
 class BiomarkerField(str, Enum):
@@ -82,7 +82,7 @@ class BiomarkerField(str, Enum):
         BiomarkerField
             The corresponding biomarker field.
         """
-        return caseless_parse_str_enum(
+        return case_less_parse_str_enum(
             cls,
             biomarker,
             alias={
@@ -135,7 +135,7 @@ class FundusField(str, Enum):
         FundusField
             The corresponding field.
         """
-        return caseless_parse_str_enum(cls, field)
+        return case_less_parse_str_enum(cls, field)
 
 
 class DiagnosisField(str, Enum):
@@ -171,7 +171,7 @@ class DiagnosisField(str, Enum):
         DiagnosisField
             The corresponding field.
         """
-        return caseless_parse_str_enum(cls, field)
+        return case_less_parse_str_enum(cls, field)
 
 
 class BiomarkersAnnotationInfos(str, Enum):
@@ -203,7 +203,7 @@ class BiomarkersAnnotationInfos(str, Enum):
         BiomarkersAnnotationInfos
             The corresponding infos field.
         """
-        return caseless_parse_str_enum(cls, infos)
+        return case_less_parse_str_enum(cls, infos)
 
 
 class BiomarkersAnnotationTasks(str, Enum):
@@ -279,6 +279,7 @@ class Dataset(Sequence):
         data: pd.DataFrame,
         cfg: DatasetConfig,
         messidor_rois: pd.DataFrame,
+        cache_path: Optional[Path] = None,
     ):
         """Create a new dataset. (Internal use only)
 
@@ -665,6 +666,7 @@ class DataSample(Mapping):
         image_format: Optional[ImageFormat] = None,
         resize: Optional[int | bool] = None,
         pre_annotation: bool = False,
+        no_cache: bool = False,
     ) -> any:
         """Read a biomarker from the sample.
 
@@ -691,18 +693,44 @@ class DataSample(Mapping):
             .. warning::
                 Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.
 
+        no_cache :
+            If True, do not use the cache to read the biomarker.
+
         Returns
         -------
             The biomarker mask under the format specified.
         """
         # Check arguments validity
         image_format = self._check_image_format(image_format)
-        target_size, crop = self._target_size(resize)
+        target_size, crop, cache_folder = self._target_size(resize)
 
         if isinstance(biomarkers, (str, BiomarkerField)):
             biomarkers = [biomarkers]
         biomarkers = [BiomarkerField.parse(b) for b in biomarkers]
         assert len(biomarkers), "No biomarker to read."
+
+        # Check if the result is cached
+        cache_path = self._cfg.cache_path
+        if not no_cache and cache_path is not None:
+            biomarkers_name = "+".join(b.value for b in sorted(biomarkers))
+            if pre_annotation:
+                biomarkers_name += "_pre"
+            cache_path = cache_path / cache_folder / biomarkers_name / f"{self.name}.png"
+
+            if cache_path.exists():
+                img = Image.open(cache_path)
+            else:
+                img = self.read_biomarker(
+                    biomarkers=biomarkers,
+                    resize=resize,
+                    image_format=ImageFormat.PIL,
+                    pre_annotation=pre_annotation,
+                    no_cache=True,
+                )
+                cache_path.parent.mkdir(parents=True, exist_ok=True)
+                img.save(cache_path, bits=1)
+
+            return img if image_format is ImageFormat.PIL else np.array(img)
 
         # Expand aggregated biomarkers
         for i in range(len(biomarkers) - 1, -1, -1):
@@ -764,7 +792,7 @@ class DataSample(Mapping):
 
         """
         image_format = self._check_image_format(image_format)
-        target_size, _ = self._target_size(resize)
+        target_size, _, _ = self._target_size(resize)
 
         biomarkers_map = np.zeros(target_size, dtype=np.uint8)
         for i, bio in biomarkers.items():
@@ -781,6 +809,7 @@ class DataSample(Mapping):
         preprocess: Optional[Preprocessing | str | bool] = None,
         image_format: Optional[ImageFormat] = None,
         resize: Optional[int | bool] = None,
+        no_cache: bool = False,
     ) -> Union[Image.Image, np.ndarray]:
         """Read the fundus image of the sample.
 
@@ -802,6 +831,9 @@ class DataSample(Mapping):
             - If ``False``, keep the original MESSIDOR resolution.
             - If ``None`` (by default), use the size defined in the configuration.
 
+        no_cache :
+            If True, do not use the cache to read the fundus image.
+
         Returns
         -------
             The fundus image under the format specified.
@@ -812,7 +844,24 @@ class DataSample(Mapping):
         # Check arguments
         preprocess = self._check_preprocessing(preprocess)
         image_format = self._check_image_format(image_format)
-        target_size, crop = self._target_size(resize)
+        target_size, crop, cache_folder = self._target_size(resize)
+
+        # Check if the result is cached
+        cache_path = self._cfg.cache_path
+        if not no_cache and cache_path is not None:
+            preprocess_folder = "fundus" if preprocess is Preprocessing.NONE else "fundus_" + preprocess.value
+            cache_path = cache_path / cache_folder / preprocess_folder / f"{self.name}.png"
+
+            if cache_path.exists():
+                img = Image.open(cache_path)
+            else:
+                img = self.read_fundus(
+                    preprocess=preprocess, resize=resize, image_format=ImageFormat.PIL, no_cache=True
+                )
+                cache_path.parent.mkdir(parents=True, exist_ok=True)
+                img.save(cache_path)
+
+            return img if image_format is ImageFormat.PIL else np.array(img)
 
         # Read the image
         if self._fundus is None:
@@ -899,13 +948,13 @@ class DataSample(Mapping):
             return Preprocessing.NONE
         return Preprocessing(preprocess)
 
-    def _target_size(self, size: Optional[int | bool] = None) -> Tuple[Point, bool]:
+    def _target_size(self, size: Optional[int | bool] = None) -> Tuple[Point, bool, str]:
         if size is None:
             size = self._cfg.resize
 
         if size is False:
-            return self._messidor_shape, False
+            return self._messidor_shape, False, "mesROI"
         elif size is True:
-            return Point(1500, 1500), True
+            return Point(1500, 1500), True, "1500"
         else:
-            return Point(size, size), True
+            return Point(size, size), True, "{size}"
