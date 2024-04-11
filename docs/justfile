@@ -1,0 +1,21 @@
+alias b := build
+alias u := update-locales
+
+# build Docs
+build:
+    sphinx-build -b html -t locales_fr source build/html/fr
+    sphinx-build -b html -t locales_en source build/html/en
+
+# clean Docs
+clean:
+    rm -rf build/html/*
+
+# Clean and build Docs
+rebuild: clean build
+
+# Update po files
+update-locales:
+    @echo "Extracting text..."
+    sphinx-build -b gettext source build/gettext > /dev/null
+    @echo "Updating locales..."
+    sphinx-intl update -p build/gettext -d source/locales  | grep -e "Update:" || echo "Nothing to update"

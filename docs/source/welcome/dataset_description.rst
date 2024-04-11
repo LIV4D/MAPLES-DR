@@ -66,6 +66,27 @@ Grades are defined systematically by the number and position of visible red and 
 
 A detailed definition of those grades can be found in `this paper <http://doi.org/10.1016/j.jcjo.2020.01.001>`_ :cite:`Boucher2020`.
 
+MAPLES-DR Archives Structure
+============================
+
+.. |MAPLES-DR.zip| replace:: ``MAPLES-DR.zip``
+.. _MAPLES-DR.zip: https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816
+
+.. |AdditionalData.zip| replace:: ``AdditionalData.zip``
+.. _AdditionalData.zip: https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822
+
+.. figure:: ../_static/MAPLES-DR_Data_Record_main.svg
+   :width: 800px
+   :align: center
+
+   Overview of the main |MAPLES-DR| archives: |MAPLES-DR.zip|_.
+
+.. figure:: ../_static/MAPLES-DR_Data_Record_additional.svg
+   :width: 800px
+   :align: center
+
+   Overview of the additional archives: |AdditionalData.zip|_.
+
 
 Annotation Platform
 ===================

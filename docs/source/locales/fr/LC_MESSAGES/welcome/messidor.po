@@ -37,7 +37,7 @@ msgstr ""
 "du consortium MESSIDOR et ne sont donc pas inclues dans le jeu de données. "
 "Cependant elles sont accessible librement à toute équipe de recherche qui "
 "les demande sur le `site du consortium <https://www.adcis.net/en/third-party/messidor/>`_."
-" Cette page décrit les instructions pour inclure les images de MESSIDOR avec "
+" Cette page fournit les instructions pour inclure les images de MESSIDOR avec "
 "les annotations de MAPLES-DR."
 
 #: ../../source/welcome/messidor.rst:8 48492aaf5bac4ac8a33358e88e184cf2
@@ -79,7 +79,7 @@ msgid ""
 "Once you have downloaded the images, you can include them in the dataset "
 "by calling:"
 msgstr ""
-"Une fois les images téléchargées, vous pouvez les inclures dans le "
+"Une fois les images téléchargées, vous pouvez les inclure dans le "
 "dataset avec:"
 
 #: ../../source/welcome/messidor.rst:26 d04e0f8511bd47e29821d1eb353c858e
@@ -94,8 +94,7 @@ msgstr ""
 ":func:`maples_dr.load_test_set`, les 200 images de fond d'oeil "
 "annotées dans MAPLES-DR seront extraites, découpées et redimenssionées "
 "pour correspondre à la résolution des cartes de segmentation de MAPLES-DR. "
-"Ces images de fond d'oeil seront accessibles sous le ``\"fundus\"``,"
-"comme les autres biomarqueurs de |MAPLES-DR|."
+"Ces images de fond d'oeil seront accessibles de la même manière que les autres biomarqueurs de |MAPLES-DR|, sous le nom ``\"fundus\"``."
 
 #: ../../source/welcome/messidor.rst:35 6db29a2566514a5f8b31ff7735741aa4
 msgid ""
@@ -107,8 +106,8 @@ msgid ""
 msgstr ""
 "De façon analogue, lors d'un export de |MAPLES-DR| vers des dossiers locaux "
 "avec :func:`maples_dr.export_train_set` ou  :func:`maples_dr.export_test_set`,"
-" un dossier appelé ``fundus```sera créé à coté de ceux des autres biomarqueurs, "
-"contenant les images de fond d'oeil à la résolution adéquate".
+" un dossier appelé ``fundus`` sera créé à coté de ceux des autres biomarqueurs, "
+"contenant les images de fond d'oeil à la résolution adéquate."
 
 #: ../../source/welcome/messidor.rst:38 f8dd358abdf6491ab388197d54efd18c
 msgid "Acknowledgements"

@@ -74,6 +74,7 @@ rst_prolog = """
 .. |MAPLES-DR| replace:: :abbr:`MAPLES-DR (MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy)`
 .. |DR| replace:: :abbr:`DR (Diabetic Retinopathy)`
 .. |ME| replace:: :abbr:`ME (Macular Edema)`
+.. |CWS| replace:: :abbr:`CWS (Cotton Wool Spots)`
 """
 
 # -- Options for nbsphinx ----------------------------------------------------
@@ -105,6 +106,7 @@ bibtex_default_style = "unsrt"
 # https://docs.readthedocs.io/en/stable/guides/manage-translations-sphinx.html
 gettext_uuid = True
 gettext_compact = False
+gettext_allow_fuzzy_translations = True
 
 try:
     html_context
