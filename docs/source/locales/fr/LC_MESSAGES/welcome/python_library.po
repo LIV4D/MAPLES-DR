@@ -2,8 +2,7 @@
 # Copyright (C) 2024, Gabriel Lepetit-Aimon
 # This file is distributed under the same license as the MAPLES-DR package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
-#
-#, fuzzy
+
 msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
@@ -21,11 +20,11 @@ msgstr ""
 
 #: ../../source/welcome/python_library.rst:14
 msgid "Quick Start with MAPLES-DR library"
-msgstr "Guide simplifié du paquet `maples_dr`"
+msgstr "Guide simplifié de l'API `maples_dr`"
 
 #: ../../source/welcome/python_library.rst:3 c8f2acf4dfba49e0be09b0e7b3555393
 msgid "MAPLES-DR Python Library"
-msgstr "Paquet Python de MAPLES-DR"
+msgstr "API Python pour MAPLES-DR"
 
 #: ../../source/welcome/python_library.rst:5 93d86a299ccf4971b46d4bd86e4bd1d5
 msgid ""

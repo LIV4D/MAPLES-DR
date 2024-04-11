@@ -5,7 +5,7 @@ MAPLES-DR Dataset Documentation
 
 **MAPLES-DR** *(MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy)* is a public dataset which provides expert-level diagnosis of |DR| and pixel-wise segmentation maps of 10 retinal structures.
 
-For **198 fundus image** of the public dataset :doc:`MESSIDOR <welcome/messidor>`, our team of seven canadian senior retinologists graded :abbr:`DR (Diabetic Retinopathy)` and :abbr:`ME (Macular Edema)`, and segmented ten retinal structures related to those pathologies: **optic disc** and **cup**, **macula**, **vessels**, **micro-aneurysms**, **hemorrhages**, **neo-vessels**, **exudates**, **cotton wool spots** and **drusens**. A detailed description of those biomarkers and their implication in the diagnosis of DR can be found in the :doc:`dataset description section <welcome/dataset_description>` of this documentation. 
+For **198 fundus image** of the public dataset :doc:`MESSIDOR <welcome/messidor>` :cite:`MESSIDOR`, our team of seven canadian senior retinologists graded :abbr:`DR (Diabetic Retinopathy)` and :abbr:`ME (Macular Edema)`, and segmented ten retinal structures related to those pathologies: **optic disc** and **cup**, **macula**, **vessels**, **micro-aneurysms**, **hemorrhages**, **neo-vessels**, **exudates**, **cotton wool spots** and **drusens**. A detailed description of those biomarkers and their implication in the diagnosis of DR can be found in the :doc:`dataset description section <welcome/dataset_description>` of this documentation. 
 By releasing this dataset, we hope to help the AI community improves the explainability and reliability of machine learning models for DR screening.
 
 .. figure:: _static/MAPLES-DR_Overview.svg
