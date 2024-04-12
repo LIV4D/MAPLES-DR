@@ -45,6 +45,8 @@ This can lead to the appearance of lesions known as **Cotton Wool Spots** (:abbr
 
 Finally, |MAPLES-DR| also provides annotations of **drusens**. These lesions are more commonly associated with Age-related Macular Degeneration (:abbr:`AMD (Age-related Macular Degeneration)`), with a prevalence varying from 10\% (fifth decade of life) to 35\% (seventh decade).  They usually appear around the macula and are histologically situated at the interface with the Retinal Pigment Epithelium (RPE). It is supposed that they originate from degenerative products of the RPE's cells and are composed of lipids and glycoproteins. Classifying early stage :abbr:`AMD (Age-related Macular Degeneration)` depends on  estimating the size of the drusen.
 
+.. _dr-me-grades:
+
 |DR| and |ME| grades
 ********************
 
@@ -56,12 +58,14 @@ Finally, |MAPLES-DR| also provides annotations of **drusens**. These lesions are
  - **R3**: severe
  - **R4A**: proliferative
  - **R4S**: stable treated proliferative
+ - **R6**: insufficient quality for grading
  
 and three for ME: 
 
  - **M0**: absent
  - **M1**: mild
  - **M2**: moderate 
+ - **M6**: insufficient quality for grading
  
 
 Grades are defined systematically by the number and position of visible red and bright retinal lesions. Each grade is associated with a recommended course of action (from rescreening in two years for mild cases, to immediate referral to an ophthalmologist for the more severe ones). 

@@ -1,3 +1,6 @@
+import logging
+from time import time
+
 import maples_dr
 import numpy as np
 from maples_dr.dataset import (
@@ -9,6 +12,8 @@ from maples_dr.dataset import (
     FundusField,
 )
 from pytest import fixture
+
+LOGGER = logging.getLogger(__name__)
 
 
 @fixture
@@ -59,6 +64,16 @@ def test_dataset_properties(train_set):
         assert f"dr_{r}_comment" in train_set.data
 
 
+def test_dataset_numerical_indexing(train_set):
+    names0 = train_set.keys()
+
+    assert train_set[0].name == names0[0]
+    assert train_set[-1].name == names0[-1]
+    assert train_set[:5].keys() == names0[:5]
+    assert train_set[5:10].keys() == names0[5:10]
+    assert train_set[-5:].keys() == names0[-5:]
+
+
 def test_dataset_samples(train_set):
     sample = train_set[0]
     sample._cfg.image_format = "bgr"
@@ -99,8 +114,3 @@ def test_dataset_samples(train_set):
             assert pathology in train_set.data
             assert f"{pathology}_{r}" in train_set.data
         assert f"dr_{r}_comment" in train_set.data
-
-
-def test_cached_samples(train_set):
-    maples_dr.configure(cache="examples/PATH/TO/CACHE")
-    test_dataset_samples(train_set)

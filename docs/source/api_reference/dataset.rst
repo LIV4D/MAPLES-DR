@@ -9,6 +9,11 @@ Datasets
     :special-members: __getitem__, __len__
 
 
+.. autoclass:: maples_dr.DataSample
+    :members:
+    :exclude-members: __init__
+    :special-members: __getitem__
+
 ----------
 
 Datasets Fields

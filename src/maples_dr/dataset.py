@@ -45,7 +45,7 @@ class BiomarkerField(str, Enum):
     #: The mask of bright lesions with uncertain type (either CWS, exudates or drusens).
     BRIGHT_UNCERTAINS = "brightUncertains"
 
-    #: Union of all the red lesions masks (microaneuryms, hemorrhages and uncertain).
+    #: Union of all the red lesions masks (microaneurysm, hemorrhages and uncertain).
     RED_LESIONS = "redLesions"
 
     #: The hemorrhages mask.
@@ -57,7 +57,7 @@ class BiomarkerField(str, Enum):
     #: The neovascularization mask.
     NEOVASCULARIZATION = "neovascularization"
 
-    #: The mask of red lesions with uncertain type (either microaneuryms or hemorrhages).
+    #: The mask of red lesions with uncertain type (either microaneurysm or hemorrhages).
     RED_UNCERTAINS = "redUncertains"
 
     @classmethod
@@ -81,6 +81,8 @@ class BiomarkerField(str, Enum):
         -------
         BiomarkerField
             The corresponding biomarker field.
+
+        :meta private:
         """
         return case_less_parse_str_enum(
             cls,
@@ -109,7 +111,7 @@ class FundusField(str, Enum):
 
     .. warning::
         Path to MESSIDOR fundus images **must** be configured to use these fields!
-        See :func:`maples_dr.configure` for more informations.
+        See :func:`maples_dr.configure` for more information.
     """
 
     #: The preprocessed fundus image (or the original fundus image if no preprocessing is applied).
@@ -134,6 +136,8 @@ class FundusField(str, Enum):
         -------
         FundusField
             The corresponding field.
+
+        :meta private:
         """
         return case_less_parse_str_enum(cls, field)
 
@@ -144,10 +148,12 @@ class DiagnosisField(str, Enum):
     #: The Diabetic Retinopathy grade.
     #:
     #:  - ``R0`` : No DR.
-    #:  - ``R1`` : Mild NPDR.
-    #:  - ``R2`` : Moderate NPDR.
-    #:  - ``R3`` : Severe NPDR.
-    #:  - ``R4A`` : PDR.
+    #:  - ``R1`` : Mild Non-Proliferative DR.
+    #:  - ``R2`` : Moderate Non-Proliferative DR.
+    #:  - ``R3`` : Severe Non-Proliferative DR.
+    #:  - ``R4A`` : Proliferative DR.
+    #:  - ``R4S`` : Treated and Stable Proliferative DR.
+    #:  - ``R6`` : Insufficient quality to grade.
     DR = "dr"
 
     #: The Macular Edema grade.
@@ -155,6 +161,7 @@ class DiagnosisField(str, Enum):
     #:  - ``M0`` : No ME.
     #:  - ``M1`` : ME without center involvement.
     #:  - ``M2`` : ME with center involvement.
+    #:  - ``M6`` : Insufficient quality to grade.
     ME = "me"
 
     @classmethod
@@ -170,12 +177,14 @@ class DiagnosisField(str, Enum):
         -------
         DiagnosisField
             The corresponding field.
+
+        :meta private:
         """
         return case_less_parse_str_enum(cls, field)
 
 
 class BiomarkersAnnotationInfos(str, Enum):
-    """Valid name for the additional informations collected during the biomarkers annotations process."""
+    """Valid name for the additional information collected during the biomarkers annotations process."""
 
     #: The name of the retinologist who annotated the series of biomarkers.
     RETINOLOGIST = "retinologist"
@@ -202,6 +211,8 @@ class BiomarkersAnnotationInfos(str, Enum):
         -------
         BiomarkersAnnotationInfos
             The corresponding infos field.
+
+        :meta private:
         """
         return case_less_parse_str_enum(cls, infos)
 
@@ -212,7 +223,7 @@ class BiomarkersAnnotationTasks(str, Enum):
     #: The annotation task for bright lesions (CWS, exudates, drusens).
     BRIGHT = "brightLesions"
 
-    #: The annotation task for red lesions (microaneuryms, hemorrhages, neovessels).
+    #: The annotation task for red lesions (microaneurysm, hemorrhages, neovessels).
     RED = "redLesions"
 
     #: The annotation task for the optic disc, optic cup and the macula.
@@ -274,13 +285,7 @@ class Dataset(Sequence):
     See :obj:`Field` for the list of available fields.
     """
 
-    def __init__(
-        self,
-        data: pd.DataFrame,
-        cfg: DatasetConfig,
-        messidor_rois: pd.DataFrame,
-        cache_path: Optional[Path] = None,
-    ):
+    def __init__(self, data: pd.DataFrame, cfg: DatasetConfig, messidor_rois: pd.DataFrame):
         """Create a new dataset. (Internal use only)
 
         :meta private:
@@ -349,7 +354,7 @@ class Dataset(Sequence):
             rois = self._rois.loc[sample_infos.name]
             return DataSample(sample_infos, self._cfg, rois)
         elif isinstance(idx, slice):
-            return self.subset(idx)
+            return self.subset(start=idx.start, end=idx.stop, step=idx.step)
         elif isinstance(idx, list):
             return self.subset_by_name(idx)
         else:
@@ -369,7 +374,7 @@ class Dataset(Sequence):
     def data(self) -> pd.DataFrame:
         """The data of the dataset.
 
-        A dataframe containing the informations of each sample. It has the following columns:
+        A dataframe containing the information of each sample. It has the following columns:
             - index: the name of the sample.
             - ``fundus``: the path to the fundus image.
             - [:class:`BiomarkerField`] (accept aggregated): the path to the biomarkers masks.
@@ -392,7 +397,9 @@ class Dataset(Sequence):
         """
         return self._data.index.tolist()
 
-    def subset(self, *arg, start: Optional[int] = None, end: Optional[int] = None) -> Dataset:
+    def subset(
+        self, *arg, start: Optional[int] = None, end: Optional[int] = None, step: Optional[int] = None
+    ) -> Dataset:
         """Get a subset of the dataset.
 
         Parameters
@@ -408,20 +415,25 @@ class Dataset(Sequence):
             The subset of the dataset.
         """
         if start is None and end is None:
-            if len(arg) == 2:
+            if step is None and len(arg) == 3:
+                start, end, step = arg
+            elif len(arg) == 2:
                 start, end = arg
             elif len(arg) == 1:
                 start = 0
                 end = arg[0]
             else:
                 raise ValueError("Invalid number of arguments: only expect start and end indexes.")
-        elif start is None and len(arg) == 1:
+        elif start is None and end is not None and len(arg) == 1:
             start = arg[0]
-        else:
-            raise ValueError("Invalid number of arguments: only expect start and end indexes.")
+        elif len(arg) != 0:
+            raise ValueError("Invalid number of arguments: only expect start, end and step.")
 
-        subset_data = self._data.iloc[start:end]
-        subset_rois = self._rois.iloc[start:end]
+        if step is None:
+            step = 1
+
+        subset_data = self._data.iloc[start:end:step]
+        subset_rois = self._rois.loc[subset_data.index]
         return Dataset(subset_data, self._cfg, subset_rois)
 
     def subset_by_name(self, names: List[str]) -> Dataset:
@@ -447,7 +459,9 @@ class Dataset(Sequence):
         Parameters
         ----------
         pathology : Pathology, optional
-            The pathology to get the diagnosis for. If None, get the diagnosis for both pathologies.
+            The pathology to get the diagnosis for.
+
+            If None, get the diagnosis for both pathologies.
 
         Returns
         -------
@@ -503,7 +517,7 @@ class Dataset(Sequence):
         return fields
 
     def get_sample_infos(self, idx: str | int) -> pd.Series:
-        """Get the informations of a sample.
+        """Get the information of a sample.
 
         Parameters
         ----------
@@ -513,7 +527,7 @@ class Dataset(Sequence):
         Returns
         -------
         pd.Series
-            The informations of the sample.
+            The information of the sample.
 
 
         Raises
@@ -525,7 +539,7 @@ class Dataset(Sequence):
             If the image name is unknown.
         """
         if isinstance(idx, int):
-            if idx < 0 or idx >= len(self):
+            if idx < -len(self) or idx >= len(self):
                 raise IndexError(f"Unknown sample: {idx}.")
             return self._data.iloc[idx]
         else:
@@ -535,12 +549,12 @@ class Dataset(Sequence):
             return infos.iloc[0]
 
     def annotations_infos(self) -> pd.DataFrame:
-        """Get the annotations informations of the dataset.
+        """Get the annotations information of the dataset.
 
         Returns
         -------
         pd.DataFrame
-            The annotations informations of the dataset.
+            The annotations information of the dataset.
         """
         tasks = [_.value for _ in BiomarkersAnnotationTasks]
         infos = [_.value for _ in BiomarkersAnnotationInfos]
@@ -568,10 +582,12 @@ class Dataset(Sequence):
         path :
             Path of the folder where to export the dataset.
         fields :
-            Fields to export. If None, export the whole dataset.
-            If ``fields`` is a string or list, export only the given fields.
-            If ``fields`` is a dictionary, export the fields given by the keys
-            and rename their folder to their corresponding dictionnary values.
+            The fields to be exported.
+
+            - If None, export the whole dataset.
+            - If ``fields`` is a string or list, export only the given fields.
+            - If ``fields`` is a dictionary, export the fields given by the keys
+            and rename their folder to their corresponding dictionary values.
         optimize :
             If True, optimize the images when exporting them.
         """
@@ -611,7 +627,7 @@ class Dataset(Sequence):
 class DataSample(Mapping):
     """A sample from the MAPLES-DR dataset.
 
-    A sample is a dictionary containing the informations of a single sample from the dataset.
+    A sample is a dictionary containing the information of a single sample from the dataset.
 
     """
 
@@ -674,27 +690,30 @@ class DataSample(Mapping):
         ----------
         biomarkers :
             Name of the biomarker(s) to read.
+
             If multiple biomarkers are given, the corresponding masks will be merged.
 
         image_format :
-            Format of the image to return. If None, use the format defined in the configuration.
+            Format of the image to return.
+
+            If ``None`` (by default), use the format defined in the configuration.
 
         resize :
             Resize the image to the given size.
 
+            - If ``resize`` is an int, crop the image to a square ROI and resize it to the shape ``(resize, resize)``;
             - If ``True``, keep the original MAPLES-DR resolution of 1500x1500 px;
-            - If ``False``, use the original MESSIDOR resolution if MESSIDOR path is configured, otherwise fallback to
-            MAPLES-DR original resolution.
+            - If ``False``, use the original MESSIDOR resolution if MESSIDOR path is configured, otherwise fallback to MAPLES-DR original resolution.
             - If ``None`` (by default), use the size defined in the configuration.
 
         pre_annotation :
-            If True, read the pre-annotation biomarkers instead of the final ones.
+            If set to ``True``, read the pre-annotation biomarkers instead of the final ones.
 
             .. warning::
                 Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.
 
         no_cache :
-            If True, do not use the cache to read the biomarker.
+            If set to ``True``, the cache will not be used to read the biomarker, regardless of the configuration.
 
         Returns
         -------
@@ -702,24 +721,37 @@ class DataSample(Mapping):
         """
         # Check arguments validity
         image_format = self._check_image_format(image_format)
-        target_size, crop, cache_folder = self._target_size(resize)
+        target_size, crop = self._target_size(resize)
 
         if isinstance(biomarkers, (str, BiomarkerField)):
             biomarkers = [biomarkers]
         biomarkers = [BiomarkerField.parse(b) for b in biomarkers]
         assert len(biomarkers), "No biomarker to read."
 
-        # Check if the result is cached
-        cache_path = self._cfg.cache_path
-        if not no_cache and cache_path is not None:
-            biomarkers_name = "+".join(b.value for b in sorted(biomarkers))
-            if pre_annotation:
-                biomarkers_name += "_pre"
-            cache_path = cache_path / cache_folder / biomarkers_name / f"{self.name}.png"
+        # === Try to read the biomarker from the cache ===
+        if not no_cache and self._cfg.cache_path is not None:
+            if (
+                (crop and target_size == (1500, 1500))
+                and len(biomarkers) == 1
+                and biomarkers[0] not in AGGREGATED_BIOMARKERS
+            ):
+                # If the biomarker is not aggregated and not resized, use the direct path
+                key = biomarkers[0].value + ("_pre" if pre_annotation else "")
+                path = self._data.get(key, None)
+                if path is None or not Path(path).exists():
+                    # For missing biomarkers, return an empty image
+                    return Image.new("1", target_size) if image_format is ImageFormat.PIL else np.zeros(target_size)
 
+                img = Image.open(path)
+                return img if image_format is ImageFormat.PIL else np.array(img)
+
+            # If the cache exists
+            cache_path = self._cfg.biomarkers_cache_path(biomarkers, pre_annotation, resize) / f"{self.name}.png"
             if cache_path.exists():
+                # Read the cached image
                 img = Image.open(cache_path)
             else:
+                # Otherwise read the image with the normal method and save it to the cache
                 img = self.read_biomarker(
                     biomarkers=biomarkers,
                     resize=resize,
@@ -732,6 +764,7 @@ class DataSample(Mapping):
 
             return img if image_format is ImageFormat.PIL else np.array(img)
 
+        # === Read the biomarker from the original files ===
         # Expand aggregated biomarkers
         for i in range(len(biomarkers) - 1, -1, -1):
             bio = biomarkers[i]
@@ -766,7 +799,7 @@ class DataSample(Mapping):
         else:
             return biomarkers_map
 
-    def read_biomarkers(
+    def read_multiple_biomarkers(
         self,
         biomarkers: Mapping[int, BiomarkerField | str | List[BiomarkerField | str]],
         image_format: Optional[ImageFormat] = None,
@@ -774,7 +807,7 @@ class DataSample(Mapping):
         resize: Optional[int | bool] = None,
     ):
         """
-        Read multiple biomarkers, assigning a class to a biomarker or a group of them.
+        Read multiple biomarkers at once, assigning a class to a biomarker or a group of them.
 
         Parameters
         ----------
@@ -782,17 +815,19 @@ class DataSample(Mapping):
             Name of the biomarker(s) to read.
 
         image_format :
-            Format of the image to return. If None, use the format defined in the configuration.
+            Format of the image to return.
+
+            If None (by default), use the format defined in the configuration.
 
         pre_annotation :
-            If True, read the pre-annotation biomarkers instead of the final ones.
+            If set to ``True``, read the pre-annotation biomarkers instead of the final ones.
 
             .. warning::
                 Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.
 
         """
         image_format = self._check_image_format(image_format)
-        target_size, _, _ = self._target_size(resize)
+        target_size, _ = self._target_size(resize)
 
         biomarkers_map = np.zeros(target_size, dtype=np.uint8)
         for i, bio in biomarkers.items():
@@ -816,52 +851,59 @@ class DataSample(Mapping):
         Parameters
         ----------
         preprocess :
-            If is a :class:`Preprocessing` (or a string), the image is preprocessed with the given preprocessing.
-            If ``True``, the image is preprocessed with the preprocessing defined in the configuration.
-            If ``False``, the image is not preprocessed.
-            If ``None``, use the preprocessing defined in the configuration.
+            Preprocessing to apply to the image.
+
+            - If a :class:`maples_dr.config.Preprocessing` (or an equivalent string), the image is preprocessed with the given preprocessing;
+            - if ``False``, the image is not preprocessed.
+            - if ``None`` (by default) or ``True``, use the preprocessing defined in the configuration.
 
         image_format :
-            Format of the image to return. If None, use the format defined in the configuration.<
+            Format of the image to return.
+
+            If ``None`` (by default), use the format defined in the configuration.
 
         resize :
             Resize the image to the given size.
 
+            - If ``resize`` is an int, crop the image to a square ROI and resize it to the shape ``(resize, resize)``;
             - If ``True``, use the original MAPLES-DR resolution of 1500x1500 px;
             - If ``False``, keep the original MESSIDOR resolution.
             - If ``None`` (by default), use the size defined in the configuration.
 
         no_cache :
-            If True, do not use the cache to read the fundus image.
+            If set to ``True``, the cache will not be used to read the fundus image, regardless of the configuration.
 
         Returns
         -------
             The fundus image under the format specified.
         """
 
-        assert "fundus" in self._data, "Impossible to read fundus images, path to MESSIDOR dataset is unkown."
+        assert "fundus" in self._data, "Impossible to read fundus images, path to MESSIDOR dataset is unknown."
 
         # Check arguments
         preprocess = self._check_preprocessing(preprocess)
         image_format = self._check_image_format(image_format)
-        target_size, crop, cache_folder = self._target_size(resize)
+        target_size, crop = self._target_size(resize)
 
         # Check if the result is cached
         cache_path = self._cfg.cache_path
         if not no_cache and cache_path is not None:
-            preprocess_folder = "fundus" if preprocess is Preprocessing.NONE else "fundus_" + preprocess.value
-            cache_path = cache_path / cache_folder / preprocess_folder / f"{self.name}.png"
-
-            if cache_path.exists():
-                img = Image.open(cache_path)
+            if not crop and preprocess is Preprocessing.NONE:
+                img = Image.open(self._data[FundusField.FUNDUS.value])
             else:
-                img = self.read_fundus(
-                    preprocess=preprocess, resize=resize, image_format=ImageFormat.PIL, no_cache=True
-                )
-                cache_path.parent.mkdir(parents=True, exist_ok=True)
-                img.save(cache_path)
+                cache_path = self._cfg.fundus_cache_path(resize, preprocess) / f"{self.name}.jpg"
 
-            return img if image_format is ImageFormat.PIL else np.array(img)
+                if not cache_path.exists():
+                    img = self.read_fundus(
+                        preprocess=preprocess, resize=resize, image_format=ImageFormat.PIL, no_cache=True
+                    )
+                    cache_path.parent.mkdir(parents=True, exist_ok=True)
+                    img.save(cache_path, quality=98, subsampling=0)
+
+                # Even if we just created the cache, we reload it to ensure consistency despite compression losses
+                img = Image.open(cache_path)
+
+            return self._apply_image_format(img, ImageFormat.PIL, image_format)
 
         # Read the image
         if self._fundus is None:
@@ -948,13 +990,13 @@ class DataSample(Mapping):
             return Preprocessing.NONE
         return Preprocessing(preprocess)
 
-    def _target_size(self, size: Optional[int | bool] = None) -> Tuple[Point, bool, str]:
+    def _target_size(self, size: Optional[int | bool] = None) -> Tuple[Point, bool]:
         if size is None:
             size = self._cfg.resize
 
         if size is False:
-            return self._messidor_shape, False, "mesROI"
+            return self._messidor_shape, False
         elif size is True:
-            return Point(1500, 1500), True, "1500"
+            return Point(1500, 1500), True
         else:
-            return Point(size, size), True, "{size}"
+            return Point(size, size), True

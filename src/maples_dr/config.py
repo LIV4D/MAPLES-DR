@@ -50,8 +50,6 @@ DOWNLOAD = "DOWNLOAD"
 class DatasetConfig:
     """
     Dataclass storing the configuration of the dataset.
-
-
     """
 
     #: Size of the generated images.
@@ -81,7 +79,10 @@ class DatasetConfig:
         """
         Update the configuration with the given values.
 
-        :param kwargs: Configuration to update with.
+        Parameters
+        ----------
+        cfg:
+            Configuration to update with.
 
         :meta private:
         """
@@ -94,12 +95,88 @@ class DatasetConfig:
         """
         Return the path to the cache directory.
 
-        :return: The path to the cache directory or None if the cache is disabled.
+        Returns
+        -------
+            The path to the cache directory or None if the cache is disabled.
         """
         path = self._cache
         if path is False:
             return None
         return Path(path)
+
+    def biomarkers_cache_path(
+        self, biomarkers, pre_annotation: bool = False, resize: Optional[int | bool] = None
+    ) -> Path:
+        """Return the path to the cache directory for biomarkers masks.
+
+        Parameters
+        ----------
+        biomarker: BiomarkerField | list(BiomarkerField)
+            Name of the biomarker.
+        pre_annotation:
+            If True, the path to the cache directory for pre-annotated biomarkers masks is returned.
+        resize:
+            Size of the generated images. If not provided, the current size is used.
+
+        Returns
+        -------
+            The path to the cache directory for biomarkers masks.
+
+        :meta private:
+        """
+        from .dataset import BiomarkerField
+
+        if isinstance(biomarkers, BiomarkerField):
+            biomarkers = [biomarkers]
+        folder = "+".join(b.value for b in sorted(biomarkers))
+        if pre_annotation:
+            folder += "_pre"
+        return self.cache_path / self._resize_cache_folder_name(resize) / folder
+
+    def fundus_cache_path(
+        self, resize: Optional[int | bool] = None, preprocess: Optional[Preprocessing] = None
+    ) -> Path:
+        """
+        Return the path to the cache directory for fundus images.
+
+        Parameters
+        ----------
+        resize:
+            Size of the generated images. If not provided, the current size is used.
+        preprocess:
+            Preprocessing algorithm applied on the fundus images. If not provided, the current preprocessing is used.
+
+        Returns
+        -------
+            The path to the cache directory for fundus images.
+
+        :meta private:
+        """
+        preprocess = Preprocessing(preprocess) or self.preprocessing
+        preprocess_folder = "fundus" if preprocess is Preprocessing.NONE else "fundus_" + preprocess.value
+        return self.cache_path / self._resize_cache_folder_name(resize) / preprocess_folder
+
+    def _resize_cache_folder_name(self, resize: Optional[int | bool] = None) -> str:
+        """
+        Return the name of the cache folder for the given resize value.
+
+        Parameters
+        ----------
+        resize:
+            Size of the generated images. If not provided, the current size is used.
+
+        Returns
+        -------
+            The name of the cache folder for the given resize value.
+
+        :meta private:
+        """
+        resize = resize if resize is not None else self.resize
+        if resize is False:
+            return "mes"
+        elif resize is True:
+            return "1500"
+        return str(resize)
 
 
 class InvalidConfigError(Exception):

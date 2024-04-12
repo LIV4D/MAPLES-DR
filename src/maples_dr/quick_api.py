@@ -16,25 +16,25 @@ def load_train_set() -> Dataset:
     MAPLES-DR training set contains labels of pathological and anatomical structures for 138 fundus images.
     The dataset is return as a :class:`Dataset` object, which is equivalent to a list of samples.
     Each sample being stored as a dictionary with the following fields:
-    - "fundus": The fundus image. (MESSIDOR path must have been configured!)
 
-    - "optic_cup": The optic cup mask.
-    - "optic_disc": The optic disc mask.
-    - "macula": The macula mask.
-    - "vessels": The red lesions mask.
+    - ``"fundus"``: The fundus image. (MESSIDOR path must have been configured!)
 
-    - "cotton_wool_spots": The cotton wool spots mask.
-    - "exudates": The exudates mask.
-    - "drusens": The drusens mask.
-    - "bright_uncertain": The mask of bright lesions with uncertain type (CWS, exudates or drusens).
-
-    - "microaneurysms": The microaneurysms mask.
-    - "hemorrhages": The hemorrhages mask.
-    - "neovascularization": The neovascularization mask.
-    - "red_uncertains": The mask of red lesions with uncertain type (microaneuryms or hemorrhages).
-
-    - "dr": The Diabetic Retinopathy grade ('R0', 'R1', 'R2', 'R3', 'R4A').
-    - "me": The Macular Edema grade ('M0', 'M1', 'M2').
+    - ``"optic_cup"``: The optic cup mask.
+    - ``"optic_disc"``: The optic disc mask.
+    - ``"macula"``: The macula mask.
+    - ``"vessels"``: The red lesions mask.
+    - ``"cotton_wool_spots"``: The cotton wool spots mask.
+    - ``"exudates"``: The exudates mask.
+    - ``"drusens"``: The drusens mask.
+    - ``"bright_uncertain"``: The mask of bright lesions with uncertain type (CWS, exudates or drusens).
+    - ``"microaneurysms"``: The microaneurysms mask.
+    - ``"hemorrhages"``: The hemorrhages mask.
+    - ``"neovascularization"``: The neovascularization mask.
+    - ``"red_uncertains"``: The mask of red lesions with uncertain type (microaneuryms or hemorrhages).
+    - ``"dr"``: The Diabetic Retinopathy grade (``'R0'``, ``'R1'``, ``'R2'``, ``'R3'``, ``'R4A'``).
+      See :ref:`dr-me-grades` for more information.
+    - ``"me"``: The Macular Edema grade (``'M0'``, ``'M1'``, ``'M2'``).
+      See :ref:`dr-me-grades` for more information.
 
 
     Returns
@@ -116,3 +116,8 @@ def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageFi
     >>> export_test_set("path/to/save", fields=["fundus", "red_lesions", "vessels"])
     """
     return GLOBAL_LOADER.load_dataset("test").export(path, fields)
+
+
+def clear_cache():
+    """Clear the cache directory."""
+    return GLOBAL_LOADER.clear_cache()
