@@ -1,14 +1,8 @@
 import logging
 
 import maples_dr
-import numpy as np
-from maples_dr.dataset import (
-    AGGREGATED_BIOMARKERS,
-    BiomarkersAnnotationInfos,
-    BiomarkersAnnotationTasks,
-    DiagnosisField,
-)
 from maples_dr.dataset import BiomarkerField as Bio
+from maples_dr.dataset import DiagnosisField
 from pytest import fixture
 
 LOGGER = logging.getLogger(__name__)

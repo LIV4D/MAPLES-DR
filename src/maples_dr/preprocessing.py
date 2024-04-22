@@ -1,6 +1,8 @@
 from typing import Optional
 
 import numpy as np
+from skimage import measure as skmeasure
+from skimage import morphology as skmorph
 
 from .config import Preprocessing
 
@@ -149,9 +151,6 @@ def fundus_roi(
     mask = fundus > 10
 
     if morphological_clean:
-        from skimage import measure as skmeasure
-        from skimage import morphology as skmorph
-
         # Remove small objects
         mask = skmorph.remove_small_objects(mask, 5000)
 
@@ -179,8 +178,6 @@ def fundus_roi(
         )
 
     if final_erosion > 0:
-        from skimage import morphology as skmorph
-
         skmorph.binary_erosion(mask, skmorph.disk(final_erosion), out=mask)
 
     return mask

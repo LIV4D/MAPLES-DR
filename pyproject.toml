@@ -15,13 +15,13 @@ dependencies = [
     'pandas',
     'pyyaml',
     'rich',
+    'scikit-image', 
 ]
 
 [project.optional-dependencies]
 examples = [
     'plotly',
     'rich',
-    'scikit-image', 
     'scikit-learn', 
     'scipy',
     'tqdm',

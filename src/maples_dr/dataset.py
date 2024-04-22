@@ -11,7 +11,7 @@ import pandas as pd
 from PIL import Image
 from PIL.Image import Resampling
 
-from .config import DatasetConfig, ImageFormat, InvalidConfigError, Preprocessing
+from .config import DatasetConfig, ImageFormat, Preprocessing
 from .preprocessing import fundus_roi, preprocess_fundus
 from .utilities import Point, Rect, RichProgress, case_less_parse_str_enum
 
