@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 20:02-0400\n"
+"POT-Creation-Date: 2024-04-19 16:31-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -32,14 +32,9 @@ msgstr ""
 msgid "Return the path to the cache directory."
 msgstr ""
 
-#: 0ff83708d4474c95aa8803c972df7db1 maples_dr.config.DatasetConfig.cache_path
+#: bbb7e326f8634fdc9770fcf7bf962db8 maples_dr.config.DatasetConfig.cache_path
 #: of
-msgid "Returns"
-msgstr ""
-
-#: aed333aa69d54a67a277dceb5e13801b maples_dr.config.DatasetConfig.cache_path:3
-#: of
-msgid "The path to the cache directory or None if the cache is disabled."
+msgid "Return type"
 msgstr ""
 
 #: ../../docstring 7df527a956b2421b8a3145c10f2bae02
@@ -156,4 +151,10 @@ msgstr ""
 #: 88600b41769b48e1b7ac808fe804e32d maples_dr.config.InvalidConfigError:1 of
 msgid "Exception raised when the configuration is invalid."
 msgstr ""
+
+#~ msgid "Returns"
+#~ msgstr ""
+
+#~ msgid "The path to the cache directory or None if the cache is disabled."
+#~ msgstr ""
 

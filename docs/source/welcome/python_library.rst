@@ -2,7 +2,7 @@
 MAPLES-DR Python Library
 ************************
 
-The `maples_dr <https://github.com/LIV4D/MAPLES-DR/>`_ package documented here provides a python library to ease the use of MAPLES-DR dataset, especially for machine learning applications.
+The `maples_dr <https://github.com/LIV4D/MAPLES-DR/>`_ package documented here provides a python library to make the MAPLES-DR dataset easier to use, especially for machine learning applications.
 
 
 Documentation

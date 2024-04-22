@@ -2,12 +2,12 @@
 Using MESSIDOR fundus images
 ****************************************
 
-The fundus images corresponding to the diagnostic labels and biomarker segmentation maps of MAPLES-DR are the property of the MESSIDOR consortium and are therefore not included in the dataset. However they are freely available to any research team who requires them on the `Consortium's website <https://www.adcis.net/en/third-party/messidor/>`_. This page will guide you through the setup of including MESSIDOR fundus images along MAPLES-DR labels.
+The fundus images used to create MAPLES-DR are the property of the MESSIDOR consortium and are therefore not included in the dataset. However, they are freely available to any research team who requires them on the `Consortium's website <https://www.adcis.net/en/third-party/messidor/>`_. This page will guide you through the steps to include the MESSIDOR fundus images along with MAPLES-DR labels.
 
 Download MESSIDOR fundus images
 ================================
 
-The MESSIDOR fundus images can be downloaded from the `Consortium's website <https://www.adcis.net/en/third-party/messidor/>`_. The Consortium requires you to fill a form with your personal informations, agree to the terms of license agreement, and verify your email address before downloading the images. 
+The MESSIDOR fundus images can be downloaded from the `Consortium's website <https://www.adcis.net/en/third-party/messidor/>`_. The Consortium requires you to fill a form with your personal information, agree to the terms of the license agreement, and verify your email address before downloading the images. 
 
 The download page contains links to several files. The fundus images are divided into 12 zip archives named ``Base__ images (zip)``. Make sure to download all 12 archives (`Base11.zip`, `Base12.zip`, ...,  `Base34.zip`) to the same directory.
 
@@ -23,7 +23,7 @@ Once you have downloaded the images, you can include them in the dataset by call
     configure(messidor_path='/path/to/messidor/download/directory/')
 
 
-Upon calling :func:`maples_dr.load_train_set` or :func:`maples_dr.load_test_set`, the 200 fundus images related to MAPLES-DR will be extracted, cropped and resized to match MAPLES-DR resolution. They will be accessible under the field ``"fundus"`` along the other MAPLES-DR biomarkers.
+Upon calling :func:`maples_dr.load_train_set` or :func:`maples_dr.load_test_set`, the 200 fundus images related to MAPLES-DR will be extracted, cropped and resized to match MAPLES-DR resolution. They will be accessible under the field ``"fundus"`` similarly to the MAPLES-DR biomarkers.
 
 .. code-block:: python
 

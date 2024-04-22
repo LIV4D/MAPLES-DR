@@ -2,10 +2,9 @@
 Quick Start
 ************
 
-MAPLES-DR dataset is available for download on `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_. But in the 
-context of training machine learning algorithm we strongly recommend to directly use the `maples_dr` python package to easily download, format and manipulate the dataset.
+The MAPLES-DR dataset is available for download on `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_. But in the context of training machine learning algorithms we strongly recommend users to install the `maples_dr` python package to easily download, format and manipulate the dataset.
 
-This page will guide you through the installation process and simple usage of the package: loading the dataset in memory or saving it in a local folder.
+This page will guide you through the installation process and basic usage of the package: loading the dataset in memory or saving it in a local folder.
 
 Installation
 ============
@@ -27,7 +26,7 @@ Once imported, MAPLES-DR train or test sets can be loaded in memory with a singl
     train_set = maples_dr.load_train_set()
     test_set = maples_dr.load_test_set()
 
-If necessary, the dataset archive is automatically downloaded from `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extracted and cached locally. The data is then returned as a :class:`maples_dr.Dataset` which is assimilable to a list of dictionaries containing all MAPLES-DR labels. (For more information, see the :doc:`../api_reference/dataset` class documentation). 
+If necessary, the dataset archive is automatically downloaded from `Figshare <https://doi.org/10.6084/m9.figshare.24328660>`_, extracted and cached locally. The data is then returned as a :class:`maples_dr.Dataset` which takes the form of a list of dictionaries containing all MAPLES-DR labels. (For more information, see the :doc:`../api_reference/dataset` class documentation). 
 
 For example, the vessel map of the first sample of the train set can be accessed with:
 
@@ -78,9 +77,9 @@ As a result of these commands, all the labels of MAPLES-DR are saved as image fi
 Configure the datasets behavior
 ===============================
 
-The dataset behavior can be tailored to ease the integration with your code or you specific application. For instance, you might need the images and biomarkers map to have a specific resolution, a specific format (PIL image or numpy array), a specific channel order (`rgb` or `bgr`)...  The default behavior of the library is configured with the :func:`maples_dr.configure` method, and the configuration options are documented in details in :class:`maples_dr.config.DatasetConfig` documentation.
+The dataset behavior can be tailored to ease the integration with your code or specific application. For instance, you might need the images and biomarker maps to have a specific resolution, a specific format (PIL image or numpy array), a specific channel order (`rgb` or `bgr`)...  The default behavior of the library is configured with the :func:`maples_dr.configure` method, and the configuration options are detailed in :class:`maples_dr.config.DatasetConfig` documentation.
 
-The following example shows how to configure the dataset to return images as numpy arrays (instead of PIL image) and with a resolution of 512x512 pixels:
+The following example shows how to configure the dataset to return images as numpy arrays (instead of PIL images) and with a resolution of 512x512 pixels:
 
 .. code-block:: python
 
@@ -88,7 +87,7 @@ The following example shows how to configure the dataset to return images as num
 
 
 
-The same method can be used to specify a local path from where the library should read MAPLES-DR data, instead of downloading them from Figshare.
+The same method can be used to specify a local path where the library should read MAPLES-DR data, instead of downloading them from Figshare.
 
 .. code-block:: python
 
@@ -97,7 +96,7 @@ The same method can be used to specify a local path from where the library shoul
         maples_dr_diagnosis_path="path/to/MAPLES-DR/diagnosis.xls"
     )
 
-Finally, a local path to MESSIDOR dataset can also be specified with this function in order to include the fundus images from MESSIDOR along MAPLES-DR labels. (See :doc:`../welcome/messidor` for more details.)
+Finally, a local path to the MESSIDOR dataset can also be specified with this function in order to include the fundus images from MESSIDOR along with the MAPLES-DR labels. (See :doc:`../welcome/messidor` for more details.)
 
 .. code-block:: python
 
