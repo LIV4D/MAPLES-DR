@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 from collections.abc import Mapping, Sequence
 from enum import Enum
 from pathlib import Path
@@ -777,7 +778,20 @@ class DataSample(Mapping):
         for bio in biomarkers:
             key = bio.value + ("_pre" if pre_annotation else "")
             if key in self._data:
-                paths.append(self._data[key])
+                bio_path = self._data[key]
+                if bio_path is not None:
+                    paths.append(bio_path)
+                else:
+                    if bio is BiomarkerField.MACULA:
+                        logging.warning(
+                            f"The macula is not segmented on image {self.name}!\n"
+                            "(The corresponding fundus image is centered on the optic disc, the macula is not visible)."
+                        )
+                    if bio is BiomarkerField.OPTIC_CUP:
+                        logging.warning(
+                            f"The optic cup is not segmented on image {self.name}!\n"
+                            "(The cup boundaries are too fuzzy to be annotated.)."
+                        )
 
         # Read the biomarkers
         biomarkers_map = np.zeros(target_size, dtype=bool)
@@ -790,7 +804,7 @@ class DataSample(Mapping):
 
         for path in paths:
             if Path(path).exists():
-                img = Image.open(path).resize(target_size, Resampling.NEAREST)
+                img = Image.open(path).resize(target_size.xy(), Resampling.NEAREST)
                 window[np.array(img) > 0] = 1
 
         # Apply format conversion
@@ -919,12 +933,13 @@ class DataSample(Mapping):
             fundus_format = ImageFormat.BGR
 
         # Resize the image
-        if fundus_format is ImageFormat.BGR and fundus.shape[:2] != target_size:
-            fundus = self._apply_image_format(fundus, fundus_format, ImageFormat.PIL)
-            fundus_format = ImageFormat.PIL
-            fundus = fundus.resize(target_size, Resampling.LANCZOS if target_size[0] < 1000 else Resampling.BILINEAR)
-        elif fundus_format is ImageFormat.PIL and fundus.size != target_size:
-            fundus = fundus.resize(target_size, Resampling.LANCZOS if target_size[0] < 1000 else Resampling.BILINEAR)
+        fundus_shape = fundus.size if fundus_format is ImageFormat.PIL else fundus.shape[:2]
+        if fundus_shape != target_size:
+            resampling_method = Resampling.LANCZOS if target_size.y < 1000 else Resampling.BILINEAR
+            if fundus_format is not ImageFormat.PIL:
+                fundus = self._apply_image_format(fundus, fundus_format, ImageFormat.PIL)
+                fundus_format = ImageFormat.PIL
+            fundus = fundus.resize(target_size.xy(), resampling_method)
 
         # Preprocess the image
         if preprocess is not Preprocessing.NONE:

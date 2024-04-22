@@ -19,7 +19,7 @@ from .utilities import RichProgress, xdg_data_home
 
 #   === CONSTANTS ===
 # Figshare public urls of the MAPLES DR dataset
-MAPLES_DR_ADDITIONAL_URL = "https://figshare.com/ndownloader/files/43695822"
+MAPLES_DR_ADDITIONAL_URL = "https://figshare.com/ndownloader/files/45795384"
 
 #: Unset constant
 UNSET = "UNSET"
@@ -397,15 +397,17 @@ class DatasetLoader:
 
         return annotation_infos
 
-    @staticmethod
-    def check_maples_dr_integrity(path: Path, biomarkers: list[str], images_names: list[str]):
+    def check_maples_dr_integrity(self, path: Path, biomarkers: list[str], images_names: list[str]):
         """
         Check if the MAPLES-DR dataset contains all segmentation maps.
         """
         missing_images = 0
         for biomarker in biomarkers:
             for img in images_names:
-                if not (path / "annotations" / biomarker / (img + ".png")).exists():
+                if (
+                    self.is_biomarker_segmented(biomarker, img)
+                    and not (path / "annotations" / biomarker / (img + ".png")).exists()
+                ):
                     missing_images += 1
         if missing_images > 0:
             raise InvalidConfigError(
@@ -540,9 +542,9 @@ class DatasetLoader:
             BiomarkerField.RED_UNCERTAINS.value: "RedUncertains",
             BiomarkerField.VESSELS.value: "Vessels",
         }
-        for biomarker, bio_folder in biomarkers_folder.items():
+        for bio, bio_folder in biomarkers_folder.items():
             folder = self.maples_dr_folder / "annotations" / bio_folder
-            paths[biomarker] = [folder / (name + ".png") for name in names]
+            paths[bio] = [folder / (n + ".png") if self.is_biomarker_segmented(bio, n) else None for n in names]
 
         preannotations_folder = {
             BiomarkerField.EXUDATES.value: "Exudates",
@@ -550,8 +552,8 @@ class DatasetLoader:
             BiomarkerField.MICROANEURYSMS.value: "Microaneurysms",
             BiomarkerField.VESSELS.value: "Vessels",
         }
-        for biomarker, bio_folder in preannotations_folder.items():
-            paths[biomarker + "_pre"] = [
+        for bio, bio_folder in preannotations_folder.items():
+            paths[bio + "_pre"] = [
                 self.maples_dr_folder / "preannotations" / bio_folder / (name + ".png") for name in names
             ]
 
@@ -595,6 +597,38 @@ class DatasetLoader:
                 extension = "png"
             names = [name + "." + extension for name in names]
         return names
+
+    def is_biomarker_segmented(self, biomarker: BiomarkerField | str, name: str) -> bool:
+        """
+        Check if the given biomarker is segmented in the MAPLES-DR dataset.
+
+        .. note::
+
+            The macula segmentation is missing for one image centered on the optic disc.
+
+            The optic cup boundaries are too fuzzy to be segmented on six images.
+
+
+        Parameters
+        ----------
+        biomarker:
+            The biomarker to check.
+        name:
+            The image name.
+
+        Returns
+        -------
+        bool
+            True if the biomarker is segmented, False otherwise.
+        """
+        if not self.is_configured():
+            raise NotConfiguredError()
+        biomarker = BiomarkerField.parse(biomarker)
+        if biomarker is BiomarkerField.MACULA and name in self.dataset_record["no_macula"]:
+            return False
+        if biomarker is BiomarkerField.OPTIC_CUP and name in self.dataset_record["no_cup"]:
+            return False
+        return True
 
 
 GLOBAL_LOADER = DatasetLoader()

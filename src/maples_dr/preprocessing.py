@@ -51,7 +51,7 @@ def clahe_preprocessing(fundus: np.ndarray, mask: Optional[np.ndarray] = None) -
     assert fundus.dtype == np.uint8, f"Fundus image must be a 8-bit unsigned integer array instead of {fundus.dtype}."
     assert (
         len(fundus.shape) == 3 and fundus.shape[2] == 3
-    ), "Fundus image must be a 3-channel RGB image with shape (height, width, 3) instead of {fundus.shape}."
+    ), f"Fundus image must be a 3-channel RGB image with shape (height, width, 3) instead of {fundus.shape}."
     mask = fundus_roi(fundus) if mask is None else mask
     assert mask.shape == fundus.shape[:2], "Mask must have the same shape as the fundus image."
 
@@ -109,22 +109,35 @@ def median_preprocessing(fundus: np.ndarray) -> np.ndarray:
     return cv2.addWeighted(fundus, 4, bg, -4, 128)
 
 
-def fundus_roi(fundus: np.ndarray, blur_radius=5, morphological_clean=False, smoothing_radius=0) -> np.ndarray:
+def fundus_roi(
+    fundus: np.ndarray, blur_radius=5, morphological_clean=False, smoothing_radius=0, final_erosion=4
+) -> np.ndarray:
     """Compute the region of interest (ROI) of a fundus image.
 
     Parameters:
     -----------
     fundus:
         The fundus image.
+
     blur_radius:
         The radius of the median blur filter.
+
         By default: 5.
+
     morphological_clean:
         Whether to perform morphological cleaning. (small objects removal and filling of the holes not on the border)
+
         By default: False.
+
     smoothing_radius:
         The radius of the Gaussian blur filter.
+
         By default: 0.
+
+    final_erosion:
+        The radius of the disk used for the final erosion.
+
+        By default: 4.
 
     Returns:
         The ROI mask.
@@ -162,6 +175,12 @@ def fundus_roi(fundus: np.ndarray, blur_radius=5, morphological_clean=False, smo
                 smoothing_radius,
                 borderType=cv2.BORDER_CONSTANT,
             )
-            > 200
+            > 125
         )
+
+    if final_erosion > 0:
+        from skimage import morphology as skmorph
+
+        skmorph.binary_erosion(mask, skmorph.disk(final_erosion), out=mask)
+
     return mask
