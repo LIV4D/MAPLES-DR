@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 20:02-0400\n"
+"POT-Creation-Date: 2024-04-22 16:09-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -52,7 +52,6 @@ msgid ""
 " structures."
 msgstr ""
 
-#: 54f45821030441239641d5ac5e4c7d98 c0c930f0c5a341c8921adb3bf02782a0
 #: edebc0546ac54953a85b95d3890fb179 f5aa5d9498a0427db7c8971ca1422bb0
 #: maples_dr.preprocessing.clahe_preprocessing
 #: maples_dr.preprocessing.fundus_roi
@@ -68,7 +67,6 @@ msgid "The fundus image as a BGR numpy array (height, width, 3)."
 msgstr ""
 
 #: 484cb57b9e9a4e4aa0546de65a6d12fd 79317cdc8d1e4dc68dc2eb252b574963
-#: 9d922be6e629476da1fd985c006c59f0 d52e91d6a05741d38b3fa679d5449524
 #: maples_dr.preprocessing.clahe_preprocessing
 #: maples_dr.preprocessing.fundus_roi
 #: maples_dr.preprocessing.median_preprocessing
@@ -84,7 +82,7 @@ msgstr ""
 msgid "Parameters:"
 msgstr ""
 
-#: 77f6a6334cb140bb829e7c3280f45753 maples_dr.preprocessing.fundus_roi:5 of
+#: 77f6a6334cb140bb829e7c3280f45753 maples_dr.preprocessing.fundus_roi:6 of
 msgid "fundus:"
 msgstr ""
 
@@ -92,37 +90,61 @@ msgstr ""
 msgid "The fundus image."
 msgstr ""
 
-#: 814571b6b41e4b208773036badf3e84a maples_dr.preprocessing.fundus_roi:8 of
+#: 814571b6b41e4b208773036badf3e84a maples_dr.preprocessing.fundus_roi:11 of
 msgid "blur_radius:"
 msgstr ""
 
-#: 593b733899af49dfa62881a5f11d442f maples_dr.preprocessing.fundus_roi:8 of
-msgid "The radius of the median blur filter. By default: 5."
+#: 593b733899af49dfa62881a5f11d442f maples_dr.preprocessing.fundus_roi:9 of
+msgid "The radius of the median blur filter."
 msgstr ""
 
-#: 85700239e97e475da79c8fa0b85da945 maples_dr.preprocessing.fundus_roi:11 of
+#: 142adfb96b014cc38ec40bd051b5f73d maples_dr.preprocessing.fundus_roi:11 of
+msgid "By default: 5."
+msgstr ""
+
+#: 85700239e97e475da79c8fa0b85da945 maples_dr.preprocessing.fundus_roi:16 of
 msgid "morphological_clean:"
 msgstr ""
 
-#: e1288e157f244a43a437108c2a007e59 maples_dr.preprocessing.fundus_roi:11 of
+#: e1288e157f244a43a437108c2a007e59 maples_dr.preprocessing.fundus_roi:14 of
 msgid ""
 "Whether to perform morphological cleaning. (small objects removal and "
-"filling of the holes not on the border) By default: False."
+"filling of the holes not on the border)"
 msgstr ""
 
-#: 57b1a131f9c749359705b7b40ee7c6bd maples_dr.preprocessing.fundus_roi:15 of
+#: 7e5ad9551acd41a8af9a84a7485da2f0 maples_dr.preprocessing.fundus_roi:16 of
+msgid "By default: False."
+msgstr ""
+
+#: 57b1a131f9c749359705b7b40ee7c6bd maples_dr.preprocessing.fundus_roi:21 of
 msgid "smoothing_radius:"
 msgstr ""
 
-#: ea8141c058fe4e259d4bdf93ca2bfda9 maples_dr.preprocessing.fundus_roi:14 of
-msgid "The radius of the Gaussian blur filter. By default: 0."
+#: ea8141c058fe4e259d4bdf93ca2bfda9 maples_dr.preprocessing.fundus_roi:19 of
+msgid "The radius of the Gaussian blur filter."
+msgstr ""
+
+#: f20b57d88e1249d4b25e2a3648ae6cef maples_dr.preprocessing.fundus_roi:21 of
+msgid "By default: 0."
+msgstr ""
+
+#: e68defac7cf241738422176ec846a6d4 maples_dr.preprocessing.fundus_roi:26 of
+msgid "final_erosion:"
+msgstr ""
+
+#: 593b733899af49dfa62881a5f11d442f maples_dr.preprocessing.fundus_roi:24 of
+msgid "The radius of the disk used for the final erosion."
+msgstr ""
+
+#: 8eae93c2c6fc4720b84d5acda60742e1 maples_dr.preprocessing.fundus_roi:26 of
+msgid "By default: 4."
 msgstr ""
 
 #: 59ea43bf5aaa4b8195dbae1ca269d4bf maples_dr.preprocessing.fundus_roi of
 msgid "returns"
 msgstr ""
 
-#: 58ffeede7d96483fbb0ff7c84ce74da8 maples_dr.preprocessing.fundus_roi:17 of
+#: 58ffeede7d96483fbb0ff7c84ce74da8 maples_dr.preprocessing.fundus_roi:28 of
 msgid "The ROI mask."
 msgstr ""
 
@@ -154,4 +176,17 @@ msgid ""
 "The preprocessing algorithm to apply. See "
 ":class:`maples_dr.config.Preprocessing` for the available options."
 msgstr ""
+
+#~ msgid "The radius of the median blur filter. By default: 5."
+#~ msgstr ""
+
+#~ msgid ""
+#~ "Whether to perform morphological cleaning. "
+#~ "(small objects removal and filling of"
+#~ " the holes not on the border) "
+#~ "By default: False."
+#~ msgstr ""
+
+#~ msgid "The radius of the Gaussian blur filter. By default: 0."
+#~ msgstr ""
 

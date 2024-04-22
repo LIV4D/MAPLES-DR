@@ -20,12 +20,7 @@ def train_set():
     return maples_dr.load_train_set()
 
 
-def test_cached_samples(train_set):
-    maples_dr.configure(cache="examples/PATH/TO/CACHE")
-    test_dataset_samples(train_set)
-
-
-def test_cache_efficiency_fundus(train_set):
+def test_cache_efficiency_fundus(train_set, tmp_path):
     N_SAMPLES = 50
 
     # Measure Timing without cache
@@ -36,8 +31,7 @@ def test_cache_efficiency_fundus(train_set):
     dt_nocache = time() - tic
 
     # Measure Timing with cache
-    maples_dr.configure(cache="examples/PATH/TO/CACHE")
-    maples_dr.clear_cache()
+    maples_dr.configure(cache=tmp_path)
 
     # A first time to create the cache
     tic = time()
@@ -79,7 +73,7 @@ def test_cache_efficiency_fundus(train_set):
     LOGGER.info(f"Cache efficiency: {dt_nocache / max(dt_cache1, dt_cache2):.2f}")
 
 
-def test_cache_efficiency_vessels(train_set):
+def test_cache_efficiency_vessels(train_set, tmp_path):
     N_SAMPLES = 50
 
     # === COMPARE TIMING WHEN NO PROCESSING IS APPLIED ===
@@ -91,7 +85,7 @@ def test_cache_efficiency_vessels(train_set):
     dt_nocache = time() - tic
 
     # Measure Timing with cache
-    maples_dr.configure(cache="examples/PATH/TO/CACHE")
+    maples_dr.configure(cache=tmp_path)
     maples_dr.clear_cache()
     tic = time()
     vessels_cache0 = [sample.read_biomarker(BiomarkerField.VESSELS) for sample in train_set[:N_SAMPLES]]
@@ -122,7 +116,7 @@ def test_cache_efficiency_vessels(train_set):
     dt_nocache = time() - tic
 
     # Measure Timing with cache
-    maples_dr.configure(cache="examples/PATH/TO/CACHE")
+    maples_dr.configure(cache=tmp_path)
 
     # A first time to create the cache
     tic = time()
@@ -166,7 +160,7 @@ def test_cache_efficiency_vessels(train_set):
     LOGGER.info(f"Cache efficiency: {dt_nocache / max(dt_cache1, dt_cache2):.2f}")
 
 
-def test_cache_efficiency_red(train_set):
+def test_cache_efficiency_red(train_set, tmp_path):
     N_SAMPLES = 50
 
     # === COMPARE TIMING WHEN NO PROCESSING IS APPLIED ===
@@ -178,7 +172,7 @@ def test_cache_efficiency_red(train_set):
     dt_nocache = time() - tic
 
     # Measure Timing with cache
-    maples_dr.configure(cache="examples/PATH/TO/CACHE")
+    maples_dr.configure(cache=tmp_path)
     maples_dr.clear_cache()
 
     # A first time to create the cache
@@ -224,7 +218,7 @@ def test_cache_efficiency_red(train_set):
     dt_nocache = time() - tic
 
     # Measure Timing with cache
-    maples_dr.configure(cache="examples/PATH/TO/CACHE")
+    maples_dr.configure(cache=tmp_path)
 
     # A first time to create the cache
     tic = time()

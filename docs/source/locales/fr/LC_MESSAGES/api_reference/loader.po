@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 16:31-0400\n"
+"POT-Creation-Date: 2024-04-22 16:09-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -42,6 +42,7 @@ msgstr ""
 #: maples_dr.loader.DatasetLoader.configure
 #: maples_dr.loader.DatasetLoader.discover_messidor_images
 #: maples_dr.loader.DatasetLoader.image_names
+#: maples_dr.loader.DatasetLoader.is_biomarker_segmented
 #: maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos
 #: maples_dr.loader.DatasetLoader.load_dataset
 #: maples_dr.loader.DatasetLoader.load_dataset_record_and_rois
@@ -241,6 +242,7 @@ msgstr ""
 #: 9dad99948ff2460bbc257ce946cfbde2
 #: maples_dr.loader.DatasetLoader.discover_messidor_images
 #: maples_dr.loader.DatasetLoader.image_names
+#: maples_dr.loader.DatasetLoader.is_biomarker_segmented
 #: maples_dr.loader.DatasetLoader.is_configured
 #: maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos
 #: maples_dr.loader.DatasetLoader.load_dataset
@@ -273,6 +275,43 @@ msgid ""
 "If False (default), return the images names without the extension. - If "
 "True, return the images names with a png extension. - If a string, return"
 " the images names with the given extension."
+msgstr ""
+
+#: 9aea6b5b66cf462992b41aca84507adb
+#: maples_dr.loader.DatasetLoader.is_biomarker_segmented:1 of
+msgid "Check if the given biomarker is segmented in the MAPLES-DR dataset."
+msgstr ""
+
+#: 37ccab606ffb424faac4e427ffff5959
+#: maples_dr.loader.DatasetLoader.is_biomarker_segmented:5 of
+msgid ""
+"The macula segmentation is missing for one image centered on the optic "
+"disc."
+msgstr ""
+
+#: bee1f165933f44d99860c9acef94ea34
+#: maples_dr.loader.DatasetLoader.is_biomarker_segmented:7 of
+msgid "The optic cup boundaries are too fuzzy to be segmented on six images."
+msgstr ""
+
+#: 744a81973542484eadaa4dde24ff8dc5
+#: maples_dr.loader.DatasetLoader.is_biomarker_segmented:10 of
+msgid "The biomarker to check."
+msgstr ""
+
+#: 5a09166acd884e2ab7e9b0dedc579ed9
+#: maples_dr.loader.DatasetLoader.is_biomarker_segmented:11 of
+msgid "The image name."
+msgstr ""
+
+#: 9dad99948ff2460bbc257ce946cfbde2
+#: maples_dr.loader.DatasetLoader.is_biomarker_segmented of
+msgid "Returns"
+msgstr ""
+
+#: 101f8628128041be8fffd101f9aa6084
+#: maples_dr.loader.DatasetLoader.is_biomarker_segmented:13 of
+msgid "True if the biomarker is segmented, False otherwise."
 msgstr ""
 
 #: 0d5a61d4d2a94597a4537f0075ebf934
