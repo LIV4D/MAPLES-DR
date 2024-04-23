@@ -1,6 +1,8 @@
 # MAPLES-DR
 
+[![Version](https://img.shields.io/pypi/v/maples_dr.svg?logo=pypi)](https://pypi.python.org/pypi/maples_dr)
 [![doc](https://github.com/LIV4D/MAPLES-DR/actions/workflows/documentation.yml/badge.svg?branch=dev)](https://liv4d.github.io/MAPLES-DR/en/)
+
 
 **MAPLES-DR _(MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy)_** is a public dataset which provides diagnoses for DR and ME as well as pixel-wise segmentation maps for 10 retinal structures for 198 images of MESSIDOR. This repository provides a python library of utility codes to ease the use of the database.
 
