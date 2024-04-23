@@ -174,7 +174,7 @@ def fundus_roi(
         The ROI mask.
 
     """
-    ensure_imports(skimage_needed=True, skimage_needed=morphological_clean or final_erosion > 0)
+    ensure_imports(cv2_needed=True, skimage_needed=morphological_clean or final_erosion > 0)
 
     fundus = cv2.medianBlur(fundus[..., 1], blur_radius * 2 - 1)
     mask = fundus > 10
