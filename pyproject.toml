@@ -1,7 +1,7 @@
 [project]
 
 name = "maples-dr"
-version = '0.1.0'
+version = '0.1.0rc3'
 authors = [
     {name= 'Gabriel Lepetit-Aimon', email= 'gabriel.lepetit-aimon@polymtl.ca'},
 ]
@@ -13,9 +13,9 @@ dependencies = [
     'numpy',
     'Pillow',
     'pandas',
+    'xlrd',
     'pyyaml',
     'rich',
-    'scikit-image', 
 ]
 
 [project.optional-dependencies]
@@ -23,6 +23,7 @@ examples = [
     'plotly',
     'rich',
     'scikit-learn', 
+    'scikit-image',
     'scipy',
     'tqdm',
     'jppype',
@@ -35,6 +36,8 @@ dev = [
     'nbsphinx',
     'sphinx-intl',
     'ipython',
+]
+test = [
     'pytest',
 ]
 

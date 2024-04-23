@@ -6,8 +6,6 @@ from enum import Enum
 from pathlib import Path
 from typing import Any, Mapping, Optional
 
-from .utilities import xdg_data_home
-
 
 class ImageFormat(str, Enum):
     """String Enum of possible image formats for fundus images and biomarker masks."""
