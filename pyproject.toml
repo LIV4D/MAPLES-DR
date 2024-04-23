@@ -1,7 +1,7 @@
 [project]
 
 name = "maples-dr"
-version = '0.1.0rc1'
+version = '0.1.0rc2'
 authors = [
     {name= 'Gabriel Lepetit-Aimon', email= 'gabriel.lepetit-aimon@polymtl.ca'},
 ]
