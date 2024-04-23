@@ -1,10 +1,39 @@
 from typing import Optional
 
 import numpy as np
-from skimage import measure as skmeasure
-from skimage import morphology as skmorph
 
 from .config import Preprocessing
+
+try:
+    import cv2
+except ImportError:
+    cv2 = None
+
+try:
+    from skimage import measure as skmeasure
+    from skimage import morphology as skmorph
+except ImportError:
+    skmeasure = None
+    skmorph = None
+
+
+__all__ = ["preprocess_fundus", "clahe_preprocessing", "median_preprocessing", "fundus_roi"]
+
+
+def ensure_imports(cv2_needed=False, skimage_needed=False):
+    if cv2_needed and skimage_needed and (cv2 is None and skmeasure is None):
+        raise ImportError(
+            "OpenCV and Scikit-Image are required for this function.\n"
+            "Please install them using 'pip install opencv-python-headless scikit-image'."
+        )
+    if cv2_needed and not cv2:
+        raise ImportError(
+            "OpenCV is required for this function." "Please install it using 'pip install opencv-python-headless'."
+        )
+    if skimage_needed and not skmeasure:
+        raise ImportError(
+            "Scikit-Image is required for this function." "Please install it using 'pip install scikit-image'."
+        )
 
 
 def preprocess_fundus(fundus: np.ndarray, preprocessing: Preprocessing | str) -> np.ndarray:
@@ -58,7 +87,7 @@ def clahe_preprocessing(fundus: np.ndarray, mask: Optional[np.ndarray] = None) -
     assert mask.shape == fundus.shape[:2], "Mask must have the same shape as the fundus image."
 
     # CV2 is required for this preprocessing
-    import cv2
+    ensure_imports(cv2_needed=True)
 
     # Preprocessing
     mean_b = np.median(fundus[..., 0][mask])
@@ -104,7 +133,7 @@ def median_preprocessing(fundus: np.ndarray) -> np.ndarray:
     ), "Fundus image must be a 3-channel RGB image with shape (height, width, 3) instead of {fundus.shape}."
 
     # CV2 is required for this preprocessing
-    import cv2
+    ensure_imports(cv2_needed=True)
 
     k = np.max(fundus.shape) // 20 * 2 + 1
     bg = cv2.medianBlur(fundus, k)
@@ -145,7 +174,7 @@ def fundus_roi(
         The ROI mask.
 
     """
-    import cv2
+    ensure_imports(skimage_needed=True, skimage_needed=morphological_clean or final_erosion > 0)
 
     fundus = cv2.medianBlur(fundus[..., 1], blur_radius * 2 - 1)
     mask = fundus > 10

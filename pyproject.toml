@@ -16,7 +16,6 @@ dependencies = [
     'xlrd',
     'pyyaml',
     'rich',
-    'scikit-image', 
 ]
 
 [project.optional-dependencies]
@@ -24,6 +23,7 @@ examples = [
     'plotly',
     'rich',
     'scikit-learn', 
+    'scikit-image',
     'scipy',
     'tqdm',
     'jppype',
@@ -36,6 +36,8 @@ dev = [
     'nbsphinx',
     'sphinx-intl',
     'ipython',
+]
+test = [
     'pytest',
 ]
 
