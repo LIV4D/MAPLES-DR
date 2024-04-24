@@ -87,6 +87,7 @@ def load_new_annotations():
     REFINED_ANNOTATION = [
         Path("../PATH/TO/MAPLES-DR/Variability/Daniel"),
         Path("../PATH/TO/MAPLES-DR/Variability/Fares_resized"),
+        Path("../PATH/TO/MAPLES-DR/Variability/MarieCarole_resized"),
     ]
     REFINED_PREANNOTATION = Path("../PATH/TO/MAPLES-DR/preannotations-improved-apr24/annotations_resized/")
 
@@ -168,7 +169,7 @@ def count_lesions(dataset: maples_dr.dataset.Dataset, biomarker: maples_dr.datas
     return pd.Series(counts, index=dataset.data.index)
 
 
-def multi_annotator_regions_diff(initial_map, *edited_maps):
+def multi_annotator_regions_diff(initial_map, *edited_maps, change_max_iou=0.5):
     """Compute the difference between an initial map and a set of edited maps.
 
     For each region (connected component) in the initial map, the function determines whether it was removed, changed,
@@ -196,21 +197,24 @@ def multi_annotator_regions_diff(initial_map, *edited_maps):
     added_graph = nx.Graph()
 
     for i, m in enumerate(edited_maps):
-        labels_m, removed_m, changed_m, kept_m, added_m = regions_diff(initial_map_labels, m)
-        for l in removed_m:
-            region_diffs[l].append("R")
-        for l in changed_m:
-            region_diffs[l].append("C")
-        for l in kept_m:
-            region_diffs[l].append("K")
+        labels_m, removed_m, changed_m, kept_m, added_m = regions_diff(
+            initial_map_labels, m, change_max_iou=change_max_iou
+        )
+
+        for l_removed in removed_m:
+            region_diffs[l_removed].append("R")
+        for l_changed in changed_m:
+            region_diffs[l_changed].append("C")
+        for l_kept in kept_m:
+            region_diffs[l_kept].append("K")
 
         # Create node for added regions
-        for l in added_m:
-            added_graph.add_node((i, l))
+        for l_added in added_m:
+            added_graph.add_node((i, l_added))
             for i_previous_labels, previous_labels in enumerate(labels):
-                overlapping_l = set(np.unique(previous_labels[labels_m == l])) - {0}
+                overlapping_l = set(np.unique(previous_labels[labels_m == l_added])) - {0}
                 for ol in overlapping_l:
-                    added_graph.add_edge((i, l), (i_previous_labels, ol))
+                    added_graph.add_edge((i, l_added), (i_previous_labels, ol))
 
         labels.append(labels_m)
 
@@ -220,15 +224,15 @@ def multi_annotator_regions_diff(initial_map, *edited_maps):
     l_added = n_initial_labels
     for component in added_components:
         l_added += 1
-        for i, l in component:
-            final_labels[labels[i] == l] = l_added
+        for i, l_added in component:
+            final_labels[labels[i] == l_added] = l_added
 
         region_diffs[l_added] = ["A" if i in {_[0] for _ in component} else "" for i in range(len(edited_maps))]
 
     return final_labels, region_diffs
 
 
-def regions_diff(initial_label_map, map_after):
+def regions_diff(initial_label_map, map_after, *, change_max_iou=0.5) -> tuple[np.ndarray, set, set, set, set]:
     """Compute the difference between two maps in terms of connected components.
 
     Parameters
@@ -243,15 +247,15 @@ def regions_diff(initial_label_map, map_after):
     removed :
         A numpy array of the same shape as the input maps, where each pixel is labeled with the index of the connected
         component that was removed.
-    added :
-        A numpy array of the same shape as the input maps, where each pixel is labeled with the index of the connected
-        component that was added.
     changed :
         A numpy array of the same shape as the input maps, where each pixel is labeled with the index of the connected
         component that was changed.
     kept :
         A numpy array of the same shape as the input maps, where each pixel is labeled with the index of the connected
         component that was kept.
+    added :
+        A numpy array of the same shape as the input maps, where each pixel is labeled with the index of the connected
+        component that was added.
     """
     labels1 = initial_label_map
     if labels1.dtype == bool:
@@ -265,26 +269,31 @@ def regions_diff(initial_label_map, map_after):
 
     added_l2 = set(range(1, np.max(labels2) + 1))
 
-    for l1 in list(kept_l1):
-        l2s = np.unique(labels2[labels1 == l1])
+    l1s_to_process = set(kept_l1)
+    while l1s_to_process:
+        l1 = l1s_to_process.pop()
 
-        if list(l2s) == [0]:
+        l2s = set(np.unique(labels2[labels1 == l1])) - {0}
+
+        if len(l2s) == 0:
             # The connected component was removed
             kept_l1.remove(l1)
             removed_l1.add(l1)
             continue
-        else:
-            if len(l2s) == 1:
-                l2 = l2s[0]
-                if np.all((labels2 == l2) == (labels1 == l1)):
-                    # The connected component was kept unchanged
-                    added_l2.remove(l2)
-                    continue
 
-        # The connected component was changed
-        changed_l1.add(l1)
-        kept_l1.remove(l1)
-        added_l2 -= set(l2s)
+        l2_mask = np.isin(labels2, list(l2s))
+        merged_l1s = set(np.unique(labels1[l2_mask])) - {0}
+        l1_mask = np.isin(labels1, list(merged_l1s))
+
+        if (l1_mask & l2_mask).sum() / (l1_mask | l2_mask).sum() > change_max_iou:
+            # The connected component was kept unchanged
+            added_l2 -= l2s
+        else:
+            # The connected component was changed
+            kept_l1 -= merged_l1s
+            changed_l1 |= merged_l1s
+            added_l2 -= l2s
+        l1s_to_process -= merged_l1s
 
     added_l = np.max(labels)
     added_l1 = set()
