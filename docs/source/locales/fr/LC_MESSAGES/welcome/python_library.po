@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-25 11:11-0400\n"
+"POT-Creation-Date: 2024-04-25 11:42-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -41,8 +41,8 @@ msgid "Quick Start"
 msgstr "Guide de démarrage rapide"
 
 #: ../../source/welcome/python_library.rst:15 637ffeecc3664d75a04cf352bd564c88
-msgid ":doc:`Quick Start with MAPLES-DR library <quickstart>`"
-msgstr ":doc:`Guide simplifié de l'API python de MAPLES-DR <quickstart>`"
+msgid ":doc:`Installation & Basic Usage <quickstart>`"
+msgstr ":doc:`Installation & Utilisation Simple  <quickstart>`"
 
 #: ../../source/welcome/python_library.rst:16 28aca74502db409cbb70842bbbad262c
 msgid ":doc:`messidor`"

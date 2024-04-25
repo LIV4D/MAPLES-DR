@@ -12,7 +12,7 @@ Documentation
 Quick Start
 ***********
 
- - :doc:`Quick Start with MAPLES-DR library <quickstart>`
+ - :doc:`Installation & Basic Usage <quickstart>`
  - :doc:`messidor`
 
 

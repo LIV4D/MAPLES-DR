@@ -46,7 +46,7 @@ Additional Resources
 
 Segmentation Models
 *******************
-We released the segmentation models developed and trained on MAPLES-DR as two Python libraries: they bundle the weights and pytorch code required to automatically segment retinal vessels and lesions. These libraries were designed to be used by researchers or clinicians without deep learning expertise. They are available on github:
+We released the segmentation models developed and trained on MAPLES-DR as two Python libraries: they bundle the weights and PyTorch code required to automatically segment retinal vessels and lesions. These libraries were designed to be used by researchers or clinicians without deep learning expertise. They are available on GitHub:
 
  - `fundus-vessels-toolkit <https://github.com/gabriel-lepetitaimon/fundus-vessels-toolkit>`_ for automatic segmentation and graph extraction of the retinal vasculature; 
  - `fundus-lesions-toolkit <https://github.com/ClementPla/fundus-lesions-toolkit>`_ for automatic semantic segmentation of microaneurysms, hemorrhages, exudates and |CWS|.
@@ -54,7 +54,7 @@ We released the segmentation models developed and trained on MAPLES-DR as two Py
 
 Annotation Platform
 *******************
-The web-based annotation platform used to annotate MAPLES-DR is also available on `github <https://github.com/LIV4D/AnnotationPlatform>`_.
+The web-based annotation platform used to annotate MAPLES-DR is also available on `GitHub <https://github.com/LIV4D/AnnotationPlatform>`_.
 
 Reference
 =========
