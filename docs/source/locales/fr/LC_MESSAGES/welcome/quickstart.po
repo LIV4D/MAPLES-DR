@@ -163,7 +163,7 @@ msgid ""
 "details.)"
 msgstr ""
 "Enfin, un chemin local vers le jeu de données MESSIDOR peut également "
-"être spécifié avec cette fonction pour inclure les images de fond d'oeil "
+"être spécifié avec cette fonction pour inclure les images de fond d'œil "
 "de MESSIDOR. (Voir :doc:`../welcome/messidor` pour plus de détails.)"
 
 #: ../../source/welcome/quickstart.rst:107 fc67b14979cf488fa1d2739c7dcb118f
