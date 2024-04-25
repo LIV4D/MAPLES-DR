@@ -98,7 +98,7 @@ The segmentation maps were resized to match the resolution of the original MESSI
 AdditionalData.zip
 ******************
 
-The second archive contains all the additional information and data collected during the annotation process. It's also the only archive downloaded and used by the :doc:`maples_dr <python_library>` library. Indeed because |AdditionalData.zip|_ includes all the annotations and pre-annotation in the resolution at whicch they were annotated (1500x1500 pixels), as well as the individual diagnoses graded by each retinologist, all the data contained in the |MAPLES-DR.zip|_ can be derived from it.   
+The second archive contains all the additional information and data collected during the annotation process. It's also the only archive downloaded and used by the :doc:`maples_dr <python_library>` library. Indeed because |AdditionalData.zip|_ includes all the annotations and pre-annotation in the resolution at which they were annotated (1500x1500 pixels), as well as the individual diagnoses graded by each retinologist, all the data contained in the |MAPLES-DR.zip|_ can be derived from it.   
 
 It contains the following files:
 
