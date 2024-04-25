@@ -6,7 +6,7 @@ The  project was originally motivated in 2018 by the absence of large fundus pub
 
 We designed |MAPLES-DR| to address this gap by providing pixel-wise annotations of anatomical structures (optic disc, macula, retinal vessels) and pathological lesions (microaneurysms, hemorrhages, neovascularizations, exudates, cotton wool spots, drusens) for nearly 200 images of the well known `MESSIDOR <https://www.adcis.net/en/third-party/messidor/>`_ public dataset. The annotations were performed by a team of seven senior retinologists from hospitals in Toronto and Montréal (Canada).
 
-|MAPLES-DR| also includes diagnostic for |DR| and |ME| following Canadian teleopthalmology screening guidelines :cite:`Boucher2020`. These diagnoses are closer to international standards :cite:`wilkinson2003proposed` :cite:`zachariah2015grading` than MESSIDOR's original ones.
+|MAPLES-DR| also includes diagnostic for |DR| and |ME| following Canadian teleopthalmology screening guidelines :footcite:`Boucher2020`. These diagnoses are closer to international standards :footcite:`wilkinson2003proposed` :footcite:`zachariah2015grading` than MESSIDOR's original ones.
 
 
 Labels Description
@@ -22,9 +22,9 @@ Segmentation of Anatomical structures
 *************************************
 Anatomical structures are present in all images, including healthy ones, but their appearance and their proximity to lesions provide valuable diagnostic information.
 
-**Retinal vessels** are indicative of the stage of |DR|: an increase in arteriolar tortuosity is associated with mild and moderate stages :cite:`sasongkoRetinalVascularTortuosity2011`, while venous beading and dilation are symptoms of severe proliferative stages. The vascular tree is also used as a reference to assess the readability of an image.
+**Retinal vessels** are indicative of the stage of |DR|: an increase in arteriolar tortuosity is associated with mild and moderate stages :footcite:`sasongkoRetinalVascularTortuosity2011`, while venous beading and dilation are symptoms of severe proliferative stages. The vascular tree is also used as a reference to assess the readability of an image.
 
-The **optic disc**, **optic cup**, and **macula** are also included in |MAPLES-DR|. Their purpose for diagnosis is two-fold. First, ME is graded by counting the number of lesions within one or two optic disk diameters from the macula, which implies the annotation of both these anatomical structures. Similarly, clinical definitions of |DR| severity often distinguish four quadrants by dividing the retina  horizontally by a line through the fovea and optic disc (superior / inferior division) and vertically by a line through the fovea (temporal / nasal division) :cite:`purvesRetinotopicRepresentationVisual2001`. Second, the positions of the lesions in relation to these healthy structures may indicate different etiologies and severities. For example, clinical guidelines sometimes distinguish between disc neovascularization and other neovascularization.
+The **optic disc**, **optic cup**, and **macula** are also included in |MAPLES-DR|. Their purpose for diagnosis is two-fold. First, ME is graded by counting the number of lesions within one or two optic disk diameters from the macula, which implies the annotation of both these anatomical structures. Similarly, clinical definitions of |DR| severity often distinguish four quadrants by dividing the retina  horizontally by a line through the fovea and optic disc (superior / inferior division) and vertically by a line through the fovea (temporal / nasal division) :footcite:`purvesRetinotopicRepresentationVisual2001`. Second, the positions of the lesions in relation to these healthy structures may indicate different etiologies and severities. For example, clinical guidelines sometimes distinguish between disc neovascularization and other neovascularization.
 
 
 Segmentation of Red lesions
@@ -70,7 +70,7 @@ and three for ME:
 
 Grades are defined systematically by the number and position of visible red and bright retinal lesions. Each grade is associated with a recommended course of action (from rescreening in two years for mild cases, to immediate referral to an ophthalmologist for the more severe ones). 
 
-A detailed definition of the grading system can be found in `this paper <http://doi.org/10.1016/j.jcjo.2020.01.001>`_ :cite:`Boucher2020`.
+A detailed definition of the grading system can be found in `this paper <http://doi.org/10.1016/j.jcjo.2020.01.001>`_ :footcite:`Boucher2020`.
 
 Data Records
 ============
@@ -129,9 +129,8 @@ The annotation procedure was co-designed with the team of retinologists to meet 
 
 To meet these challenges, we developed a custom web-based annotation platform allowing the following workflow: expert annotators can access the Web portal at any time to consult and edit annotations with specialized drawing tools; these annotations and the related information (annotation times, comments) are centralized and stored in a secure database hosted on our laboratory server; as the research team, we assign tasks to annotators, monitor progress, and export annotations via a Python API. The annotation platform (portal, annotation tools, server backend, and Python API) as well as training material for annotators is available on `github <https://github.com/LIV4D/AnnotationPlatform>`_.
 
-For more details on the annotation process please refer to the `MAPLES-DR paper <https://arxiv.org/abs/2402.04258>`_ :cite:`maples_dr`.
+For more details on the annotation process please refer to the `MAPLES-DR paper <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr`.
 
 References
 ==========
-.. bibliography::
-   :filter: docname in docnames
+.. footbibliography::

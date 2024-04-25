@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 16:31-0400\n"
+"POT-Creation-Date: 2024-04-25 11:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -16,10 +16,6 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
-
-#: ../../source/welcome/python_library.rst:14
-msgid "Quick Start with MAPLES-DR library"
-msgstr "Guide simplifié de l'API `maples_dr`"
 
 #: ../../source/welcome/python_library.rst:3 c8f2acf4dfba49e0be09b0e7b3555393
 msgid "MAPLES-DR Python Library"
@@ -44,11 +40,42 @@ msgstr "Documentation"
 msgid "Quick Start"
 msgstr "Guide de démarrage rapide"
 
-#: ../../source/welcome/python_library.rst:22 e4b30f0e41c64c24bd9c1d6511a216b5
+#: ../../source/welcome/python_library.rst:15 637ffeecc3664d75a04cf352bd564c88
+msgid ":doc:`Quick Start with MAPLES-DR library <quickstart>`"
+msgstr ":doc:`Guide simplifié de l'API python de MAPLES-DR <quickstart>`"
+
+#: ../../source/welcome/python_library.rst:16 28aca74502db409cbb70842bbbad262c
+msgid ":doc:`messidor`"
+msgstr ""
+
+#: ../../source/welcome/python_library.rst:20 e4b30f0e41c64c24bd9c1d6511a216b5
 msgid "Examples"
 msgstr "Exemples"
 
-#: ../../source/welcome/python_library.rst:30 43d6f5795926499c85cbac02cf77357c
+#: ../../source/welcome/python_library.rst:21 0e92792827454df792ee7ab3e74639e9
+msgid ":doc:`../examples/visualisation`"
+msgstr ""
+
+#: ../../source/welcome/python_library.rst:25 43d6f5795926499c85cbac02cf77357c
 msgid "API Reference"
 msgstr "Définition de l'API (non-traduite)"
 
+#: ../../source/welcome/python_library.rst:27 9338a32fa73d46b7886b08f2d73c7dbb
+msgid ":doc:`../api_reference/quick_api`"
+msgstr ""
+
+#: ../../source/welcome/python_library.rst:28 0678250745ce42e1960c847d01d35109
+msgid ":doc:`../api_reference/config`"
+msgstr ""
+
+#: ../../source/welcome/python_library.rst:29 5a3dcdf5a76e4a7c9f00f93238ebe5fb
+msgid ":doc:`../api_reference/dataset`"
+msgstr ""
+
+#: ../../source/welcome/python_library.rst:30 fde772ba5f7e4046b22278541f3cc164
+msgid ":doc:`../api_reference/loader`"
+msgstr ""
+
+#: ../../source/welcome/python_library.rst:31 ec5267940f6b464b99dae434124dc967
+msgid ":doc:`../api_reference/preprocessing`"
+msgstr ""
