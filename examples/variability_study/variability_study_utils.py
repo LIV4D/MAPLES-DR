@@ -8,6 +8,8 @@ from jppype.utilities.geometric import Point
 from maples_dr.dataset import BiomarkerField as Bio
 from skimage.measure import label, regionprops
 
+FILE = Path(__file__).parent.resolve()
+
 
 def centroid(map):
     props = regionprops(map.astype(np.uint8))
@@ -21,23 +23,22 @@ def regions_f1(map1, map2):
     nb_l1 = np.max(labels1)
     nb_l2 = np.max(labels2)
 
+    if nb_l1 == 0 and nb_l2 == 0:
+        return float("nan")
+    if nb_l1 == 0 or nb_l2 == 0:
+        return 0.0
+
     sen = 0.0
     for l1 in range(1, nb_l1 + 1):
-        if np.any((labels1 == l1) & (labels2 > 0)):
+        if np.any((labels1 == l1) & map2):
             sen += 1
-    if nb_l1 > 0:
-        sen /= nb_l1
-    else:
-        sen = float("nan")
+    sen /= nb_l1
 
     spe = 0.0
     for l2 in range(1, nb_l2 + 1):
-        if np.any((labels2 == l2) & (labels1 > 0)):
+        if np.any((labels2 == l2) & map1):
             spe += 1
-    if nb_l2 > 0:
-        spe /= nb_l2
-    else:
-        spe = float("nan")
+    spe /= nb_l2
 
     f1 = 2 * sen * spe / (sen + spe)
     return f1
@@ -85,20 +86,18 @@ def load_annotations_from_scratch(images=None):
 
 def load_new_annotations():
     REFINED_ANNOTATION = [
-        Path("../PATH/TO/MAPLES-DR/Variability/Daniel"),
-        Path("../PATH/TO/MAPLES-DR/Variability/Fares_resized"),
-        Path("../PATH/TO/MAPLES-DR/Variability/MarieCarole_resized"),
+        (FILE / "../PATH/TO/MAPLES-DR/Variability/Daniel").resolve(),
+        (FILE / "../PATH/TO/MAPLES-DR/Variability/Fares_resized").resolve(),
+        (FILE / "../PATH/TO/MAPLES-DR/Variability/MarieCarole_resized").resolve(),
     ]
-    REFINED_PREANNOTATION = Path("../PATH/TO/MAPLES-DR/preannotations-improved-apr24/annotations_resized/")
 
-    images = [_.stem for _ in (REFINED_ANNOTATION[0] / "Microaneurysms").rglob("*.png")]
+    new_datasets = [
+        load_refined_preannotations(),
+        load_refined_preannotations(),
+        load_refined_preannotations(),
+    ]
 
-    def create_dataset():
-        return maples_dr.quick_api.GLOBAL_LOADER.load_dataset()[images]
-
-    new_datasets = [create_dataset() for p in REFINED_ANNOTATION]
-
-    for r, (path, dataset) in enumerate(zip(REFINED_ANNOTATION, new_datasets, strict=True)):
+    for r, (annotator_folder, dataset) in enumerate(zip(REFINED_ANNOTATION, new_datasets, strict=True)):
         for lesion, folder in {
             Bio.MICROANEURYSMS: "Microaneurysms",
             Bio.HEMORRHAGES: "Hemorrhages",
@@ -108,39 +107,37 @@ def load_new_annotations():
             Bio.DRUSENS: "Drusens",
             Bio.BRIGHT_UNCERTAINS: "BrightUncertains",
         }.items():
-            paths = [path / folder / (img + ".png") for img in images]
-            if all(f.exists() for f in paths):
-                dataset._data[lesion.value] = [path.absolute() for path in paths]
-            else:
-                print(f"Missing {lesion} for retinologist {r}.")
-        for col in list(dataset._data.columns):
-            if col.endswith("pre"):
-                del dataset._data[col]
-
-        # Remove all preannotations
-        for col in list(dataset._data.columns):
-            if col.endswith("pre"):
-                del dataset._data[col]
-
-        # Replace by refined preannotations
-        for lesion, folder in {
-            Bio.MICROANEURYSMS: "Microaneurysms",
-            Bio.HEMORRHAGES: "Hemorrhages",
-            Bio.EXUDATES: "Exudates",
-            Bio.COTTON_WOOL_SPOTS: "CottonWoolSpots",
-        }.items():
-            paths = [REFINED_PREANNOTATION / folder / (img + ".png") for img in dataset.keys()]
-            if all(f.exists() for f in paths):
-                dataset._data[lesion.value + "_pre"] = [path.absolute() for path in paths]
-            else:
-                print(f"Missing preannotation for {lesion}.")
+            new_paths = [(annotator_folder / folder / (img + ".png")).absolute() for img in dataset.keys()]
+            old_paths = list(dataset._data[lesion.value])
+            missing_paths = set()
+            for i, path in enumerate(new_paths):
+                if path.exists():
+                    old_paths[i] = str(path)
+                else:
+                    missing_paths.add(path.stem)
+            if missing_paths:
+                print(f"Missing images {missing_paths} for {lesion} and retinologist {r}.")
+            dataset._data[lesion.value] = old_paths
 
     return new_datasets
 
 
-def load_refined_preannotations(resized=True):
-    REFINED_PREANNOTATION = Path("../PATH/TO/MAPLES-DR/preannotations-improved-apr24/annotations_resized/")
-    dataset = maples_dr.quick_api.GLOBAL_LOADER.load_dataset()
+def load_refined_preannotations(version="daniel"):
+    if version == "daniel":
+        REFINED_PREANNOTATION = Path("../PATH/TO/MAPLES-DR/preannotations-improved-apr24/annotations_resized/")
+    elif version == "fares":
+        REFINED_PREANNOTATION = Path("../PATH/TO/MAPLES-DR/preannotations-improved-apr24/annotations/")
+    else:
+        REFINED_PREANNOTATION = Path("../PATH/TO/MAPLES-DR/Variability/PreannotationMC/")
+    REFINED_PREANNOTATION = (FILE / REFINED_PREANNOTATION).resolve()
+
+    images = [_.stem for _ in Path("../PATH/TO/MAPLES-DR/Variability/PreannotationMC/Microaneurysms").rglob("*.png")]
+    dataset = maples_dr.quick_api.GLOBAL_LOADER.load_dataset()[images]
+
+    # Remove all preannotations
+    for col in list(dataset._data.columns):
+        if col.endswith("pre"):
+            del dataset._data[col]
 
     # Replace by refined preannotations
     for lesion, folder in {
@@ -169,7 +166,7 @@ def count_lesions(dataset: maples_dr.dataset.Dataset, biomarker: maples_dr.datas
     return pd.Series(counts, index=dataset.data.index)
 
 
-def multi_annotator_regions_diff(initial_map, *edited_maps, change_max_iou=0.5):
+def multi_annotator_regions_diff(initial_map, *edited_maps, change_max_iou=0.8):
     """Compute the difference between an initial map and a set of edited maps.
 
     For each region (connected component) in the initial map, the function determines whether it was removed, changed,
