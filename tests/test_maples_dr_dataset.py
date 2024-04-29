@@ -169,3 +169,30 @@ def test_lesions_on_all_pathological_samples(all_set):
                 missing_lesions.add(sample.name)
 
     assert not missing_lesions, f"Missing lesions for {len(missing_lesions)} images {missing_lesions}."
+
+
+def test_exclusion_of_missing_biomarkers(all_set):
+    dataset_record = maples_dr.quick_api.GLOBAL_LOADER.dataset_record
+    no_macula = set(dataset_record.get("no_macula", []))
+    no_cup = set(dataset_record.get("no_cup", []))
+    all_names = set(all_set.keys())
+
+    maples_dr.configure(exclude_missing_cup=True)
+    dataset_no_cup = maples_dr.quick_api.GLOBAL_LOADER.load_dataset("all_with_duplicates")
+    no_cup_names = set(_.name for _ in dataset_no_cup)
+    assert no_cup_names == all_names - no_cup, "Images with missing cup should be excluded."
+
+    maples_dr.configure(exclude_missing_macula=True, exclude_missing_cup=False)
+    dataset_no_macula = maples_dr.quick_api.GLOBAL_LOADER.load_dataset("all_with_duplicates")
+    no_macula_names = set(_.name for _ in dataset_no_macula)
+    assert no_macula_names == all_names - no_macula, "Images with missing macula should be excluded."
+
+    maples_dr.configure(exclude_missing_macula=True, exclude_missing_cup=True)
+    dataset_no_lesions = maples_dr.quick_api.GLOBAL_LOADER.load_dataset("all_with_duplicates")
+    no_lesions_names = set(_.name for _ in dataset_no_lesions)
+    assert no_lesions_names == all_names - no_macula - no_cup, "Images with missing macula and cup should be excluded."
+
+    maples_dr.configure(exclude_missing_macula=False, exclude_missing_cup=False)
+    dataset_all = maples_dr.quick_api.GLOBAL_LOADER.load_dataset("all_with_duplicates")
+    all_names2 = set(_.name for _ in dataset_all)
+    assert all_names2 == all_names, "All images should be included back when disabling exclusion."

@@ -18,7 +18,9 @@ def local_dataset():
 
 
 def test_download(local_dataset):
-    downloaded_dataset = maples_dr.quick_api.GLOBAL_LOADER.load_dataset("all_with_duplicates")
+    maples_dr.clear_download_cache()
+
+    downloaded_dataset = maples_dr.load_dataset("all_with_duplicates")
 
     # === Check data content ===
     # Biomarkers

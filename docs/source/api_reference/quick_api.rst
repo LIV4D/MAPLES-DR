@@ -21,6 +21,12 @@ All the following function are imported either from `maples_dr.quick_api` or dir
 
 .. autofunction:: maples_dr.load_test_set
 
+.. autofunction:: maples_dr.load_dataset
+
 .. autofunction:: maples_dr.export_train_set
 
 .. autofunction:: maples_dr.export_test_set
+
+.. autofunction:: maples_dr.clear_cache
+
+.. autofunction:: maples_dr.clear_download_cache

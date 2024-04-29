@@ -13,4 +13,13 @@ if os.environ.get("MAPLES-DR_SILENT_IMPORT", None) is None:
     )
 
 from .dataset import DataSample, Dataset
-from .quick_api import clear_cache, configure, export_test_set, export_train_set, load_test_set, load_train_set
+from .quick_api import (
+    clear_cache,
+    clear_download_cache,
+    configure,
+    export_test_set,
+    export_train_set,
+    load_dataset,
+    load_test_set,
+    load_train_set,
+)
