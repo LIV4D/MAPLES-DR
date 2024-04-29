@@ -41,9 +41,6 @@ class Preprocessing(str, Enum):
     MEDIAN = "median"
 
 
-DOWNLOAD = "DOWNLOAD"
-
-
 @dataclass
 class DatasetConfig:
     """

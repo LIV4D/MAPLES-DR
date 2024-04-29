@@ -14,7 +14,6 @@ import pandas as pd
 import yaml
 
 from .config import (
-    DOWNLOAD,
     DatasetConfig,
     ImageFormat,
     InvalidConfigError,
@@ -35,6 +34,9 @@ MAPLES_DR_ADDITIONAL_URL = "https://figshare.com/ndownloader/files/45795384"
 
 #: Unset constant
 UNSET = "UNSET"
+
+#: Persistent cache constant
+DOWNLOAD_CACHE = xdg_data_home() / "maples_dr" / "AdditionalData"
 
 
 class DatasetSubset(str, Enum):
@@ -61,9 +63,7 @@ class NotConfiguredError(Exception):
     Exception raised when the dataset loader is not configured.
     """
 
-    def __init__(
-        self, message: str = "MAPLES-DR dataset is not configured yet.", *args
-    ):
+    def __init__(self, message: str = "MAPLES-DR dataset is not configured yet.", *args):
         super().__init__(message, *args)
 
 
@@ -82,7 +82,8 @@ class DatasetLoader:
         self._maples_dr_path: Optional[Path] = None
         self._diagnosis: Optional[pd.DataFrame] = None
         self._annotations_infos: Optional[Dict[str, pd.DataFrame]] = None
-        self._is_maples_dr_folder_temporary: bool = False
+        self._exclude_missing_macula = False
+        self._exclude_missing_cup = False
 
         self._messidor_paths: Optional[dict[str, str]] = None
         self._messidor_ROIs: Optional[pd.DataFrame] = None
@@ -101,6 +102,8 @@ class DatasetLoader:
         resize: Optional[int] = None,
         image_format: Optional[ImageFormat] = None,
         preprocessing: Optional[Preprocessing] = None,
+        exclude_missing_macula: Optional[bool] = None,
+        exclude_missing_cup: Optional[bool] = None,
         disable_check: bool = False,
     ):
         """Configure the default behavior of the MAPLES-DR dataset.
@@ -148,6 +151,16 @@ class DatasetLoader:
         disable_check : bool, optional
             If True, disable the integrity check of the dataset.
 
+        exclude_missing_macula : bool, optional
+            If True, exclude images with missing macula segmentation (one image of the train set).
+
+            By default: False.
+
+        exclude_missing_cup : bool, optional
+            If True, exclude images with missing optic cup segmentation (4 images of the train set, 2 of the test set).
+
+            By default: False.
+
         """
         # === Update the dataset configuration ===
         self._datasets_config.update(
@@ -157,6 +170,10 @@ class DatasetLoader:
                 preprocessing=preprocessing,
             )
         )
+        if exclude_missing_macula is not None:
+            self._exclude_missing_macula = exclude_missing_macula
+        if exclude_missing_cup is not None:
+            self._exclude_missing_cup = exclude_missing_cup
 
         # === Set Maples-DR cache ===
         if cache is not UNSET and self.cfg._cache != cache:
@@ -165,14 +182,11 @@ class DatasetLoader:
             cache = self.cfg.cache_path
 
         # === Prepare Maples-DR ===
-        # If configure is called the first time with no path, download the dataset or use the cache.
-        if maples_dr_path is UNSET and self._maples_dr_path is None:
-            if cache is None:
-                maples_dr_path = DOWNLOAD
-            else:
-                maples_dr_path = cache / "AdditionalData"
+        if (maples_dr_path is not UNSET and self._maples_dr_path != maples_dr_path) or self._maples_dr_path is None:
+            # If configure is called the first time with no path, download the dataset or use the cache.
+            if maples_dr_path is UNSET:
+                maples_dr_path = None
 
-        if maples_dr_path is not UNSET and self._maples_dr_path != maples_dr_path:
             # Set the path and download the dataset if needed.
             maples_dr_path = self._change_maples_dr_path(maples_dr_path)
 
@@ -193,17 +207,11 @@ class DatasetLoader:
                     images_names=self.image_names(DatasetSubset.ALL_WITH_DUPLICATES),
                 )
 
-            self._diagnosis = self.load_maples_dr_diagnosis(
-                maples_dr_path / "diagnosis_infos.xls"
-            )
+            self._diagnosis = self.load_maples_dr_diagnosis(maples_dr_path / "diagnosis_infos.xls")
 
         # === Prepare MESSIDOR ===
         if messidor_path is UNSET:
-            if (
-                self._messidor_paths is None
-                and cache is not None
-                and (cache / "MESSIDOR").is_dir()
-            ):
+            if self._messidor_paths is None and cache is not None and (cache / "MESSIDOR").is_dir():
                 messidor_path = cache / "MESSIDOR"
 
         if messidor_path is not UNSET:
@@ -221,6 +229,13 @@ class DatasetLoader:
         """
         if self.cfg.cache_path is not None:
             rmtree(self.cfg.cache_path, ignore_errors=True)
+
+    @staticmethod
+    def clear_download_cache():
+        """
+        Clear the cache where the MAPLES-DR archive is downloaded and extracted.
+        """
+        rmtree(DOWNLOAD_CACHE, ignore_errors=True)
 
     @property
     def cfg(self) -> DatasetConfig:
@@ -264,9 +279,7 @@ class DatasetLoader:
         # If a cache already existed, copy the MAPLES-DR original dataset to the new cache path.
         if previous_cache is not None:
             if (previous_cache / "AdditionalData").is_dir():
-                shutil.copytree(
-                    previous_cache / "AdditionalData", path / "AdditionalData"
-                )
+                shutil.copytree(previous_cache / "AdditionalData", path / "AdditionalData")
             if (previous_cache / "MESSIDOR").is_dir():
                 shutil.copytree(previous_cache / "MESSIDOR", path / "MESSIDOR")
 
@@ -287,81 +300,71 @@ class DatasetLoader:
         """
         Return the path to the MAPLES-DR dataset folder.
         """
-        # If Maples-DR was previously downloaded, delete the temporary folder.
-        if self._is_maples_dr_folder_temporary and self._maples_dr_path is not None:
-            rmtree(self._maples_dr_path, ignore_errors=True)
-            self._is_maples_dr_folder_temporary = False
-
         self._maples_dr_path = None
 
-        if path is None or path is DOWNLOAD:
-            # If no path is given, prepare the dataset download to...
-            path = mkdtemp()
-            self._is_maples_dr_folder_temporary = True
+        if path is None:
+            # If the cache is enabled, prepare the dataset download to the cache folder.
+            path = DOWNLOAD_CACHE
 
         path = Path(path)
 
-        if path.is_dir():
-            # === If the path is a directory ===
-            # Ensure it exists ...
-            if not path.exists():
-                path.mkdir(parents=True)
-            # and check if the folder contains the dataset record.
-            if not (path / "dataset_record.yaml").exists():
-                # If not, download the dataset.
-                zip_path = path / "maples_dr.zip"
-                download(MAPLES_DR_ADDITIONAL_URL, zip_path, "MAPLES-DR labels")
-                with ZipFile(path / "maples_dr.zip", "r") as zip_file:
-                    zip_file.extractall(path)
-                (path / "maples_dr.zip").unlink()
-
-        elif path.name.endswith(".zip"):
-            # === If the path is a zip file, unzip it to a temporary folder ===
+        if path.suffix == ".zip":
+            # === If the path is a zip file, unzip it to a cache folder ===
             zip_path = path
             if not zip_path.exists():
-                raise InvalidConfigError(
-                    f"Invalid Maples DR archive: {zip_path} doesn't exist."
-                )
+                raise InvalidConfigError(f"Invalid Maples DR archive: {zip_path} doesn't exist.")
 
-            # Create a temporary folder.
+            # Select the appropriate cache folder
             if self.cfg.cache_path is not None:
                 path = self.cfg.cache_path / "AdditionalData"
             else:
-                path = Path(mkdtemp())
+                path = DOWNLOAD_CACHE
+                path.mkdir(parents=True, exist_ok=True)
+
             # Unzip the dataset to the temporary folder.
             try:
                 with ZipFile(zip_path, "r") as zip_file:
                     zip_file.extractall(path)
             except Exception as e:
                 raise InvalidConfigError(
-                    f"Invalid Maples DR archive: {zip_path}:"
-                    "\n\t the provided archive is impossible to unzip."
+                    f"Invalid Maples DR archive: {zip_path}:" "\n\t the provided archive is impossible to unzip."
                 ) from e
-            else:
-                # Test if the zip file contains maples_dr folder.
-                if not (path / "dataset_record.yaml").exists():
-                    raise InvalidConfigError(
-                        f"Invalid Maples DR archive:  {path}:"
-                        '\n\t the provided archive doesn\'t contains the file "dataset_record.yaml".'
-                    )
-                if not (path / "MESSIDOR-ROIs.csv").exists():
-                    raise InvalidConfigError(
-                        f"Invalid Maples DR archive:  {path}:"
-                        '\n\t the provided archive doesn\'t contains the file "MESSIDOR-ROIs.csv".'
-                    )
-                if not (path / "diagnosis_infos.xls").exists():
-                    raise InvalidConfigError(
-                        f"Invalid Maples DR archive:  {path}:"
-                        '\n\t the provided archive doesn\'t contains the file "diagnosis_infos.xls".'
-                    )
 
-                if not (path / "biomarkers_annotation_infos.xls").exists():
-                    raise InvalidConfigError(
-                        f"Invalid Maples DR archive:  {path}:"
-                        '\n\t the provided archive doesn\'t contains the file "biomarkers_annotation_infos.xls".'
-                    )
-            if self.cfg.cache_path is not None:
-                self._is_maples_dr_folder_temporary = True
+        else:
+            # === If the path is a directory ===
+            # Ensure it exists ...
+            path.mkdir(parents=True, exist_ok=True)
+            # and check if the folder contains the dataset record.
+            if not (path / "dataset_record.yaml").exists():
+                # If not, download the dataset.
+                zip_path = path / "additional_data.zip"
+                download(MAPLES_DR_ADDITIONAL_URL, zip_path, "MAPLES-DR labels")
+                with ZipFile(path / "additional_data.zip", "r") as zip_file:
+                    zip_file.extractall(path)
+                (path / "additional_data.zip").unlink()
+
+        # Test if the final path contains maples_dr files.
+        if not (path / "dataset_record.yaml").exists():
+            raise InvalidConfigError(
+                f"Invalid Maples DR archive:  {path}:"
+                '\n\t the provided archive doesn\'t contains the file "dataset_record.yaml".'
+            )
+        if not (path / "MESSIDOR-ROIs.csv").exists():
+            raise InvalidConfigError(
+                f"Invalid Maples DR archive:  {path}:"
+                '\n\t the provided archive doesn\'t contains the file "MESSIDOR-ROIs.csv".'
+            )
+        if not (path / "diagnosis_infos.xls").exists():
+            raise InvalidConfigError(
+                f"Invalid Maples DR archive:  {path}:"
+                '\n\t the provided archive doesn\'t contains the file "diagnosis_infos.xls".'
+            )
+
+        if not (path / "biomarkers_annotation_infos.xls").exists():
+            raise InvalidConfigError(
+                f"Invalid Maples DR archive:  {path}:"
+                '\n\t the provided archive doesn\'t contains the file "biomarkers_annotation_infos.xls".'
+            )
 
         self._maples_dr_path = path
         return path
@@ -415,9 +418,7 @@ class DatasetLoader:
                     "Retinologist": task + "_" + BiomarkersAnnotationInfos.RETINOLOGIST,
                     "Comment": task + "_" + BiomarkersAnnotationInfos.COMMENT,
                     "Time": task + "_" + BiomarkersAnnotationInfos.ANNOTATION_TIME,
-                    "Annotation #": task
-                    + "_"
-                    + BiomarkersAnnotationInfos.ANNOTATION_ID,
+                    "Annotation #": task + "_" + BiomarkersAnnotationInfos.ANNOTATION_ID,
                 },
             )
 
@@ -428,9 +429,7 @@ class DatasetLoader:
 
         return annotation_infos
 
-    def check_maples_dr_integrity(
-        self, path: Path, biomarkers: list[str], images_names: list[str]
-    ):
+    def check_maples_dr_integrity(self, path: Path, biomarkers: list[str], images_names: list[str]):
         """
         Check if the MAPLES-DR dataset contains all segmentation maps.
         """
@@ -474,9 +473,7 @@ class DatasetLoader:
 
     # --- MESSIDOR path configuration ---
     @staticmethod
-    def discover_messidor_images(
-        images: list[str], path: Optional[str | Path] = None
-    ) -> Dict[str, Path]:
+    def discover_messidor_images(images: list[str], path: Optional[str | Path] = None) -> Dict[str, Path]:
         """
         Discover the MESSIDOR images corresponding to the given MAPLES-DR images.
 
@@ -493,9 +490,7 @@ class DatasetLoader:
 
         # Scan MESSIDOR subfolders to find each MAPLES-DR images.
         missing_images = set(images)
-        for img_path in chain.from_iterable(
-            path.glob(f"**/*.{ext}") for ext in ("tif", "jpg", "png")
-        ):
+        for img_path in chain.from_iterable(path.glob(f"**/*.{ext}") for ext in ("tif", "jpg", "png")):
             try:
                 missing_images.remove(img_path.stem)
             except KeyError:
@@ -529,9 +524,7 @@ class DatasetLoader:
 
                             zip_info.filename = img_filename
                             zip_file.extract(zip_info, unzip_folder)
-                            messidor_paths[img_stem] = (
-                                unzip_folder / img_filename
-                            ).absolute()
+                            messidor_paths[img_stem] = (unzip_folder / img_filename).absolute()
 
                             progress.update(1)
                             if len(missing_images) == 0:
@@ -544,9 +537,7 @@ class DatasetLoader:
         )
 
     # === DATASETS FACTORIES ===
-    def load_dataset(
-        self, subset: DatasetSubset | str | list[str] = DatasetSubset.ALL
-    ) -> Dataset:
+    def load_dataset(self, subset: DatasetSubset | str | list[str] = DatasetSubset.ALL) -> Dataset:
         """
         Return the MAPLES-DR dataset.
 
@@ -560,18 +551,14 @@ class DatasetLoader:
             valid_images = set(self.image_names(DatasetSubset.ALL_WITH_DUPLICATES))
             for img in subset:
                 if img not in valid_images:
-                    raise ValueError(
-                        f"Invalid image name: {img} is not a valid image name."
-                    )
+                    raise ValueError(f"Invalid image name: {img} is unknown.")
             names = subset
         else:
             names = self.image_names(subset)
 
         paths = {}
         if self._messidor_paths is not None:
-            paths[FundusField.FUNDUS.value] = [
-                self._messidor_paths[name] for name in names
-            ]
+            paths[FundusField.FUNDUS.value] = [self._messidor_paths[name] for name in names]
 
         biomarkers_folder = {
             BiomarkerField.BRIGHT_UNCERTAINS.value: "BrightUncertains",
@@ -589,10 +576,7 @@ class DatasetLoader:
         }
         for bio, bio_folder in biomarkers_folder.items():
             folder = self.maples_dr_folder / "annotations" / bio_folder
-            paths[bio] = [
-                folder / (n + ".png") if self.is_biomarker_segmented(bio, n) else None
-                for n in names
-            ]
+            paths[bio] = [folder / (n + ".png") if self.is_biomarker_segmented(bio, n) else None for n in names]
 
         preannotations_folder = {
             BiomarkerField.EXUDATES.value: "Exudates",
@@ -602,8 +586,7 @@ class DatasetLoader:
         }
         for bio, bio_folder in preannotations_folder.items():
             paths[bio + "_pre"] = [
-                self.maples_dr_folder / "preannotations" / bio_folder / (name + ".png")
-                for name in names
+                self.maples_dr_folder / "preannotations" / bio_folder / (name + ".png") for name in names
             ]
 
         data = pd.DataFrame(paths, index=names)
@@ -653,15 +636,19 @@ class DatasetLoader:
             names += self.dataset_record["test"]
         if subset in (DatasetSubset.DUPLICATES, DatasetSubset.ALL_WITH_DUPLICATES):
             names += list(self.dataset_record["duplicates"].values())
+
+        if self._exclude_missing_cup:
+            names = [name for name in names if name not in self.dataset_record["no_cup"]]
+        if self._exclude_missing_macula:
+            names = [name for name in names if name not in self.dataset_record["no_macula"]]
+
         if extension:
             if isinstance(extension, bool):
                 extension = "png"
             names = [name + "." + extension for name in names]
         return names
 
-    def is_biomarker_segmented(
-        self, biomarker: BiomarkerField | str, name: str
-    ) -> bool:
+    def is_biomarker_segmented(self, biomarker: BiomarkerField | str, name: str) -> bool:
         """
         Check if the given biomarker is segmented in the MAPLES-DR dataset.
 
@@ -687,15 +674,9 @@ class DatasetLoader:
         if not self.is_configured():
             raise NotConfiguredError()
         biomarker = BiomarkerField.parse(biomarker)
-        if (
-            biomarker is BiomarkerField.MACULA
-            and name in self.dataset_record["no_macula"]
-        ):
+        if biomarker is BiomarkerField.MACULA and name in self.dataset_record["no_macula"]:
             return False
-        if (
-            biomarker is BiomarkerField.OPTIC_CUP
-            and name in self.dataset_record["no_cup"]
-        ):
+        if biomarker is BiomarkerField.OPTIC_CUP and name in self.dataset_record["no_cup"]:
             return False
         return True
 
@@ -708,9 +689,7 @@ def download(url: str, path: str | Path, description: Optional[str] = None):
     Download the file at the given url to the given path.
     """
     response = urlopen(url)
-    with RichProgress.download(
-        description, byte_size=int(response.info()["Content-length"])
-    ) as progress:
+    with RichProgress.download(description, byte_size=int(response.info()["Content-length"])) as progress:
         with open(path, "wb") as dest_file:
             for data in iter(partial(response.read, 32768), b""):
                 dest_file.write(data)

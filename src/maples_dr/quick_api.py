@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Dict, List, Optional
 
 from .dataset import Dataset, ImageField
-from .loader import DatasetLoader
+from .loader import DatasetLoader, DatasetSubset
 
 GLOBAL_LOADER = DatasetLoader()
 
@@ -11,7 +11,7 @@ configure = GLOBAL_LOADER.configure
 
 
 def load_train_set() -> Dataset:
-    """Load the training set in memory.
+    """Load the training set.
 
     MAPLES-DR training set contains labels of pathological and anatomical structures for 138 fundus images.
     The dataset is return as a :class:`Dataset` object, which is equivalent to a list of samples.
@@ -52,11 +52,11 @@ def load_train_set() -> Dataset:
     >>>     vessels = sample["vessels"]         # The vessels mask
     >>>     dr = sample["dr"]                   # The Diabetic Retinopathy grade
     """
-    return GLOBAL_LOADER.load_dataset("train")
+    return GLOBAL_LOADER.load_dataset(DatasetSubset.TRAIN)
 
 
 def load_test_set() -> Dataset:
-    """Load the testing set in memory.
+    """Load the testing set.
 
     See :func:`load_train_set` for more details.
 
@@ -65,7 +65,25 @@ def load_test_set() -> Dataset:
     Dataset
         The testing set.
     """
-    return GLOBAL_LOADER.load_dataset("test")
+    return GLOBAL_LOADER.load_dataset(DatasetSubset.TEST)
+
+
+def load_dataset(subset: DatasetSubset | str | list[str] = DatasetSubset.ALL) -> Dataset:
+    """Load specific subset of the dataset (by default load the whole dataset without the duplicates).
+
+    Parameters
+    ----------
+    subset :
+        The subset to load (see :class:`DatasetSubset` for the available options), or a list of image names.
+
+
+
+    Returns
+    -------
+    Dataset
+        The corresponding subset of MAPLES-DR. See :func:`load_train_set` for more details on the data format.
+    """
+    return GLOBAL_LOADER.load_dataset(subset)
 
 
 def export_train_set(
@@ -121,3 +139,8 @@ def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageFi
 def clear_cache():
     """Clear the cache directory."""
     return GLOBAL_LOADER.clear_cache()
+
+
+def clear_download_cache():
+    """Clear the download cache directory."""
+    return GLOBAL_LOADER.clear_download_cache()
