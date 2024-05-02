@@ -11,29 +11,22 @@ Documentation
 
 Quick Start
 ***********
-.. toctree::
-   :maxdepth: 2
 
-   Quick Start with MAPLES-DR library <quickstart>
-   messidor
+ - :doc:`Installation & Basic Usage <quickstart>`
+ - :doc:`messidor`
 
 
 Examples
 ********
-.. toctree::
-   :maxdepth: 1
-
-   ../examples/visualisation
+ - :doc:`../examples/visualisation`
 
 
 API Reference
 *************
-.. toctree::
-   :maxdepth: 1
 
-   ../api_reference/quick_api
-   ../api_reference/config
-   ../api_reference/dataset
-   ../api_reference/loader
-   ../api_reference/preprocessing
+ - :doc:`../api_reference/quick_api`
+ - :doc:`../api_reference/config`
+ - :doc:`../api_reference/dataset`
+ - :doc:`../api_reference/loader`
+ - :doc:`../api_reference/preprocessing`
 

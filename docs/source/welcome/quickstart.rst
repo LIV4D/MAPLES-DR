@@ -16,7 +16,7 @@ The `maples-dr` package is available on PyPI and can be installed using pip:
     $ pip install maples-dr
 
 
-Simple Usage
+Basic Usage
 ============
 Once imported, MAPLES-DR train or test sets can be loaded in memory with a single line of Python code.
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 16:31-0400\n"
+"POT-Creation-Date: 2024-05-02 11:35-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -48,7 +48,8 @@ msgid ""
 msgstr ""
 
 #: b4df7463095842f19bf8ec0962fdddda maples_dr.loader.DatasetLoader.configure
-#: maples_dr.quick_api.export_test_set maples_dr.quick_api.export_train_set of
+#: maples_dr.quick_api.export_test_set maples_dr.quick_api.export_train_set
+#: maples_dr.quick_api.load_dataset of
 msgid "Parameters"
 msgstr ""
 
@@ -212,8 +213,42 @@ msgstr ""
 msgid "If True, disable the integrity check of the dataset."
 msgstr ""
 
+#: f64c17af51ec4753a45fcafce0ed580e maples_dr.loader.DatasetLoader.configure:37
+#: of
+msgid ""
+"If True, exclude images with missing macula segmentation (one image of "
+"the train set).  By default: False."
+msgstr ""
+
+#: c3dd4041c93d4c429b99c82cde0b4290 maples_dr.loader.DatasetLoader.configure:37
+#: of
+msgid ""
+"If True, exclude images with missing macula segmentation (one image of "
+"the train set)."
+msgstr ""
+
+#: 59fca73624964833abeb3163b27d15a4 72b984b3cb744f599015262c9ab9c3f5
+#: maples_dr.loader.DatasetLoader.configure:39
+#: maples_dr.loader.DatasetLoader.configure:43 of
+msgid "By default: False."
+msgstr ""
+
+#: 39a9e062c0474c80afb9a4795e5f1a3a maples_dr.loader.DatasetLoader.configure:41
+#: of
+msgid ""
+"If True, exclude images with missing optic cup segmentation (4 images of "
+"the train set, 2 of the test set).  By default: False."
+msgstr ""
+
+#: 4662d9ee10644ae98a579c01961cc607 maples_dr.loader.DatasetLoader.configure:41
+#: of
+msgid ""
+"If True, exclude images with missing optic cup segmentation (4 images of "
+"the train set, 2 of the test set)."
+msgstr ""
+
 #: 5296ccfbe3b34c44994aea90929dccc6 maples_dr.quick_api.load_train_set:1 of
-msgid "Load the training set in memory."
+msgid "Load the training set."
 msgstr ""
 
 #: c5edc555236c40c5b860daeb86d214b9 maples_dr.quick_api.load_train_set:3 of
@@ -294,8 +329,8 @@ msgid ""
 ":ref:`dr-me-grades` for more information."
 msgstr ""
 
-#: bb4871dd23cf48cfae1acddbc8c472a1 maples_dr.quick_api.load_test_set
-#: maples_dr.quick_api.load_train_set of
+#: bb4871dd23cf48cfae1acddbc8c472a1 maples_dr.quick_api.load_dataset
+#: maples_dr.quick_api.load_test_set maples_dr.quick_api.load_train_set of
 msgid "Returns"
 msgstr ""
 
@@ -304,7 +339,8 @@ msgid "The training set."
 msgstr ""
 
 #: 1549c95aa21a421b8e29f514866d6ff3 maples_dr.quick_api.export_train_set
-#: maples_dr.quick_api.load_test_set maples_dr.quick_api.load_train_set of
+#: maples_dr.quick_api.load_dataset maples_dr.quick_api.load_test_set
+#: maples_dr.quick_api.load_train_set of
 msgid "Return type"
 msgstr ""
 
@@ -315,7 +351,7 @@ msgid "Examples"
 msgstr ""
 
 #: 3ae3e03f49d94181973b733d7655aa68 maples_dr.quick_api.load_test_set:1 of
-msgid "Load the testing set in memory."
+msgid "Load the testing set."
 msgstr ""
 
 #: 4ffef197ef774edca35a2f4473c7863c maples_dr.quick_api.load_test_set:3 of
@@ -324,6 +360,24 @@ msgstr ""
 
 #: b9dc9f1117a94be49cc237496ffdd9c8 maples_dr.quick_api.load_test_set:5 of
 msgid "The testing set."
+msgstr ""
+
+#: 6284cf08586d43b5b500e217ea5c8d92 maples_dr.quick_api.load_dataset:1 of
+msgid ""
+"Load specific subset of the dataset (by default load the whole dataset "
+"without the duplicates)."
+msgstr ""
+
+#: d9c59d3f4e914845a47ddf2f543254f4 maples_dr.quick_api.load_dataset:3 of
+msgid ""
+"The subset to load (see :class:`DatasetSubset` for the available "
+"options), or a list of image names."
+msgstr ""
+
+#: 33c2903cc8f149ffa80992e75a9a8e2d maples_dr.quick_api.load_dataset:5 of
+msgid ""
+"The corresponding subset of MAPLES-DR. See :func:`load_train_set` for "
+"more details on the data format."
 msgstr ""
 
 #: 78f7b0af11634abcbe321ed2ddea54eb maples_dr.quick_api.export_train_set:1 of
@@ -362,6 +416,15 @@ msgstr ""
 
 #: 097ba9fd38aa40c686bb7cfb269475f4 maples_dr.quick_api.export_test_set:5 of
 msgid "The path to save the dataset to."
+msgstr ""
+
+#: 54267b1feb604f9c8d853966758e9a5b maples_dr.quick_api.clear_cache:1 of
+msgid "Clear the cache directory."
+msgstr ""
+
+#: 0a31c94e063140c48f6d15417486bbb0 maples_dr.quick_api.clear_download_cache:1
+#: of
+msgid "Clear the download cache directory."
 msgstr ""
 
 #~ msgid ""
@@ -467,5 +530,11 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "\"me\": The Macular Edema grade ('M0', 'M1', 'M2')."
+#~ msgstr ""
+
+#~ msgid "Load the training set in memory."
+#~ msgstr ""
+
+#~ msgid "Load the testing set in memory."
 #~ msgstr ""
 

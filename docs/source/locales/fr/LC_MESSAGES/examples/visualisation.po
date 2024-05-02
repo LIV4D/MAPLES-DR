@@ -81,7 +81,7 @@ msgstr "Hémorragies"
 #: ../../source/examples/visualisation.ipynb:768
 #: b0f2b52335f54e1987dbc42030772e3e
 msgid "Microaneurysms"
-msgstr "Microanévrismes"
+msgstr "Micro-anévrismes"
 
 #: ../../source/examples/visualisation.ipynb:799
 #: acaf1adcd6324087b012aa9210def79c

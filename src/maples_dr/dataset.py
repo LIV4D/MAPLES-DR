@@ -283,7 +283,7 @@ class Dataset(Sequence):
     Datasets are a utility class to access and export samples from the MAPLES-DR dataset.
 
     They are equivalent to a list of samples, each sample being stored as a dictionary­.
-    See :obj:`Field` for the list of available fields.
+    See :class:`Field <maples_dr.dataset.Field>` for the list of available fields.
     """
 
     def __init__(self, data: pd.DataFrame, cfg: DatasetConfig, messidor_rois: pd.DataFrame):
@@ -332,7 +332,7 @@ class Dataset(Sequence):
     def __getitem__(self, idx: int | str | slice[int] | list[str]) -> DataSample:
         """Get a sample from the dataset.
 
-        The sample is returned as a :class:`DatasetSample <maples_dr.dataset.DatasetSample>`.
+        The sample is returned as a :class:`DataSample <maples_dr.dataset.DataSample>`.
 
 
         Parameters

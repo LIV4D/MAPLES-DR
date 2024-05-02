@@ -1,11 +1,11 @@
 [project]
 
 name = "maples-dr"
-version = '0.1.0rc3'
+version = '0.1.0rc4'
 authors = [
     {name= 'Gabriel Lepetit-Aimon', email= 'gabriel.lepetit-aimon@polymtl.ca'},
 ]
-description = """Utilities python library for the public dataset: MAPLES-DR."""
+description = """Utilities python library for the public dataset of retinal structures: MAPLES-DR."""
 readme = 'README.md'
 
 requires-python = '>=3.10'
@@ -42,8 +42,8 @@ test = [
 ]
 
 [project.urls]
-Homepage = 'https://liv4d.github.io/MAPLES-DR/en/welcome/maples_dr'
-Documentation = 'https://liv4d.github.io/MAPLES-DR/en/'
+Homepage = 'https://liv4d.github.io/MAPLES-DR/en/'
+Documentation = 'https://liv4d.github.io/MAPLES-DR/en/welcome/python_library.html'
 Source = 'https://github.com/LIV4D/MAPlES-DR'
 
 

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  MAPLES-DR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-19 16:31-0400\n"
+"POT-Creation-Date: 2024-05-02 16:16-0400\n"
 "PO-Revision-Date: 2024-04-10 20:37-0400\n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -18,34 +18,38 @@ msgstr ""
 "Generated-By: Babel 2.11.0\n"
 
 #: ../../source/index.rst:73
+msgid "MAPLES-DR Dataset"
+msgstr "Le jeu de données MAPLES-DR"
+
+#: ../../source/index.rst:78
 msgid "Dataset Description"
-msgstr "Description du Jeu de Données"
+msgstr "Description du jeu de données"
 
-#: ../../source/index.rst:73
+#: ../../source/index.rst:78
 msgid "Python library"
-msgstr "API Python"
+msgstr "API python"
 
-#: ../../source/index.rst:73
-msgid "Welcome"
-msgstr "Bienvenue"
+#: ../../source/index.rst:78
+msgid "Documentation"
+msgstr "Documentation"
 
-#: ../../source/index.rst:85
+#: ../../source/index.rst:90
 msgid "Examples"
 msgstr "Exemples"
 
-#: ../../source/index.rst:93
+#: ../../source/index.rst:98
 msgid "Configuration"
 msgstr "Configuration"
 
-#: ../../source/index.rst:93
+#: ../../source/index.rst:98
 msgid "API Reference"
 msgstr "Définition de l'API"
 
-#: ../../source/index.rst:3 ffd5e10f81264ba28f6dd4f39b06016a
+#: ../../source/index.rst:3 80fa1bf717904dd4a560790b1e6e3cf3
 msgid "MAPLES-DR Dataset Documentation"
 msgstr "Documentation du jeu de données MAPLES-DR"
 
-#: ../../source/index.rst:7 925efcb57ba442e7881eed9f9ca32a33
+#: ../../source/index.rst:7 484aeca8929c426287ba19045b5e8e61
 msgid ""
 "**MAPLES-DR** *(MESSIDOR Anatomical and Pathological Labels for "
 "Explainable Screening of Diabetic Retinopathy)* is a public dataset which"
@@ -54,69 +58,69 @@ msgid ""
 msgstr ""
 "**MAPLES-DR** *(MESSIDOR Anatomical and Pathological Labels for "
 "Explainable Screening of Diabetic Retinopathy)* est un jeu de données "
-"publique regroupant des annotations de diagnostics de |DR| et des cartes "
-"de segmentations de 10 structures rétiniennes."
+"public de diagnostics de |DR| et de cartes de segmentations de structures"
+" rétiniennes."
 
-#: ../../source/index.rst:9 06daf668478d45618449275621387598
+#: ../../source/index.rst:9 ff42adf6f5614ae280f27d87a247ff14
 msgid ""
 "For **198 fundus image** of the public dataset :doc:`MESSIDOR "
-"<welcome/messidor>` :cite:`MESSIDOR`, our team of seven Canadian senior "
-"retinologists graded :abbr:`DR (Diabetic Retinopathy)` and :abbr:`ME "
-"(Macular Edema)`, and segmented ten retinal structures related to those "
-"pathologies: **optic disc** and **cup**, **macula**, **vessels**, "
-"**micro-aneurysms**, **hemorrhages**, **neo-vessels**, **exudates**, "
-"**cotton wool spots** and **drusens**. A detailed description of those "
-"biomarkers and their role in the diagnosis of DR can be found in the "
-":doc:`dataset description section <welcome/dataset_description>` of this "
-"documentation. By releasing this dataset, we hope to help the AI "
-"community improves the explainability and reliability of machine learning"
-" models for DR screening."
+"<welcome/messidor>` :footcite:`MESSIDOR`, our team of seven Canadian "
+"senior retinologists graded :abbr:`DR (Diabetic Retinopathy)` and "
+":abbr:`ME (Macular Edema)`, and segmented ten retinal structures related "
+"to those pathologies: **optic disc** and **cup**, **macula**, "
+"**vessels**, **micro-aneurysms**, **hemorrhages**, **neo-vessels**, "
+"**exudates**, **cotton wool spots** and **drusens**. A detailed "
+"description of those biomarkers and their role in the diagnosis of DR can"
+" be found in the :doc:`dataset description section "
+"<welcome/dataset_description>` of this documentation. By releasing this "
+"dataset, we hope to help the AI community improves the explainability and"
+" reliability of machine learning models for DR screening."
 msgstr ""
-"Pour **198 images de fond d'oeil** du jeu de données public "
-":doc:`MESSIDOR <welcome/messidor>` :cite:`MESSIDOR`, notre équipe "
-"canadienne de sept rétinologues séniors ont annoté des grades de |DR| "
-"(Rétinopahie Diabétique) et de |ME| (Eudème Maculaire)`, et ont segmentés"
-" dix structures rétiennes symptomatiques de ces pathologies: **le disque "
-"optique** et **la cup**, **la macula**, **les vaisseaux**, les **micro-"
-"anévrismes**, les **hémorragies**, les **néo-vaisseaux**, les "
-"**exudats**, les **nodules cottoneux** and les **drusens**. Pour une "
-"description détaillée de tous ces biomarqueurs ainsi que leur importance "
-"dans le dépistage de la |DR|, référez-vous à la section  "
-":doc:`description du jeu de données <welcome/dataset_description>` de "
-"cette documentation. En publiant |MAPLES-DR| nous espérons contribuer aux"
-" recherches visant à améliorer l'interprétabilité des modèles de "
-"diagnostique automatique de la DR par apprentissage machine."
+"Notre équipe canadienne de sept rétinologues séniors ont annoté des "
+"grades de |DR| (Rétinopathie Diabétique) et de |ME| (Œdème Maculaire), "
+"sur **198 images de fond d'œil** du jeu de données public :doc:`MESSIDOR "
+"<welcome/messidor>` :footcite:`MESSIDOR`. Pour chacune de ces images, ils"
+" ont aussi segmentés dix structures rétiniennes symptomatiques de ces "
+"deux pathologies: le **disque** anévrismes**, les **hémorragies**, les "
+"**néo-vaisseaux**, les **exsudats**, les **nodules cotonneux** and les "
+"**drusens**. Pour une description détaillée de tous ces biomarqueurs "
+"ainsi que leurs rôles dans le dépistage de la |DR|, référez-vous à la "
+"section  :doc:`description du jeu de données "
+"<welcome/dataset_description>` de cette documentation. En publiant "
+"|MAPLES-DR| nous espérons contribuer aux recherches visant à améliorer "
+"l'interprétabilité des modèles de diagnostique automatique de la DR par "
+"apprentissage machine."
 
-#: ../../source/index.rst:16 6d6226af34e84455a0534c2e716d2f56
+#: ../../source/index.rst:16 481dbd1342744952a500347bcf8671e4
 msgid ""
 "Overview of |MAPLES-DR| content and annotation process. (Credit: "
-":cite:t:`maples_dr`)"
+":footcite:t:`maples_dr`)"
 msgstr ""
-"Vue d'ensemble du contenu et du procédé d'annotation de |MAPLES-DR|. "
-"(Crédit: :cite:t:`maples_dr`)"
+"Vue d'ensemble du contenu et du protocole d'annotation de |MAPLES-DR|. "
+"(Crédit: :footcite:t:`maples_dr`)"
 
-#: ../../source/index.rst:19 de34039f047f4687a0bc6e56d30e970b
+#: ../../source/index.rst:19 b6d7c032bbe14ccea421761aa94a4367
 msgid ""
 "The annotation procedure relied on AI generated pre-segmentation of some "
 "retinal structures and a custom web-based annotation platform. The "
 "complete annotation process is documented in `this paper "
-"<https://arxiv.org/abs/2402.04258>`_ :cite:`maples_dr` *(the URL "
+"<https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr` *(the URL "
 "currently refers to a temporary arxiv preprint, while the manuscript is "
 "under revision.)*."
 msgstr ""
 "La procédure d'annotation de |MAPLES-DR| s'est appuyée sur des cartes "
-"pré-segmentatée par :abbr:`IA (Intelligence Artificielle)` pour certaines"
-" structures rétiniennes, ainsi que sur une plateforme d'annotation en "
-"ligne. Le procédé d'annotation est documenté au complet dans `ce papier "
-"<https://arxiv.org/abs/2402.04258>`_ :cite:`maples_dr` *(l'URL pointe "
-"actuellement vers un preprint ArXiv, le temps que notre manuscrit est en "
+"pré-segmentées par :abbr:`IA (Intelligence Artificielle)` pour certaines "
+"structures rétiniennes, ainsi que sur un outils d'annotation hébergé sur "
+"le web. Le protocole d'annotation est documenté en détail dans `ce papier"
+" <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr` *(l'URL "
+"pointe vers un preprint ArXiv, le temps que notre manuscrit suive son "
 "processus de révision)*."
 
-#: ../../source/index.rst:23 ff3ec67178364d97bcf1b98f72c55f32
+#: ../../source/index.rst:23 953f90f3ab604b77ab155bab77d84f30
 msgid "Usage"
 msgstr "Utilisation"
 
-#: ../../source/index.rst:25 a9e0a2f5c2134d2b87a150cdc4126ae2
+#: ../../source/index.rst:25 bbaa86ac15d340f68d359fbcc8f49a15
 msgid ""
 "The dataset is freely available for download from the `MAPLES-DR Figshare"
 " repository <https://doi.org/10.6084/m9.figshare.24328660>`_."
@@ -124,7 +128,7 @@ msgstr ""
 "Le jeu de données est accessible librement depuis le `dépôt Figshare de "
 "MAPLES-DR <https://doi.org/10.6084/m9.figshare.24328660>`_."
 
-#: ../../source/index.rst:27 05c6afbfc8394356869eb133ff8a4471
+#: ../../source/index.rst:27 e8302143b4b645839c793249504d96ee
 msgid ""
 "However, for machine learning usage we encourage researchers to directly "
 "download MAPLES-DR labels through :doc:`the python library "
@@ -133,17 +137,17 @@ msgid ""
 "original fundus images of MESSIDOR, by automating the process of "
 "matching, cropping and resizing them to a uniform format."
 msgstr ""
-"Cependant, nous recommandons de télécharger les annotations de |MAPLES-"
-"DR| directement depuis :doc:`le paquet python<welcome/python_library>`: "
-"``maples_dr``, en particulier pour l'entrainement de modèles. Nous avons "
-"développé cette bibliothèque Python pour simplifier le chargement et "
-"l'intégration des cartes de segmentation de MAPLES-DR avec les images de "
-"fond d'œil originales fournies par MESSIDOR. L'API simple de "
-"``maples_dr`` automatise ainsi l'appariement, le découpage et le "
-"redimensionnement en un format uniforme, adapté à l'entrainement de "
-"réseaux de neurones."
+"Cependant, nous recommandons plutôt de télécharger les annotations de "
+"|MAPLES-DR| à l'aide du :doc:`le paquet python<welcome/python_library>`: "
+"``maples_dr``. Nous avons développé cette bibliothèque Python pour "
+"simplifier l'utilisation conjointe des cartes de segmentation de MAPLES-"
+"DR avec les images de fond d'œil originales fournies par MESSIDOR. L'API "
+"de ``maples_dr`` automatise ainsi l'appariement des images, leur "
+"découpage et redimensionnement vers une résolution uniforme. Ainsi "
+"formaté, les données sont particulièrement adaptées pour entraîner des "
+"réseaux de neurones à segmenter les structures rétiniennes."
 
-#: ../../source/index.rst:29 24a9dc373768452e943619c1db1d0fff
+#: ../../source/index.rst:29 e261616cec6545778ace979171b3f41d
 msgid ""
 "Note that the fundus images are the property of the MESSIDOR program "
 "partners and are not included in the MAPLES-DR dataset, but they are "
@@ -152,59 +156,59 @@ msgid ""
 "instructions in :doc:`MESSIDOR section <welcome/messidor>` to integrate "
 "them with |MAPLES-DR| labels."
 msgstr ""
-"Notez que les images de fond d'œil associées aux annotations de |MAPLES-"
-"DR| sont la propriété du concortium MESSIDOR et ne sont donc pas incluses"
-" dans les fichiers de |MAPLES-DR|. Cependant, elles sont disponibles pour"
-" toute équipe de recherche qui en fait la demande sur le `site de "
-"Messidor <https://www.adcis.net/en/third-party/messidor/>`_. La "
+"Les images de fond d'œil associées aux annotations de |MAPLES-DR| sont la"
+" propriété du consortium MESSIDOR et ne sont donc pas incluses dans les "
+"fichiers de |MAPLES-DR|. Cependant, elles sont disponibles à toutes les "
+"équipes de recherche qui en font la demande sur le `site de Messidor "
+"<https://www.adcis.net/fr/logiciels-tiers/messidor-fr/>`_. La "
 ":doc:`section MESSIDOR <welcome/messidor>` de la présente documentation  "
-"décrit les étapes à suivre pour les intégrer avec les annotations de "
-"|MAPLES-DR|."
+"décrit les étapes à suivre pour les intégrer aux annotations de |MAPLES-"
+"DR| à l'aide du paquet `maples_dr`."
 
-#: ../../source/index.rst:31 dc6d386e1d9b408382dfda7674025438
+#: ../../source/index.rst:31 eb6ca3712d6748f98311b4b6542074d0
 msgid ""
 "If you wish to use this dataset in an academic work, we kindly ask you to"
 " cite the following `paper <https://arxiv.org/abs/2402.04258>`_ "
-":cite:`maples_dr`::"
+":footcite:`maples_dr`::"
 msgstr ""
 "Nous demandons aux chercheurs qui souhaitent utiliser ce jeu de données "
 "dans leur travaux académique de citer `le papier "
 "<https://arxiv.org/abs/2402.04258>`_ lié à la publication de |MAPLES-"
-"DR|:cite:`maples_dr`::"
+"DR|:footcite:`maples_dr`::"
 
-#: ../../source/index.rst:42 b0d4a2831faf4abc8c60a55ea67bb022
+#: ../../source/index.rst:42 205011a07a3940fdbed2065fcd1089cd
 msgid ""
 "*(This citation currently refers to a temporary arxiv preprint while our "
 "manuscript is under revisions.)*"
 msgstr ""
 "*(Cette citation pointe temporairement vers arxiv, le temps que notre "
-"manuscrit est en processus de révisions.)*"
+"manuscrit suive son processus de révisions.)*"
 
-#: ../../source/index.rst:45 d0cceb19841b4233b07432c9729d34be
+#: ../../source/index.rst:45 6b45b1a9ad8a43c6ab45fe7987de6986
 msgid "Additional Resources"
 msgstr "Ressources Additionnelles"
 
-#: ../../source/index.rst:48 62499d62c16d40f9b9342ccf30700720
+#: ../../source/index.rst:48 b0e886fffebf4d2bb572439cdd63b1df
 msgid "Segmentation Models"
 msgstr "Modèles de segmentation"
 
-#: ../../source/index.rst:49 ab61ffe792894cbeada2a1bd57b625a9
+#: ../../source/index.rst:49 66eae5266c81475ba98b99e4f4c2855a
 msgid ""
 "We released the segmentation models developed and trained on MAPLES-DR as"
-" two Python libraries: they bundle the weights and pytorch code required "
+" two Python libraries: they bundle the weights and PyTorch code required "
 "to automatically segment retinal vessels and lesions. These libraries "
 "were designed to be used by researchers or clinicians without deep "
-"learning expertise. They are available on github:"
+"learning expertise. They are available on GitHub:"
 msgstr ""
-"Nous avons rendu public des modèles de segmentation développés et entrainés"
-" sur |MAPLES-DR| sous la forme de deux bibliothèques Python. Ces "
-"bibliothèques contiennent les poids et le code pytorch nécessaires pour "
-"segmenter automatiquement les vaisseaux de la rétine et certaines de ses lésions.
-" Elles furent conçus pour être utilisées par des chercheurs ou des cliniciens sans "
-"expérience de la manipulation de réseaux de neurones. On peut les trouver"
-" sur GitHub:"
+"Nous avons rendu public des modèles de segmentation développés et "
+"entraînés sur |MAPLES-DR| sous la forme de deux bibliothèques Python. Ces"
+" bibliothèques contiennent les poids et le code PyTorch nécessaires pour "
+"segmenter automatiquement les vaisseaux de la rétine et certaines de ses "
+"lésions Elles furent conçus pour être utilisées par des chercheurs ou des"
+" cliniciens sans expérience de la manipulation de réseaux de neurones. On"
+" peut les trouver sur GitHub:"
 
-#: ../../source/index.rst:51 75a8d1606c0b4f599252dff6710b463a
+#: ../../source/index.rst:51 5cf7583294e34c6d8d5410cb59fac681
 msgid ""
 "`fundus-vessels-toolkit <https://github.com/gabriel-lepetitaimon/fundus-"
 "vessels-toolkit>`_ for automatic segmentation and graph extraction of the"
@@ -214,7 +218,7 @@ msgstr ""
 "vessels-toolkit>`_ pour la segmentation et l'extraction automatique de la"
 " vasculature rétinienne;"
 
-#: ../../source/index.rst:52 f92386a13d84462a9719f621db9146f2
+#: ../../source/index.rst:52 16749a8196804c59af20edfaef8cff88
 msgid ""
 "`fundus-lesions-toolkit <https://github.com/ClementPla/fundus-lesions-"
 "toolkit>`_ for automatic semantic segmentation of microaneurysms, "
@@ -225,27 +229,44 @@ msgstr ""
 "anévrismes, des hémorragies, des exsudats et des |CWS| (nodules "
 "cotonneux)."
 
-#: ../../source/index.rst:56 8ffab8488b4b4a50aff84cd3629f1c1e
+#: ../../source/index.rst:56 2e1f8dcac27c43839712097941db1905
 msgid "Annotation Platform"
 msgstr "Plateforme d'Annotation"
 
-#: ../../source/index.rst:57 108d650767364b5996df42861f31c1c1
+#: ../../source/index.rst:57 20ace0d4d2e44a538720b6138d5aabe3
 msgid ""
 "The web-based annotation platform used to annotate MAPLES-DR is also "
-"available on `github <https://github.com/LIV4D/AnnotationPlatform>`_."
+"available on `GitHub <https://github.com/LIV4D/AnnotationPlatform>`_."
 msgstr ""
 "La plateforme d'annotation utilisées pour annoter |MAPLES-DR| est "
-"accessible sur `github <https://github.com/LIV4D/AnnotationPlatform>`_."
+"accessible sur `GitHub <https://github.com/LIV4D/AnnotationPlatform>`_."
 
-#: ../../source/index.rst:60 c7691ac951254c2889ba2d04cad77320
+#: ../../source/index.rst:60 7cc4f409501846d38928b830cef91d07
 msgid "Reference"
 msgstr "Bibliographie"
 
-#: ../../source/index.rst:67 52cad34569914fb584abdc0acf1e799f
+#: ../../source/index.rst:66 c7233ff4635942abb79e93cbbff9991a
 msgid "Acknowledgements"
 msgstr "Remerciements"
 
-#: ../../source/index.rst:68 133bab0794ba41559254afd0481d479e
+#: ../../source/index.rst:67 e5a682b842ec4814a3aab704b5737ea8
+msgid ""
+"The LIV4D laboratory would like to thank Dr. Marie Carole Boucher, Dr. "
+"Michael H Brent, Dr. Renaud Duval as well as Dr. Karim Hammamji, Dr. "
+"Ananda Kalevar, Dr. Cynthia Qian, and  Dr. David Wong for their time and "
+"effort labeling the MAPLES-DR dataset. We also thank Dr. Fares Antaky and"
+" Dr. Daniel Milad for participating in a inter-observer variability study"
+" that helped us assess the quality of lesions segmentations of MAPLES-DR."
+msgstr ""
+"Le laboratoire LIV4D tient à remercier Dr. Marie Carole Boucher, Dr. "
+"Michael H Brent, Dr. Renaud Duval ainsi que Dr. Karim Hammamji, Dr. "
+"Ananda Kalevar, Dr. Cynthia Qian, et Dr. David Wong pour leur temps et "
+"implication lors de l'annotation du jeu de données |MAPLES-DR|. Nous "
+"remercions également Dr. Fares Antaky et Dr. Daniel Milad pour leur "
+"participation à une étude de variabilité inter-observateurs qui a permis "
+"d'évaluer la qualité des segmentations de lésions de |MAPLES-DR|."
+
+#: ../../source/index.rst:69 3380d9a3152b4dd2a416aca72932e54a
 msgid ""
 "This study was funded by the Natural Science and Engineering Research "
 "Council of Canada as well as Diabetes Action Canada and FROUM (Fonds de "
@@ -256,7 +277,7 @@ msgstr ""
 "Canada et le :abbr:`FROUM (Fonds de recherche en ophtalmologie de "
 "l'Université de Montréal)`."
 
-#: ../../source/index.rst:70 380c8f98611c46098071d21fd78550cd
+#: ../../source/index.rst:71 8a0669029ade427b95a047842097f967
 msgid ""
 "The original MESSIDOR dataset  was kindly provided by the Messidor "
 "program partners (see `https://www.adcis.net/en/third-party/messidor/ "
@@ -265,3 +286,4 @@ msgstr ""
 "Le jeu de données d'images de fond d'œil est fourni par les partenaires "
 "du programme Messidor (voir `https://www.adcis.net/fr/logiciels-tiers"
 "/messidor-fr/ <https://www.adcis.net/fr/logiciels-tiers/messidor-fr/>`_)."
+

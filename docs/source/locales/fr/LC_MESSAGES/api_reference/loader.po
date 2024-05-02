@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-22 16:09-0400\n"
+"POT-Creation-Date: 2024-05-02 11:35-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -36,8 +36,7 @@ msgstr ""
 msgid "Check if the MAPLES-DR dataset contains all segmentation maps."
 msgstr ""
 
-#: 01b9db89645f4362a7ca48163b46faaf a97ee699daa6494a8a80d40f43803973
-#: d9b08f88d81944cba34dc0896a5ac00c
+#: a97ee699daa6494a8a80d40f43803973 d9b08f88d81944cba34dc0896a5ac00c
 #: maples_dr.loader.DatasetLoader.check_maples_dr_integrity
 #: maples_dr.loader.DatasetLoader.configure
 #: maples_dr.loader.DatasetLoader.discover_messidor_images
@@ -53,6 +52,11 @@ msgstr ""
 #: 6d73a1cfda8a45fb9fb9a0d5d0dc8e27
 #: maples_dr.loader.DatasetLoader.clear_cache:1 of
 msgid "Clear the cache."
+msgstr ""
+
+#: d58a834c3cf745b794048dde0443eb09
+#: maples_dr.loader.DatasetLoader.clear_download_cache:1 of
+msgid "Clear the cache where the MAPLES-DR archive is downloaded and extracted."
 msgstr ""
 
 #: c583952bd00346799b60bfce8154c322 maples_dr.loader.DatasetLoader.configure:1
@@ -225,6 +229,39 @@ msgstr ""
 #: c4e47afb8fdc47f6b47be156fad23020 maples_dr.loader.DatasetLoader.configure:35
 #: of
 msgid "If True, disable the integrity check of the dataset."
+msgstr ""
+
+#: 171b1c99607c4fd78e0dea21d87fe3f8 maples_dr.loader.DatasetLoader.configure:37
+#: of
+msgid ""
+"If True, exclude images with missing macula segmentation (one image of "
+"the train set).  By default: False."
+msgstr ""
+
+#: f1b986886c514f51948f561f76761c30 maples_dr.loader.DatasetLoader.configure:37
+#: of
+msgid ""
+"If True, exclude images with missing macula segmentation (one image of "
+"the train set)."
+msgstr ""
+
+#: 46f6af1d8b884311aeb5905500b5a5cd maples_dr.loader.DatasetLoader.configure:39
+#: maples_dr.loader.DatasetLoader.configure:43 of
+msgid "By default: False."
+msgstr ""
+
+#: 7f477c4bb8f14f2d95787e836d4e33c0 maples_dr.loader.DatasetLoader.configure:41
+#: of
+msgid ""
+"If True, exclude images with missing optic cup segmentation (4 images of "
+"the train set, 2 of the test set).  By default: False."
+msgstr ""
+
+#: 76b839749abc4d1abd42ff0886ef7797 maples_dr.loader.DatasetLoader.configure:41
+#: of
+msgid ""
+"If True, exclude images with missing optic cup segmentation (4 images of "
+"the train set, 2 of the test set)."
 msgstr ""
 
 #: ec6fe8c04d454661a61122baefdfa93d

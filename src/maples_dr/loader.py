@@ -5,7 +5,6 @@ from functools import partial
 from itertools import chain
 from pathlib import Path
 from shutil import rmtree
-from tempfile import mkdtemp
 from typing import Dict, Optional, Tuple
 from urllib.request import urlopen
 from zipfile import ZipFile
@@ -87,10 +86,6 @@ class DatasetLoader:
 
         self._messidor_paths: Optional[dict[str, str]] = None
         self._messidor_ROIs: Optional[pd.DataFrame] = None
-
-    def __del__(self):
-        if self._is_maples_dr_folder_temporary:
-            rmtree(self._maples_dr_path, ignore_errors=True)
 
     # === CONFIGURATION ===
     def configure(
