@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  MAPLES-DR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-25 11:57-0400\n"
+"POT-Creation-Date: 2024-05-02 11:35-0400\n"
 "PO-Revision-Date: 2024-04-10 20:37-0400\n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -17,31 +17,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.11.0\n"
 
-#: ../../source/index.rst:71
+#: ../../source/index.rst:73
 msgid "MAPLES-DR Dataset"
 msgstr "Le jeu de données MAPLES-DR"
 
-#: ../../source/index.rst:76
+#: ../../source/index.rst:78
 msgid "Dataset Description"
 msgstr "Description du jeu de données"
 
-#: ../../source/index.rst:76
+#: ../../source/index.rst:78
 msgid "Python library"
 msgstr "API python"
 
-#: ../../source/index.rst:76
+#: ../../source/index.rst:78
 msgid "Documentation"
 msgstr "Documentation"
 
-#: ../../source/index.rst:88
+#: ../../source/index.rst:90
 msgid "Examples"
 msgstr "Exemples"
 
-#: ../../source/index.rst:96
+#: ../../source/index.rst:98
 msgid "Configuration"
 msgstr "Configuration"
 
-#: ../../source/index.rst:96
+#: ../../source/index.rst:98
 msgid "API Reference"
 msgstr "Définition de l'API"
 
@@ -249,7 +249,24 @@ msgstr "Bibliographie"
 msgid "Acknowledgements"
 msgstr "Remerciements"
 
-#: ../../source/index.rst:67 133bab0794ba41559254afd0481d479e
+#: ../../source/index.rst:67 dd01f539ec024b4dbda63eddf52bc1f0
+msgid ""
+"The LIV4D laboratory would like to thank Dr. Marie Carole Boucher, Dr. "
+"Michael H Brent, Dr. Renaud Duval as well as Dr. Karim Hammamji, Dr. "
+"Ananda Kalevar, Dr. Cynthia Qian, and  Dr. David Wong for their time and "
+"effort labeling the MAPLES-DR dataset. We also thank Dr. Fares Antaky and "
+"Dr. Daniel Milad for participating in a inter-observer variability study "
+"that helped us assess the quality of lesions segmentations of MAPLES-DR."
+msgstr ""
+"Le laboratoire LIV4D tient à remercier Dr. Marie Carole Boucher, Dr. "
+"Michael H Brent, Dr. Renaud Duval ainsi que Dr. Karim Hammamji, Dr. "
+"Ananda Kalevar, Dr. Cynthia Qian, et Dr. David Wong pour leur temps et "
+"implication lors de l'annotation du jeu de données |MAPLES-DR|. "
+"Nous remercions également Dr. Fares Antaky et Dr. Daniel Milad pour leur "
+"participation à une étude de variabilité inter-observateurs qui a "
+"permis d'évaluer la qualité des segmentations de lésions de |MAPLES-DR|."
+
+#: ../../source/index.rst:69 133bab0794ba41559254afd0481d479e
 msgid ""
 "This study was funded by the Natural Science and Engineering Research "
 "Council of Canada as well as Diabetes Action Canada and FROUM (Fonds de "
@@ -260,7 +277,7 @@ msgstr ""
 "Canada et le :abbr:`FROUM (Fonds de recherche en ophtalmologie de "
 "l'Université de Montréal)`."
 
-#: ../../source/index.rst:69 380c8f98611c46098071d21fd78550cd
+#: ../../source/index.rst:71 380c8f98611c46098071d21fd78550cd
 msgid ""
 "The original MESSIDOR dataset  was kindly provided by the Messidor "
 "program partners (see `https://www.adcis.net/en/third-party/messidor/ "

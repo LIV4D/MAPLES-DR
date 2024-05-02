@@ -64,7 +64,7 @@ Reference
 
 Acknowledgements
 ================
-The LIV4D laboratory would like to thank Dr. Marie Carole Boucher, Dr. Michael H Brent, Dr. Renaud Duval as well as Dr. Karim Hammamji, Dr. Ananda Kalevar, Dr. Cynthia Qian, and  Dr. David Wong for their time and effort labeling the MAPLES-DR dataset. We also thank Dr. Fares Antaky and Daniel Milad for participating in a inter-observer variability study that helped us assess the quality of lesions segmentations of MAPLES-DR.
+The LIV4D laboratory would like to thank Dr. Marie Carole Boucher, Dr. Michael H Brent, Dr. Renaud Duval as well as Dr. Karim Hammamji, Dr. Ananda Kalevar, Dr. Cynthia Qian, and  Dr. David Wong for their time and effort labeling the MAPLES-DR dataset. We also thank Dr. Fares Antaky and Dr. Daniel Milad for participating in a inter-observer variability study that helped us assess the quality of lesions segmentations of MAPLES-DR.
 
 This study was funded by the Natural Science and Engineering Research Council of Canada as well as Diabetes Action Canada and FROUM (Fonds de recherche en ophtalmologie de l'Université de Montréal).
 
