@@ -28,7 +28,7 @@ However, for machine learning usage we encourage researchers to directly downloa
 
 Note that the fundus images are the property of the MESSIDOR program partners and are not included in the MAPLES-DR dataset, but they are available to any research teams who requires them on `Messidor website <https://www.adcis.net/en/third-party/messidor/>`_. Follow the instructions in :doc:`MESSIDOR section <welcome/messidor>` to integrate them with |MAPLES-DR| labels.
 
-If you wish to use this dataset in an academic work, we kindly ask you to footcite the following `paper <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr`::
+If you wish to use this dataset in an academic work, we kindly ask you to cite the following `paper <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr`::
 
       @article{maples_dr,
          title={MAPLES-DR: MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy}, 
