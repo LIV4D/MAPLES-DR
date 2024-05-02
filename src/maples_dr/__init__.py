@@ -12,7 +12,8 @@ if os.environ.get("MAPLES-DR_SILENT_IMPORT", None) is None:
         "  please cite: [u cyan link=https://arxiv.org/abs/2402.04258]https://arxiv.org/abs/2402.04258[/u cyan link]"
     )
 
-from .dataset import DataSample, Dataset
+from .config import ImageFormat, InvalidConfigError, Preprocessing
+from .dataset import BiomarkerField, DataSample, Dataset, DiagnosisField, FundusField
 from .quick_api import (
     clear_cache,
     clear_download_cache,

@@ -246,12 +246,12 @@ class Pathology(str, Enum):
 
 #: The name of a valid image field in MAPLES-DR.
 #:
-#: This type alias is a union of :class:`BiomarkerField` and :class:`FundusField`.
+#: This type alias is a union of :class:`BiomarkerField <maples_dr.dataset.BiomarkerField>` and :class:`FundusField <,maples_dr.dataset.FundusField>`.
 ImageField: TypeAlias = Union[FundusField, BiomarkerField]
 
 #: The name of a valid field in MAPLES-DR.
 #:
-#: This type alias is a union of :class:`DiagnosisField`, :class:`BiomarkerField`, and :class:`FundusField`.
+#: This type alias is a union of :class:`DiagnosisField <maples_dr.dataset.DiagnosisField>`, :class:`BiomarkerField <maples_dr.dataset.BiomarkerField>`, and :class:`FundusField <maples_dr.dataset.FundusField>`.
 Field: TypeAlias = Union[DiagnosisField, ImageField]
 
 
@@ -332,13 +332,8 @@ class Dataset(Sequence):
     def __getitem__(self, idx: int | str | slice[int] | list[str]) -> DataSample:
         """Get a sample from the dataset.
 
-        This method is a shortcut for :meth:`read_sample`.
-        It returns the sample as a dictionary with the keys:
+        The sample is returned as a :class:`DatasetSample <maples_dr.dataset.DatasetSample>`.
 
-        - ``name`` containing the name of the image (e.g. "20051116_44816_0400_PP").
-        - every :class:`Field` except ``bright_lesions`` and ``red_lesions``.
-
-        The image are formatted following the default configuration (see :func:`maples_dr.configure`).
 
         Parameters
         ----------
@@ -347,8 +342,8 @@ class Dataset(Sequence):
 
         Returns
         -------
-        dict
-            The sample as a dictionary.
+        DataSample
+            The sample.
         """
         if isinstance(idx, (str, int)):
             sample_infos = self.get_sample_infos(idx)
@@ -376,10 +371,11 @@ class Dataset(Sequence):
         """The data of the dataset.
 
         A dataframe containing the information of each sample. It has the following columns:
+
             - index: the name of the sample.
             - ``fundus``: the path to the fundus image.
-            - [:class:`BiomarkerField`] (accept aggregated): the path to the biomarkers masks.
-            - [:class:`BiomarkersAnnotationTasks` ``_`` :class:`BiomarkersAnnotationInfos`]: the additional annotations informations.
+            - :class:`BiomarkerField <maples_dr.dataset.BiomarkerField>` (accept aggregated): the path to the biomarkers masks.
+            - :class:`BiomarkersAnnotationTasks <maples_dr.dataset.BiomarkersAnnotationTasks>` _ :class:`BiomarkersAnnotationInfos <maples_dr.dataset.BiomarkersAnnotationInfos>`: the additional annotations informations.
             - ``dr``: the consensus DR grade.
             - ``me``: the consensus ME grade.
             - ``dr_{A|B|C}``: the DR grade given by one retinologist.
@@ -608,20 +604,18 @@ class Dataset(Sequence):
 
         with RichProgress.iteration("Exporting Maples-DR...", len(self), "Maples-DR exported in {t} seconds.") as p:
             for i in range(len(self)):
-                sample = self.read_sample(i, list(fields.keys()), image_format="PIL")
+                sample = self[i]
 
-                for field, img in sample.items():
-                    if field not in fields:
-                        continue
-
-                    field_folder = path / fields[field]
+                for field, folder in fields.items():
+                    field_folder = path / folder
 
                     opt = {}
                     if field not in ("fundus", "raw_fundus"):
                         opt["bits "] = 1
                         opt["optimize"] = optimize
 
-                    img.save(field_folder / f"{sample['name']}.png", **opt)
+                    img = sample.read_field(field, image_format=ImageFormat.PIL)
+                    img.save(field_folder / f"{sample.name}.png", **opt)
                     p.update(1 / len(fields))
 
 
@@ -648,17 +642,63 @@ class DataSample(Mapping):
         return len(self._data)
 
     def __getitem__(self, key: Field | str) -> Union[Image.Image, np.ndarray, str]:
-        key = check_field(key)
-        if isinstance(key, BiomarkerField):
-            return self.read_biomarker(key)
-        elif isinstance(key, DiagnosisField):
-            return self._data[key.value]
-        elif key is FundusField.FUNDUS:
-            return self.read_fundus()
-        elif key is FundusField.RAW_FUNDUS:
-            return self.read_fundus(preprocess=False)
-        elif key is FundusField.MASK:
-            return self.read_roi_mask()
+        return self.read_field(field=key)
+
+    def read_field(
+        self,
+        field: Field | str,
+        image_format: Optional[ImageFormat] = None,
+        resize: Optional[int | bool] = None,
+        pre_annotation: bool = False,
+    ):
+        """Read one field of the sample.
+
+        This function is similar to __getitem__ but provides more options to format the result (resize, image format...).
+
+        Parameters
+        ----------
+        field : Field | str
+            Any field from:
+
+            - :class:`BiomarkerField <maples_dr.dataset.BiomarkerField>`: a biomarker name, possible values are: ``'opticCup'``, ``'opticDisc'``, ``'macula'``, ``'vessels'``, ``'brightLesions'``, ``'cottonWoolSpots'``, ``'drusens'``, ``'exudates'``, ``'brightUncertains'``, ``'redLesions'``, ``'hemorrhages'``, ``'microaneurysms'``, ``'neovascularization'``, ``'redUncertains'``.
+            - :class:`DiagnosisField <maples_dr.dataset.DiagnosisField>`: a diagnosis name, possible values are: ``'dr'``, ``'me'``.
+            - :class:`FundusField <maples_dr.dataset.FundusField>`: a fundus field, possible values are: ``'fundus'``, ``'rawFundus'``, ``'mask'``.
+
+        image_format :
+            Format of the image to return.
+
+            If ``None`` (by default), use the format defined in the configuration.
+
+        resize :
+            Resize the image to the given size.
+
+            - If ``resize`` is an int, crop the image to a square ROI and resize it to the shape ``(resize, resize)``;
+            - If ``True``, keep the original MAPLES-DR resolution of 1500x1500 px;
+            - If ``False``, use the original MESSIDOR resolution if MESSIDOR path is configured, otherwise fallback to MAPLES-DR original resolution.
+            - If ``None`` (by default), use the size defined in the configuration.
+
+        pre_annotation :
+            If set to ``True``, read the pre-annotation biomarkers instead of the final ones.
+
+            .. warning::
+                Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.
+
+        Returns
+        -------
+        Image.Image | np.ndarray | str
+            The field under the format specified.
+        """
+        field = check_field(field)
+        if isinstance(field, BiomarkerField):
+            return self.read_biomarker(field, image_format=image_format, resize=resize, pre_annotation=pre_annotation)
+        elif isinstance(field, DiagnosisField):
+            return self._data[field.value]
+        elif field is FundusField.FUNDUS:
+            return self.read_fundus(image_format=image_format, resize=resize)
+        elif field is FundusField.RAW_FUNDUS:
+            return self.read_fundus(image_format=image_format, resize=resize, preprocess=False)
+        elif field is FundusField.MASK:
+            return self.read_roi_mask(image_format=image_format, resize=resize)
 
     def __iter__(self) -> Generator[Field]:
         if FundusField.FUNDUS.value in self._data:
@@ -690,12 +730,16 @@ class DataSample(Mapping):
         Parameters
         ----------
         biomarkers :
-            Name of the biomarker(s) to read.
+            Name of the biomarker(s) to read. Possible values are: ``'opticCup'``, ``'opticDisc'``, ``'macula'``,
+            ``'vessels'``, ``'brightLesions'``, ``'cottonWoolSpots'``, ``'drusens'``, ``'exudates'``,
+            ``'brightUncertains'``, ``'redLesions'``, ``'hemorrhages'``, ``'microaneurysms'``,
+            ``'neovascularization'``, ``'redUncertains'`` (see :class:`BiomarkerField <maples_dr.dataset.BiomarkerField>` for more details).
 
             If multiple biomarkers are given, the corresponding masks will be merged.
 
         image_format :
-            Format of the image to return.
+            Format of the image to return. Possible values are: ``'PIL'``, ``'BGR'`` or ``'RGB'``
+            (see :class:`ImageFormat <maples_dr.config.ImageFormat>` for more details.).
 
             If ``None`` (by default), use the format defined in the configuration.
 
@@ -826,10 +870,14 @@ class DataSample(Mapping):
         Parameters
         ----------
         biomarkers :
-            Name of the biomarker(s) to read.
+            Name of the biomarker(s) to read. Possible values are: ``'opticCup'``, ``'opticDisc'``, ``'macula'``,
+            ``'vessels'``, ``'brightLesions'``, ``'cottonWoolSpots'``, ``'drusens'``, ``'exudates'``,
+            ``'brightUncertains'``, ``'redLesions'``, ``'hemorrhages'``, ``'microaneurysms'``,
+            ``'neovascularization'``, ``'redUncertains'`` (see :class:`BiomarkerField <maples_dr.dataset.BiomarkerField>` for more details).
 
         image_format :
-            Format of the image to return.
+            Format of the image to return. Possible values are: ``'PIL'``, ``'BGR'`` or ``'RGB'``
+            (see :class:`ImageFormat <maples_dr.config.ImageFormat>` for more details.).
 
             If None (by default), use the format defined in the configuration.
 
@@ -867,12 +915,13 @@ class DataSample(Mapping):
         preprocess :
             Preprocessing to apply to the image.
 
-            - If a :class:`maples_dr.config.Preprocessing` (or an equivalent string), the image is preprocessed with the given preprocessing;
+            - If a :class:`Preprocessing <maples_dr.config.Preprocessing>` (or an equivalent string), the image is preprocessed with the given preprocessing;
             - if ``False``, the image is not preprocessed.
             - if ``None`` (by default) or ``True``, use the preprocessing defined in the configuration.
 
         image_format :
-            Format of the image to return.
+            Format of the image to return. Possible values are: ``'PIL'``, ``'BGR'`` or ``'RGB'``
+            (see :class:`ImageFormat <maples_dr.config.ImageFormat>` for more details.).
 
             If ``None`` (by default), use the format defined in the configuration.
 
@@ -952,21 +1001,34 @@ class DataSample(Mapping):
 
         return self._apply_image_format(fundus, fundus_format, image_format)
 
-    def read_roi_mask(self, image_format: Optional[ImageFormat] = None) -> np.ndarray | Image.Image:
+    def read_roi_mask(
+        self, image_format: Optional[ImageFormat] = None, resize: Optional[int | bool] = None
+    ) -> np.ndarray | Image.Image:
         """Read the region of interest of the fundus image.
 
         Parameters
         ----------
 
         image_format :
-            Format of the image to return. If None, use the format defined in the configuration.
+            Format of the image to return. Possible values are: ``'PIL'``, ``'BGR'`` or ``'RGB'``
+            (see :class:`ImageFormat <maples_dr.config.ImageFormat>` for more details.).
+
+            If ``None`` (by default), use the format defined in the configuration.
+
+        resize :
+            Resize the image to the given size.
+
+            - If ``resize`` is an int, crop the image to a square ROI and resize it to the shape ``(resize, resize)``;
+            - If ``True``, use the original MAPLES-DR resolution of 1500x1500 px;
+            - If ``False``, keep the original MESSIDOR resolution.
+            - If ``None`` (by default), use the size defined in the configuration.
 
         Returns
         -------
         np.ndarray
             The region of interest of the fundus image.
         """
-        fundus = self.read_fundus(preprocess=False, image_format=ImageFormat.BGR)
+        fundus = self.read_fundus(preprocess=False, image_format=ImageFormat.BGR, resize=resize)
         mask = fundus_roi(fundus)
 
         return self._apply_image_format(mask, ImageFormat.BGR, image_format)
