@@ -1,7 +1,10 @@
 from __future__ import annotations
 
 import logging
+import math
+import multiprocessing
 from collections.abc import Mapping, Sequence
+from concurrent.futures import ProcessPoolExecutor
 from enum import Enum
 from pathlib import Path
 from typing import Dict, Generator, Iterable, List, Optional, Tuple, TypeAlias, Union
@@ -571,6 +574,7 @@ class Dataset(Sequence):
         path: str | Path,
         fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
         optimize: bool = False,
+        n_workers=8,
     ):
         """Export the dataset to a folder.
 
@@ -601,24 +605,58 @@ class Dataset(Sequence):
         for field in fields.values():
             field_folder = path / field
             field_folder.mkdir(parents=True, exist_ok=True)
-
+        
         with RichProgress.iteration("Exporting Maples-DR...", len(self), "Maples-DR exported in {t} seconds.") as p:
-            for i in range(len(self)):
-                sample = self[i]
+            if n_workers == 1:
+                self.export_samples(range(len(self)), path, fields, optimize=optimize, progress=p)
+            else:
+                indices = np.array_split(np.arange(len(self)), n_workers)
+                futures = []
+                with multiprocessing.Manager() as manager:
+                    _progress = manager.dict()
+                    overall_progress_task = p.progress.add_task("[green]All jobs progress:")
+                    with ProcessPoolExecutor(max_workers=n_workers) as executor:
+                        for i, array in enumerate(indices):
+                            task_id = p.progress.add_task(f"task {i}", visible=False)
+                            futures.append(executor.submit(self.export_samples, array, path, fields, optimize, None, 
+                                                           task_id, _progress))
+                        
+                        while (n_finished := sum([future.done() for future in futures])) < len(futures):
+                            p.progress.update(overall_progress_task, completed=n_finished, total=len(futures))
+                            n = 0
+                            for task_id, update_data in _progress.items():
+                                latest = update_data["progress"]
+                                total = update_data["total"]
+                                # update the progress bar for this task:
+                                n += latest
+                                p.progress.update(task_id, completed=latest, total=total, visible=latest < total,)
+                            
+                            p.progress.update(0, completed=math.ceil(n), total=len(self))
+                        # raise any errors:
+                        for future in futures:
+                            future.result()
+                p.progress.update(overall_progress_task, completed=len(futures), total=len(futures))
+                        
+    def export_samples(self, indices, path, fields, optimize=False, progress=None, task_id=None, mp_progress=None):
+        n = 0
+        for index in indices:
+            sample = self[int(index)]
+            for field, folder in fields.items():
+                field_folder = path / folder
 
-                for field, folder in fields.items():
-                    field_folder = path / folder
+                opt = {}
+                if field not in ("fundus", "raw_fundus"):
+                    opt["bits "] = 1
+                    opt["optimize"] = optimize
 
-                    opt = {}
-                    if field not in ("fundus", "raw_fundus"):
-                        opt["bits "] = 1
-                        opt["optimize"] = optimize
-
-                    img = sample.read_field(field, image_format=ImageFormat.PIL)
-                    img.save(field_folder / f"{sample.name}.png", **opt)
-                    p.update(1 / len(fields))
-
-
+                img = sample.read_field(field, image_format=ImageFormat.PIL)
+                img.save(field_folder / f"{sample.name}.png", **opt)
+                if progress is not None:
+                    progress.update(1 / len(fields))
+                n +=  1 / len(fields)
+                if mp_progress is not None:
+                    mp_progress[task_id] = {"progress": n, "total": len(indices)}
+        
 class DataSample(Mapping):
     """A sample from the MAPLES-DR dataset.
 

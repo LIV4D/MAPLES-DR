@@ -87,7 +87,7 @@ def load_dataset(subset: DatasetSubset | str | list[str] = DatasetSubset.ALL) ->
 
 
 def export_train_set(
-    path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None
+    path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None, n_workers: int = 1
 ) -> None:
     """Save the training set to a folder.
 
@@ -109,10 +109,13 @@ def export_train_set(
     >>> maples_dr.configure(messidor_path="path/to/messidor.zip")
     >>> export_train_set("path/to/save", fields=["fundus", "red_lesions", "vessels"])
     """
-    return GLOBAL_LOADER.load_dataset("train").export(path, fields)
+    return GLOBAL_LOADER.load_dataset("train").export(path, fields, n_workers=n_workers)
 
 
-def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None):
+
+def export_test_set(
+    path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None, n_workers: int = 1
+):
     """Save the testing set to a folder.
 
 
@@ -133,7 +136,7 @@ def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageFi
     >>> maples_dr.configure(messidor_path="path/to/messidor.zip")
     >>> export_test_set("path/to/save", fields=["fundus", "red_lesions", "vessels"])
     """
-    return GLOBAL_LOADER.load_dataset("test").export(path, fields)
+    return GLOBAL_LOADER.load_dataset("test").export(path, fields, n_workers=n_workers)
 
 
 def clear_cache():
