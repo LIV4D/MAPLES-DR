@@ -37,8 +37,15 @@ class RichProgress:
         self.progress.start()
         return self
 
-    def update(self, value=1, message=None):
-        self.progress.update(self.task, advance=value, description=message)
+    def update(self, advance=None, completed=None, message=None, visible=True, total=None):
+        if completed is not None:
+            advance = None
+        elif advance is None:
+            advance = 1
+
+        self.progress.update(
+            self.task, advance=advance, description=message, completed=completed, visible=visible, total=total
+        )
 
     def __exit__(self, exc_type, exc_value, traceback):
         elapsed = time() - self.t0

@@ -87,7 +87,9 @@ def load_dataset(subset: DatasetSubset | str | list[str] = DatasetSubset.ALL) ->
 
 
 def export_train_set(
-    path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None
+    path: str | Path,
+    fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
+    n_workers: Optional[int] = None,
 ) -> None:
     """Save the training set to a folder.
 
@@ -102,6 +104,12 @@ def export_train_set(
 
         See :class:`maples_dr.dataset.ImageField` for the list of available fields.
 
+    n_workers :
+        The number of workers to use for exporting the dataset.
+
+        If None (by default), the number of workers is automatically determined based on the number of available CPUs.
+
+
 
     Examples
     --------
@@ -109,10 +117,14 @@ def export_train_set(
     >>> maples_dr.configure(messidor_path="path/to/messidor/directory/")
     >>> export_train_set("path/to/save", fields=["fundus", "red_lesions", "vessels"])
     """
-    return GLOBAL_LOADER.load_dataset("train").export(path, fields)
+    return GLOBAL_LOADER.load_dataset(DatasetSubset.TRAIN).export(path, fields, n_workers=n_workers)
 
 
-def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None):
+def export_test_set(
+    path: str | Path,
+    fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
+    n_workers: Optional[int] = None,
+):
     """Save the testing set to a folder.
 
 
@@ -126,6 +138,11 @@ def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageFi
 
         See :class:`maples_dr.dataset.ImageField` for the list of available fields.
 
+    n_workers :
+        The number of workers to use for exporting the dataset.
+
+        If None (by default), the number of workers is automatically determined based on the number of available CPUs.
+
 
     Examples
     --------
@@ -133,7 +150,7 @@ def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageFi
     >>> maples_dr.configure(messidor_path="path/to/messidor/directory/")
     >>> export_test_set("path/to/save", fields=["fundus", "red_lesions", "vessels"])
     """
-    return GLOBAL_LOADER.load_dataset("test").export(path, fields)
+    return GLOBAL_LOADER.load_dataset(DatasetSubset.TEST).export(path, fields, n_workers=n_workers)
 
 
 def clear_cache():

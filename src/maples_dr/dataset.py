@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import logging
+import multiprocessing
 from collections.abc import Mapping, Sequence
+from concurrent.futures import ProcessPoolExecutor
 from enum import Enum
 from pathlib import Path
 from typing import Dict, Generator, Iterable, List, Optional, Tuple, TypeAlias, Union
@@ -275,6 +277,15 @@ def check_field(field: Field | str) -> Field:
         f"  - BiomarkerField: {', '.join(_.value for _ in BiomarkerField)}\n"
         f"  - FundusField: {', '.join(_.value for _ in FundusField)}\n"
     )
+
+
+def field2folder_name(field: str | Field | Path) -> str:
+    if isinstance(field, Field):
+        return field.value
+    if isinstance(field, Path):
+        field = str(field.resolve().absolute())
+    assert isinstance(field, str), "Invalid folder name."
+    return field
 
 
 class Dataset(Sequence):
@@ -571,6 +582,9 @@ class Dataset(Sequence):
         path: str | Path,
         fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
         optimize: bool = False,
+        missing_as_blank: bool = False,
+        pre_annotation: bool = False,
+        n_workers=None,
     ):
         """Export the dataset to a folder.
 
@@ -587,36 +601,77 @@ class Dataset(Sequence):
             and rename their folder to their corresponding dictionary values.
         optimize :
             If True, optimize the images when exporting them.
-        """
-        if fields is None:
-            fields = {f: f for f in self.available_fields(biomarkers=True, fundus=True, raw_fundus=True)}
-        elif isinstance(fields, str):
-            fields = {fields: fields}
-        elif isinstance(fields, list):
-            fields = {f: f for f in fields}
+        pre_annotation :
+            If set to ``True``, write the pre-annotation biomarkers instead of the reviewed ones.
+        missing_as_blank :
+            If set to ``True``, missing biomarkers will be exported as blank images.
+        n_workers :
+            The number of workers to use for the export.
 
+            If None, use the number of CPUs available.
+        """
+        # === Parse the fields argument ===
+        if fields is None:
+            fields = {
+                f: field2folder_name(f) for f in self.available_fields(diagnosis=False, aggregated_biomarkers=False)
+            }
+        elif isinstance(fields, (str, Field)):
+            fields = {check_field(fields): field2folder_name(fields)}
+        elif isinstance(fields, list):
+            fields = {check_field(f): field2folder_name(f) for f in fields}
+        if isinstance(fields, dict):
+            fields = {check_field(f): field2folder_name(folder) for f, folder in fields.items()}
+        else:
+            raise ValueError("Invalid fields argument.")
+
+        # === Parse the path argument ===
         if isinstance(path, str):
             path = Path(path)
 
-        for field in fields.values():
-            field_folder = path / field
-            field_folder.mkdir(parents=True, exist_ok=True)
+        export_opts = dict(
+            path=path,
+            fields=fields,
+            optimize=optimize,
+            pre_annotation=pre_annotation,
+            missing_as_blank=missing_as_blank,
+        )
 
         with RichProgress.iteration("Exporting Maples-DR...", len(self), "Maples-DR exported in {t} seconds.") as p:
-            for i in range(len(self)):
-                sample = self[i]
+            if n_workers == 1:
+                for i, sample in enumerate(self):
+                    for _ in sample._export_no_check(yield_on_save=True, **export_opts):
+                        p.update(1 / len(fields))
+                    p.update(completed=i + 1)
+            else:
+                if n_workers is None:
+                    n_workers = multiprocessing.cpu_count()
+                with multiprocessing.Manager() as manager:
+                    tasks_progress = []
+                    futures = []
 
-                for field, folder in fields.items():
-                    field_folder = path / folder
+                    with ProcessPoolExecutor(max_workers=n_workers) as executor:
+                        for subset in np.array_split(np.arange(len(self)), n_workers):
+                            task_progress = manager.dict({"completed": 0})
+                            future = executor.submit(self._export_worker, subset, task_progress, **export_opts)
+                            tasks_progress.append(task_progress)
+                            futures.append(future)
 
-                    opt = {}
-                    if field not in ("fundus", "raw_fundus"):
-                        opt["bits "] = 1
-                        opt["optimize"] = optimize
+                        while sum(future.done() for future in futures) < len(futures):
+                            n = sum([progress_dict["completed"] for progress_dict in tasks_progress])
+                            p.update(completed=n, total=len(self))
 
-                    img = sample.read_field(field, image_format=ImageFormat.PIL)
-                    img.save(field_folder / f"{sample.name}.png", **opt)
-                    p.update(1 / len(fields))
+                        # raise any errors:
+                        for future in futures:
+                            future.result()
+
+                p.update(completed=True)
+
+    def _export_worker(self, indices, task_progress, fields=None, **export_opts):
+        for i, index in enumerate(indices):
+            sample = self[int(index)]
+            for _ in sample._export_no_check(fields=fields, **export_opts, yield_on_save=True):
+                task_progress["completed"] += 1 / len(fields)
+            task_progress["completed"] = i + 1
 
 
 class DataSample(Mapping):
@@ -637,12 +692,81 @@ class DataSample(Mapping):
         self._fundus: Optional[np.ndarray] = None
         self._roi: Rect = Rect.from_points(int(roi["y0"]), int(roi["x0"]), int(roi["y1"]), int(roi["x1"]))
         self._messidor_shape: Point = Point(int(roi["H"]), int(roi["W"]))
+        self._keys: Optional[List[Field]] = None
 
     def __len__(self) -> int:
         return len(self._data)
 
     def __getitem__(self, key: Field | str) -> Union[Image.Image, np.ndarray, str]:
         return self.read_field(field=key)
+
+    def available_fields(
+        self,
+        biomarkers=None,
+        aggregated_biomarkers=None,
+        missing_biomarkers=None,
+        diagnosis=None,
+        fundus=None,
+        raw_fundus=None,
+    ):
+        any_true = (
+            biomarkers is True
+            or aggregated_biomarkers is True
+            or missing_biomarkers is True
+            or diagnosis is True
+            or fundus is True
+            or raw_fundus is True
+        )
+        if not any_true:
+            biomarkers = biomarkers is None
+            aggregated_biomarkers = aggregated_biomarkers is None
+            missing_biomarkers = missing_biomarkers is None
+            diagnosis = diagnosis is None
+            fundus = fundus is None
+            raw_fundus = raw_fundus is None
+
+        fields = []
+        if biomarkers:
+            fields.extend(
+                field
+                for field in BiomarkerField
+                if field not in AGGREGATED_BIOMARKERS and self._data[field.value] is not None
+            )
+        if aggregated_biomarkers:
+            fields.extend(AGGREGATED_BIOMARKERS.keys())
+        if missing_biomarkers:
+            fields.extend(
+                field
+                for field in BiomarkerField
+                if field not in AGGREGATED_BIOMARKERS and self._data[field.value] is None
+            )
+        if diagnosis:
+            fields.extend(DiagnosisField)
+        if "fundus" in self._data:
+            if fundus:
+                fields.append(FundusField.FUNDUS)
+            if raw_fundus:
+                fields.append(FundusField.RAW_FUNDUS)
+        return fields
+
+    def keys(self) -> List[Field]:
+        if self._keys is None:
+            self._keys = self.available_fields(aggregated_biomarkers=False, missing_biomarkers=False)
+        return self._keys
+
+    def __iter__(self) -> Generator[Field]:
+        return iter(self.keys())
+
+    def __len__(self) -> int:
+        return len(self.keys())
+
+    def __repr__(self) -> str:
+        return f"<DataSample name={self.name}>"
+
+    @property
+    def name(self) -> str:
+        """The name of the sample."""
+        return self._data.name
 
     def read_field(
         self,
@@ -699,23 +823,6 @@ class DataSample(Mapping):
             return self.read_fundus(image_format=image_format, resize=resize, preprocess=False)
         elif field is FundusField.MASK:
             return self.read_roi_mask(image_format=image_format, resize=resize)
-
-    def __iter__(self) -> Generator[Field]:
-        if FundusField.FUNDUS.value in self._data:
-            if self._cfg.preprocessing != Preprocessing.NONE:
-                yield FundusField.RAW_FUNDUS
-            yield [FundusField.FUNDUS]
-
-        yield from (_ for _ in BiomarkerField if _ not in AGGREGATED_BIOMARKERS)
-        yield from DiagnosisField
-
-    def __repr__(self) -> str:
-        return f"<DataSample name={self.name}>"
-
-    @property
-    def name(self) -> str:
-        """The name of the sample."""
-        return self._data.name
 
     def read_biomarker(
         self,
@@ -1034,6 +1141,104 @@ class DataSample(Mapping):
         mask = fundus_roi(fundus)
 
         return self._apply_image_format(mask, ImageFormat.BGR, image_format)
+
+    def export(
+        self,
+        path: str | Path,
+        fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
+        optimize: bool = False,
+        *,
+        pre_annotation: bool = False,
+        missing_as_blank=False,
+    ) -> Mapping[Field, Optional[str]]:
+        """Export the sample to a folder.
+
+        Parameters
+        ----------
+        path :
+            Path of the folder where to export the sample.
+        fields :
+            The fields to be exported.
+
+            - If None, export all available fields.
+            - If ``fields`` is a string or list, export only the given fields.
+            - If ``fields`` is a dictionary, export the fields given by the keys
+            and rename their folder to their corresponding dictionary values.
+        optimize :
+            If True, optimize the images when exporting them.
+        pre_annotation :
+            If set to ``True``, write the pre-annotation biomarkers instead of the reviewed ones.
+        missing_as_blank :
+            If set to ``True``, missing biomarkers will be exported as blank images.
+
+        Returns
+        -------
+        Mapping[Field, Optional[str]]
+            A mapping of the exported fields to their paths (or None if the field was not exported).
+        """
+
+        # === Parse the fields argument ===
+        if fields is None:
+            fields = {
+                f: field2folder_name(f)
+                for f in self.available_fields(
+                    aggregated_biomarkers=False, diagnosis=False, missing_biomarkers=not missing_as_blank
+                )
+            }
+        elif isinstance(fields, (str, Field)):
+            fields = {check_field(fields): field2folder_name(fields)}
+        elif isinstance(fields, list):
+            fields = {check_field(f): field2folder_name(f) for f in fields}
+        if isinstance(fields, dict):
+            fields = {check_field(f): field2folder_name(folder) for f, folder in fields.items()}
+        else:
+            raise ValueError("Invalid fields argument.")
+
+        # === Parse the path argument ===
+        if isinstance(path, str):
+            path = Path(path)
+
+        # === Export the fields ===
+        return {
+            k: v
+            for k, v in self._export_no_check(
+                path=path,
+                fields=fields,
+                optimize=optimize,
+                pre_annotation=pre_annotation,
+                missing_as_blank=missing_as_blank,
+                yield_on_save=True,
+            )
+        }
+
+    def _export_no_check(
+        self, path, fields, optimize, pre_annotation, missing_as_blank, yield_on_save=False
+    ) -> Generator[Tuple[Field, Optional[str]]]:
+        available_fields = self.available_fields(missing_biomarkers=False, diagnosis=False)
+
+        for field, folder in fields.items():
+            field_folder = path / folder
+            field_folder.mkdir(parents=True, exist_ok=True)
+            filename = str((field_folder / f"{self.name}.png").resolve().absolute())
+
+            if field in available_fields:
+                img = self.read_field(field, image_format=ImageFormat.PIL, pre_annotation=pre_annotation)
+
+                if field in (FundusField.FUNDUS, FundusField.RAW_FUNDUS):
+                    img.save(filename, bits=1, optimize=optimize)
+                else:
+                    img.save(filename)
+
+            else:
+                if missing_as_blank:
+                    img = Image.new("1", self._target_size()[0])
+                    img.save(filename, bits=1)
+                else:
+                    yield field, None
+                    continue
+
+            if yield_on_save:
+                yield field, filename
 
     def _apply_image_format(
         self, image: Image.Image | np.ndarray, input_format: ImageFormat, target_format: str | ImageFormat | None

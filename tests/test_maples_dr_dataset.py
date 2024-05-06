@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 
 import maples_dr
 import numpy as np
@@ -196,3 +197,16 @@ def test_exclusion_of_missing_biomarkers(all_set):
     dataset_all = maples_dr.quick_api.GLOBAL_LOADER.load_dataset("all_with_duplicates")
     all_names2 = set(_.name for _ in dataset_all)
     assert all_names2 == all_names, "All images should be included back when disabling exclusion."
+
+
+def test_dataset_export(all_set, tmp_path):
+    all_set.export(tmp_path, missing_as_blank=False)
+
+    # Check that the exported images exist
+    for sample in all_set:
+        for field in sample.available_fields(aggregated_biomarkers=False, diagnosis=False, missing_biomarkers=False):
+            assert (tmp_path / field.value / f"{sample.name}.png").exists(), f"Missing {field} for {sample.name}."
+
+    all_set.export(path=tmp_path, fields={Bio.OPTIC_CUP: tmp_path / "all_cups"}, missing_as_blank=True)
+    for sample in all_set:
+        assert (tmp_path / "all_cups" / f"{sample.name}.png").exists(), f"Missing cup for {sample.name}."
