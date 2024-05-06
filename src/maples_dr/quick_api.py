@@ -45,7 +45,7 @@ def load_train_set() -> Dataset:
     Examples
     --------
     >>> import maples_dr
-    >>> maples_dr.configure(messidor_path="path/to/messidor.zip")
+    >>> maples_dr.configure(messidor_path="path/to/messidor/directory/")
     >>> train_set = maples_dr.load_train_set()
     >>> for sample in train_set:
     >>>     fundus = sample["fundus"]           # The fundus image
@@ -106,7 +106,7 @@ def export_train_set(
     Examples
     --------
     >>> import maples_dr
-    >>> maples_dr.configure(messidor_path="path/to/messidor.zip")
+    >>> maples_dr.configure(messidor_path="path/to/messidor/directory/")
     >>> export_train_set("path/to/save", fields=["fundus", "red_lesions", "vessels"])
     """
     return GLOBAL_LOADER.load_dataset("train").export(path, fields)
@@ -130,7 +130,7 @@ def export_test_set(path: str | Path, fields: Optional[ImageField | List[ImageFi
     Examples
     --------
     >>> import maples_dr
-    >>> maples_dr.configure(messidor_path="path/to/messidor.zip")
+    >>> maples_dr.configure(messidor_path="path/to/messidor/directory/")
     >>> export_test_set("path/to/save", fields=["fundus", "red_lesions", "vessels"])
     """
     return GLOBAL_LOADER.load_dataset("test").export(path, fields)

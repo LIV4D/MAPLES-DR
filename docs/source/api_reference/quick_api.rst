@@ -8,9 +8,7 @@ All the following function are imported either from `maples_dr.quick_api` or dir
 
 .. code-block:: python
 
-    from maples_dr import *
-    # or
-    from maples_dr import configure, export_train_set, export_test_set
+    from maples_dr import configure, load_train_set, load_test_set, export_train_set, export_test_set
 
 
 ----------------

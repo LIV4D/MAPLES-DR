@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-25 11:57-0400\n"
+"POT-Creation-Date: 2024-05-06 10:40-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -18,12 +18,12 @@ msgstr ""
 "Generated-By: Babel 2.11.0\n"
 
 #: ../../source/welcome/dataset_description.rst:3
-#: 41c8fe2015c84856975409b4c6012b3c
+#: 0ffa82a4b85049b18101bc9ee4c206a9
 msgid "MAPLES-DR Dataset Description"
 msgstr "Description du jeu de données MAPLES-DR"
 
 #: ../../source/welcome/dataset_description.rst:5
-#: 6e8cfa8f0a4048098fac77498ac31adf
+#: a58a331ba5a54c179b41dd94f4a63a36
 msgid ""
 "The  project was originally motivated in 2018 by the absence of large "
 "fundus public datasets providing pixel-wise annotations of both "
@@ -41,7 +41,7 @@ msgstr ""
 "leur manque d'explicabilité ou d'interprétabilité."
 
 #: ../../source/welcome/dataset_description.rst:7
-#: 3cc0dd15327d4e8db42905c3254bed70
+#: 2ba3fd450ba54b08a9bee46869affd1a
 msgid ""
 "We designed |MAPLES-DR| to address this gap by providing pixel-wise "
 "annotations of anatomical structures (optic disc, macula, retinal "
@@ -62,7 +62,7 @@ msgstr ""
 " des hôpitaux de Toronto et Montréal (Canada)."
 
 #: ../../source/welcome/dataset_description.rst:9
-#: edb1986c68784c26bfaf49602e3cd549
+#: b64cc9aca12043258ed94dec8cf7e92e
 msgid ""
 "|MAPLES-DR| also includes diagnostic for |DR| and |ME| following Canadian"
 " teleopthalmology screening guidelines :footcite:`Boucher2020`. These "
@@ -78,22 +78,22 @@ msgstr ""
 "MESSIDOR."
 
 #: ../../source/welcome/dataset_description.rst:13
-#: ec88d3e0e7c34127ac43a3e2cd8d190b
+#: 533404c729bd49a1b73855d90d1e4d37
 msgid "Labels Description"
 msgstr "Description des annotations"
 
 #: ../../source/welcome/dataset_description.rst:19
-#: f0c36d4e60674d3bafb4cc63d312da1e
+#: fa3cd6be271341d5b3845172be30538d
 msgid "Overview of MAPLES-DR labels."
 msgstr "Aperçu des annotations de MAPLES-DR."
 
 #: ../../source/welcome/dataset_description.rst:22
-#: 741e79f57f7044f4b4b88971d2eb4f5c
+#: c414e842a11e4bf7b5d4e6bb1dc7bcdd
 msgid "Segmentation of Anatomical structures"
 msgstr "Carte de segmentation des structures rétiniennes"
 
 #: ../../source/welcome/dataset_description.rst:23
-#: 2195a7b885404ecfb617e91dad30fbe4
+#: 35facb844092469d9387b053d17cb7c4
 msgid ""
 "Anatomical structures are present in all images, including healthy ones, "
 "but their appearance and their proximity to lesions provide valuable "
@@ -105,7 +105,7 @@ msgstr ""
 "pour le diagnostic de la |DR|."
 
 #: ../../source/welcome/dataset_description.rst:25
-#: 215dc1a8a7014a18a5137ce9dc86eeaf
+#: 5e09ff0a9b1d4faaa6d0db74dc29cf9a
 msgid ""
 "**Retinal vessels** are indicative of the stage of |DR|: an increase in "
 "arteriolar tortuosity is associated with mild and moderate stages "
@@ -121,7 +121,7 @@ msgstr ""
 "référence pour évaluer la lisibilité d'une image."
 
 #: ../../source/welcome/dataset_description.rst:27
-#: 8d88af25c79d4128b657c87a30eb0374
+#: f2bf31fade2d4a64b89035d3679fff31
 msgid ""
 "The **optic disc**, **optic cup**, and **macula** are also included in "
 "|MAPLES-DR|. Their purpose for diagnosis is two-fold. First, ME is graded"
@@ -152,13 +152,54 @@ msgstr ""
 "les directives cliniques distinguent parfois la néovascularisation du "
 "disque et les autres néovascularisations."
 
-#: ../../source/welcome/dataset_description.rst:31
-#: 741e79f57f7044f4b4b88971d2eb4f5c
+#: ../../source/welcome/dataset_description.rst:30
+#: 837c8f43099642cdbb266bb2efbd1b54
+msgid ""
+"One sample of the train set is centered on the optic disc instead of the "
+"macula which is not visible in this image. No segmentation of the macula "
+"is therefore provided for this image."
+msgstr ""
+"Un échantillon du jeu d'entraînement est centré sur le disque optique plutôt"
+" que sur la macula qui n'est pas visible sur cette image. Aucune "
+"segmentation de la macula n'est donc fournie pour cette image."
+
+#: ../../source/welcome/dataset_description.rst:32
+#: 4a6fc4bf893241f2b2a8fcb31f88f894
+msgid ""
+"Similarly, four samples of the train set and two samples of the test set "
+"are missing a segmentation of the optic cup because their boundaries were"
+" judged too ambiguous by the retinologists."
+msgstr ""
+"De même, quatre échantillons de l'ensemble d'entraînement et deux "
+"échantillons de l'ensemble de test ne disposent pas d'une segmentation de"
+" la cupule optique car leurs frontières ont été jugées trop ambiguës par les"
+" rétinologues."
+
+#: ../../source/welcome/dataset_description.rst:34
+#: b832b14bd2a2400c918f074c0547f21a
+msgid ""
+"Trying to access these segmentation maps will return an blank mask and "
+"raise a warning. To remove these images from your dataset, you can "
+"specify :func:`maples_dr.configure(exclude_missing_macula=True) "
+"<maples_dr.configure>` or "
+":func:`maples_dr.configure(exclude_missing_cup=True) "
+"<maples_dr.configure>` to exclude them."
+msgstr ""
+"Accéder à ces cartes de segmentation renverra un masque vide et "
+"affichera un avertissement. Pour exclure ces images du jeu de données "
+"utilisez : func:`maples_dr.configure(exclude_missing_macula=True) "
+"<maples_dr.configure>` ou "
+":func:`maples_dr.configure(exclude_missing_cup=True) "
+"<maples_dr.configure>`."
+
+
+#: ../../source/welcome/dataset_description.rst:38
+#: 2f99d43ec4444119bbf9cd2a38042212
 msgid "Segmentation of Red lesions"
 msgstr "Segmentation des lésions rouges"
 
-#: ../../source/welcome/dataset_description.rst:32
-#: 4a4c98e01f394bd6981ff09ebb763ece
+#: ../../source/welcome/dataset_description.rst:39
+#: 0b1ed10f25d34b27abe3da100fd85334
 msgid ""
 "Diabete mellitelus affects the walls of the vessels, eventually causing "
 "microvascular dysfunctions that manifest in the retina as microaneurysms,"
@@ -173,8 +214,8 @@ msgstr ""
 "Abnormalities)`), ou de néovaisseaux. Ces structures pathologiques sont "
 "appelées \"lésions rouges\"."
 
-#: ../../source/welcome/dataset_description.rst:34
-#: 9a5c7c568767487ca44f6544ef9e525f
+#: ../../source/welcome/dataset_description.rst:41
+#: 40dc3d04ff1443d39c51b741307472ff
 msgid ""
 "**Microaneurysms** appear as small circular dilations of the capillaries."
 " They are early signs of microvascular dysfunction and are commonly used "
@@ -185,8 +226,8 @@ msgstr ""
 "dysfonctionnement micro-vasculaire et sont couramment utilisés pour "
 "détecter une |DR| légère."
 
-#: ../../source/welcome/dataset_description.rst:36
-#: 3087ac4986434017813f682e77b7eb1c
+#: ../../source/welcome/dataset_description.rst:43
+#: afa59ff8b0cd475499b8b374821e2923
 msgid ""
 "Intraretinal **hemorrhages** develop in more advanced stages of the "
 "pathology and are divided into dot or blot hemorrhages. Dot hemorrhages "
@@ -212,8 +253,8 @@ msgstr ""
 "apparaître dans les stades les plus sévères de la rétinopathie, aucune "
 "n'a été découverte dans l'ensemble de données MAPLES-DR."
 
-#: ../../source/welcome/dataset_description.rst:38
-#: 3e9bfec900894a4f8e87796744dc1206
+#: ../../source/welcome/dataset_description.rst:45
+#: f5029baf803e4049b54bff6802fbd004
 #, python-format
 msgid ""
 "Starting from the moderate non-proliferative stage (R2), irregular "
@@ -252,13 +293,13 @@ msgstr ""
 "Microvascular Abnormalities)` ne sont pas différenciées des "
 "néovascularisations dans |MAPLES-DR|."
 
-#: ../../source/welcome/dataset_description.rst:41
-#: 741e79f57f7044f4b4b88971d2eb4f5c
+#: ../../source/welcome/dataset_description.rst:48
+#: 08a50d31889d4d57a4d1ec99696b4098
 msgid "Segmentation of Bright Lesions"
 msgstr "Segmentation des lésions claires"
 
-#: ../../source/welcome/dataset_description.rst:42
-#: 5a9499bbdc1143559dfd15d13c8f44c6
+#: ../../source/welcome/dataset_description.rst:49
+#: ece6919efa954677a771fc97cc23c03b
 msgid ""
 "In the severe stages of |DR|, the retina thickens (edema formation) and "
 "hard **exudates** (also known as lipoprotein exudation)  may appear, "
@@ -277,8 +318,8 @@ msgstr ""
 "l'intérieur du corps de l'axone, permettant son renouvellement) dans la "
 "couche des fibres du nerf optique."
 
-#: ../../source/welcome/dataset_description.rst:44
-#: a0513b31d160406f8621797b11274cbe
+#: ../../source/welcome/dataset_description.rst:51
+#: 7055151384e9407bb6f0a273541bc9c9
 msgid ""
 "This can lead to the appearance of lesions known as **Cotton Wool Spots**"
 " (:abbr:`CWS (Cotton Wool Spots)`), resulting from axoplasmic "
@@ -296,8 +337,8 @@ msgstr ""
 "également être observés dans d'autres maladies vasculaires (hypertension "
 "artérielle systémique, obstruction veineuse, coagulopathies...)"
 
-#: ../../source/welcome/dataset_description.rst:46
-#: 769b5d2474a1479ca32587f71dbb7c36
+#: ../../source/welcome/dataset_description.rst:53
+#: cdd1a54561c04da5966fd7bae427b28d
 msgid ""
 "Finally, |MAPLES-DR| also provides annotations of **drusens**. These "
 "lesions are more commonly associated with Age-related Macular "
@@ -322,13 +363,13 @@ msgstr ""
 "related Macular Degeneration)` s'appuie sur l'estimation de la taille des"
 " drusens."
 
-#: ../../source/welcome/dataset_description.rst:51
-#: 31b837e38e194734bb6b67f00225cec8
+#: ../../source/welcome/dataset_description.rst:58
+#: f199302f6c19437e9b27d9991e34e5f2
 msgid "|DR| and |ME| grades"
 msgstr "Grades de |DR| et de |ME|"
 
-#: ../../source/welcome/dataset_description.rst:53
-#: 621a77f527744b68a98ffe2b3a919d2f
+#: ../../source/welcome/dataset_description.rst:60
+#: 0dcf9790531641dfabb0bf0655c9c61a
 msgid ""
 "|MAPLES-DR| grades for |DR| and |ME| annotated by the retinologists "
 "follow the guidelines developed for Canadian teleopthalmology screening. "
@@ -338,68 +379,68 @@ msgstr ""
 "développées pour le dépistage de la |DR| par télémédecine au Canada. Ces "
 "directives distinguent six grades pour la |DR|:"
 
-#: ../../source/welcome/dataset_description.rst:55
-#: 56084ba32fde4650a07e0ccdb5f75b96
+#: ../../source/welcome/dataset_description.rst:62
+#: 6495c4594f2a4ab7baca87200abf2ca4
 msgid "**R0**: absent"
 msgstr "**R0**: absente"
 
-#: ../../source/welcome/dataset_description.rst:56
-#: 6bf66df7062d4eefb1d0a6f742a25313
+#: ../../source/welcome/dataset_description.rst:63
+#: c671a09b4eee4b519a531ca441f31515
 msgid "**R1**: mild"
 msgstr "**R1**: légère"
 
-#: ../../source/welcome/dataset_description.rst:57
-#: 59f9f68fa7d14d13b926f25b2422cd0b
+#: ../../source/welcome/dataset_description.rst:64
+#: ffdabb2b55b84e7096b38d9ee892e144
 msgid "**R2**: moderate"
 msgstr "**R2**: modérée"
 
-#: ../../source/welcome/dataset_description.rst:58
-#: ee61a1e425c54b33807ee512bb565be8
+#: ../../source/welcome/dataset_description.rst:65
+#: 806b78218cc14f54a98d6f204434e259
 msgid "**R3**: severe"
 msgstr "**R3**: sévère"
 
-#: ../../source/welcome/dataset_description.rst:59
-#: 5e90d63c19114f0ab7366608b4f8e8be
+#: ../../source/welcome/dataset_description.rst:66
+#: e9491c5bc769443da447e721db58fd93
 msgid "**R4A**: proliferative"
 msgstr "**R4A**: proliférative"
 
-#: ../../source/welcome/dataset_description.rst:60
-#: c0d4c5e83ad14566a826407d50705e33
+#: ../../source/welcome/dataset_description.rst:67
+#: 6a4c736f40204a0e98b8de9bbc3d6b16
 msgid "**R4S**: stable treated proliferative"
 msgstr "**R4S**: proliférative traitée et stable"
 
-#: ../../source/welcome/dataset_description.rst:61
-#: b75f284c810944e29d8ed1e96f878a5c
+#: ../../source/welcome/dataset_description.rst:68
+#: e621400bbb8244eab339bb25cf792545
 msgid "**R6**: insufficient quality for grading"
 msgstr "**R6**: qualité insuffisante pour un diagnostic fiable"
 
-#: ../../source/welcome/dataset_description.rst:63
-#: 597c14c3648941cba2336a2af0504ba3
+#: ../../source/welcome/dataset_description.rst:70
+#: b2ee21477d0a409eb3f77356e67733d2
 msgid "and three for ME:"
 msgstr "et trois pour la |ME| :"
 
-#: ../../source/welcome/dataset_description.rst:65
-#: 6c4c30972a834ca4bafbb18116355a3c
+#: ../../source/welcome/dataset_description.rst:72
+#: 6f145e54f86f4fb585c3583fe1092f07
 msgid "**M0**: absent"
 msgstr "**M0**: absente"
 
-#: ../../source/welcome/dataset_description.rst:66
-#: f81ebe6738d946eba11f9e1a7926227f
+#: ../../source/welcome/dataset_description.rst:73
+#: 16e7317d5a874fb880ab3b5492cae69f
 msgid "**M1**: mild"
 msgstr "**M1**: légère"
 
-#: ../../source/welcome/dataset_description.rst:67
-#: b83e8835929f45b48c5ca8a2c6debc05
+#: ../../source/welcome/dataset_description.rst:74
+#: 61597cc647dc4c2bb8f9dea2cd17dc25
 msgid "**M2**: moderate"
 msgstr "**M2**: modérée"
 
-#: ../../source/welcome/dataset_description.rst:68
-#: 1ca35051572246c8b427545204c9f566
+#: ../../source/welcome/dataset_description.rst:75
+#: 89384e074f314a8ba781687ddaec891f
 msgid "**M6**: insufficient quality for grading"
 msgstr "**M6**: qualité insuffisante pour un diagnostic fiable"
 
-#: ../../source/welcome/dataset_description.rst:71
-#: 91bb8d618b544c518707a202214a3865
+#: ../../source/welcome/dataset_description.rst:78
+#: 67225f4eae51492e95c37a04f4c34747
 msgid ""
 "Grades are defined systematically by the number and position of visible "
 "red and bright retinal lesions. Each grade is associated with a "
@@ -413,8 +454,8 @@ msgstr ""
 "les cas légers, à une prise en charge immédiate par un ophtalmologiste "
 "pour les cas les plus sévères)."
 
-#: ../../source/welcome/dataset_description.rst:73
-#: e417783fa8994997a9b37c6246ac1cc9
+#: ../../source/welcome/dataset_description.rst:80
+#: 48f0d04a972a49dd9c7fcd476b2bf432
 msgid ""
 "A detailed definition of the grading system can be found in `this paper "
 "<http://doi.org/10.1016/j.jcjo.2020.01.001>`_ :footcite:`Boucher2020`."
@@ -423,13 +464,13 @@ msgstr ""
 " article <http://doi.org/10.1016/j.jcjo.2020.01.001>`_ "
 ":footcite:`Boucher2020`."
 
-#: ../../source/welcome/dataset_description.rst:76
-#: cb6f68c119ea4270853d8ac553c0b3fa
+#: ../../source/welcome/dataset_description.rst:83
+#: 6c065c193df048f8864d7faccbe4e78b
 msgid "Data Records"
 msgstr "Structure des données"
 
-#: ../../source/welcome/dataset_description.rst:83
-#: 4b6733d3983d4640875c2af50da28569
+#: ../../source/welcome/dataset_description.rst:90
+#: 7849ac43b22c4524baa99a63ccc1ae79
 msgid ""
 "|MAPLES-DR| dataset is distributed as two archives: |MAPLES-DR.zip|_ and "
 "|AdditionalData.zip|_. The first one contains the main data of MAPLES-DR "
@@ -446,13 +487,13 @@ msgstr ""
 "données intermédiaires (cartes de pré-annotation, grades avant "
 "consensus...)."
 
-#: ../../source/welcome/dataset_description.rst:86
-#: 90abfd22e4d54d8ba26d3d5acaafb13f
+#: ../../source/welcome/dataset_description.rst:93
+#: 35bba98c7a804693bd9a41a959238a4d
 msgid "MAPLES-DR.zip"
 msgstr ""
 
-#: ../../source/welcome/dataset_description.rst:88
-#: 6b02d3ed50a747f98f4f1d093166e501
+#: ../../source/welcome/dataset_description.rst:95
+#: 54212c7a30e0450eb0d960e96c9e1519
 msgid ""
 "|MAPLES-DR.zip|_ is the main archive of the dataset. It's split into two "
 "folders `train/` and `test/`, each one containing a table `diagnosis.csv`"
@@ -471,8 +512,8 @@ msgstr ""
 "L'ensemble d'entraînement est composé de 138 images, tandis que "
 "l'ensemble de test en contient 60."
 
-#: ../../source/welcome/dataset_description.rst:90
-#: d6801d797c104f70bf336afa2761f032
+#: ../../source/welcome/dataset_description.rst:97
+#: f73d7a9be430433e98cf7fed3eb540b0
 msgid ""
 "The segmentation maps were resized to match the resolution of the "
 "original MESSIDOR images. Note that the MESSIDOR images vary in "
@@ -485,18 +526,18 @@ msgstr ""
 "1536x2304 pixels). Les cartes de segmentations de |MAPLES-DR.zip|_ "
 "reproduisent ces variations."
 
-#: ../../source/welcome/dataset_description.rst:96
-#: e478e98d25314c0dbfdd984a0482f2fc
+#: ../../source/welcome/dataset_description.rst:103
+#: 5af2716af9094caa80170c80917a0d70
 msgid "Overview of the main |MAPLES-DR| archive: |MAPLES-DR.zip|_."
 msgstr "Aperçu de l'archive principale de |MAPLES-DR| : |MAPLES-DR.zip|_."
 
-#: ../../source/welcome/dataset_description.rst:99
-#: 2e3f1edf16c847afa80311693d6250bd
+#: ../../source/welcome/dataset_description.rst:106
+#: 1025eab4d5ab4f1a99446c873ac19abe
 msgid "AdditionalData.zip"
 msgstr ""
 
-#: ../../source/welcome/dataset_description.rst:101
-#: 9627a49181c54216bb122880bb0211c8
+#: ../../source/welcome/dataset_description.rst:108
+#: 01bc663872cf4835b51d37439fcc3df0
 msgid ""
 "The second archive contains all the additional information and data "
 "collected during the annotation process. It's also the only archive "
@@ -516,13 +557,13 @@ msgstr ""
 "toutes les données propre à l'archive |MAPLES-DR.zip|_ peuvent en être "
 "dérivées."
 
-#: ../../source/welcome/dataset_description.rst:103
-#: 8e1cbb489aa64fc9ba79a529ca6013ad
+#: ../../source/welcome/dataset_description.rst:110
+#: 8f88d3bec0014b1bb93286a3c3323423
 msgid "It contains the following files:"
 msgstr "Elle contient les fichiers suivants :"
 
-#: ../../source/welcome/dataset_description.rst:105
-#: c385230cf3ec43a0af21e55cd2ed75d9
+#: ../../source/welcome/dataset_description.rst:112
+#: a1514c5e9592445cb152af233eac5b4a
 msgid ""
 "**biomarkers_annotations_infos.xls**: identify which ``Retinologist`` "
 "performed the annotation of a given biomarker category, the ``Time`` "
@@ -537,8 +578,8 @@ msgstr ""
 "(``Annotation#``: 1 pour la première image annotée, 200 pour la "
 "dernière)."
 
-#: ../../source/welcome/dataset_description.rst:106
-#: 486db1b5a2c0440390b055f7579f807c
+#: ../../source/welcome/dataset_description.rst:113
+#: e6a98ee91ec842f4b252729a72f61076
 msgid ""
 "**diagnosis_infos.xls**: contains the grades of |DR| and |ME| annotated "
 "by each Retinologist as well as the consensus they reached. It also "
@@ -549,8 +590,8 @@ msgstr ""
 "délibération. Il inclut également les commentaires laissés par les "
 "rétinologues lors du diagnostic."
 
-#: ../../source/welcome/dataset_description.rst:107
-#: bbc9287cdff041998e6881b07d077e92
+#: ../../source/welcome/dataset_description.rst:114
+#: b759a750a4ad4eca91de16a05b00c9bf
 msgid ""
 "**MESSIDOR-ROIs.csv**: provides the bounding boxes extracted from the "
 "MESSIDOR images to obtain squared regions of interest without blank "
@@ -567,8 +608,8 @@ msgstr ""
 " pixels des images de MESSIDOR : ``H`` et ``W`` (resp. la hauteur et la "
 "largeur)."
 
-#: ../../source/welcome/dataset_description.rst:108
-#: 116bc8484f914761beac80df58664452
+#: ../../source/welcome/dataset_description.rst:115
+#: fd423ec70d794cc9beb3835de3555df2
 msgid ""
 "**dataset_record.yaml**: a yaml file containing the ``biomarkers`` name, "
 "the ``test`` and ``train`` split (as a list of image name), and the names"
@@ -581,8 +622,8 @@ msgstr ""
 "d'images, et le nom des ``doublons`` associés au nom de leur \"jumeau\" "
 "dans l'ensemble d’entraînement de |MAPLES-DR|."
 
-#: ../../source/welcome/dataset_description.rst:109
-#: 73193e790e414886bfbaf6258f299858
+#: ../../source/welcome/dataset_description.rst:116
+#: 0cdd721b42244c84a18ffd0b2f898dad
 msgid ""
 "**annotations/**: this folder has 12 subfolders (one for each biomarker),"
 " which in turn contains all 200 segmentation maps annotated by the "
@@ -598,8 +639,8 @@ msgstr ""
 " en utilisant les régions d’intérêt décrites dans le fichier ``MESSIDOR-"
 "ROIs.csv``."
 
-#: ../../source/welcome/dataset_description.rst:110
-#: f0ddd9fd036a4acb86c778d035dc0310
+#: ../../source/welcome/dataset_description.rst:117
+#: 36b43f151ab34469933f21319cfe3907
 msgid ""
 "**pre_annotations/**: this folder contains the automatic segmentation of "
 "Vessels, Exudates, Hemorrhages, and Microaneurysms provided as pre-"
@@ -609,13 +650,13 @@ msgstr ""
 "des vaisseaux, des exsudats, des hémorragies et des micro-anévrismes "
 "fournies comme pré-annotations aux rétinologues."
 
-#: ../../source/welcome/dataset_description.rst:116
-#: 7941ae5721bd4913be0c3d6354a03db8
+#: ../../source/welcome/dataset_description.rst:123
+#: 2fb99e2027a540d69d8d5eb17707841d
 msgid "Overview of the additional archive: |AdditionalData.zip|_."
 msgstr "Aperçu de l'archive complémentaire : |AdditionalData.zip|_."
 
-#: ../../source/welcome/dataset_description.rst:120
-#: 87d9aa43543041d8a89695890ecafd9f
+#: ../../source/welcome/dataset_description.rst:127
+#: c22b04765559464aa94cfba982bf38ca
 msgid ""
 "**Note on the duplicates**: initially 200 images were annotated but we "
 "latter realized that two of them were duplicates from the original "
@@ -631,13 +672,13 @@ msgstr ""
 "retirés de |MAPLES-DR.zip|_, mais ont été conservés dans "
 "|AdditionalData.zip|_ à des fins de transparence."
 
-#: ../../source/welcome/dataset_description.rst:123
-#: 578444a6ffd84c06a20eb3e78127f240
+#: ../../source/welcome/dataset_description.rst:130
+#: 2e32c80a88124758bdb2e409c7f233fe
 msgid "Annotation Procedure"
 msgstr "Procédure d'annotation"
 
-#: ../../source/welcome/dataset_description.rst:124
-#: b0a6207a47c7443fad3de35655ae10e1
+#: ../../source/welcome/dataset_description.rst:131
+#: 9e7c5ee387274bf1bc41fbd1af9fbe2d
 msgid ""
 "The annotation procedure was co-designed with the team of retinologists "
 "to meet a triple objective:"
@@ -645,8 +686,8 @@ msgstr ""
 "La procédure d'annotation a été co-conçue avec l'équipe de rétinologues "
 "pour répondre à un triple objectif :"
 
-#: ../../source/welcome/dataset_description.rst:126
-#: 5b247e575d3c46e39bd9e61d413d67cb
+#: ../../source/welcome/dataset_description.rst:133
+#: c75e652a8ffd4d3c91eafaf20e8d88b9
 msgid ""
 "Providing an intuitive yet effective annotation tool for the "
 "classification and segmentation of biomarkers in fundus images."
@@ -655,8 +696,8 @@ msgstr ""
 "classification et la segmentation des biomarqueurs dans les images de "
 "fond d'œil."
 
-#: ../../source/welcome/dataset_description.rst:127
-#: ef29be2edd544a6baeedfda7d203f5c6
+#: ../../source/welcome/dataset_description.rst:134
+#: 27b4ce097d4a4e1fb51b657a8c9cd5a4
 msgid ""
 "Enabling a collaborative effort on common annotations despite the "
 "geographical distance between the retinologists and the limited time each"
@@ -666,8 +707,8 @@ msgstr ""
 "distance géographique entre les rétinologues et le temps limité que "
 "chacun pouvait consacrer à ce programme."
 
-#: ../../source/welcome/dataset_description.rst:128
-#: c1403ffd6e56404497e3f5401e13bd76
+#: ../../source/welcome/dataset_description.rst:135
+#: 80c50a747b074b728e90156ce98f8b10
 msgid ""
 "Designing a \"scalable\" annotation protocol, capable of being extended "
 "to much more ambitious annotation campaigns, such as labeling large "
@@ -678,8 +719,8 @@ msgstr ""
 "l'étiquetage de grandes bases de données canadiennes de télémédecine "
 "contenant des dizaines de milliers d'images."
 
-#: ../../source/welcome/dataset_description.rst:130
-#: 2d331549629240dd9931625ff95c68df
+#: ../../source/welcome/dataset_description.rst:137
+#: 9d5352d6578e47acb5b814626f67b7a8
 msgid ""
 "To meet these challenges, we developed a custom web-based annotation "
 "platform allowing the following workflow: expert annotators can access "
@@ -705,8 +746,8 @@ msgstr ""
 "Python) ainsi que le matériel de formation pour les annotateurs sont "
 "disponibles sur `GitHub <https://github.com/LIV4D/AnnotationPlatform>`_."
 
-#: ../../source/welcome/dataset_description.rst:132
-#: ee3aa1cebe5a4492ab406d78d776d101
+#: ../../source/welcome/dataset_description.rst:139
+#: 9f2a83e41493458191d3d5df51443f41
 msgid ""
 "For more details on the annotation process please refer to the `MAPLES-DR"
 " paper <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr`."
@@ -715,8 +756,8 @@ msgstr ""
 " à l'article `MAPLES-DR <https://arxiv.org/abs/2402.04258>`_ "
 ":footcite:`maples_dr`."
 
-#: ../../source/welcome/dataset_description.rst:135
-#: 0f94f6ba5e2f43f181567bf454f47d20
+#: ../../source/welcome/dataset_description.rst:142
+#: f04eb0c43def4aa6b5755e0c0fa13674
 msgid "References"
 msgstr "Bibliographie"
 

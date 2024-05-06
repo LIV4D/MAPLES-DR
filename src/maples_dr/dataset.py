@@ -830,11 +830,13 @@ class DataSample(Mapping):
                         logging.warning(
                             f"The macula is not segmented on image {self.name}!\n"
                             "(The corresponding fundus image is centered on the optic disc, the macula is not visible)."
+                            "\n Use maples_dr.configure(exclude_missing_macula=True) to exclude this image."
                         )
                     if bio is BiomarkerField.OPTIC_CUP:
                         logging.warning(
                             f"The optic cup is not segmented on image {self.name}!\n"
-                            "(The cup boundaries are too fuzzy to be annotated.)."
+                            "(The cup boundaries are too fuzzy to be annotated.).\n"
+                            "Use maples_dr.configure(exclude_missing_optic_cup=True) to exclude this image."
                         )
 
         # Read the biomarkers
