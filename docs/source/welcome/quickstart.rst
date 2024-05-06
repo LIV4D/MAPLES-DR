@@ -100,7 +100,7 @@ Finally, a local path to the MESSIDOR dataset can also be specified with this fu
 
 .. code-block:: python
 
-    maples_dr.configure(messidor_path="path/to/Messidor/")
+    maples_dr.configure(messidor_path="path/to/Messidor/directory/")
 
 ------------
 

@@ -26,6 +26,13 @@ Anatomical structures are present in all images, including healthy ones, but the
 
 The **optic disc**, **optic cup**, and **macula** are also included in |MAPLES-DR|. Their purpose for diagnosis is two-fold. First, ME is graded by counting the number of lesions within one or two optic disk diameters from the macula, which implies the annotation of both these anatomical structures. Similarly, clinical definitions of |DR| severity often distinguish four quadrants by dividing the retina  horizontally by a line through the fovea and optic disc (superior / inferior division) and vertically by a line through the fovea (temporal / nasal division) :footcite:`purvesRetinotopicRepresentationVisual2001`. Second, the positions of the lesions in relation to these healthy structures may indicate different etiologies and severities. For example, clinical guidelines sometimes distinguish between disc neovascularization and other neovascularization.
 
+.. warning ::
+   One sample of the train set is centered on the optic disc instead of the macula which is not visible in this image. No segmentation of the macula is therefore provided for this image.
+
+   Similarly, four samples of the train set and two samples of the test set are missing a segmentation of the optic cup because their boundaries were judged too ambiguous by the retinologists.
+
+   Trying to access these segmentation maps will return an blank mask and raise a warning. To remove these images from your dataset, you can specify :func:`maples_dr.configure(exclude_missing_macula=True) <maples_dr.configure>` or :func:`maples_dr.configure(exclude_missing_cup=True) <maples_dr.configure>` to exclude them.
+
 
 Segmentation of Red lesions
 ***************************
