@@ -88,7 +88,7 @@ class RichProgress:
 EnumT = TypeVar("EnumT", bound=Enum)
 
 
-def case_less_parse_str_enum(
+def case_insensitive_parsing(
     enum_type: type, value: any, ignored_characters: Optional[str] = " -_", alias: Optional[Mapping[str, EnumT]] = None
 ) -> EnumT:
     try:

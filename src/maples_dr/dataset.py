@@ -15,7 +15,7 @@ from PIL.Image import Resampling
 
 from .config import DatasetConfig, ImageFormat, Preprocessing
 from .preprocessing import fundus_roi, preprocess_fundus
-from .utilities import Point, Rect, RichProgress, case_less_parse_str_enum
+from .utilities import Point, Rect, RichProgress, case_insensitive_parsing
 
 
 class BiomarkerField(str, Enum):
@@ -87,7 +87,7 @@ class BiomarkerField(str, Enum):
 
         :meta private:
         """
-        return case_less_parse_str_enum(
+        return case_insensitive_parsing(
             cls,
             biomarker,
             alias={
@@ -142,7 +142,7 @@ class FundusField(str, Enum):
 
         :meta private:
         """
-        return case_less_parse_str_enum(cls, field)
+        return case_insensitive_parsing(cls, field, alias={"roi": FundusField.MASK})
 
 
 class DiagnosisField(str, Enum):
@@ -183,7 +183,7 @@ class DiagnosisField(str, Enum):
 
         :meta private:
         """
-        return case_less_parse_str_enum(cls, field)
+        return case_insensitive_parsing(cls, field)
 
 
 class BiomarkersAnnotationInfos(str, Enum):
@@ -217,7 +217,7 @@ class BiomarkersAnnotationInfos(str, Enum):
 
         :meta private:
         """
-        return case_less_parse_str_enum(cls, infos)
+        return case_insensitive_parsing(cls, infos)
 
 
 class BiomarkersAnnotationTasks(str, Enum):
@@ -495,33 +495,28 @@ class Dataset(Sequence):
 
     def available_fields(
         self, biomarkers=None, aggregated_biomarkers=None, diagnosis=None, fundus=None, raw_fundus=None
-    ):
-        any_true = (
-            biomarkers is True
-            or aggregated_biomarkers is True
-            or diagnosis is True
-            or fundus is True
-            or raw_fundus is True
-        )
+    ) -> List[Field]:
+        any_true = biomarkers is True or aggregated_biomarkers is True or diagnosis is True or fundus is True
         if not any_true:
             biomarkers = biomarkers is None
             aggregated_biomarkers = aggregated_biomarkers is None
             diagnosis = diagnosis is None
             fundus = fundus is None
-            raw_fundus = raw_fundus is None
 
         fields = []
         if biomarkers:
-            fields += [_.value for _ in BiomarkerField if _ not in AGGREGATED_BIOMARKERS]
+            fields.extend(
+                field
+                for field in BiomarkerField
+                if field not in AGGREGATED_BIOMARKERS and self._data[field.value] is not None
+            )
         if aggregated_biomarkers:
-            fields += list(AGGREGATED_BIOMARKERS.keys())
+            fields.extend(AGGREGATED_BIOMARKERS.keys())
         if diagnosis:
-            fields += [_.value for _ in DiagnosisField]
+            fields.extend(DiagnosisField)
         if "fundus" in self._data.columns:
             if fundus:
-                fields += [FundusField.FUNDUS.value]
-            if raw_fundus:
-                fields += [FundusField.RAW_FUNDUS.value]
+                fields.extend(FundusField)
         return fields
 
     def get_sample_infos(self, idx: str | int) -> pd.Series:
@@ -707,7 +702,6 @@ class DataSample(Mapping):
         missing_biomarkers=None,
         diagnosis=None,
         fundus=None,
-        raw_fundus=None,
     ):
         any_true = (
             biomarkers is True
@@ -715,7 +709,6 @@ class DataSample(Mapping):
             or missing_biomarkers is True
             or diagnosis is True
             or fundus is True
-            or raw_fundus is True
         )
         if not any_true:
             biomarkers = biomarkers is None
@@ -723,7 +716,6 @@ class DataSample(Mapping):
             missing_biomarkers = missing_biomarkers is None
             diagnosis = diagnosis is None
             fundus = fundus is None
-            raw_fundus = raw_fundus is None
 
         fields = []
         if biomarkers:
@@ -744,9 +736,7 @@ class DataSample(Mapping):
             fields.extend(DiagnosisField)
         if "fundus" in self._data:
             if fundus:
-                fields.append(FundusField.FUNDUS)
-            if raw_fundus:
-                fields.append(FundusField.RAW_FUNDUS)
+                fields.extend(FundusField)
         return fields
 
     def keys(self) -> List[Field]:
@@ -1225,9 +1215,9 @@ class DataSample(Mapping):
                 img = self.read_field(field, image_format=ImageFormat.PIL, pre_annotation=pre_annotation)
 
                 if field in (FundusField.FUNDUS, FundusField.RAW_FUNDUS):
-                    img.save(filename, bits=1, optimize=optimize)
-                else:
                     img.save(filename)
+                else:
+                    img.save(filename, bits=1, optimize=optimize)
 
             else:
                 if missing_as_blank:

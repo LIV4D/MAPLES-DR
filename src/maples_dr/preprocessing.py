@@ -175,8 +175,9 @@ def fundus_roi(
 
     """
     ensure_imports(cv2_needed=True, skimage_needed=morphological_clean or final_erosion > 0)
-
-    fundus = cv2.medianBlur(fundus[..., 1], blur_radius * 2 - 1)
+    padding = blur_radius + smoothing_radius
+    fundus = np.pad(fundus[..., 1], ((padding, padding), (padding, padding)), mode="constant")
+    fundus = cv2.medianBlur(fundus, blur_radius * 2 - 1)
     mask = fundus > 10
 
     if morphological_clean:
@@ -209,4 +210,4 @@ def fundus_roi(
     if final_erosion > 0:
         skmorph.binary_erosion(mask, skmorph.disk(final_erosion), out=mask)
 
-    return mask
+    return mask[padding:-padding, padding:-padding]
