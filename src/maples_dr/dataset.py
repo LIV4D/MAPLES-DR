@@ -576,7 +576,7 @@ class Dataset(Sequence):
         self,
         path: str | Path,
         fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
-        optimize: bool = False,
+        fundus_as_jpg: bool = True,
         missing_as_blank: bool = False,
         pre_annotation: bool = False,
         n_workers=None,
@@ -594,8 +594,8 @@ class Dataset(Sequence):
             - If ``fields`` is a string or list, export only the given fields.
             - If ``fields`` is a dictionary, export the fields given by the keys
             and rename their folder to their corresponding dictionary values.
-        optimize :
-            If True, optimize the images when exporting them.
+        fundus_as_jpg :
+            If True, save the fundus images (raw and preprocessed) as JPEG images. This format will drastically reduce load times but may introduce compression artifacts.
         pre_annotation :
             If set to ``True``, write the pre-annotation biomarkers instead of the reviewed ones.
         missing_as_blank :
@@ -626,7 +626,7 @@ class Dataset(Sequence):
         export_opts = dict(
             path=path,
             fields=fields,
-            optimize=optimize,
+            fundus_as_jpg=fundus_as_jpg,
             pre_annotation=pre_annotation,
             missing_as_blank=missing_as_blank,
         )
@@ -1136,7 +1136,7 @@ class DataSample(Mapping):
         self,
         path: str | Path,
         fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
-        optimize: bool = False,
+        fundus_as_jpg: bool = True,
         *,
         pre_annotation: bool = False,
         missing_as_blank=False,
@@ -1154,8 +1154,8 @@ class DataSample(Mapping):
             - If ``fields`` is a string or list, export only the given fields.
             - If ``fields`` is a dictionary, export the fields given by the keys
             and rename their folder to their corresponding dictionary values.
-        optimize :
-            If True, optimize the images when exporting them.
+        fundus_as_jpg :
+            If True, save the fundus images (raw and preprocessed) as JPEG images. This format will drastically reduce load times but may introduce compression artifacts.
         pre_annotation :
             If set to ``True``, write the pre-annotation biomarkers instead of the reviewed ones.
         missing_as_blank :
@@ -1194,7 +1194,7 @@ class DataSample(Mapping):
             for k, v in self._export_no_check(
                 path=path,
                 fields=fields,
-                optimize=optimize,
+                fundus_as_jpg=fundus_as_jpg,
                 pre_annotation=pre_annotation,
                 missing_as_blank=missing_as_blank,
                 yield_on_save=True,
@@ -1202,7 +1202,7 @@ class DataSample(Mapping):
         }
 
     def _export_no_check(
-        self, path, fields, optimize, pre_annotation, missing_as_blank, yield_on_save=False
+        self, path, fields, fundus_as_jpg, pre_annotation, missing_as_blank, yield_on_save=False
     ) -> Generator[Tuple[Field, Optional[str]]]:
         available_fields = self.available_fields(missing_biomarkers=False, diagnosis=False)
 
@@ -1215,9 +1215,12 @@ class DataSample(Mapping):
                 img = self.read_field(field, image_format=ImageFormat.PIL, pre_annotation=pre_annotation)
 
                 if field in (FundusField.FUNDUS, FundusField.RAW_FUNDUS):
-                    img.save(filename)
+                    if fundus_as_jpg:
+                        img.save(filename[:-3] + "jpg", quality=98, subsampling=0)
+                    else:
+                        img.save(filename)
                 else:
-                    img.save(filename, bits=1, optimize=optimize)
+                    img.save(filename, bits=1, optimize=True)
 
             else:
                 if missing_as_blank:

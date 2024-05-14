@@ -89,6 +89,7 @@ def load_dataset(subset: DatasetSubset | str | list[str] = DatasetSubset.ALL) ->
 def export_train_set(
     path: str | Path,
     fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
+    fundus_as_jpg: bool = True,
     n_workers: Optional[int] = None,
 ) -> None:
     """Save the training set to a folder.
@@ -103,6 +104,10 @@ def export_train_set(
         The field or list of fields to save. If None (by default), all fields will be saved.
 
         See :class:`maples_dr.dataset.ImageField` for the list of available fields.
+
+    fundus_as_jpg :
+        Whether to save the fundus images as JPG files. If False, the fundus images will be saved as PNG files.
+        JPG format will drastically reduce the load time of the dataset, but may introduce compression artifacts.
 
     n_workers :
         The number of workers to use for exporting the dataset.
@@ -123,6 +128,7 @@ def export_train_set(
 def export_test_set(
     path: str | Path,
     fields: Optional[ImageField | List[ImageField] | Dict[ImageField, str]] = None,
+    fundus_as_jpg: bool = True,
     n_workers: Optional[int] = None,
 ):
     """Save the testing set to a folder.
@@ -137,6 +143,10 @@ def export_test_set(
         The field or list of fields to save. If None (by default), all fields will be saved.
 
         See :class:`maples_dr.dataset.ImageField` for the list of available fields.
+
+    fundus_as_jpg :
+        Whether to save the fundus images as JPG files. If False, the fundus images will be saved as PNG files.
+        JPG format will drastically reduce the load time of the dataset, but may introduce compression artifacts.
 
     n_workers :
         The number of workers to use for exporting the dataset.
