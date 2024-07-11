@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-06 10:40-0400\n"
+"POT-Creation-Date: 2024-07-11 10:03-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.15.0\n"
 
 #: ../../source/welcome/dataset_description.rst:3
 #: 0ffa82a4b85049b18101bc9ee4c206a9
@@ -159,8 +159,8 @@ msgid ""
 "macula which is not visible in this image. No segmentation of the macula "
 "is therefore provided for this image."
 msgstr ""
-"Un échantillon du jeu d'entraînement est centré sur le disque optique plutôt"
-" que sur la macula qui n'est pas visible sur cette image. Aucune "
+"Un échantillon du jeu d'entraînement est centré sur le disque optique "
+"plutôt que sur la macula qui n'est pas visible sur cette image. Aucune "
 "segmentation de la macula n'est donc fournie pour cette image."
 
 #: ../../source/welcome/dataset_description.rst:32
@@ -172,8 +172,8 @@ msgid ""
 msgstr ""
 "De même, quatre échantillons de l'ensemble d'entraînement et deux "
 "échantillons de l'ensemble de test ne disposent pas d'une segmentation de"
-" la cupule optique car leurs frontières ont été jugées trop ambiguës par les"
-" rétinologues."
+" la cupule optique car leurs frontières ont été jugées trop ambiguës par "
+"les rétinologues."
 
 #: ../../source/welcome/dataset_description.rst:34
 #: b832b14bd2a2400c918f074c0547f21a
@@ -185,13 +185,12 @@ msgid ""
 ":func:`maples_dr.configure(exclude_missing_cup=True) "
 "<maples_dr.configure>` to exclude them."
 msgstr ""
-"Accéder à ces cartes de segmentation renverra un masque vide et "
-"affichera un avertissement. Pour exclure ces images du jeu de données "
-"utilisez : func:`maples_dr.configure(exclude_missing_macula=True) "
+"Accéder à ces cartes de segmentation renverra un masque vide et affichera"
+" un avertissement. Pour exclure ces images du jeu de données utilisez : "
+"func:`maples_dr.configure(exclude_missing_macula=True) "
 "<maples_dr.configure>` ou "
 ":func:`maples_dr.configure(exclude_missing_cup=True) "
 "<maples_dr.configure>`."
-
 
 #: ../../source/welcome/dataset_description.rst:38
 #: 2f99d43ec4444119bbf9cd2a38042212
@@ -512,31 +511,68 @@ msgstr ""
 "L'ensemble d'entraînement est composé de 138 images, tandis que "
 "l'ensemble de test en contient 60."
 
-#: ../../source/welcome/dataset_description.rst:97
-#: f73d7a9be430433e98cf7fed3eb540b0
-msgid ""
-"The segmentation maps were resized to match the resolution of the "
-"original MESSIDOR images. Note that the MESSIDOR images vary in "
-"dimensions (ranging from 960x1440 up to 1536x2304 pixels), thus do the "
-"images in |MAPLES-DR.zip|_."
-msgstr ""
-"Les cartes de segmentation ont été redimensionnées pour correspondre à la"
-" résolution des images initiales de MESSIDOR. Notez que la résolution des"
-" images de MESSIDOR varie de l'une à l'autre (allant de 960x1440 à "
-"1536x2304 pixels). Les cartes de segmentations de |MAPLES-DR.zip|_ "
-"reproduisent ces variations."
-
-#: ../../source/welcome/dataset_description.rst:103
+#: ../../source/welcome/dataset_description.rst:101
 #: 5af2716af9094caa80170c80917a0d70
 msgid "Overview of the main |MAPLES-DR| archive: |MAPLES-DR.zip|_."
 msgstr "Aperçu de l'archive principale de |MAPLES-DR| : |MAPLES-DR.zip|_."
 
+#: ../../source/welcome/dataset_description.rst:104
+#: 2b526f25e69849598c9b9d9784f07fc0
+msgid ""
+"The image ``20051020_55346_0100_PP`` is centered on the optic disc and "
+"its macula is not visible. To raise awareness of this issue, **the "
+"segmentation maps of its macula has been removed** from ``MAPLES-"
+"DR.zip/train/Macula/`` which therefore only contains 137 images."
+msgstr ""
+"L'image ``20051020_55346_0100_PP`` est centrée sur le disque optique et "
+"sa macula n'est pas visible. Pour éviter toute confusion, **la carte de "
+"segmentation de sa macula a été retirée** de ``MAPLES-"
+"DR.zip/train/Macula/`` qui ne contient donc que 137 images."
+
 #: ../../source/welcome/dataset_description.rst:106
+#: fada9068f12b445ea75d7457de6b8dd4
+msgid ""
+"Furthemore, for six images (4 in the train set and 2 in the test set), "
+"the boundaries of the optic cup were judged too ambiguous by the "
+"retinologists for a proper annotation. **No segmentation map of optic cup"
+" are provided for those images** diminishing the number of images in "
+"``MAPLES-DR.zip/train/OpticCup/`` and ``MAPLES-DR.zip/test/OpticCup/`` to"
+" respectively 134 and 58 images."
+msgstr ""
+"De plus, pour six images (4 dans l'ensemble d'entraînement et 2 dans "
+"l'ensemble de test), les frontières de la cupule optique ont été jugées "
+"trop ambiguës par les rétinologues pour une annotation correcte. **Aucune"
+" carte de segmentation de la cupule optique n'est donc fournie pour ces "
+"images** réduisant le nombre d'images dans ``MAPLES-"
+"DR.zip/train/OpticCup/`` et ``MAPLES-DR.zip/test/OpticCup/`` à "
+"respectivement 134 et 58 images."
+
+#: ../../source/welcome/dataset_description.rst:109
+#: 5caadb37cf3044a99ba4f7c347652c98
+msgid ""
+"The segmentation maps in |MAPLES-DR.zip|_ were resized to match the "
+"resolution of the original MESSIDOR images, which vary in dimensions "
+"(ranging from 960x1440 up to 1536x2304 pixels). If your application "
+"requires a homogeneous resolution (e.g. for training a deep learning "
+"model), we advice to use :doc:`maples_dr <python_library>` python library"
+" to crop and resize the images and the segmentation maps to a unique "
+"resolution."
+msgstr ""
+"Les cartes de segmentation de |MAPLES-DR.zip|_ ont été redimensionnées "
+"pour correspondre à la résolution des images originales de MESSIDOR, qui "
+"varient en dimensions (allant de 960x1440 à 1536x2304 pixels). Pour les "
+"applications nécessitant une résolution homogène (par exemple "
+"l'entraînement de réseau de neurones), nous vous conseillons d'utiliser "
+"le paquet python :doc:`maples_dr <python_library>` pour recadrer et "
+"redimensionner les images et les cartes de segmentation à une résolution "
+"commune."
+
+#: ../../source/welcome/dataset_description.rst:113
 #: 1025eab4d5ab4f1a99446c873ac19abe
 msgid "AdditionalData.zip"
 msgstr ""
 
-#: ../../source/welcome/dataset_description.rst:108
+#: ../../source/welcome/dataset_description.rst:115
 #: 01bc663872cf4835b51d37439fcc3df0
 msgid ""
 "The second archive contains all the additional information and data "
@@ -557,12 +593,34 @@ msgstr ""
 "toutes les données propre à l'archive |MAPLES-DR.zip|_ peuvent en être "
 "dérivées."
 
-#: ../../source/welcome/dataset_description.rst:110
-#: 8f88d3bec0014b1bb93286a3c3323423
-msgid "It contains the following files:"
-msgstr "Elle contient les fichiers suivants :"
+#: ../../source/welcome/dataset_description.rst:118
+#: c22b04765559464aa94cfba982bf38ca
+msgid ""
+"**Note on the duplicates**: initially 200 images were annotated but we "
+"latter realized that two of them were duplicates from the original "
+"MESSIDOR dataset (same images stored using different names). The 2 "
+"duplicates were removed from |MAPLES-DR.zip|_ but were kept in "
+"|AdditionalData.zip|_ for transparency."
+msgstr ""
+"**Note sur les doublons** : initialement, |MAPLES-DR| comptait des "
+"annotations pour 200 images. Mais à la fin de la campagne d'annotation, "
+"nous avons pris connaissance que deux de ces images faisaient parties des"
+" doublons de l'ensemble de données original MESSIDOR (des images "
+"dupliquées, stockées sous deux noms différents). Ces 2 doublons ont été "
+"retirés de |MAPLES-DR.zip|_, mais ont été conservés dans "
+"|AdditionalData.zip|_ à des fins de transparence."
 
-#: ../../source/welcome/dataset_description.rst:112
+#: ../../source/welcome/dataset_description.rst:124
+#: 2fb99e2027a540d69d8d5eb17707841d
+msgid "Overview of the additional archive: |AdditionalData.zip|_."
+msgstr "Aperçu de l'archive complémentaire : |AdditionalData.zip|_."
+
+#: ../../source/welcome/dataset_description.rst:127
+#: 8f88d3bec0014b1bb93286a3c3323423
+msgid "|AdditionalData.zip|_ contains the following files:"
+msgstr "L'archive |AdditionalData.zip|_ contient les fichiers suivants :"
+
+#: ../../source/welcome/dataset_description.rst:129
 #: a1514c5e9592445cb152af233eac5b4a
 msgid ""
 "**biomarkers_annotations_infos.xls**: identify which ``Retinologist`` "
@@ -578,7 +636,7 @@ msgstr ""
 "(``Annotation#``: 1 pour la première image annotée, 200 pour la "
 "dernière)."
 
-#: ../../source/welcome/dataset_description.rst:113
+#: ../../source/welcome/dataset_description.rst:130
 #: e6a98ee91ec842f4b252729a72f61076
 msgid ""
 "**diagnosis_infos.xls**: contains the grades of |DR| and |ME| annotated "
@@ -590,7 +648,7 @@ msgstr ""
 "délibération. Il inclut également les commentaires laissés par les "
 "rétinologues lors du diagnostic."
 
-#: ../../source/welcome/dataset_description.rst:114
+#: ../../source/welcome/dataset_description.rst:131
 #: b759a750a4ad4eca91de16a05b00c9bf
 msgid ""
 "**MESSIDOR-ROIs.csv**: provides the bounding boxes extracted from the "
@@ -608,7 +666,7 @@ msgstr ""
 " pixels des images de MESSIDOR : ``H`` et ``W`` (resp. la hauteur et la "
 "largeur)."
 
-#: ../../source/welcome/dataset_description.rst:115
+#: ../../source/welcome/dataset_description.rst:132
 #: fd423ec70d794cc9beb3835de3555df2
 msgid ""
 "**dataset_record.yaml**: a yaml file containing the ``biomarkers`` name, "
@@ -622,24 +680,28 @@ msgstr ""
 "d'images, et le nom des ``doublons`` associés au nom de leur \"jumeau\" "
 "dans l'ensemble d’entraînement de |MAPLES-DR|."
 
-#: ../../source/welcome/dataset_description.rst:116
+#: ../../source/welcome/dataset_description.rst:133
 #: 0cdd721b42244c84a18ffd0b2f898dad
 msgid ""
 "**annotations/**: this folder has 12 subfolders (one for each biomarker),"
 " which in turn contains all 200 segmentation maps annotated by the "
-"retinologists (train, test and duplicates). The images are stored as png "
-"binary masks in the resolution at which they were annotated (1500x1500 "
-"pixels) using the ROIs provided in the ``MESSIDOR-ROIs.csv``."
+"retinologists (train, test and duplicates). One segmentation map was "
+"removed from the ``Macula`` folder, and 6 were removed from ``OpticCup`` "
+"(see warning above).  All segmentation maps are stored as png binary "
+"masks in the resolution at which they were annotated (1500x1500 pixels) "
+"using the ROIs provided in the ``MESSIDOR-ROIs.csv``."
 msgstr ""
 "**annotations/**: ce dossier contient 12 sous-dossiers (un pour chaque "
 "biomarqueur), qui contiennent à leur tour les 200 cartes de segmentation "
 "annotées par les rétinologues (entraînement, test et doublons "
-"confondues). Les images sont stockées sous forme de masques binaires png "
-"dans la résolution à laquelle elles furent annotées (1500x1500 pixels) et"
-" en utilisant les régions d’intérêt décrites dans le fichier ``MESSIDOR-"
-"ROIs.csv``."
+"confondues). Une carte de segmentation a été retirée du dossier "
+"``Macula`` et 6 ont été retirées du dossier ``OpticCup`` (voir "
+"avertissement ci-dessus).  Toutes les cartes de segmentation sont "
+"stockées sous forme de masques binaires png dans la résolution à laquelle"
+" elles furent annotées (1500x1500 pixels) et en utilisant les régions "
+"d’intérêt décrites dans le fichier ``MESSIDOR-ROIs.csv``."
 
-#: ../../source/welcome/dataset_description.rst:117
+#: ../../source/welcome/dataset_description.rst:134
 #: 36b43f151ab34469933f21319cfe3907
 msgid ""
 "**pre_annotations/**: this folder contains the automatic segmentation of "
@@ -650,34 +712,12 @@ msgstr ""
 "des vaisseaux, des exsudats, des hémorragies et des micro-anévrismes "
 "fournies comme pré-annotations aux rétinologues."
 
-#: ../../source/welcome/dataset_description.rst:123
-#: 2fb99e2027a540d69d8d5eb17707841d
-msgid "Overview of the additional archive: |AdditionalData.zip|_."
-msgstr "Aperçu de l'archive complémentaire : |AdditionalData.zip|_."
-
-#: ../../source/welcome/dataset_description.rst:127
-#: c22b04765559464aa94cfba982bf38ca
-msgid ""
-"**Note on the duplicates**: initially 200 images were annotated but we "
-"latter realized that two of them were duplicates from the original "
-"MESSIDOR dataset (the same images stored different names). The 2 "
-"duplicates were removed from |MAPLES-DR.zip|_ but were kept in "
-"|AdditionalData.zip|_ for transparency."
-msgstr ""
-"**Note sur les doublons** : initialement, |MAPLES-DR| comptait des "
-"annotations pour 200 images. Mais à la fin de la campagne d'annotation, "
-"nous avons pris connaissance que deux de ces images faisaient parties des"
-" doublons de l'ensemble de données original MESSIDOR (des images "
-"dupliquées, stockées sous deux noms différents). Ces 2 doublons ont été "
-"retirés de |MAPLES-DR.zip|_, mais ont été conservés dans "
-"|AdditionalData.zip|_ à des fins de transparence."
-
-#: ../../source/welcome/dataset_description.rst:130
+#: ../../source/welcome/dataset_description.rst:137
 #: 2e32c80a88124758bdb2e409c7f233fe
 msgid "Annotation Procedure"
 msgstr "Procédure d'annotation"
 
-#: ../../source/welcome/dataset_description.rst:131
+#: ../../source/welcome/dataset_description.rst:138
 #: 9e7c5ee387274bf1bc41fbd1af9fbe2d
 msgid ""
 "The annotation procedure was co-designed with the team of retinologists "
@@ -686,7 +726,7 @@ msgstr ""
 "La procédure d'annotation a été co-conçue avec l'équipe de rétinologues "
 "pour répondre à un triple objectif :"
 
-#: ../../source/welcome/dataset_description.rst:133
+#: ../../source/welcome/dataset_description.rst:140
 #: c75e652a8ffd4d3c91eafaf20e8d88b9
 msgid ""
 "Providing an intuitive yet effective annotation tool for the "
@@ -696,7 +736,7 @@ msgstr ""
 "classification et la segmentation des biomarqueurs dans les images de "
 "fond d'œil."
 
-#: ../../source/welcome/dataset_description.rst:134
+#: ../../source/welcome/dataset_description.rst:141
 #: 27b4ce097d4a4e1fb51b657a8c9cd5a4
 msgid ""
 "Enabling a collaborative effort on common annotations despite the "
@@ -707,7 +747,7 @@ msgstr ""
 "distance géographique entre les rétinologues et le temps limité que "
 "chacun pouvait consacrer à ce programme."
 
-#: ../../source/welcome/dataset_description.rst:135
+#: ../../source/welcome/dataset_description.rst:142
 #: 80c50a747b074b728e90156ce98f8b10
 msgid ""
 "Designing a \"scalable\" annotation protocol, capable of being extended "
@@ -719,7 +759,7 @@ msgstr ""
 "l'étiquetage de grandes bases de données canadiennes de télémédecine "
 "contenant des dizaines de milliers d'images."
 
-#: ../../source/welcome/dataset_description.rst:137
+#: ../../source/welcome/dataset_description.rst:144
 #: 9d5352d6578e47acb5b814626f67b7a8
 msgid ""
 "To meet these challenges, we developed a custom web-based annotation "
@@ -746,7 +786,7 @@ msgstr ""
 "Python) ainsi que le matériel de formation pour les annotateurs sont "
 "disponibles sur `GitHub <https://github.com/LIV4D/AnnotationPlatform>`_."
 
-#: ../../source/welcome/dataset_description.rst:139
+#: ../../source/welcome/dataset_description.rst:146
 #: 9f2a83e41493458191d3d5df51443f41
 msgid ""
 "For more details on the annotation process please refer to the `MAPLES-DR"
@@ -756,7 +796,7 @@ msgstr ""
 " à l'article `MAPLES-DR <https://arxiv.org/abs/2402.04258>`_ "
 ":footcite:`maples_dr`."
 
-#: ../../source/welcome/dataset_description.rst:142
+#: ../../source/welcome/dataset_description.rst:149
 #: f04eb0c43def4aa6b5755e0c0fa13674
 msgid "References"
 msgstr "Bibliographie"

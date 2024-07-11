@@ -94,27 +94,28 @@ MAPLES-DR.zip
 
 |MAPLES-DR.zip|_ is the main archive of the dataset. It's split into two folders `train/` and `test/`, each one containing a table `diagnosis.csv` with the final |DR| and |ME| grades as well as 12 folders: one for each biomarker. Those folders store the segmentation maps as png binary images following the same naming convention as their MESSIDOR counterparts (eg. `20051019_38557_0100_PP.png`). The train set is composed of 138 images, while the test set contains 60 images.
 
-The segmentation maps were resized to match the resolution of the original MESSIDOR images. Note that the MESSIDOR images vary in dimensions (ranging from 960x1440 up to 1536x2304 pixels), thus do the images in |MAPLES-DR.zip|_.
-
 .. figure:: ../_static/MAPLES-DR_Data_Record_main.svg
    :width: 800px
    :align: center
 
    Overview of the main |MAPLES-DR| archive: |MAPLES-DR.zip|_.
 
+.. warning::
+   The image ``20051020_55346_0100_PP`` is centered on the optic disc and its macula is not visible. To raise awareness of this issue, **the segmentation maps of its macula has been removed** from ``MAPLES-DR.zip/train/Macula/`` which therefore only contains 137 images.
+
+   Furthemore, for six images (4 in the train set and 2 in the test set), the boundaries of the optic cup were judged too ambiguous by the retinologists for a proper annotation. **No segmentation map of optic cup are provided for those images** diminishing the number of images in ``MAPLES-DR.zip/train/OpticCup/`` and ``MAPLES-DR.zip/test/OpticCup/`` to respectively 134 and 58 images.
+
+.. note::
+   The segmentation maps in |MAPLES-DR.zip|_ were resized to match the resolution of the original MESSIDOR images, which vary in dimensions (ranging from 960x1440 up to 1536x2304 pixels). If your application requires a homogeneous resolution (e.g. for training a deep learning model), we advice to use :doc:`maples_dr <python_library>` python library to crop and resize the images and the segmentation maps to a unique resolution.
+
+
 AdditionalData.zip
 ******************
 
 The second archive contains all the additional information and data collected during the annotation process. It's also the only archive downloaded and used by the :doc:`maples_dr <python_library>` library. Indeed because |AdditionalData.zip|_ includes all the annotations and pre-annotation in the resolution at which they were annotated (1500x1500 pixels), as well as the individual diagnoses graded by each retinologist, all the data contained in the |MAPLES-DR.zip|_ can be derived from it.   
 
-It contains the following files:
-
-- **biomarkers_annotations_infos.xls**: identify which ``Retinologist`` performed the annotation of a given biomarker category, the ``Time`` spent on each annotation (in seconds), any ``Comment`` they left, and the ``Annotation#`` rank (1 for the first image annotated, 200 for the last).
-- **diagnosis_infos.xls**: contains the grades of |DR| and |ME| annotated by each Retinologist as well as the consensus they reached. It also includes the  comments left by the retinologists while grading.
-- **MESSIDOR-ROIs.csv**: provides the bounding boxes extracted from the MESSIDOR images to obtain squared regions of interest without blank borders. The bounding boxes are stored as top-left (``x0``, ``y0``) and bottom-right (``x1``, ``y1``) coordinates in pixels. This file also includes the original resolution in pixel of the MESSIDOR images: ``H`` and ``W`` (resp. height and width).
-- **dataset_record.yaml**: a yaml file containing the ``biomarkers`` name, the ``test`` and ``train`` split (as a list of image name), and the names of the ``duplicates`` associated to the names of their "siblings" in |MAPLES-DR| train set.
-- **annotations/**: this folder has 12 subfolders (one for each biomarker), which in turn contains all 200 segmentation maps annotated by the retinologists (train, test and duplicates). The images are stored as png binary masks in the resolution at which they were annotated (1500x1500 pixels) using the ROIs provided in the ``MESSIDOR-ROIs.csv``.
-- **pre_annotations/**: this folder contains the automatic segmentation of Vessels, Exudates, Hemorrhages, and Microaneurysms provided as pre-annotations to the retinologists.
+.. note:: 
+   **Note on the duplicates**: initially 200 images were annotated but we latter realized that two of them were duplicates from the original MESSIDOR dataset (same images stored using different names). The 2 duplicates were removed from |MAPLES-DR.zip|_ but were kept in |AdditionalData.zip|_ for transparency.
 
 .. figure:: ../_static/MAPLES-DR_Data_Record_additional.svg
    :width: 800px
@@ -123,8 +124,14 @@ It contains the following files:
    Overview of the additional archive: |AdditionalData.zip|_.
 
 
-.. note:: 
-   **Note on the duplicates**: initially 200 images were annotated but we latter realized that two of them were duplicates from the original MESSIDOR dataset (the same images stored different names). The 2 duplicates were removed from |MAPLES-DR.zip|_ but were kept in |AdditionalData.zip|_ for transparency.
+|AdditionalData.zip|_ contains the following files:
+
+- **biomarkers_annotations_infos.xls**: identify which ``Retinologist`` performed the annotation of a given biomarker category, the ``Time`` spent on each annotation (in seconds), any ``Comment`` they left, and the ``Annotation#`` rank (1 for the first image annotated, 200 for the last).
+- **diagnosis_infos.xls**: contains the grades of |DR| and |ME| annotated by each Retinologist as well as the consensus they reached. It also includes the  comments left by the retinologists while grading.
+- **MESSIDOR-ROIs.csv**: provides the bounding boxes extracted from the MESSIDOR images to obtain squared regions of interest without blank borders. The bounding boxes are stored as top-left (``x0``, ``y0``) and bottom-right (``x1``, ``y1``) coordinates in pixels. This file also includes the original resolution in pixel of the MESSIDOR images: ``H`` and ``W`` (resp. height and width).
+- **dataset_record.yaml**: a yaml file containing the ``biomarkers`` name, the ``test`` and ``train`` split (as a list of image name), and the names of the ``duplicates`` associated to the names of their "siblings" in |MAPLES-DR| train set.
+- **annotations/**: this folder has 12 subfolders (one for each biomarker), which in turn contains all 200 segmentation maps annotated by the retinologists (train, test and duplicates). One segmentation map was removed from the ``Macula`` folder, and 6 were removed from ``OpticCup`` (see warning above).  All segmentation maps are stored as png binary masks in the resolution at which they were annotated (1500x1500 pixels) using the ROIs provided in the ``MESSIDOR-ROIs.csv``.
+- **pre_annotations/**: this folder contains the automatic segmentation of Vessels, Exudates, Hemorrhages, and Microaneurysms provided as pre-annotations to the retinologists.
 
 Annotation Procedure
 ====================
