@@ -1,7 +1,9 @@
-import maples_dr
 import numpy as np
-from maples_dr.dataset import FundusField as FF
 from pytest import fixture
+
+import maples_dr
+from maples_dr.dataset import FundusField as FF
+from maples_dr.preprocessing import Preprocessing
 
 
 @fixture
@@ -23,3 +25,21 @@ def test_fundus(all_set):
     # Test equivalence of __getitem__ and actual read methods for fundus and mask
     assert np.all(sample.read_fundus(preprocess=False) == sample[FF.RAW_FUNDUS])
     assert np.all(sample.read_roi_mask() == sample[FF.MASK])
+
+
+def test_clahe_preprocessing(all_set):
+    sample = all_set[0]
+    sample._cfg.image_format = "bgr"
+    sample._cfg.preprocessing = "clahe"
+
+    # Test preprocessing
+    assert np.all(sample.read_fundus(preprocess=Preprocessing.CLAHE) == sample[FF.FUNDUS])
+
+
+def test_median_preprocessing(all_set):
+    sample = all_set[0]
+    sample._cfg.image_format = "bgr"
+    sample._cfg.preprocessing = "median"
+
+    # Test preprocessing
+    assert np.all(sample.read_fundus(preprocess=Preprocessing.MEDIAN) == sample[FF.FUNDUS])
