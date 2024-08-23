@@ -176,9 +176,9 @@ def fundus_roi(
     """
     ensure_imports(cv2_needed=True, skimage_needed=morphological_clean or final_erosion > 0)
     padding = blur_radius + smoothing_radius
-    fundus = np.pad(fundus[..., 1], ((padding, padding), (padding, padding)), mode="constant")
+    fundus = np.pad(fundus[..., 2], ((padding, padding), (padding, padding)), mode="constant")
     fundus = cv2.medianBlur(fundus, blur_radius * 2 - 1)
-    mask = fundus > 10
+    mask = fundus > 20
 
     if morphological_clean:
         # Remove small objects
