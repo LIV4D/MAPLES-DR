@@ -16,7 +16,7 @@ By releasing this dataset, we hope to help the AI community improves the explain
    Overview of |MAPLES-DR| content and annotation process. (Credit: :footcite:t:`maples_dr`)
 
 
-The annotation procedure relied on AI generated pre-segmentation of some retinal structures and a custom web-based annotation platform. The complete annotation process is documented in `this paper <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr` *(the URL currently refers to a temporary arxiv preprint, while the manuscript is under revision.)*.
+The annotation procedure relied on AI generated pre-segmentation of some retinal structures and a custom web-based annotation platform. The complete annotation process is documented in `this paper <https://doi.org/10.1038/s41597-024-03739-6>`_ :footcite:`maples_dr`.
 
 
 Usage
@@ -28,18 +28,20 @@ However, for machine learning usage we encourage researchers to directly downloa
 
 Note that the fundus images are the property of the MESSIDOR program partners and are not included in the MAPLES-DR dataset, but they are available to any research teams who requires them on `Messidor website <https://www.adcis.net/en/third-party/messidor/>`_. Follow the instructions in :doc:`MESSIDOR section <welcome/messidor>` to integrate them with |MAPLES-DR| labels.
 
-If you wish to use this dataset in an academic work, we kindly ask you to cite the following `paper <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr`::
+If you wish to use this dataset in an academic work, we kindly ask you to cite the following `paper <https://doi.org/10.1038/s41597-024-03739-6>`_ :footcite:`maples_dr`::
 
       @article{maples_dr,
-         title={MAPLES-DR: MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy}, 
+         title={MAPLES-DR: MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy},
          author={Gabriel Lepetit-Aimon and Clément Playout and Marie Carole Boucher and Renaud Duval and Michael H Brent and Farida Cheriet},
+         journal={Scientific Data},
+         volume={11},
+         number={1},
+         pages={914},
          year={2024},
-         eprint={2402.04258},
-         archivePrefix={arXiv},
-         doi={10.48550/arXiv.2402.04258}
+         month={08},
+         publisher={Nature Publishing Group UK London},
+         doi={10.1038/s41597-024-03739-6}
       }
-
-*(This citation currently refers to a temporary arxiv preprint while our manuscript is under revisions.)*
 
 Additional Resources
 ====================

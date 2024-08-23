@@ -11,16 +11,20 @@
 
 MAPLES-DR dataset is available for download on [figshare](https://doi.org/10.6084/m9.figshare.24328660). The fundus images are not included in MAPLES-DR but one can download them from [MESSIDOR Consortium's website](https://www.adcis.net/fr/logiciels-tiers/messidor-fr/).
 
-If you wish to use this dataset in an academic work, we kindly ask you to cite the following [paper](https://arxiv.org/abs/2402.04258):
+If you wish to use this dataset in an academic work, we kindly ask you to cite the following [paper](https://doi.org/10.1038/s41597-024-03739-6):
 
 ```bibtex
 @article{maples_dr,
-    title={MAPLES-DR: MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy}, 
-    author={Gabriel Lepetit-Aimon and Clément Playout and Marie Carole Boucher and Renaud Duval and Michael H Brent and Farida Cheriet},
-    year={2024},
-    eprint={2402.04258},
-    archivePrefix={arXiv},
-    doi={10.48550/arXiv.2402.04258}
+   title={MAPLES-DR: MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy},
+   author={Gabriel Lepetit-Aimon and Clément Playout and Marie Carole Boucher and Renaud Duval and Michael H Brent and Farida Cheriet},
+   journal={Scientific Data},
+   volume={11},
+   number={1},
+   pages={914},
+   year={2024},
+   month={08},
+   publisher={Nature Publishing Group UK London},
+   doi={10.1038/s41597-024-03739-6}
 }
 ```
 

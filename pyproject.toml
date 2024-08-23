@@ -27,6 +27,7 @@ examples = [
     'scipy',
     'tqdm',
     'jppype',
+    'irrcac',
 ]
 dev = [
     'sphinx',

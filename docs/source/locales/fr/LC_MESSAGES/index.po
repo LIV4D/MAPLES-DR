@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version:  MAPLES-DR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-05-02 16:16-0400\n"
+"POT-Creation-Date: 2024-08-23 10:14-0400\n"
 "PO-Revision-Date: 2024-04-10 20:37-0400\n"
 "Last-Translator: \n"
 "Language: fr\n"
@@ -15,33 +15,33 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.11.0\n"
+"Generated-By: Babel 2.15.0\n"
 
-#: ../../source/index.rst:73
+#: ../../source/index.rst:75
 msgid "MAPLES-DR Dataset"
 msgstr "Le jeu de données MAPLES-DR"
 
-#: ../../source/index.rst:78
+#: ../../source/index.rst:80
 msgid "Dataset Description"
 msgstr "Description du jeu de données"
 
-#: ../../source/index.rst:78
+#: ../../source/index.rst:80
 msgid "Python library"
 msgstr "API python"
 
-#: ../../source/index.rst:78
+#: ../../source/index.rst:80
 msgid "Documentation"
 msgstr "Documentation"
 
-#: ../../source/index.rst:90
+#: ../../source/index.rst:92
 msgid "Examples"
 msgstr "Exemples"
 
-#: ../../source/index.rst:98
+#: ../../source/index.rst:100
 msgid "Configuration"
 msgstr "Configuration"
 
-#: ../../source/index.rst:98
+#: ../../source/index.rst:100
 msgid "API Reference"
 msgstr "Définition de l'API"
 
@@ -104,15 +104,13 @@ msgid ""
 "The annotation procedure relied on AI generated pre-segmentation of some "
 "retinal structures and a custom web-based annotation platform. The "
 "complete annotation process is documented in `this paper "
-"<https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr` *(the URL "
-"currently refers to a temporary arxiv preprint, while the manuscript is "
-"under revision.)*."
+"<https://doi.org/10.1038/s41597-024-03739-6>`_ :footcite:`maples_dr`."
 msgstr ""
 "La procédure d'annotation de |MAPLES-DR| s'est appuyée sur des cartes "
 "pré-segmentées par :abbr:`IA (Intelligence Artificielle)` pour certaines "
 "structures rétiniennes, ainsi que sur un outils d'annotation hébergé sur "
 "le web. Le protocole d'annotation est documenté en détail dans `ce papier"
-" <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr` *(l'URL "
+" <https://doi.org/10.1038/s41597-024-03739-6>`_ :footcite:`maples_dr` *(l'URL "
 "pointe vers un preprint ArXiv, le temps que notre manuscrit suive son "
 "processus de révision)*."
 
@@ -168,31 +166,23 @@ msgstr ""
 #: ../../source/index.rst:31 eb6ca3712d6748f98311b4b6542074d0
 msgid ""
 "If you wish to use this dataset in an academic work, we kindly ask you to"
-" cite the following `paper <https://arxiv.org/abs/2402.04258>`_ "
-":footcite:`maples_dr`::"
+" cite the following `paper <https://doi.org/10.1038/s41597-024-03739-6>`_"
+" :footcite:`maples_dr`::"
 msgstr ""
 "Nous demandons aux chercheurs qui souhaitent utiliser ce jeu de données "
 "dans leur travaux académique de citer `le papier "
-"<https://arxiv.org/abs/2402.04258>`_ lié à la publication de |MAPLES-"
+"<https://doi.org/10.1038/s41597-024-03739-6>`_ lié à la publication de |MAPLES-"
 "DR|:footcite:`maples_dr`::"
 
-#: ../../source/index.rst:42 205011a07a3940fdbed2065fcd1089cd
-msgid ""
-"*(This citation currently refers to a temporary arxiv preprint while our "
-"manuscript is under revisions.)*"
-msgstr ""
-"*(Cette citation pointe temporairement vers arxiv, le temps que notre "
-"manuscrit suive son processus de révisions.)*"
-
-#: ../../source/index.rst:45 6b45b1a9ad8a43c6ab45fe7987de6986
+#: ../../source/index.rst:47 6b45b1a9ad8a43c6ab45fe7987de6986
 msgid "Additional Resources"
 msgstr "Ressources Additionnelles"
 
-#: ../../source/index.rst:48 b0e886fffebf4d2bb572439cdd63b1df
+#: ../../source/index.rst:50 b0e886fffebf4d2bb572439cdd63b1df
 msgid "Segmentation Models"
 msgstr "Modèles de segmentation"
 
-#: ../../source/index.rst:49 66eae5266c81475ba98b99e4f4c2855a
+#: ../../source/index.rst:51 66eae5266c81475ba98b99e4f4c2855a
 msgid ""
 "We released the segmentation models developed and trained on MAPLES-DR as"
 " two Python libraries: they bundle the weights and PyTorch code required "
@@ -208,7 +198,7 @@ msgstr ""
 " cliniciens sans expérience de la manipulation de réseaux de neurones. On"
 " peut les trouver sur GitHub:"
 
-#: ../../source/index.rst:51 5cf7583294e34c6d8d5410cb59fac681
+#: ../../source/index.rst:53 5cf7583294e34c6d8d5410cb59fac681
 msgid ""
 "`fundus-vessels-toolkit <https://github.com/gabriel-lepetitaimon/fundus-"
 "vessels-toolkit>`_ for automatic segmentation and graph extraction of the"
@@ -218,7 +208,7 @@ msgstr ""
 "vessels-toolkit>`_ pour la segmentation et l'extraction automatique de la"
 " vasculature rétinienne;"
 
-#: ../../source/index.rst:52 16749a8196804c59af20edfaef8cff88
+#: ../../source/index.rst:54 16749a8196804c59af20edfaef8cff88
 msgid ""
 "`fundus-lesions-toolkit <https://github.com/ClementPla/fundus-lesions-"
 "toolkit>`_ for automatic semantic segmentation of microaneurysms, "
@@ -229,11 +219,11 @@ msgstr ""
 "anévrismes, des hémorragies, des exsudats et des |CWS| (nodules "
 "cotonneux)."
 
-#: ../../source/index.rst:56 2e1f8dcac27c43839712097941db1905
+#: ../../source/index.rst:58 2e1f8dcac27c43839712097941db1905
 msgid "Annotation Platform"
 msgstr "Plateforme d'Annotation"
 
-#: ../../source/index.rst:57 20ace0d4d2e44a538720b6138d5aabe3
+#: ../../source/index.rst:59 20ace0d4d2e44a538720b6138d5aabe3
 msgid ""
 "The web-based annotation platform used to annotate MAPLES-DR is also "
 "available on `GitHub <https://github.com/LIV4D/AnnotationPlatform>`_."
@@ -241,15 +231,15 @@ msgstr ""
 "La plateforme d'annotation utilisées pour annoter |MAPLES-DR| est "
 "accessible sur `GitHub <https://github.com/LIV4D/AnnotationPlatform>`_."
 
-#: ../../source/index.rst:60 7cc4f409501846d38928b830cef91d07
+#: ../../source/index.rst:62 7cc4f409501846d38928b830cef91d07
 msgid "Reference"
 msgstr "Bibliographie"
 
-#: ../../source/index.rst:66 c7233ff4635942abb79e93cbbff9991a
+#: ../../source/index.rst:68 c7233ff4635942abb79e93cbbff9991a
 msgid "Acknowledgements"
 msgstr "Remerciements"
 
-#: ../../source/index.rst:67 e5a682b842ec4814a3aab704b5737ea8
+#: ../../source/index.rst:69 e5a682b842ec4814a3aab704b5737ea8
 msgid ""
 "The LIV4D laboratory would like to thank Dr. Marie Carole Boucher, Dr. "
 "Michael H Brent, Dr. Renaud Duval as well as Dr. Karim Hammamji, Dr. "
@@ -266,7 +256,7 @@ msgstr ""
 "participation à une étude de variabilité inter-observateurs qui a permis "
 "d'évaluer la qualité des segmentations de lésions de |MAPLES-DR|."
 
-#: ../../source/index.rst:69 3380d9a3152b4dd2a416aca72932e54a
+#: ../../source/index.rst:71 3380d9a3152b4dd2a416aca72932e54a
 msgid ""
 "This study was funded by the Natural Science and Engineering Research "
 "Council of Canada as well as Diabetes Action Canada and FROUM (Fonds de "
@@ -277,7 +267,7 @@ msgstr ""
 "Canada et le :abbr:`FROUM (Fonds de recherche en ophtalmologie de "
 "l'Université de Montréal)`."
 
-#: ../../source/index.rst:71 8a0669029ade427b95a047842097f967
+#: ../../source/index.rst:73 8a0669029ade427b95a047842097f967
 msgid ""
 "The original MESSIDOR dataset  was kindly provided by the Messidor "
 "program partners (see `https://www.adcis.net/en/third-party/messidor/ "
@@ -286,4 +276,3 @@ msgstr ""
 "Le jeu de données d'images de fond d'œil est fourni par les partenaires "
 "du programme Messidor (voir `https://www.adcis.net/fr/logiciels-tiers"
 "/messidor-fr/ <https://www.adcis.net/fr/logiciels-tiers/messidor-fr/>`_)."
-

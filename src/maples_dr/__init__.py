@@ -9,7 +9,7 @@ if os.environ.get("MAPLES-DR_SILENT_IMPORT", None) is None:
     console.print(
         "[b]Thanks for using MAPLES-DR![/b]\n"
         "  When using this dataset in academic works,\n"
-        "  please cite: [u cyan link=https://arxiv.org/abs/2402.04258]https://arxiv.org/abs/2402.04258[/u cyan link]"
+        "  please cite: [u cyan link=https://doi.org/10.1038/s41597-024-03739-6]https://doi.org/10.1038/s41597-024-03739-6[/u cyan link]"
     )
 
 from .config import ImageFormat, InvalidConfigError, Preprocessing
