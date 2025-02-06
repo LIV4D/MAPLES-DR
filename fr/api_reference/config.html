@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAPLES-DR Configuration &mdash; Documentation MAPLES-DR 0.1alpha</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f27618dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Datasets" href="dataset.html" />
+    <link rel="prev" title="MAPLES-DR Quick API" href="quick_api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Le jeu de données MAPLES-DR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/python_library.html">Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">Démarrage Rapide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/messidor.html">Utiliser les images de MESSIDOR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Exemples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Exemple de visualisation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Définition de l'API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.config.DatasetConfig"><code class="docutils literal notranslate"><span class="pre">DatasetConfig</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.DatasetConfig.cache_path"><code class="docutils literal notranslate"><span class="pre">DatasetConfig.cache_path</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.DatasetConfig.image_format"><code class="docutils literal notranslate"><span class="pre">DatasetConfig.image_format</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.DatasetConfig.preprocessing"><code class="docutils literal notranslate"><span class="pre">DatasetConfig.preprocessing</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.DatasetConfig.resize"><code class="docutils literal notranslate"><span class="pre">DatasetConfig.resize</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.config.ImageFormat"><code class="docutils literal notranslate"><span class="pre">ImageFormat</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.ImageFormat.PIL"><code class="docutils literal notranslate"><span class="pre">ImageFormat.PIL</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.ImageFormat.RGB"><code class="docutils literal notranslate"><span class="pre">ImageFormat.RGB</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.ImageFormat.BGR"><code class="docutils literal notranslate"><span class="pre">ImageFormat.BGR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.ImageFormat.__new__"><code class="docutils literal notranslate"><span class="pre">ImageFormat.__new__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.config.Preprocessing"><code class="docutils literal notranslate"><span class="pre">Preprocessing</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.Preprocessing.NONE"><code class="docutils literal notranslate"><span class="pre">Preprocessing.NONE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.Preprocessing.CLAHE"><code class="docutils literal notranslate"><span class="pre">Preprocessing.CLAHE</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.Preprocessing.MEDIAN"><code class="docutils literal notranslate"><span class="pre">Preprocessing.MEDIAN</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.config.Preprocessing.__new__"><code class="docutils literal notranslate"><span class="pre">Preprocessing.__new__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.config.InvalidConfigError"><code class="docutils literal notranslate"><span class="pre">InvalidConfigError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">MAPLES-DR Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_reference/config.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="maples-dr-configuration">
+<h1>MAPLES-DR Configuration<a class="headerlink" href="#maples-dr-configuration" title="Lien vers cette rubrique"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.config.DatasetConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DatasetConfig</span></span><a class="headerlink" href="#maples_dr.config.DatasetConfig" title="Lien vers cette définition"></a></dt>
+<dd><p>Dataclass storing the configuration of the dataset.</p>
+<dl class="py property">
+<dt class="sig sig-object py" id="maples_dr.config.DatasetConfig.cache_path">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cache_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(disponible dans Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#maples_dr.config.DatasetConfig.cache_path" title="Lien vers cette définition"></a></dt>
+<dd><p>Return the path to the cache directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The path to the cache directory or None if the cache is disabled.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.config.DatasetConfig.image_format">
+<span class="sig-name descname"><span class="pre">image_format</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><span class="pre">ImageFormat</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PIL'</span></em><a class="headerlink" href="#maples_dr.config.DatasetConfig.image_format" title="Lien vers cette définition"></a></dt>
+<dd><p>Python format of the generated images. See <a class="reference internal" href="#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFormat</span></code></a> for the available options.</p>
+<p>By default: <a class="reference internal" href="#maples_dr.config.ImageFormat.PIL" title="maples_dr.config.ImageFormat.PIL"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ImageFormat.PIL</span></code></a> is used.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.config.DatasetConfig.preprocessing">
+<span class="sig-name descname"><span class="pre">preprocessing</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#maples_dr.config.Preprocessing" title="maples_dr.config.Preprocessing"><span class="pre">Preprocessing</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'none'</span></em><a class="headerlink" href="#maples_dr.config.DatasetConfig.preprocessing" title="Lien vers cette définition"></a></dt>
+<dd><p>Preprocessing algorithm applied on the fundus images.
+See <a class="reference internal" href="#maples_dr.config.Preprocessing" title="maples_dr.config.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">Preprocessing</span></code></a> for the available options.</p>
+<p>By default: <a class="reference internal" href="#maples_dr.config.Preprocessing.NONE" title="maples_dr.config.Preprocessing.NONE"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Preprocessing.NONE</span></code></a> (no preprocessing) is applied.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.config.DatasetConfig.resize">
+<span class="sig-name descname"><span class="pre">resize</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#maples_dr.config.DatasetConfig.resize" title="Lien vers cette définition"></a></dt>
+<dd><p>Size of the generated images.</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">int</span></code>: the images are resized to a square of the given size;</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">True</span></code>: the original MAPLES-DR resolution of 1500x1500 px is kept;</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">False</span></code>: keep the original MESSIDOR resolution if MESSIDOR path is configured,
+otherwise fallback to MAPLES-DR original resolution.</p></li>
+</ul>
+<p>By default: <code class="docutils literal notranslate"><span class="pre">True</span></code> (use MAPLES-DR 1500x1500 px resolution).</p>
+</dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.config.ImageFormat">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ImageFormat</span></span><a class="headerlink" href="#maples_dr.config.ImageFormat" title="Lien vers cette définition"></a></dt>
+<dd><p>String Enum of possible image formats for fundus images and biomarker masks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.config.ImageFormat.PIL">
+<span class="sig-name descname"><span class="pre">PIL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'PIL'</span></em><a class="headerlink" href="#maples_dr.config.ImageFormat.PIL" title="Lien vers cette définition"></a></dt>
+<dd><p>Images are formatted as <a class="reference external" href="https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image" title="(disponible dans Pillow (PIL Fork) v11.1.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">PIL.Image.Image</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.config.ImageFormat.RGB">
+<span class="sig-name descname"><span class="pre">RGB</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'rgb'</span></em><a class="headerlink" href="#maples_dr.config.ImageFormat.RGB" title="Lien vers cette définition"></a></dt>
+<dd><p>Images are formatted as numpy array.
+Biomarkers masks have a shape of <code class="docutils literal notranslate"><span class="pre">(height,</span> <span class="pre">width)</span></code> and
+fundus image have a shape of <code class="docutils literal notranslate"><span class="pre">(height,</span> <span class="pre">width,</span> <span class="pre">3)</span></code> with a <code class="docutils literal notranslate"><span class="pre">RGB</span></code> channel order.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.config.ImageFormat.BGR">
+<span class="sig-name descname"><span class="pre">BGR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'bgr'</span></em><a class="headerlink" href="#maples_dr.config.ImageFormat.BGR" title="Lien vers cette définition"></a></dt>
+<dd><p>Images are formatted as numpy array.
+Biomarkers masks have a shape of <code class="docutils literal notranslate"><span class="pre">(height,</span> <span class="pre">width)</span></code> and
+fundus image have a shape of <code class="docutils literal notranslate"><span class="pre">(height,</span> <span class="pre">width,</span> <span class="pre">3)</span></code> with a <code class="docutils literal notranslate"><span class="pre">BGR</span></code> channel order.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.config.ImageFormat.__new__">
+<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.config.ImageFormat.__new__" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.config.Preprocessing">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Preprocessing</span></span><a class="headerlink" href="#maples_dr.config.Preprocessing" title="Lien vers cette définition"></a></dt>
+<dd><p>String Enum of possible preprocessing algorithms applied on the fundus images.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.config.Preprocessing.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'none'</span></em><a class="headerlink" href="#maples_dr.config.Preprocessing.NONE" title="Lien vers cette définition"></a></dt>
+<dd><p>No preprocessing.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.config.Preprocessing.CLAHE">
+<span class="sig-name descname"><span class="pre">CLAHE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'clahe'</span></em><a class="headerlink" href="#maples_dr.config.Preprocessing.CLAHE" title="Lien vers cette définition"></a></dt>
+<dd><p>Preprocessing based on Contrast Limited Adaptive Histogram Equalization (CLAHE).</p>
+<p>See <a class="reference internal" href="preprocessing.html#maples_dr.preprocessing.clahe_preprocessing" title="maples_dr.preprocessing.clahe_preprocessing"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.preprocessing.clahe_preprocessing()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.config.Preprocessing.MEDIAN">
+<span class="sig-name descname"><span class="pre">MEDIAN</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'median'</span></em><a class="headerlink" href="#maples_dr.config.Preprocessing.MEDIAN" title="Lien vers cette définition"></a></dt>
+<dd><p>Preprocessing based on median filtering.</p>
+<p>See <a class="reference internal" href="preprocessing.html#maples_dr.preprocessing.median_preprocessing" title="maples_dr.preprocessing.median_preprocessing"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.preprocessing.median_preprocessing()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.config.Preprocessing.__new__">
+<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.config.Preprocessing.__new__" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.config.InvalidConfigError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">InvalidConfigError</span></span><a class="headerlink" href="#maples_dr.config.InvalidConfigError" title="Lien vers cette définition"></a></dt>
+<dd><p>Exception raised when the configuration is invalid.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="quick_api.html" class="btn btn-neutral float-left" title="MAPLES-DR Quick API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="dataset.html" class="btn btn-neutral float-right" title="Datasets" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    fr
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Langages</dt>
+      
+        
+        <dd><a href="../../en/api_reference/config.html">en</a></dd>
+        
+      
+         <strong> 
+        <dd><a href="../../fr/api_reference/config.html">fr</a></dd>
+         </strong> 
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

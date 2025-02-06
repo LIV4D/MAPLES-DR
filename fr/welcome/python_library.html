@@ -1,0 +1,250 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Python pour MAPLES-DR &mdash; Documentation MAPLES-DR 0.1alpha</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f27618dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Démarrage Rapide" href="quickstart.html" />
+    <link rel="prev" title="Description du jeu de données MAPLES-DR" href="dataset_description.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Le jeu de données MAPLES-DR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Python library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#quick-start">Guide de démarrage rapide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examples">Exemples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-reference">Définition de l’API (non-traduite)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Démarrage Rapide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="messidor.html">Utiliser les images de MESSIDOR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Exemples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Exemple de visualisation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Définition de l'API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Python pour MAPLES-DR</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/welcome/python_library.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="maples-dr-python-library">
+<h1>API Python pour MAPLES-DR<a class="headerlink" href="#maples-dr-python-library" title="Lien vers cette rubrique"></a></h1>
+<p>Le paquet <a class="reference external" href="https://github.com/LIV4D/MAPLES-DR/">maples_dr</a> documenté ici fournit une bibliothèque python pour faciliter l’utilisation de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>, en particulier pour les applications d’apprentissage automatique.</p>
+<section id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Lien vers cette rubrique"></a></h2>
+<section id="quick-start">
+<h3>Guide de démarrage rapide<a class="headerlink" href="#quick-start" title="Lien vers cette rubrique"></a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="quickstart.html"><span class="doc">Installation &amp; Utilisation Simple</span></a></p></li>
+<li><p><a class="reference internal" href="messidor.html"><span class="doc">Utiliser les images de MESSIDOR</span></a></p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="examples">
+<h3>Exemples<a class="headerlink" href="#examples" title="Lien vers cette rubrique"></a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../examples/visualisation.html"><span class="doc">Exemple de visualisation</span></a></p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="api-reference">
+<h3>Définition de l’API (non-traduite)<a class="headerlink" href="#api-reference" title="Lien vers cette rubrique"></a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference internal" href="../api_reference/quick_api.html"><span class="doc">MAPLES-DR Quick API</span></a></p></li>
+<li><p><a class="reference internal" href="../api_reference/config.html"><span class="doc">MAPLES-DR Configuration</span></a></p></li>
+<li><p><a class="reference internal" href="../api_reference/dataset.html"><span class="doc">Datasets</span></a></p></li>
+<li><p><a class="reference internal" href="../api_reference/loader.html"><span class="doc">Datasets Loader</span></a></p></li>
+<li><p><a class="reference internal" href="../api_reference/preprocessing.html"><span class="doc">Fundus Preprocessing</span></a></p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="dataset_description.html" class="btn btn-neutral float-left" title="Description du jeu de données MAPLES-DR" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="quickstart.html" class="btn btn-neutral float-right" title="Démarrage Rapide" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    fr
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Langages</dt>
+      
+        
+        <dd><a href="../../en/welcome/python_library.html">en</a></dd>
+        
+      
+         <strong> 
+        <dd><a href="../../fr/welcome/python_library.html">fr</a></dd>
+         </strong> 
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

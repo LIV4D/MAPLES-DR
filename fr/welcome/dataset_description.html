@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Description du jeu de données MAPLES-DR &mdash; Documentation MAPLES-DR 0.1alpha</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f27618dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="API Python pour MAPLES-DR" href="python_library.html" />
+    <link rel="prev" title="Documentation du jeu de données MAPLES-DR" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Le jeu de données MAPLES-DR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dataset Description</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#labels-description">Description des annotations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#segmentation-of-anatomical-structures">Carte de segmentation des structures rétiniennes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#segmentation-of-red-lesions">Segmentation des lésions rouges</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#segmentation-of-bright-lesions">Segmentation des lésions claires</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dr-and-me-grades">Grades de <abbr title="Diabetic Retinopathy">DR</abbr> et de <abbr title="Macular Edema">ME</abbr></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-records">Structure des données</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">MAPLES-DR.zip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">AdditionalData.zip</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#annotation-procedure">Procédure d’annotation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">Bibliographie</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python_library.html">Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Démarrage Rapide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="messidor.html">Utiliser les images de MESSIDOR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Exemples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Exemple de visualisation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Définition de l'API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Description du jeu de données MAPLES-DR</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/welcome/dataset_description.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="maples-dr-dataset-description">
+<h1>Description du jeu de données MAPLES-DR<a class="headerlink" href="#maples-dr-dataset-description" title="Lien vers cette rubrique"></a></h1>
+<p>Le projet a été initialement motivé, en 2018, par l’absence de grands ensembles de données publics de fonds d’œil fournissant des segmentations au niveau du pixel des structures anatomiques et pathologiques de la rétine. Ces ensembles de données sont pourtant particulièrement précieux dans un contexte où les modèles d’apprentissage profond qui atteignent l’état de l’art du diagnostic automatique de la <abbr title="Diabetic Retinopathy">DR</abbr> sont critiqués pour leur manque d’explicabilité ou d’interprétabilité.</p>
+<p>Nous avons conçu <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> pour combler cette lacune en fournissant des cartes de segmentation des structures anatomiques (disque et cupule optique, macula, vaisseaux) et pathologiques (micro-anévrismes, hémorragies, néovascularisations, exsudats, nodules cotonneux, drusens) pour près de 200 images du jeu de données public <a class="reference external" href="https://www.adcis.net/fr/logiciels-tiers/messidor-fr/">MESSIDOR</a>. Les annotations ont été réalisées par une équipe de sept rétinologues seniors des hôpitaux de Toronto et Montréal (Canada).</p>
+<p><abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> inclut également des grades pour la <abbr title="Diabetic Retinopathy">DR</abbr> et <abbr title="Macular Edema">ME</abbr> qui suivent les directives canadiennes de dépistage en télémédecine <a class="footnote-reference brackets" href="#footcite-boucher2020" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Ces directives sont plus proches des standards internationaux <a class="footnote-reference brackets" href="#footcite-wilkinson2003proposed" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#footcite-zachariah2015grading" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> que les diagnostics fournis par MESSIDOR.</p>
+<section id="labels-description">
+<h2>Description des annotations<a class="headerlink" href="#labels-description" title="Lien vers cette rubrique"></a></h2>
+<figure class="align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/MAPLES-DR_Content_Overview.svg"><img alt="../_images/MAPLES-DR_Content_Overview.svg" src="../_images/MAPLES-DR_Content_Overview.svg" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Aperçu des annotations de MAPLES-DR.</span><a class="headerlink" href="#id11" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+<section id="segmentation-of-anatomical-structures">
+<h3>Carte de segmentation des structures rétiniennes<a class="headerlink" href="#segmentation-of-anatomical-structures" title="Lien vers cette rubrique"></a></h3>
+<p>Les structures anatomiques rétiniennes sont évidemment présentes dans toutes les images, y compris les images saines, mais leur apparence et leur proximité avec les lésions fournissent des informations précieuses pour le diagnostic de la <abbr title="Diabetic Retinopathy">DR</abbr>.</p>
+<p>Les <strong>vaisseaux</strong> sont indicatifs du stade de la <abbr title="Diabetic Retinopathy">DR</abbr> : une augmentation de la tortuosité artériolaire est associée aux stades légers et modérés <a class="footnote-reference brackets" href="#footcite-sasongkoretinalvasculartortuosity2011" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>, tandis que le rétrécissement et la dilatation veineuse sont des symptômes des stades prolifératifs sévères. L’arbre vasculaire est également utilisé comme référence pour évaluer la lisibilité d’une image.</p>
+<p>Le <strong>disque optique</strong>, la <strong>cupule optique</strong> et la <strong>macula</strong> sont également inclus dans <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>. Leur objectif pour le diagnostic est double. Premièrement, le <abbr title="Macular Edema">ME</abbr> est classée en comptant le nombre de lésions dans un ou deux diamètres de disque optique de la macula, ce qui implique l’annotation de ces deux structures anatomiques. De même, les définitions cliniques de la gravité de la <abbr title="Diabetic Retinopathy">DR</abbr> distinguent souvent quatre quadrants en divisant la rétine horizontalement par une ligne passant par la fovéa et le disque optique (division supérieure / inférieure) et verticalement par une ligne passant par la fovéa (division temporale / nasale) <a class="footnote-reference brackets" href="#footcite-purvesretinotopicrepresentationvisual2001" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. Deuxièmement, les positions des lésions par rapport à ces structures saines peuvent indiquer différentes étiologies et gravités. Par exemple, les directives cliniques distinguent parfois la néovascularisation du disque et les autres néovascularisations.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Un échantillon du jeu d’entraînement est centré sur le disque optique plutôt que sur la macula qui n’est pas visible sur cette image. Aucune segmentation de la macula n’est donc fournie pour cette image.</p>
+<p>De même, quatre échantillons de l’ensemble d’entraînement et deux échantillons de l’ensemble de test ne disposent pas d’une segmentation de la cupule optique car leurs frontières ont été jugées trop ambiguës par les rétinologues.</p>
+<p>Accéder à ces cartes de segmentation renverra un masque vide et affichera un avertissement. Pour exclure ces images du jeu de données utilisez : func:<cite>maples_dr.configure(exclude_missing_macula=True) &lt;maples_dr.configure&gt;</cite> ou <a class="reference internal" href="../api_reference/quick_api.html#maples_dr.configure" title="maples_dr.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.configure(exclude_missing_cup=True)</span></code></a>.</p>
+</div>
+</section>
+<section id="segmentation-of-red-lesions">
+<h3>Segmentation des lésions rouges<a class="headerlink" href="#segmentation-of-red-lesions" title="Lien vers cette rubrique"></a></h3>
+<p>Le diabète affecte les parois des vaisseaux, causant des dysfonctionnements micro-vasculaires qui se manifestent dans la rétine sous forme de micro-anévrismes, d’hémorragies, d’anomalies micro-vasculaires rétiniennes (<abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr>), ou de néovaisseaux. Ces structures pathologiques sont appelées « lésions rouges ».</p>
+<p>Les <strong>micro-anévrismes</strong> apparaissent comme de petites dilatations circulaires des capillaires. Ils sont un symptôme précoce de dysfonctionnement micro-vasculaire et sont couramment utilisés pour détecter une <abbr title="Diabetic Retinopathy">DR</abbr> légère.</p>
+<p>Les <strong>hémorragies rétiniennes</strong> se développent dans les stades plus avancés de la pathologie et sont divisées en hémorragies ponctuées (dot hemorrhages) ou en taches (blot hemorrhages). Les hémorragies ponctuées apparaissent comme des points circulaires et bien définies et sont généralement causées par la rupture d’un micro-anévrisme. Les distinguer des micro-anévrismes est difficile, et seule l’angiographie rétinienne (FA) peut les différencier avec certitude. Les hémorragies en taches sont plus grandes et ont des bords moins définis. Dans <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>, les deux ont été annotées comme des <em>hémorragies</em>. Des hémorragies superficielles (en forme de flamme) et des hémorragies vitreuses peuvent aussi apparaître dans les stades les plus sévères de la rétinopathie, aucune n’a été découverte dans l’ensemble de données MAPLES-DR.</p>
+<p>À partir du stade modéré non prolifératif (R2), des vaisseaux rétiniens intra-rétiniens irréguliers peuvent apparaître, appelés <abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr>. Le stade suivant de la maladie (R3) coïncide avec des changements intra-rétiniens encore plus importants, qui sont des prédicteurs de l’aggravation de la maladie. En effet, la présence de <abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr> indique un risque de 50% de développer une <strong>néovascularisation</strong> dans l’année qui suit, ce qui correspond à une transition vers le stade prolifératif de la maladie. Les fuites des néovascularisations importantes sont responsables d’hémorragies pré-rétiniennes et vitreuses qui peuvent causer une perte visuelle majeure. Sur l’image du fond d’œil, les néovascularisations sont difficiles à distinguer des <abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr> ; cependant, l’angiographie à la fluorescéine peut révéler une fuite qui sert de facteur discriminant entre les deux. En l’absence de cette modalité d’imagerie, les <abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr> ne sont pas différenciées des néovascularisations dans <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>.</p>
+</section>
+<section id="segmentation-of-bright-lesions">
+<h3>Segmentation des lésions claires<a class="headerlink" href="#segmentation-of-bright-lesions" title="Lien vers cette rubrique"></a></h3>
+<p>Dans les stades sévères de la <abbr title="Diabetic Retinopathy">DR</abbr>, la rétine s’épaissit (formation d’œdème) et des <strong>exsudats</strong> durs peuvent apparaître, causant potentiellement une perte d’acuité visuelle. Ces dépôts proviennent généralement de fuites des capillaires endommagés. De plus, en cas d’ischémie, on peut observer un blocage du transport axonal (le mouvement des mitochondries, des lipides, des protéines et d’autres substances à l’intérieur du corps de l’axone, permettant son renouvellement) dans la couche des fibres du nerf optique.</p>
+<p>Cela peut conduire à l’apparition de lésions connues sous le nom de <strong>nodules cotonneux</strong> (<abbr title="Cotton Wool Spots">CWS</abbr>) résultant d’accumulations axoplasmiques. Ils sont caractérisés par leur apparence blanche et leurs bords flous. Alors que leur étiologie principale est la rétinopathie diabétique, les <abbr title="Cotton Wool Spots">CWS</abbr> peuvent également être observés dans d’autres maladies vasculaires (hypertension artérielle systémique, obstruction veineuse, coagulopathies…)</p>
+<p>Enfin, <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> fournit également des annotations des <strong>drusens</strong>. Ces lésions sont plus couramment associées à la dégénérescence maculaire liée à l’âge (<abbr title="Age-related Macular Degeneration">AMD</abbr>), avec une prévalence variant de 10% (cinquième décennie de vie) à 35% (septième décennie). Ils apparaissent généralement autour de la macula et sont histologiquement situés à l’interface avec l’épithélium pigmentaire rétinien (RPE). Il est supposé qu’ils proviennent de produits dégénératifs des cellules du RPE et sont composés de lipides et de glycoprotéines. La classification des stades précoces de <abbr title="Age-related Macular Degeneration">AMD</abbr> s’appuie sur l’estimation de la taille des drusens.</p>
+</section>
+<section id="dr-and-me-grades">
+<span id="dr-me-grades"></span><h3>Grades de <abbr title="Diabetic Retinopathy">DR</abbr> et de <abbr title="Macular Edema">ME</abbr><a class="headerlink" href="#dr-and-me-grades" title="Lien vers cette rubrique"></a></h3>
+<p>Les grades de <abbr title="Diabetic Retinopathy">DR</abbr> et de <abbr title="Macular Edema">ME</abbr> de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> suivent les directives développées pour le dépistage de la <abbr title="Diabetic Retinopathy">DR</abbr> par télémédecine au Canada. Ces directives distinguent six grades pour la <abbr title="Diabetic Retinopathy">DR</abbr>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>R0</strong>: absente</p></li>
+<li><p><strong>R1</strong>: légère</p></li>
+<li><p><strong>R2</strong>: modérée</p></li>
+<li><p><strong>R3</strong>: sévère</p></li>
+<li><p><strong>R4A</strong>: proliférative</p></li>
+<li><p><strong>R4S</strong>: proliférative traitée et stable</p></li>
+<li><p><strong>R6</strong>: qualité insuffisante pour un diagnostic fiable</p></li>
+</ul>
+</div></blockquote>
+<p>et trois pour la <abbr title="Macular Edema">ME</abbr> :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>M0</strong>: absente</p></li>
+<li><p><strong>M1</strong>: légère</p></li>
+<li><p><strong>M2</strong>: modérée</p></li>
+<li><p><strong>M6</strong>: qualité insuffisante pour un diagnostic fiable</p></li>
+</ul>
+</div></blockquote>
+<p>Les grades sont définis par le nombre et la position des lésions rétiniennes rouges et claires visibles. Chaque grade est associé à un plan d’action recommandé (depuis une nouvelle visite dans deux ans pour les cas légers, à une prise en charge immédiate par un ophtalmologiste pour les cas les plus sévères).</p>
+<p>Une définition détaillée du système de gradation est accessible dans <a class="reference external" href="http://doi.org/10.1016/j.jcjo.2020.01.001">cet article</a> <a class="footnote-reference brackets" href="#footcite-boucher2020" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+</section>
+</section>
+<section id="data-records">
+<h2>Structure des données<a class="headerlink" href="#data-records" title="Lien vers cette rubrique"></a></h2>
+<p>Le jeu de données <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> est distribué sous la forme de deux archives : <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a> et <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a>. La première contient les données finales de MAPLES-DR (cartes de segmentation et grades). La seconde contient des informations complémentaires collectées lors du processus d’annotation (temps, commentaires) ainsi que les données intermédiaires (cartes de pré-annotation, grades avant consensus…).</p>
+<section id="id7">
+<h3>MAPLES-DR.zip<a class="headerlink" href="#id7" title="Lien vers cette rubrique"></a></h3>
+<p><a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a> est l’archive principale du jeu de données. Elle est divisée en deux dossiers <cite>train/</cite> et <cite>test/</cite>, chacun contenant un fichier <cite>diagnosis.csv</cite> avec les grades finaux de <abbr title="Diabetic Retinopathy">DR</abbr> et de <abbr title="Macular Edema">ME</abbr> ainsi que 12 sous-dossiers : un pour chaque biomarqueur. Ces dossiers stockent les cartes de segmentation sous forme d’images binaires png nommées suivant la nomenclature de MESSIDOR (e.g. <cite>20051019_38557_0100_PP.png</cite>). L’ensemble d’entraînement est composé de 138 images, tandis que l’ensemble de test en contient 60.</p>
+<figure class="align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/MAPLES-DR_Data_Record_main.svg"><img alt="../_images/MAPLES-DR_Data_Record_main.svg" src="../_images/MAPLES-DR_Data_Record_main.svg" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Aperçu de l’archive principale de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> : <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a>.</span><a class="headerlink" href="#id12" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>L’image <code class="docutils literal notranslate"><span class="pre">20051020_55346_0100_PP</span></code> est centrée sur le disque optique et sa macula n’est pas visible. Pour éviter toute confusion, <strong>la carte de segmentation de sa macula a été retirée</strong> de <code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip/train/Macula/</span></code> qui ne contient donc que 137 images.</p>
+<p>De plus, pour six images (4 dans l’ensemble d’entraînement et 2 dans l’ensemble de test), les frontières de la cupule optique ont été jugées trop ambiguës par les rétinologues pour une annotation correcte. <strong>Aucune carte de segmentation de la cupule optique n’est donc fournie pour ces images</strong> réduisant le nombre d’images dans <code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip/train/OpticCup/</span></code> et <code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip/test/OpticCup/</span></code> à respectivement 134 et 58 images.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Les cartes de segmentation de <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a> ont été redimensionnées pour correspondre à la résolution des images originales de MESSIDOR, qui varient en dimensions (allant de 960x1440 à 1536x2304 pixels). Pour les applications nécessitant une résolution homogène (par exemple l’entraînement de réseau de neurones), nous vous conseillons d’utiliser le paquet python <a class="reference internal" href="python_library.html"><span class="doc">maples_dr</span></a> pour recadrer et redimensionner les images et les cartes de segmentation à une résolution commune.</p>
+</div>
+</section>
+<section id="id8">
+<h3>AdditionalData.zip<a class="headerlink" href="#id8" title="Lien vers cette rubrique"></a></h3>
+<p>La seconde archive contient toutes les informations et données additionnelles collectées lors du processus d’annotation. C’est également la seule archive téléchargée et utilisée par la bibliothèque <a class="reference internal" href="python_library.html"><span class="doc">maples_dr</span></a>. En effet, parce que <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a> inclut toutes les annotations et pré-annotations dans la résolution à laquelle elles ont été annotées (1500x1500 pixels), ainsi que les diagnostics individuels notés par chaque rétinologue, toutes les données propre à l’archive <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a> peuvent en être dérivées.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Note sur les doublons</strong> : initialement, <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> comptait des annotations pour 200 images. Mais à la fin de la campagne d’annotation, nous avons pris connaissance que deux de ces images faisaient parties des doublons de l’ensemble de données original MESSIDOR (des images dupliquées, stockées sous deux noms différents). Ces 2 doublons ont été retirés de <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a>, mais ont été conservés dans <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a> à des fins de transparence.</p>
+</div>
+<figure class="align-center" id="id13">
+<a class="reference internal image-reference" href="../_images/MAPLES-DR_Data_Record_additional.svg"><img alt="../_images/MAPLES-DR_Data_Record_additional.svg" src="../_images/MAPLES-DR_Data_Record_additional.svg" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Aperçu de l’archive complémentaire : <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a>.</span><a class="headerlink" href="#id13" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+<p>L’archive <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a> contient les fichiers suivants :</p>
+<ul class="simple">
+<li><p><strong>biomarkers_annotations_infos.xls</strong>: identifie quel rétinologue (<code class="docutils literal notranslate"><span class="pre">Retinologist</span></code>) a réalisé l’annotation d’une catégorie de biomarqueur donnée, le temps (<code class="docutils literal notranslate"><span class="pre">Time</span></code>) passé sur chaque annotation (en secondes), les commentaires (<code class="docutils literal notranslate"><span class="pre">Comment</span></code>) laissés, et le rang de l’annotation (<code class="docutils literal notranslate"><span class="pre">Annotation#</span></code>: 1 pour la première image annotée, 200 pour la dernière).</p></li>
+<li><p><strong>diagnosis_infos.xls</strong>: contient les grades de <abbr title="Diabetic Retinopathy">DR</abbr> et de <abbr title="Macular Edema">ME</abbr> annotés par chaque rétinologue ainsi que le grade consensuel atteint après délibération. Il inclut également les commentaires laissés par les rétinologues lors du diagnostic.</p></li>
+<li><p><strong>MESSIDOR-ROIs.csv</strong>: fournit les regions d’intérêt extraites des images de MESSIDOR pour obtenir des régions carrées et sans bordures. Les coordonnées des régions d’intérêt sont définies par les coordonnées de leur coin supérieur gauche (<code class="docutils literal notranslate"><span class="pre">x0</span></code>, <code class="docutils literal notranslate"><span class="pre">y0</span></code>) et inférieur droit (<code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">y1</span></code>) en pixels. Ce fichier inclut également la résolution originale en pixels des images de MESSIDOR : <code class="docutils literal notranslate"><span class="pre">H</span></code> et <code class="docutils literal notranslate"><span class="pre">W</span></code> (resp. la hauteur et la largeur).</p></li>
+<li><p><strong>dataset_record.yaml</strong>: un fichier yaml contenant le nom des biomarqueurs (<code class="docutils literal notranslate"><span class="pre">biomarkers</span></code>), la définition des ensembles d’entraînement et de test  (<code class="docutils literal notranslate"><span class="pre">train</span></code> et <code class="docutils literal notranslate"><span class="pre">test</span></code>) sous forme de listes de noms d’images, et le nom des <code class="docutils literal notranslate"><span class="pre">doublons</span></code> associés au nom de leur « jumeau » dans l’ensemble d’entraînement de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>.</p></li>
+<li><p><strong>annotations/</strong>: ce dossier contient 12 sous-dossiers (un pour chaque biomarqueur), qui contiennent à leur tour les 200 cartes de segmentation annotées par les rétinologues (entraînement, test et doublons confondues). Une carte de segmentation a été retirée du dossier <code class="docutils literal notranslate"><span class="pre">Macula</span></code> et 6 ont été retirées du dossier <code class="docutils literal notranslate"><span class="pre">OpticCup</span></code> (voir avertissement ci-dessus).  Toutes les cartes de segmentation sont « Datasestockées sous forme de masques binaires png dans la résolution à laquelle elles furent annotées (1500x1500 pixels) et en utilisant les régions d’intérêt décrites dans le fichier <code class="docutils literal notranslate"><span class="pre">MESSIDOR-ROIs.csv</span></code>.</p></li>
+<li><p><strong>pre_annotations/</strong>: ce dossier contient les segmentations automatiques des vaisseaux, des exsudats, des hémorragies et des micro-anévrismes fournies comme pré-annotations aux rétinologues.</p></li>
+</ul>
+</section>
+</section>
+<section id="annotation-procedure">
+<h2>Procédure d’annotation<a class="headerlink" href="#annotation-procedure" title="Lien vers cette rubrique"></a></h2>
+<p>La procédure d’annotation a été co-conçue avec l’équipe de rétinologues pour répondre à un triple objectif :</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Fournir un outil d’annotation intuitif mais efficace pour la classification et la segmentation des biomarqueurs dans les images de fond d’œil.</p></li>
+<li><p>Permettre un effort collaboratif sur des annotations communes malgré la distance géographique entre les rétinologues et le temps limité que chacun pouvait consacrer à ce programme.</p></li>
+<li><p>Concevoir un protocole d’annotation « scalable », capable d’être étendu à des campagnes d’annotation beaucoup plus ambitieuses, telles que l’étiquetage de grandes bases de données canadiennes de télémédecine contenant des dizaines de milliers d’images.</p></li>
+</ol>
+</div></blockquote>
+<p>Pour relever ces défis, nous avons développé une plateforme d’annotation web personnalisée permettant le fonctionnement suivant : les annotateurs experts peuvent accéder au portail Web à tout moment pour consulter et modifier les annotations avec des outils de dessin spécialisés ; ces annotations et les informations associées (temps d’annotation, commentaires) sont centralisées et stockées dans une base de données sécurisée hébergée sur notre serveur de laboratoire ; en tant qu’équipe de recherche, nous attribuons des tâches aux annotateurs, surveillons les progrès et exportons les annotations via une API Python. La plateforme d’annotation (portail, outils d’annotation, serveur backend et API Python) ainsi que le matériel de formation pour les annotateurs sont disponibles sur <a class="reference external" href="https://github.com/LIV4D/AnnotationPlatform">GitHub</a>.</p>
+<p>Pour plus de détails sur le processus d’annotation, veuillez vous référer à l’article <a class="reference external" href="https://arxiv.org/abs/2402.04258">MAPLES-DR</a> <a class="footnote-reference brackets" href="#footcite-maples-dr" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="references">
+<h2>Bibliographie<a class="headerlink" href="#references" title="Lien vers cette rubrique"></a></h2>
+<div class="docutils container" id="id10">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-boucher2020" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id6">2</a>)</span>
+<p>M.C. Boucher, J. Qian, M.H. Brent, D.T. Wong, T. Sheidow, R. Duval, A. Kherani, R. Dookeran, D. Maberley, A. Samad, and V. Chaudhary. Evidence-based Canadian guidelines for tele-retina screening for diabetic retinopathy: recommendations from the Canadian Retina Research Network (CR2N) Tele-Retina Steering Committee. <em>Canadian Journal of Ophthalmology</em>, 55(1):14–24, feb 2020. <a class="reference external" href="https://doi.org/10.1016/j.jcjo.2020.01.001">doi:10.1016/j.jcjo.2020.01.001</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-wilkinson2003proposed" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Charles P Wilkinson, Frederick L Ferris III, Ronald E Klein, Paul P Lee, Carl David Agardh, Matthew Davis, Diana Dills, Anselm Kampik, R Pararajasegaram, Juan T Verdaguer, and others. Proposed international clinical diabetic retinopathy and diabetic macular edema disease severity scales. <em>Ophthalmology</em>, 110(9):1677–1682, 2003.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-zachariah2015grading" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Sonia Zachariah, William Wykes, and David Yorston. Grading diabetic retinopathy (DR) using the Scottish grading protocol. <em>Community Eye Health</em>, 28(92):72, 2015.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-sasongkoretinalvasculartortuosity2011" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>M. B. Sasongko, T. Y. Wong, T. T. Nguyen, C. Y. Cheung, J. E. Shaw, and J. J. Wang. Retinal vascular tortuosity in persons with diabetes and diabetic retinopathy. <em>Diabetologia</em>, 54(9):2409–2416, September 2011. <a class="reference external" href="https://doi.org/10.1007/s00125-011-2200-y">doi:10.1007/s00125-011-2200-y</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-purvesretinotopicrepresentationvisual2001" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>Dale Purves, George J. Augustine, David Fitzpatrick, Lawrence C. Katz, Anthony-Samuel LaMantia, James O. McNamara, and S. Mark Williams. The Retinotopic Representation of the Visual Field. In <em>Neuroscience</em>. Sinauer Associates, 2nd edition, 2001.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-maples-dr" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">6</a><span class="fn-bracket">]</span></span>
+<p>Gabriel Lepetit-Aimon, Clément Playout, Marie Carole Boucher, Renaud Duval, Michael H Brent, and Farida Cheriet. Maples-dr: messidor anatomical and pathological labels for explainable screening of diabetic retinopathy. <em>Scientific Data</em>, 11(1):914, 08 2024. <a class="reference external" href="https://doi.org/10.1038/s41597-024-03739-6">doi:10.1038/s41597-024-03739-6</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Documentation du jeu de données MAPLES-DR" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="python_library.html" class="btn btn-neutral float-right" title="API Python pour MAPLES-DR" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    fr
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Langages</dt>
+      
+        
+        <dd><a href="../../en/welcome/dataset_description.html">en</a></dd>
+        
+      
+         <strong> 
+        <dd><a href="../../fr/welcome/dataset_description.html">fr</a></dd>
+         </strong> 
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

@@ -1,0 +1,471 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datasets Loader &mdash; Documentation MAPLES-DR 0.1alpha</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f27618dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Fundus Preprocessing" href="preprocessing.html" />
+    <link rel="prev" title="Datasets" href="dataset.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Le jeu de données MAPLES-DR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/python_library.html">Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">Démarrage Rapide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/messidor.html">Utiliser les images de MESSIDOR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Exemples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Exemple de visualisation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Définition de l'API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Datasets</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Datasets Loader</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.loader.DatasetLoader"><code class="docutils literal notranslate"><span class="pre">DatasetLoader</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.__init__"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.cfg"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.cfg</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.check_maples_dr_integrity"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.check_maples_dr_integrity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.clear_cache"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.clear_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.clear_download_cache"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.clear_download_cache()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.configure"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.configure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.discover_messidor_images"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.discover_messidor_images()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.ensure_configured"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.ensure_configured()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.image_names"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.image_names()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.is_biomarker_segmented"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.is_biomarker_segmented()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.is_configured"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.is_configured()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.load_biomarkers_annotation_infos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.load_dataset"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.load_dataset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.load_dataset_record_and_rois"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.load_dataset_record_and_rois()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.load_maples_dr_diagnosis"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.load_maples_dr_diagnosis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.loader.DatasetLoader.maples_dr_folder"><code class="docutils literal notranslate"><span class="pre">DatasetLoader.maples_dr_folder</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.loader.NotConfiguredError"><code class="docutils literal notranslate"><span class="pre">NotConfiguredError</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Datasets Loader</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_reference/loader.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="datasets-loader">
+<h1>Datasets Loader<a class="headerlink" href="#datasets-loader" title="Lien vers cette rubrique"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DatasetLoader</span></span><a class="headerlink" href="#maples_dr.loader.DatasetLoader" title="Lien vers cette définition"></a></dt>
+<dd><p>Loader for MAPLES-DR dataset.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.__init__" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.cfg">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">cfg</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="config.html#maples_dr.config.DatasetConfig" title="maples_dr.config.DatasetConfig"><span class="pre">DatasetConfig</span></a></em><a class="headerlink" href="#maples_dr.loader.DatasetLoader.cfg" title="Lien vers cette définition"></a></dt>
+<dd><p>Return the default configuration of the loaded dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.check_maples_dr_integrity">
+<span class="sig-name descname"><span class="pre">check_maples_dr_integrity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">biomarkers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">images_names</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.check_maples_dr_integrity" title="Lien vers cette définition"></a></dt>
+<dd><p>Check if the MAPLES-DR dataset contains all segmentation maps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<em>Path</em>)</p></li>
+<li><p><strong>biomarkers</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(disponible dans Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em>)</p></li>
+<li><p><strong>images_names</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(disponible dans Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.clear_cache">
+<span class="sig-name descname"><span class="pre">clear_cache</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.clear_cache" title="Lien vers cette définition"></a></dt>
+<dd><p>Clear the cache.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.clear_download_cache">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">clear_download_cache</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.clear_download_cache" title="Lien vers cette définition"></a></dt>
+<dd><p>Clear the cache where the MAPLES-DR archive is downloaded and extracted.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.configure">
+<span class="sig-name descname"><span class="pre">configure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maples_dr_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'UNSET'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">messidor_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'UNSET'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'UNSET'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_missing_macula</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">exclude_missing_cup</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">disable_check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.configure" title="Lien vers cette définition"></a></dt>
+<dd><p>Configure the default behavior of the MAPLES-DR dataset.</p>
+<p>Any parameters left to None (or “UNSET” for the first two paths) will leave the current configuration unaffected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>maples_dr_path</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>optional</em>) – <p>Path to the MAPLES-DR additional data. Must point to the directory or to the zip file.</p>
+<p>If None (by default), then the dataset is downloaded from figshare.</p>
+</p></li>
+<li><p><strong>messidor_path</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>optional</em>) – <p>Path to the MESSIDOR dataset.</p>
+<p>Must point to a directory containing the « Base11 », « Base12 », … subdirectories or zip files.</p>
+</p></li>
+<li><p><strong>cache</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em><em>, </em><em>optional</em>) – <p>Path to the cache directory. The cache is used to store the downloaded dataset and the generated images.</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">cache</span></code> is a <code class="docutils literal notranslate"><span class="pre">str</span></code> or a <code class="docutils literal notranslate"><span class="pre">Path</span></code>, then the cache is stored in the given directory.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">False</span></code> (by default), then the cache is disabled.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then the cache is stored in the default cache directory.</p></li>
+</ul>
+</p></li>
+<li><p><strong>resize</strong> (<em>Optional</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a><em>]</em><em>, </em><em>optional</em>) – <p>Set the size of the images (fundus and biomarkers) generated by <cite>maples_dr</cite>.</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">resize</span></code> is an int, crop the image to a square ROI and resize it to the shape <code class="docutils literal notranslate"><span class="pre">(resize,</span> <span class="pre">resize)</span></code>;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, keep the original MAPLES-DR resolution of 1500x1500 px;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">False</span></code>, use the original MESSIDOR resolution if MESSIDOR path is configured, otherwise fallback to MAPLES-DR original resolution.</p></li>
+</ul>
+</p></li>
+<li><p><strong>image_format</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><em>ImageFormat</em></a><em>]</em><em>, </em><em>optional</em>) – <p>Python format of the generated images. Must be either « PIL », « rgb » or « bgr ».</p>
+<p>If « rgb » or « bgr » is selected, images will be formatted as numpy array of shape: (height, width, channel).</p>
+<p>By default, « PIL » is used.</p>
+</p></li>
+<li><p><strong>preprocessing</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="config.html#maples_dr.config.Preprocessing" title="maples_dr.config.Preprocessing"><em>Preprocessing</em></a><em>]</em><em>, </em><em>optional</em>) – <p>Preprocessing algorithm applied on the fundus images.</p>
+<p>By default, no preprocessing is applied.</p>
+</p></li>
+<li><p><strong>disable_check</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – If True, disable the integrity check of the dataset.</p></li>
+<li><p><strong>exclude_missing_macula</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – <p>If True, exclude images with missing macula segmentation (one image of the train set).</p>
+<p>By default: False.</p>
+</p></li>
+<li><p><strong>exclude_missing_cup</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em>, </em><em>optional</em>) – <p>If True, exclude images with missing optic cup segmentation (4 images of the train set, 2 of the test set).</p>
+<p>By default: False.</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.discover_messidor_images">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">discover_messidor_images</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">images</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.discover_messidor_images" title="Lien vers cette définition"></a></dt>
+<dd><p>Discover the MESSIDOR images corresponding to the given MAPLES-DR images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>images</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(disponible dans Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em>) – List of MAPLES-DR images names. The image name should not contain the extension.</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em> | </em><em>Path</em><em> | </em><em>None</em>) – Path to the MESSIDOR dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(disponible dans Python v3.13)"><em>Dict</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)">str</a>, <em>Path</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.ensure_configured">
+<span class="sig-name descname"><span class="pre">ensure_configured</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.ensure_configured" title="Lien vers cette définition"></a></dt>
+<dd><p>Ensure the dataset is initialized.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.image_names">
+<span class="sig-name descname"><span class="pre">image_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DatasetSubset.ALL</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.image_names" title="Lien vers cette définition"></a></dt>
+<dd><p>Return the list of images names of the given subset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>subset</strong> (<em>DatasetSubset</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – Subset to return the images names from. If None, return all images names.
+Must be either None, « train », « test » or « duplicates ».</p></li>
+<li><p><strong>extension</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – Control whether the images names should include the extension or not.
+- If False (default), return the images names without the extension.
+- If True, return the images names with a png extension.
+- If a string, return the images names with the given extension.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(disponible dans Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.is_biomarker_segmented">
+<span class="sig-name descname"><span class="pre">is_biomarker_segmented</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">biomarker</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.is_biomarker_segmented" title="Lien vers cette définition"></a></dt>
+<dd><p>Check if the given biomarker is segmented in the MAPLES-DR dataset.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The macula segmentation is missing for one image centered on the optic disc.</p>
+<p>The optic cup boundaries are too fuzzy to be segmented on six images.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>biomarker</strong> (<a class="reference internal" href="dataset.html#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – The biomarker to check.</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – The image name.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the biomarker is segmented, False otherwise.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.is_configured">
+<span class="sig-name descname"><span class="pre">is_configured</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.is_configured" title="Lien vers cette définition"></a></dt>
+<dd><p>Check if the dataset is initialized.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_biomarkers_annotation_infos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.load_biomarkers_annotation_infos" title="Lien vers cette définition"></a></dt>
+<dd><p>Load the MAPLES-DR biomarkers annotation infos file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – Path to the MAPLES-DR biomarkers annotation infos file.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(disponible dans pandas v2.2.3)"><em>DataFrame</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.load_dataset">
+<span class="sig-name descname"><span class="pre">load_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">subset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">DatasetSubset.ALL</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.load_dataset" title="Lien vers cette définition"></a></dt>
+<dd><p>Return the MAPLES-DR dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>subset</strong> (<em>DatasetSubset</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(disponible dans Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em>) – Subset of the dataset to return. If None, return the whole dataset.
+Must be either None, « train » or « test » or a list of valid image name.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="dataset.html#maples_dr.Dataset" title="maples_dr.dataset.Dataset"><em>Dataset</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.load_dataset_record_and_rois">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_dataset_record_and_rois</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.load_dataset_record_and_rois" title="Lien vers cette définition"></a></dt>
+<dd><p>Load the MAPLES-DR dataset record and the rois in MESSIDOR images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – Path to the MAPLES-DR dataset folder.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(disponible dans Python v3.13)"><em>Tuple</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(disponible dans Python v3.13)"><em>Dict</em></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(disponible dans Python v3.13)"><em>Dict</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.load_maples_dr_diagnosis">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_maples_dr_diagnosis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.loader.DatasetLoader.load_maples_dr_diagnosis" title="Lien vers cette définition"></a></dt>
+<dd><p>Load the MAPLES-DR diagnostic file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – Path to the MAPLES-DR diagnostic file.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(disponible dans pandas v2.2.3)"><em>DataFrame</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="maples_dr.loader.DatasetLoader.maples_dr_folder">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">maples_dr_folder</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Path</span></em><a class="headerlink" href="#maples_dr.loader.DatasetLoader.maples_dr_folder" title="Lien vers cette définition"></a></dt>
+<dd><p>Return the path to the MAPLES-DR dataset folder.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.loader.NotConfiguredError">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">NotConfiguredError</span></span><a class="headerlink" href="#maples_dr.loader.NotConfiguredError" title="Lien vers cette définition"></a></dt>
+<dd><p>Exception raised when the dataset loader is not configured.</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="dataset.html" class="btn btn-neutral float-left" title="Datasets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="preprocessing.html" class="btn btn-neutral float-right" title="Fundus Preprocessing" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    fr
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Langages</dt>
+      
+        
+        <dd><a href="../../en/api_reference/loader.html">en</a></dd>
+        
+      
+         <strong> 
+        <dd><a href="../../fr/api_reference/loader.html">fr</a></dd>
+         </strong> 
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

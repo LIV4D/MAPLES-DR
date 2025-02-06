@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentation du jeu de données MAPLES-DR &mdash; Documentation MAPLES-DR 0.1alpha</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=f27618dc"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/translations.js?v=e6b791cb"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="Description du jeu de données MAPLES-DR" href="welcome/dataset_description.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#">
+            
+              <img src="_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Le jeu de données MAPLES-DR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="welcome/dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="welcome/python_library.html">Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="welcome/quickstart.html">Démarrage Rapide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="welcome/messidor.html">Utiliser les images de MESSIDOR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Exemples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/visualisation.html">Exemple de visualisation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Définition de l'API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference/preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Documentation du jeu de données MAPLES-DR</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="maples-dr-dataset-documentation">
+<h1>Documentation du jeu de données MAPLES-DR<a class="headerlink" href="#maples-dr-dataset-documentation" title="Lien vers cette rubrique"></a></h1>
+<p><strong>MAPLES-DR</strong> <em>(MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy)</em> est un jeu de données public de diagnostics de <abbr title="Diabetic Retinopathy">DR</abbr> et de cartes de segmentations de structures rétiniennes.</p>
+<p>Notre équipe canadienne de sept rétinologues séniors ont annoté des grades de <abbr title="Diabetic Retinopathy">DR</abbr> (Rétinopathie Diabétique) et de <abbr title="Macular Edema">ME</abbr> (Œdème Maculaire), sur <strong>198 images de fond d’œil</strong> du jeu de données public <a class="reference internal" href="welcome/messidor.html"><span class="doc">MESSIDOR</span></a> <a class="footnote-reference brackets" href="#footcite-messidor" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. Pour chacune de ces images, ils ont aussi segmentés dix structures rétiniennes symptomatiques de ces deux pathologies: le <strong>disque optique</strong>, la <strong>cupule optique</strong>, la <strong>macula</strong>, les <strong>vaisseaux</strong>, les <strong>micro-anévrismes</strong>, les <strong>hémorragies</strong>, les <strong>néo-vaisseaux</strong>, les <strong>exsudats</strong>, les <strong>nodules cotonneux</strong> and les <strong>drusens</strong>. Pour une description détaillée de tous ces biomarqueurs ainsi que leurs rôles dans le dépistage de la <abbr title="Diabetic Retinopathy">DR</abbr>, référez-vous à la section  <a class="reference internal" href="welcome/dataset_description.html"><span class="doc">description du jeu de données</span></a> de cette documentation. En publiant <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> nous espérons contribuer aux recherches visant à améliorer l’interprétabilité des modèles de diagnostique automatique de la DR par apprentissage machine.</p>
+<figure class="align-center" id="id6">
+<a class="reference internal image-reference" href="_images/MAPLES-DR_Overview.svg"><img alt="_images/MAPLES-DR_Overview.svg" src="_images/MAPLES-DR_Overview.svg" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Vue d’ensemble du contenu et du protocole d’annotation de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>. (Crédit: Lepetit-Aimon <em>et al.</em><a class="footnote-reference brackets" href="#footcite-maples-dr" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>)</span><a class="headerlink" href="#id6" title="Lien vers cette image"></a></p>
+</figcaption>
+</figure>
+<p>La procédure d’annotation de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> s’est appuyée sur des cartes pré-segmentées par <abbr title="Intelligence Artificielle">IA</abbr> pour certaines structures rétiniennes, ainsi que sur un outils d’annotation hébergé sur le web. Le protocole d’annotation est documenté en détail dans <a class="reference external" href="https://doi.org/10.1038/s41597-024-03739-6">ce papier</a> <a class="footnote-reference brackets" href="#footcite-maples-dr" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <em>(l’URL pointe vers un preprint ArXiv, le temps que notre manuscrit suive son processus de révision)</em>.</p>
+<section id="usage">
+<h2>Utilisation<a class="headerlink" href="#usage" title="Lien vers cette rubrique"></a></h2>
+<p>Le jeu de données est accessible librement depuis le <a class="reference external" href="https://doi.org/10.6084/m9.figshare.24328660">dépôt Figshare de MAPLES-DR</a>.</p>
+<p>Cependant, nous recommandons plutôt de télécharger les annotations de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> à l’aide du <a class="reference internal" href="welcome/python_library.html"><span class="doc">le paquet python</span></a>: <code class="docutils literal notranslate"><span class="pre">maples_dr</span></code>. Nous avons développé cette bibliothèque Python pour simplifier l’utilisation conjointe des cartes de segmentation de MAPLES-DR avec les images de fond d’œil originales fournies par MESSIDOR. L’API de <code class="docutils literal notranslate"><span class="pre">maples_dr</span></code> automatise ainsi l’appariement des images, leur découpage et redimensionnement vers une résolution uniforme. Ainsi formaté, les données sont particulièrement adaptées pour entraîner des réseaux de neurones à segmenter les structures rétiniennes.</p>
+<p>Les images de fond d’œil associées aux annotations de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> sont la propriété du consortium MESSIDOR et ne sont donc pas incluses dans les fichiers de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>. Cependant, elles sont disponibles à toutes les équipes de recherche qui en font la demande sur le <a class="reference external" href="https://www.adcis.net/fr/logiciels-tiers/messidor-fr/">site de Messidor</a>. La <a class="reference internal" href="welcome/messidor.html"><span class="doc">section MESSIDOR</span></a> de la présente documentation  décrit les étapes à suivre pour les intégrer aux annotations de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> à l’aide du paquet <cite>maples_dr</cite>.</p>
+<p>Nous demandons aux chercheurs qui souhaitent utiliser ce jeu de données dans leur travaux académique de citer <a class="reference external" href="https://doi.org/10.1038/s41597-024-03739-6">le papier</a> lié à la publication de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr><a class="footnote-reference brackets" href="#footcite-maples-dr" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@article</span><span class="p">{</span><span class="n">maples_dr</span><span class="p">,</span>
+   <span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="n">MAPLES</span><span class="o">-</span><span class="n">DR</span><span class="p">:</span> <span class="n">MESSIDOR</span> <span class="n">Anatomical</span> <span class="ow">and</span> <span class="n">Pathological</span> <span class="n">Labels</span> <span class="k">for</span> <span class="n">Explainable</span> <span class="n">Screening</span> <span class="n">of</span> <span class="n">Diabetic</span> <span class="n">Retinopathy</span><span class="p">},</span>
+   <span class="n">author</span><span class="o">=</span><span class="p">{</span><span class="n">Gabriel</span> <span class="n">Lepetit</span><span class="o">-</span><span class="n">Aimon</span> <span class="ow">and</span> <span class="n">Clément</span> <span class="n">Playout</span> <span class="ow">and</span> <span class="n">Marie</span> <span class="n">Carole</span> <span class="n">Boucher</span> <span class="ow">and</span> <span class="n">Renaud</span> <span class="n">Duval</span> <span class="ow">and</span> <span class="n">Michael</span> <span class="n">H</span> <span class="n">Brent</span> <span class="ow">and</span> <span class="n">Farida</span> <span class="n">Cheriet</span><span class="p">},</span>
+   <span class="n">journal</span><span class="o">=</span><span class="p">{</span><span class="n">Scientific</span> <span class="n">Data</span><span class="p">},</span>
+   <span class="n">volume</span><span class="o">=</span><span class="p">{</span><span class="mi">11</span><span class="p">},</span>
+   <span class="n">number</span><span class="o">=</span><span class="p">{</span><span class="mi">1</span><span class="p">},</span>
+   <span class="n">pages</span><span class="o">=</span><span class="p">{</span><span class="mi">914</span><span class="p">},</span>
+   <span class="n">year</span><span class="o">=</span><span class="p">{</span><span class="mi">2024</span><span class="p">},</span>
+   <span class="n">month</span><span class="o">=</span><span class="p">{</span><span class="mi">08</span><span class="p">},</span>
+   <span class="n">publisher</span><span class="o">=</span><span class="p">{</span><span class="n">Nature</span> <span class="n">Publishing</span> <span class="n">Group</span> <span class="n">UK</span> <span class="n">London</span><span class="p">},</span>
+   <span class="n">doi</span><span class="o">=</span><span class="p">{</span><span class="mf">10.1038</span><span class="o">/</span><span class="n">s41597</span><span class="o">-</span><span class="mi">024</span><span class="o">-</span><span class="mi">03739</span><span class="o">-</span><span class="mi">6</span><span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="additional-resources">
+<h2>Ressources Additionnelles<a class="headerlink" href="#additional-resources" title="Lien vers cette rubrique"></a></h2>
+<section id="segmentation-models">
+<h3>Modèles de segmentation<a class="headerlink" href="#segmentation-models" title="Lien vers cette rubrique"></a></h3>
+<p>Nous avons rendu public des modèles de segmentation développés et entraînés sur <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> sous la forme de deux bibliothèques Python. Ces bibliothèques contiennent les poids et le code PyTorch nécessaires pour segmenter automatiquement les vaisseaux de la rétine et certaines de ses lésions Elles furent conçus pour être utilisées par des chercheurs ou des cliniciens sans expérience de la manipulation de réseaux de neurones. On peut les trouver sur GitHub:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://github.com/gabriel-lepetitaimon/fundus-vessels-toolkit">fundus-vessels-toolkit</a> pour la segmentation et l’extraction automatique de la vasculature rétinienne;</p></li>
+<li><p><a class="reference external" href="https://github.com/ClementPla/fundus-lesions-toolkit">fundus-lesions-toolkit</a> pour la segmentation sémantique et automatique des micro-anévrismes, des hémorragies, des exsudats et des <abbr title="Cotton Wool Spots">CWS</abbr> (nodules cotonneux).</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="annotation-platform">
+<h3>Plateforme d’Annotation<a class="headerlink" href="#annotation-platform" title="Lien vers cette rubrique"></a></h3>
+<p>La plateforme d’annotation utilisées pour annoter <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> est accessible sur <a class="reference external" href="https://github.com/LIV4D/AnnotationPlatform">GitHub</a>.</p>
+</section>
+</section>
+<section id="reference">
+<h2>Bibliographie<a class="headerlink" href="#reference" title="Lien vers cette rubrique"></a></h2>
+<div class="docutils container" id="id5">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-messidor" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Etienne Decencière, Xiwei Zhang, Guy Cazuguel, Bruno Lay, Béatrice Cochener, Caroline Trone, Philippe Gain, Richard Ordonez, Pascale Massin, Ali Erginay, and others. Feedback on a publicly distributed image database: the MESSIDOR database. <em>Image Analysis &amp; Stereology</em>, 33(3):231–234, aug 2014. <a class="reference external" href="https://doi.org/http://dx.doi.org/10.5566/ias.1155">doi:http://dx.doi.org/10.5566/ias.1155</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-maples-dr" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id2">1</a>,<a role="doc-backlink" href="#id3">2</a>,<a role="doc-backlink" href="#id4">3</a>)</span>
+<p>Gabriel Lepetit-Aimon, Clément Playout, Marie Carole Boucher, Renaud Duval, Michael H Brent, and Farida Cheriet. Maples-dr: messidor anatomical and pathological labels for explainable screening of diabetic retinopathy. <em>Scientific Data</em>, 11(1):914, 08 2024. <a class="reference external" href="https://doi.org/10.1038/s41597-024-03739-6">doi:10.1038/s41597-024-03739-6</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
+<section id="acknowledgements">
+<h2>Remerciements<a class="headerlink" href="#acknowledgements" title="Lien vers cette rubrique"></a></h2>
+<p>Le laboratoire LIV4D tient à remercier Dr. Marie Carole Boucher, Dr. Michael H Brent, Dr. Renaud Duval ainsi que Dr. Karim Hammamji, Dr. Ananda Kalevar, Dr. Cynthia Qian, et Dr. David Wong pour leur temps et implication lors de l’annotation du jeu de données <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>. Nous remercions également Dr. Fares Antaky et Dr. Daniel Milad pour leur participation à une étude de variabilité inter-observateurs qui a permis d’évaluer la qualité des segmentations de lésions de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>.</p>
+<p>Ce travail a été financé par le <abbr title="Conseil de Recherches en Sciences Naturelles et en génie du Canada">CRSNC</abbr> ainsi que Diabètes Action Canada et le <abbr title="Fonds de recherche en ophtalmologie de l'Université de Montréal">FROUM</abbr>.</p>
+<p>Le jeu de données d’images de fond d’œil est fourni par les partenaires du programme Messidor (voir <a class="reference external" href="https://www.adcis.net/fr/logiciels-tiers/messidor-fr/">https://www.adcis.net/fr/logiciels-tiers/messidor-fr/</a>).</p>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="welcome/dataset_description.html" class="btn btn-neutral float-right" title="Description du jeu de données MAPLES-DR" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    fr
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Langages</dt>
+      
+        
+        <dd><a href="../en/index.html">en</a></dd>
+        
+      
+         <strong> 
+        <dd><a href="../fr/index.html">fr</a></dd>
+         </strong> 
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

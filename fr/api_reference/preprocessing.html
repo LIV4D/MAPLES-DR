@@ -1,0 +1,308 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fundus Preprocessing &mdash; Documentation MAPLES-DR 0.1alpha</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f27618dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="prev" title="Datasets Loader" href="loader.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Le jeu de données MAPLES-DR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/python_library.html">Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">Démarrage Rapide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/messidor.html">Utiliser les images de MESSIDOR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Exemples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Exemple de visualisation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Définition de l'API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loader.html">Datasets Loader</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Fundus Preprocessing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.preprocessing.clahe_preprocessing"><code class="docutils literal notranslate"><span class="pre">clahe_preprocessing()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.preprocessing.fundus_roi"><code class="docutils literal notranslate"><span class="pre">fundus_roi()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.preprocessing.median_preprocessing"><code class="docutils literal notranslate"><span class="pre">median_preprocessing()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.preprocessing.preprocess_fundus"><code class="docutils literal notranslate"><span class="pre">preprocess_fundus()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Fundus Preprocessing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_reference/preprocessing.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fundus-preprocessing">
+<h1>Fundus Preprocessing<a class="headerlink" href="#fundus-preprocessing" title="Lien vers cette rubrique"></a></h1>
+<p>A few algorithm to enhance fundus images are included in <cite>maples_dr.preprocessing</cite>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>The preprocessing algorithms require the <cite>opencv-python</cite> package to be installed.</p>
+</div>
+<hr class="docutils" />
+<dl class="py function" id="module-maples_dr.preprocessing">
+<dt class="sig sig-object py" id="maples_dr.preprocessing.clahe_preprocessing">
+<span class="sig-name descname"><span class="pre">clahe_preprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fundus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.preprocessing.clahe_preprocessing" title="Lien vers cette définition"></a></dt>
+<dd><p>Preprocessing based on Contrast Limited Adaptive Histogram Equalization (CLAHE).</p>
+<p>This algorithm was used to annotate MAPLES-DR anatomical and pathological structures.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fundus</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(disponible dans NumPy v2.2)"><em>ndarray</em></a>) – The fundus image as a BGR numpy array (height, width, 3).</p></li>
+<li><p><strong>mask</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(disponible dans NumPy v2.2)"><em>ndarray</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>The preprocessed fundus image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maples_dr.preprocessing.fundus_roi">
+<span class="sig-name descname"><span class="pre">fundus_roi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fundus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blur_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">morphological_clean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smoothing_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">final_erosion</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.preprocessing.fundus_roi" title="Lien vers cette définition"></a></dt>
+<dd><p>Compute the region of interest (ROI) of a fundus image.</p>
+<section id="parameters">
+<h2>Parameters:<a class="headerlink" href="#parameters" title="Lien vers cette rubrique"></a></h2>
+<dl>
+<dt>fundus:</dt><dd><p>The fundus image.</p>
+</dd>
+<dt>blur_radius:</dt><dd><p>The radius of the median blur filter.</p>
+<p>By default: 5.</p>
+</dd>
+<dt>morphological_clean:</dt><dd><p>Whether to perform morphological cleaning. (small objects removal and filling of the holes not on the border)</p>
+<p>By default: False.</p>
+</dd>
+<dt>smoothing_radius:</dt><dd><p>The radius of the Gaussian blur filter.</p>
+<p>By default: 0.</p>
+</dd>
+<dt>final_erosion:</dt><dd><p>The radius of the disk used for the final erosion.</p>
+<p>By default: 4.</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The ROI mask.</p>
+</dd>
+</dl>
+</section>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fundus</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(disponible dans NumPy v2.2)"><em>ndarray</em></a>)</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(disponible dans NumPy v2.2)"><em>ndarray</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maples_dr.preprocessing.median_preprocessing">
+<span class="sig-name descname"><span class="pre">median_preprocessing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fundus</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.preprocessing.median_preprocessing" title="Lien vers cette définition"></a></dt>
+<dd><p>Preprocessing based on median filtering.</p>
+<p>This algorithm is often used as a preprocessing step for automatic vessel segmentation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fundus</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(disponible dans NumPy v2.2)"><em>ndarray</em></a>) – The fundus image as a BGR numpy array (height, width, 3).</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>The preprocessed fundus image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maples_dr.preprocessing.preprocess_fundus">
+<span class="sig-name descname"><span class="pre">preprocess_fundus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fundus</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preprocessing</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.preprocessing.preprocess_fundus" title="Lien vers cette définition"></a></dt>
+<dd><p>Preprocess a fundus image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>fundus</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(disponible dans NumPy v2.2)"><em>ndarray</em></a>) – The fundus image to preprocess.</p></li>
+<li><p><strong>preprocessing</strong> (<a class="reference internal" href="config.html#maples_dr.config.Preprocessing" title="maples_dr.config.Preprocessing"><em>Preprocessing</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – The preprocessing algorithm to apply.
+See <a class="reference internal" href="config.html#maples_dr.config.Preprocessing" title="maples_dr.config.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">maples_dr.config.Preprocessing</span></code></a> for the available options.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>The preprocessed fundus image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="loader.html" class="btn btn-neutral float-left" title="Datasets Loader" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    fr
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Langages</dt>
+      
+        
+        <dd><a href="../../en/api_reference/preprocessing.html">en</a></dd>
+        
+      
+         <strong> 
+        <dd><a href="../../fr/api_reference/preprocessing.html">fr</a></dd>
+         </strong> 
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

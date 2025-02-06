@@ -1,0 +1,381 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MAPLES-DR Dataset Description &mdash; MAPLES-DR 0.1alpha documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7afaf4de"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MAPLES-DR Python Library" href="python_library.html" />
+    <link rel="prev" title="MAPLES-DR Dataset Documentation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">MAPLES-DR Dataset</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dataset Description</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#labels-description">Labels Description</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#segmentation-of-anatomical-structures">Segmentation of Anatomical structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#segmentation-of-red-lesions">Segmentation of Red lesions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#segmentation-of-bright-lesions">Segmentation of Bright Lesions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dr-and-me-grades"><abbr title="Diabetic Retinopathy">DR</abbr> and <abbr title="Macular Edema">ME</abbr> grades</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#data-records">Data Records</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">MAPLES-DR.zip</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">AdditionalData.zip</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#annotation-procedure">Annotation Procedure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="python_library.html">Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="messidor.html">Using MESSIDOR fundus images</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Visualisation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">MAPLES-DR Dataset Description</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/welcome/dataset_description.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="maples-dr-dataset-description">
+<h1>MAPLES-DR Dataset Description<a class="headerlink" href="#maples-dr-dataset-description" title="Link to this heading"></a></h1>
+<p>The  project was originally motivated in 2018 by the absence of large fundus public datasets providing pixel-wise annotations of both anatomical and pathological structures of the retina. Such datasets are especially valuable in a context where the deep learning models which achieved state-of-the-art diagnosis of <abbr title="Diabetic Retinopathy">DR</abbr> were criticized for their lack of explainability or interpretability.</p>
+<p>We designed <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> to address this gap by providing pixel-wise annotations of anatomical structures (optic disc, macula, retinal vessels) and pathological lesions (microaneurysms, hemorrhages, neovascularizations, exudates, cotton wool spots, drusens) for nearly 200 images of the well known <a class="reference external" href="https://www.adcis.net/en/third-party/messidor/">MESSIDOR</a> public dataset. The annotations were performed by a team of seven senior retinologists from hospitals in Toronto and Montréal (Canada).</p>
+<p><abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> also includes diagnostic for <abbr title="Diabetic Retinopathy">DR</abbr> and <abbr title="Macular Edema">ME</abbr> following Canadian teleopthalmology screening guidelines <a class="footnote-reference brackets" href="#footcite-boucher2020" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. These diagnoses are closer to international standards <a class="footnote-reference brackets" href="#footcite-wilkinson2003proposed" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#footcite-zachariah2015grading" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a> than MESSIDOR’s original ones.</p>
+<section id="labels-description">
+<h2>Labels Description<a class="headerlink" href="#labels-description" title="Link to this heading"></a></h2>
+<figure class="align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/MAPLES-DR_Content_Overview.svg"><img alt="../_images/MAPLES-DR_Content_Overview.svg" src="../_images/MAPLES-DR_Content_Overview.svg" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Overview of MAPLES-DR labels.</span><a class="headerlink" href="#id11" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="segmentation-of-anatomical-structures">
+<h3>Segmentation of Anatomical structures<a class="headerlink" href="#segmentation-of-anatomical-structures" title="Link to this heading"></a></h3>
+<p>Anatomical structures are present in all images, including healthy ones, but their appearance and their proximity to lesions provide valuable diagnostic information.</p>
+<p><strong>Retinal vessels</strong> are indicative of the stage of <abbr title="Diabetic Retinopathy">DR</abbr>: an increase in arteriolar tortuosity is associated with mild and moderate stages <a class="footnote-reference brackets" href="#footcite-sasongkoretinalvasculartortuosity2011" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>, while venous beading and dilation are symptoms of severe proliferative stages. The vascular tree is also used as a reference to assess the readability of an image.</p>
+<p>The <strong>optic disc</strong>, <strong>optic cup</strong>, and <strong>macula</strong> are also included in <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>. Their purpose for diagnosis is two-fold. First, ME is graded by counting the number of lesions within one or two optic disk diameters from the macula, which implies the annotation of both these anatomical structures. Similarly, clinical definitions of <abbr title="Diabetic Retinopathy">DR</abbr> severity often distinguish four quadrants by dividing the retina  horizontally by a line through the fovea and optic disc (superior / inferior division) and vertically by a line through the fovea (temporal / nasal division) <a class="footnote-reference brackets" href="#footcite-purvesretinotopicrepresentationvisual2001" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></a>. Second, the positions of the lesions in relation to these healthy structures may indicate different etiologies and severities. For example, clinical guidelines sometimes distinguish between disc neovascularization and other neovascularization.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>One sample of the train set is centered on the optic disc instead of the macula which is not visible in this image. No segmentation of the macula is therefore provided for this image.</p>
+<p>Similarly, four samples of the train set and two samples of the test set are missing a segmentation of the optic cup because their boundaries were judged too ambiguous by the retinologists.</p>
+<p>Trying to access these segmentation maps will return an blank mask and raise a warning. To remove these images from your dataset, you can specify <a class="reference internal" href="../api_reference/quick_api.html#maples_dr.configure" title="maples_dr.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.configure(exclude_missing_macula=True)</span></code></a> or <a class="reference internal" href="../api_reference/quick_api.html#maples_dr.configure" title="maples_dr.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.configure(exclude_missing_cup=True)</span></code></a> to exclude them.</p>
+</div>
+</section>
+<section id="segmentation-of-red-lesions">
+<h3>Segmentation of Red lesions<a class="headerlink" href="#segmentation-of-red-lesions" title="Link to this heading"></a></h3>
+<p>Diabete mellitelus affects the walls of the vessels, eventually causing microvascular dysfunctions that manifest in the retina as microaneurysms, hemorrhages, intraretinal microvascular abnormalities (<abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr>), or neovessels. We refer to these pathological structures as “red lesions”.</p>
+<p><strong>Microaneurysms</strong> appear as small circular dilations of the capillaries. They are early signs of microvascular dysfunction and are commonly used to detect mild <abbr title="Diabetic Retinopathy">DR</abbr>.</p>
+<p>Intraretinal <strong>hemorrhages</strong> develop in more advanced stages of the pathology and are divided into dot or blot hemorrhages. Dot hemorrhages appear as circular and well-defined spots and are typically caused by the rupture of a microaneurysm. Distinguishing them from microaneurysms is challenging, and only fundus angiography (FA) can differentiate the two with complete certainty. Blot hemorrhages are larger and have less defined borders. Both were annotated simply as <em>hemorrhages</em> in <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>. Clinical practice also recognizes superficial (flame-shaped) and vitreous hemorrhages that appear in the most severe stages of retinopathy, none was discovered in the MAPLES-DR dataset.</p>
+<p>Starting from the moderate non-proliferative stage (R2), irregular intraretinal vessels can appear, referred to as <abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr>. The next stage of the disease (R3) coincides with even more extensive intraretinal changes, which are precursors to worsening of the disease. Indeed, the presence of <abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr> indicates a 50% risk of developing <strong>neovascularisation</strong>  within one year, corresponding to a transition to the proliferative stage of the disease. Leakages from extensive neovascularisation are responsible for preretinal and vitreous hemorrhages that can cause major visual loss. In the fundus image, neovascularisations are difficult to distinguish from <abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr>; however, fluorescein angiography may reveal a leakage that serves as a discriminant factor between the two. In the absence of this imaging modality, <abbr title="Intra-Retinal Microvascular Abnormalities">IRMA</abbr> are not differentiated from neovascularisation in <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>.</p>
+</section>
+<section id="segmentation-of-bright-lesions">
+<h3>Segmentation of Bright Lesions<a class="headerlink" href="#segmentation-of-bright-lesions" title="Link to this heading"></a></h3>
+<p>In the severe stages of <abbr title="Diabetic Retinopathy">DR</abbr>, the retina thickens (edema formation) and hard <strong>exudates</strong> (also known as lipoprotein exudation)  may appear, potentially causing loss of visual acuity. These deposits usually arise from leakage from damaged capillaries. Furthermore, in the case of ischemia, one can observe a blockage in axonal transport (the movement of mitochondria, lipids, proteins, and other substances within the neuron’s body, allowing for its renewal) in the optic nerve fiber layer.</p>
+<p>This can lead to the appearance of lesions known as <strong>Cotton Wool Spots</strong> (<abbr title="Cotton Wool Spots">CWS</abbr>), resulting from axoplasmic accumulations. They are characterized by their white appearance and blurry borders. While the principal etiology is diabetic retinopathy, <abbr title="Cotton Wool Spots">CWS</abbr> can be observed in other vascular diseases (systemic arterial hypertension, vein obstruction, coagulopathies…)</p>
+<p>Finally, <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> also provides annotations of <strong>drusens</strong>. These lesions are more commonly associated with Age-related Macular Degeneration (<abbr title="Age-related Macular Degeneration">AMD</abbr>), with a prevalence varying from 10% (fifth decade of life) to 35% (seventh decade).  They usually appear around the macula and are histologically situated at the interface with the Retinal Pigment Epithelium (RPE). It is supposed that they originate from degenerative products of the RPE’s cells and are composed of lipids and glycoproteins. Classifying early stage <abbr title="Age-related Macular Degeneration">AMD</abbr> depends on  estimating the size of the drusen.</p>
+</section>
+<section id="dr-and-me-grades">
+<span id="dr-me-grades"></span><h3><abbr title="Diabetic Retinopathy">DR</abbr> and <abbr title="Macular Edema">ME</abbr> grades<a class="headerlink" href="#dr-and-me-grades" title="Link to this heading"></a></h3>
+<p><abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> grades for <abbr title="Diabetic Retinopathy">DR</abbr> and <abbr title="Macular Edema">ME</abbr> annotated by the retinologists follow the guidelines developed for Canadian teleopthalmology screening. These guidelines distinguish six grades for <abbr title="Diabetic Retinopathy">DR</abbr>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>R0</strong>: absent</p></li>
+<li><p><strong>R1</strong>: mild</p></li>
+<li><p><strong>R2</strong>: moderate</p></li>
+<li><p><strong>R3</strong>: severe</p></li>
+<li><p><strong>R4A</strong>: proliferative</p></li>
+<li><p><strong>R4S</strong>: stable treated proliferative</p></li>
+<li><p><strong>R6</strong>: insufficient quality for grading</p></li>
+</ul>
+</div></blockquote>
+<p>and three for ME:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>M0</strong>: absent</p></li>
+<li><p><strong>M1</strong>: mild</p></li>
+<li><p><strong>M2</strong>: moderate</p></li>
+<li><p><strong>M6</strong>: insufficient quality for grading</p></li>
+</ul>
+</div></blockquote>
+<p>Grades are defined systematically by the number and position of visible red and bright retinal lesions. Each grade is associated with a recommended course of action (from rescreening in two years for mild cases, to immediate referral to an ophthalmologist for the more severe ones).</p>
+<p>A detailed definition of the grading system can be found in <a class="reference external" href="http://doi.org/10.1016/j.jcjo.2020.01.001">this paper</a> <a class="footnote-reference brackets" href="#footcite-boucher2020" id="id6" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+</section>
+</section>
+<section id="data-records">
+<h2>Data Records<a class="headerlink" href="#data-records" title="Link to this heading"></a></h2>
+<p><abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> dataset is distributed as two archives: <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a> and <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a>. The first one contains the main data of MAPLES-DR (segmentation maps and grades), while the second one contains additional information on the annotation processes (time to complete, comments) as well as intermediate data (pre-annotation maps, grades before consensus…).</p>
+<section id="id7">
+<h3>MAPLES-DR.zip<a class="headerlink" href="#id7" title="Link to this heading"></a></h3>
+<p><a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a> is the main archive of the dataset. It’s split into two folders <cite>train/</cite> and <cite>test/</cite>, each one containing a table <cite>diagnosis.csv</cite> with the final <abbr title="Diabetic Retinopathy">DR</abbr> and <abbr title="Macular Edema">ME</abbr> grades as well as 12 folders: one for each biomarker. Those folders store the segmentation maps as png binary images following the same naming convention as their MESSIDOR counterparts (eg. <cite>20051019_38557_0100_PP.png</cite>). The train set is composed of 138 images, while the test set contains 60 images.</p>
+<figure class="align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/MAPLES-DR_Data_Record_main.svg"><img alt="../_images/MAPLES-DR_Data_Record_main.svg" src="../_images/MAPLES-DR_Data_Record_main.svg" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Overview of the main <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> archive: <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a>.</span><a class="headerlink" href="#id12" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The image <code class="docutils literal notranslate"><span class="pre">20051020_55346_0100_PP</span></code> is centered on the optic disc and its macula is not visible. To raise awareness of this issue, <strong>the segmentation maps of its macula has been removed</strong> from <code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip/train/Macula/</span></code> which therefore only contains 137 images.</p>
+<p>Furthemore, for six images (4 in the train set and 2 in the test set), the boundaries of the optic cup were judged too ambiguous by the retinologists for a proper annotation. <strong>No segmentation map of optic cup are provided for those images</strong> diminishing the number of images in <code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip/train/OpticCup/</span></code> and <code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip/test/OpticCup/</span></code> to respectively 134 and 58 images.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The segmentation maps in <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a> were resized to match the resolution of the original MESSIDOR images, which vary in dimensions (ranging from 960x1440 up to 1536x2304 pixels). If your application requires a homogeneous resolution (e.g. for training a deep learning model), we advice to use <a class="reference internal" href="python_library.html"><span class="doc">maples_dr</span></a> python library to crop and resize the images and the segmentation maps to a unique resolution.</p>
+</div>
+</section>
+<section id="id8">
+<h3>AdditionalData.zip<a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<p>The second archive contains all the additional information and data collected during the annotation process. It’s also the only archive downloaded and used by the <a class="reference internal" href="python_library.html"><span class="doc">maples_dr</span></a> library. Indeed because <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a> includes all the annotations and pre-annotation in the resolution at which they were annotated (1500x1500 pixels), as well as the individual diagnoses graded by each retinologist, all the data contained in the <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a> can be derived from it.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Note on the duplicates</strong>: initially 200 images were annotated but we latter realized that two of them were duplicates from the original MESSIDOR dataset (same images stored using different names). The 2 duplicates were removed from <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695816"><code class="docutils literal notranslate"><span class="pre">MAPLES-DR.zip</span></code></a> but were kept in <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a> for transparency.</p>
+</div>
+<figure class="align-center" id="id13">
+<a class="reference internal image-reference" href="../_images/MAPLES-DR_Data_Record_additional.svg"><img alt="../_images/MAPLES-DR_Data_Record_additional.svg" src="../_images/MAPLES-DR_Data_Record_additional.svg" style="width: 800px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Overview of the additional archive: <a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a>.</span><a class="headerlink" href="#id13" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><a class="reference external" href="https://figshare.com/articles/dataset/_b_MAPLES-DR_b_MESSIDOR_Anatomical_and_Pathological_Labels_for_Explainable_Screening_of_Diabetic_Retinopathy/24328660?file=43695822"><code class="docutils literal notranslate"><span class="pre">AdditionalData.zip</span></code></a> contains the following files:</p>
+<ul class="simple">
+<li><p><strong>biomarkers_annotations_infos.xls</strong>: identify which <code class="docutils literal notranslate"><span class="pre">Retinologist</span></code> performed the annotation of a given biomarker category, the <code class="docutils literal notranslate"><span class="pre">Time</span></code> spent on each annotation (in seconds), any <code class="docutils literal notranslate"><span class="pre">Comment</span></code> they left, and the <code class="docutils literal notranslate"><span class="pre">Annotation#</span></code> rank (1 for the first image annotated, 200 for the last).</p></li>
+<li><p><strong>diagnosis_infos.xls</strong>: contains the grades of <abbr title="Diabetic Retinopathy">DR</abbr> and <abbr title="Macular Edema">ME</abbr> annotated by each Retinologist as well as the consensus they reached. It also includes the  comments left by the retinologists while grading.</p></li>
+<li><p><strong>MESSIDOR-ROIs.csv</strong>: provides the bounding boxes extracted from the MESSIDOR images to obtain squared regions of interest without blank borders. The bounding boxes are stored as top-left (<code class="docutils literal notranslate"><span class="pre">x0</span></code>, <code class="docutils literal notranslate"><span class="pre">y0</span></code>) and bottom-right (<code class="docutils literal notranslate"><span class="pre">x1</span></code>, <code class="docutils literal notranslate"><span class="pre">y1</span></code>) coordinates in pixels. This file also includes the original resolution in pixel of the MESSIDOR images: <code class="docutils literal notranslate"><span class="pre">H</span></code> and <code class="docutils literal notranslate"><span class="pre">W</span></code> (resp. height and width).</p></li>
+<li><p><strong>dataset_record.yaml</strong>: a yaml file containing the <code class="docutils literal notranslate"><span class="pre">biomarkers</span></code> name, the <code class="docutils literal notranslate"><span class="pre">test</span></code> and <code class="docutils literal notranslate"><span class="pre">train</span></code> split (as a list of image name), and the names of the <code class="docutils literal notranslate"><span class="pre">duplicates</span></code> associated to the names of their “siblings” in <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> train set.</p></li>
+<li><p><strong>annotations/</strong>: this folder has 12 subfolders (one for each biomarker), which in turn contains all 200 segmentation maps annotated by the retinologists (train, test and duplicates). One segmentation map was removed from the <code class="docutils literal notranslate"><span class="pre">Macula</span></code> folder, and 6 were removed from <code class="docutils literal notranslate"><span class="pre">OpticCup</span></code> (see warning above).  All segmentation maps are stored as png binary masks in the resolution at which they were annotated (1500x1500 pixels) using the ROIs provided in the <code class="docutils literal notranslate"><span class="pre">MESSIDOR-ROIs.csv</span></code>.</p></li>
+<li><p><strong>pre_annotations/</strong>: this folder contains the automatic segmentation of Vessels, Exudates, Hemorrhages, and Microaneurysms provided as pre-annotations to the retinologists.</p></li>
+</ul>
+</section>
+</section>
+<section id="annotation-procedure">
+<h2>Annotation Procedure<a class="headerlink" href="#annotation-procedure" title="Link to this heading"></a></h2>
+<p>The annotation procedure was co-designed with the team of retinologists to meet a triple objective:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Providing an intuitive yet effective annotation tool for the classification and segmentation of biomarkers in fundus images.</p></li>
+<li><p>Enabling a collaborative effort on common annotations despite the geographical distance between the retinologists and the limited time each could dedicate to this program.</p></li>
+<li><p>Designing a “scalable” annotation protocol, capable of being extended to much more ambitious annotation campaigns, such as labeling large Canadian telemedicine databases containing tens of thousands of images.</p></li>
+</ol>
+</div></blockquote>
+<p>To meet these challenges, we developed a custom web-based annotation platform allowing the following workflow: expert annotators can access the Web portal at any time to consult and edit annotations with specialized drawing tools; these annotations and the related information (annotation times, comments) are centralized and stored in a secure database hosted on our laboratory server; as the research team, we assign tasks to annotators, monitor progress, and export annotations via a Python API. The annotation platform (portal, annotation tools, server backend, and Python API) as well as training material for annotators is available on <a class="reference external" href="https://github.com/LIV4D/AnnotationPlatform">GitHub</a>.</p>
+<p>For more details on the annotation process please refer to the <a class="reference external" href="https://arxiv.org/abs/2402.04258">MAPLES-DR paper</a> <a class="footnote-reference brackets" href="#footcite-maples-dr" id="id9" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<div class="docutils container" id="id10">
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="footcite-boucher2020" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id6">2</a>)</span>
+<p>M.C. Boucher, J. Qian, M.H. Brent, D.T. Wong, T. Sheidow, R. Duval, A. Kherani, R. Dookeran, D. Maberley, A. Samad, and V. Chaudhary. Evidence-based Canadian guidelines for tele-retina screening for diabetic retinopathy: recommendations from the Canadian Retina Research Network (CR2N) Tele-Retina Steering Committee. <em>Canadian Journal of Ophthalmology</em>, 55(1):14–24, feb 2020. <a class="reference external" href="https://doi.org/10.1016/j.jcjo.2020.01.001">doi:10.1016/j.jcjo.2020.01.001</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-wilkinson2003proposed" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Charles P Wilkinson, Frederick L Ferris III, Ronald E Klein, Paul P Lee, Carl David Agardh, Matthew Davis, Diana Dills, Anselm Kampik, R Pararajasegaram, Juan T Verdaguer, and others. Proposed international clinical diabetic retinopathy and diabetic macular edema disease severity scales. <em>Ophthalmology</em>, 110(9):1677–1682, 2003.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-zachariah2015grading" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Sonia Zachariah, William Wykes, and David Yorston. Grading diabetic retinopathy (DR) using the Scottish grading protocol. <em>Community Eye Health</em>, 28(92):72, 2015.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-sasongkoretinalvasculartortuosity2011" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
+<p>M. B. Sasongko, T. Y. Wong, T. T. Nguyen, C. Y. Cheung, J. E. Shaw, and J. J. Wang. Retinal vascular tortuosity in persons with diabetes and diabetic retinopathy. <em>Diabetologia</em>, 54(9):2409–2416, September 2011. <a class="reference external" href="https://doi.org/10.1007/s00125-011-2200-y">doi:10.1007/s00125-011-2200-y</a>.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-purvesretinotopicrepresentationvisual2001" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">5</a><span class="fn-bracket">]</span></span>
+<p>Dale Purves, George J. Augustine, David Fitzpatrick, Lawrence C. Katz, Anthony-Samuel LaMantia, James O. McNamara, and S. Mark Williams. The Retinotopic Representation of the Visual Field. In <em>Neuroscience</em>. Sinauer Associates, 2nd edition, 2001.</p>
+</aside>
+<aside class="footnote brackets" id="footcite-maples-dr" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id9">6</a><span class="fn-bracket">]</span></span>
+<p>Gabriel Lepetit-Aimon, Clément Playout, Marie Carole Boucher, Renaud Duval, Michael H Brent, and Farida Cheriet. Maples-dr: messidor anatomical and pathological labels for explainable screening of diabetic retinopathy. <em>Scientific Data</em>, 11(1):914, 08 2024. <a class="reference external" href="https://doi.org/10.1038/s41597-024-03739-6">doi:10.1038/s41597-024-03739-6</a>.</p>
+</aside>
+</aside>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="MAPLES-DR Dataset Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="python_library.html" class="btn btn-neutral float-right" title="MAPLES-DR Python Library" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    en
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Languages</dt>
+      
+         <strong> 
+        <dd><a href="../../en/welcome/dataset_description.html">en</a></dd>
+         </strong> 
+      
+        
+        <dd><a href="../../fr/welcome/dataset_description.html">fr</a></dd>
+        
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

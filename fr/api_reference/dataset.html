@@ -1,0 +1,865 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datasets &mdash; Documentation MAPLES-DR 0.1alpha</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f27618dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Datasets Loader" href="loader.html" />
+    <link rel="prev" title="MAPLES-DR Configuration" href="config.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Le jeu de données MAPLES-DR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/python_library.html">Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">Démarrage Rapide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/messidor.html">Utiliser les images de MESSIDOR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Exemples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Exemple de visualisation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Définition de l'API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Datasets</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.Dataset.__getitem__"><code class="docutils literal notranslate"><span class="pre">Dataset.__getitem__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.Dataset.annotations_infos"><code class="docutils literal notranslate"><span class="pre">Dataset.annotations_infos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.Dataset.data"><code class="docutils literal notranslate"><span class="pre">Dataset.data</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.Dataset.diagnosis"><code class="docutils literal notranslate"><span class="pre">Dataset.diagnosis()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.Dataset.export"><code class="docutils literal notranslate"><span class="pre">Dataset.export()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.Dataset.get_sample_infos"><code class="docutils literal notranslate"><span class="pre">Dataset.get_sample_infos()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.Dataset.keys"><code class="docutils literal notranslate"><span class="pre">Dataset.keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.Dataset.subset"><code class="docutils literal notranslate"><span class="pre">Dataset.subset()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.Dataset.subset_by_name"><code class="docutils literal notranslate"><span class="pre">Dataset.subset_by_name()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#maples_dr.DataSample"><code class="docutils literal notranslate"><span class="pre">DataSample</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.DataSample.export"><code class="docutils literal notranslate"><span class="pre">DataSample.export()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.DataSample.keys"><code class="docutils literal notranslate"><span class="pre">DataSample.keys()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.DataSample.name"><code class="docutils literal notranslate"><span class="pre">DataSample.name</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.DataSample.read_biomarker"><code class="docutils literal notranslate"><span class="pre">DataSample.read_biomarker()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.DataSample.read_field"><code class="docutils literal notranslate"><span class="pre">DataSample.read_field()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.DataSample.read_fundus"><code class="docutils literal notranslate"><span class="pre">DataSample.read_fundus()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.DataSample.read_multiple_biomarkers"><code class="docutils literal notranslate"><span class="pre">DataSample.read_multiple_biomarkers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.DataSample.read_roi_mask"><code class="docutils literal notranslate"><span class="pre">DataSample.read_roi_mask()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#datasets-fields">Datasets Fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.dataset.Field"><code class="docutils literal notranslate"><span class="pre">Field</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.dataset.DiagnosisField"><code class="docutils literal notranslate"><span class="pre">DiagnosisField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.DiagnosisField.DR"><code class="docutils literal notranslate"><span class="pre">DiagnosisField.DR</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.DiagnosisField.ME"><code class="docutils literal notranslate"><span class="pre">DiagnosisField.ME</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.DiagnosisField.__new__"><code class="docutils literal notranslate"><span class="pre">DiagnosisField.__new__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.dataset.ImageField"><code class="docutils literal notranslate"><span class="pre">ImageField</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.dataset.FundusField"><code class="docutils literal notranslate"><span class="pre">FundusField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.FundusField.FUNDUS"><code class="docutils literal notranslate"><span class="pre">FundusField.FUNDUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.FundusField.RAW_FUNDUS"><code class="docutils literal notranslate"><span class="pre">FundusField.RAW_FUNDUS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.FundusField.MASK"><code class="docutils literal notranslate"><span class="pre">FundusField.MASK</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.FundusField.__new__"><code class="docutils literal notranslate"><span class="pre">FundusField.__new__()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField"><code class="docutils literal notranslate"><span class="pre">BiomarkerField</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.OPTIC_CUP"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.OPTIC_CUP</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.OPTIC_DISC"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.OPTIC_DISC</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.MACULA"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.MACULA</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.VESSELS"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.VESSELS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.BRIGHT_LESIONS"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.BRIGHT_LESIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.COTTON_WOOL_SPOTS"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.COTTON_WOOL_SPOTS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.DRUSENS"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.DRUSENS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.EXUDATES"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.EXUDATES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.BRIGHT_UNCERTAINS"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.BRIGHT_UNCERTAINS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.RED_LESIONS"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.RED_LESIONS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.HEMORRHAGES"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.HEMORRHAGES</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.MICROANEURYSMS"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.MICROANEURYSMS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.NEOVASCULARIZATION"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.NEOVASCULARIZATION</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.RED_UNCERTAINS"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.RED_UNCERTAINS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maples_dr.dataset.BiomarkerField.__new__"><code class="docutils literal notranslate"><span class="pre">BiomarkerField.__new__()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Datasets</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/api_reference/dataset.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="datasets">
+<h1>Datasets<a class="headerlink" href="#datasets" title="Lien vers cette rubrique"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.Dataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Dataset</span></span><a class="headerlink" href="#maples_dr.Dataset" title="Lien vers cette définition"></a></dt>
+<dd><p>A set of samples from the MAPLES-DR dataset.</p>
+<p>Datasets are a utility class to access and export samples from the MAPLES-DR dataset.</p>
+<p>They are equivalent to a list of samples, each sample being stored as a dictionary­.
+See <a class="reference internal" href="#maples_dr.dataset.Field" title="maples_dr.dataset.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> for the list of available fields.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.Dataset.__getitem__">
+<span class="sig-name descname"><span class="pre">__getitem__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.Dataset.__getitem__" title="Lien vers cette définition"></a></dt>
+<dd><p>Get a sample from the dataset.</p>
+<p>The sample is returned as a <a class="reference internal" href="#maples_dr.DataSample" title="maples_dr.dataset.DataSample"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataSample</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – Index of the sample. Can be an integer or the name of the sample (e.g. « 20051116_44816_0400_PP »).</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sample.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#maples_dr.DataSample" title="maples_dr.DataSample">DataSample</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.Dataset.annotations_infos">
+<span class="sig-name descname"><span class="pre">annotations_infos</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.Dataset.annotations_infos" title="Lien vers cette définition"></a></dt>
+<dd><p>Get the annotations information of the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The annotations information of the dataset.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="maples_dr.Dataset.data">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(disponible dans pandas v2.2.3)"><span class="pre">DataFrame</span></a></em><a class="headerlink" href="#maples_dr.Dataset.data" title="Lien vers cette définition"></a></dt>
+<dd><p>The data of the dataset.</p>
+<p>A dataframe containing the information of each sample. It has the following columns:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>index: the name of the sample.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">fundus</span></code>: the path to the fundus image.</p></li>
+<li><p><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiomarkerField</span></code></a> (accept aggregated): the path to the biomarkers masks.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">BiomarkersAnnotationTasks</span></code> _ <code class="xref py py-class docutils literal notranslate"><span class="pre">BiomarkersAnnotationInfos</span></code>: the additional annotations informations.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dr</span></code>: the consensus DR grade.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">me</span></code>: the consensus ME grade.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dr_{A|B|C}</span></code>: the DR grade given by one retinologist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">me_{A|B|C}</span></code>: the ME grade given by one retinologist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">dr_{A|B|C}_comment</span></code>: comments from the retinologist when grading the DR diagnosis.</p></li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.Dataset.diagnosis">
+<span class="sig-name descname"><span class="pre">diagnosis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pathology</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.Dataset.diagnosis" title="Lien vers cette définition"></a></dt>
+<dd><p>Get the diagnosis of the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>pathology</strong> (<em>Pathology</em><em>, </em><em>optional</em>) – <p>The pathology to get the diagnosis for.</p>
+<p>If None, get the diagnosis for both pathologies.</p>
+</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>The diagnosis of the dataset.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.Dataset.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fundus_as_jpg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_as_blank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_workers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.Dataset.export" title="Lien vers cette définition"></a></dt>
+<dd><p>Export the dataset to a folder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em> | </em><em>Path</em>) – Path of the folder where to export the dataset.</p></li>
+<li><p><strong>fields</strong> (<a class="reference internal" href="#maples_dr.dataset.FundusField" title="maples_dr.dataset.FundusField"><em>FundusField</em></a><em> | </em><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(disponible dans Python v3.13)"><em>List</em></a><em>[</em><a class="reference internal" href="#maples_dr.dataset.FundusField" title="maples_dr.dataset.FundusField"><em>FundusField</em></a><em> | </em><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(disponible dans Python v3.13)"><em>Dict</em></a><em>[</em><a class="reference internal" href="#maples_dr.dataset.FundusField" title="maples_dr.dataset.FundusField"><em>FundusField</em></a><em> | </em><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>] </em><em>| </em><em>None</em>) – <p>The fields to be exported.</p>
+<ul>
+<li><p>If None, export the whole dataset.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">fields</span></code> is a string or list, export only the given fields.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">fields</span></code> is a dictionary, export the fields given by the keys</p></li>
+</ul>
+<p>and rename their folder to their corresponding dictionary values.</p>
+</p></li>
+<li><p><strong>fundus_as_jpg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – If True, save the fundus images (raw and preprocessed) as JPEG images. This format will drastically reduce load times but may introduce compression artifacts.</p></li>
+<li><p><strong>pre_annotation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, write the pre-annotation biomarkers instead of the reviewed ones.</p></li>
+<li><p><strong>missing_as_blank</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, missing biomarkers will be exported as blank images.</p></li>
+<li><p><strong>n_workers</strong> – <p>The number of workers to use for the export.</p>
+<p>If None, use the number of CPUs available.</p>
+</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.Dataset.get_sample_infos">
+<span class="sig-name descname"><span class="pre">get_sample_infos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">idx</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.Dataset.get_sample_infos" title="Lien vers cette définition"></a></dt>
+<dd><p>Get the information of a sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>idx</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a>) – Index of the sample. Can be an integer or the name of the sample (i.e. « 20051116_44816_0400_PP »).</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>The information of the sample.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+<dt class="field-even">Lève<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#IndexError" title="(disponible dans Python v3.13)"><strong>IndexError</strong></a> – If the index is out of range.</p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#KeyError" title="(disponible dans Python v3.13)"><strong>KeyError</strong></a> – If the image name is unknown.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.Dataset.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.Dataset.keys" title="Lien vers cette définition"></a></dt>
+<dd><p>Get the names of the samples in the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Renvoie<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The names of the samples.</p>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.Dataset.subset">
+<span class="sig-name descname"><span class="pre">subset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">arg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.Dataset.subset" title="Lien vers cette définition"></a></dt>
+<dd><p>Get a subset of the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a>) – The index of the first sample of the subset.</p></li>
+<li><p><strong>end</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a>) – The index of the last sample of the subset.</p></li>
+<li><p><strong>step</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>The subset of the dataset.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#maples_dr.Dataset" title="maples_dr.Dataset">Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.Dataset.subset_by_name">
+<span class="sig-name descname"><span class="pre">subset_by_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">names</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.Dataset.subset_by_name" title="Lien vers cette définition"></a></dt>
+<dd><p>Get a subset of the dataset by names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>names</strong> (<em>List</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em>) – The names of the samples to keep.</p>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>The subset of the dataset.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#maples_dr.Dataset" title="maples_dr.Dataset">Dataset</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.DataSample">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DataSample</span></span><a class="headerlink" href="#maples_dr.DataSample" title="Lien vers cette définition"></a></dt>
+<dd><p>A sample from the MAPLES-DR dataset.</p>
+<p>A sample is a dictionary containing the information of a single sample from the dataset.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.DataSample.export">
+<span class="sig-name descname"><span class="pre">export</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fields</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fundus_as_jpg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_as_blank</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.DataSample.export" title="Lien vers cette définition"></a></dt>
+<dd><p>Export the sample to a folder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em> | </em><em>Path</em>) – Path of the folder where to export the sample.</p></li>
+<li><p><strong>fields</strong> (<a class="reference internal" href="#maples_dr.dataset.FundusField" title="maples_dr.dataset.FundusField"><em>FundusField</em></a><em> | </em><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(disponible dans Python v3.13)"><em>List</em></a><em>[</em><a class="reference internal" href="#maples_dr.dataset.FundusField" title="maples_dr.dataset.FundusField"><em>FundusField</em></a><em> | </em><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(disponible dans Python v3.13)"><em>Dict</em></a><em>[</em><a class="reference internal" href="#maples_dr.dataset.FundusField" title="maples_dr.dataset.FundusField"><em>FundusField</em></a><em> | </em><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>] </em><em>| </em><em>None</em>) – <p>The fields to be exported.</p>
+<ul>
+<li><p>If None, export all available fields.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">fields</span></code> is a string or list, export only the given fields.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">fields</span></code> is a dictionary, export the fields given by the keys</p></li>
+</ul>
+<p>and rename their folder to their corresponding dictionary values.</p>
+</p></li>
+<li><p><strong>fundus_as_jpg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – If True, save the fundus images (raw and preprocessed) as JPEG images. This format will drastically reduce load times but may introduce compression artifacts.</p></li>
+<li><p><strong>pre_annotation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, write the pre-annotation biomarkers instead of the reviewed ones.</p></li>
+<li><p><strong>missing_as_blank</strong> – If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, missing biomarkers will be exported as blank images.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>A mapping of the exported fields to their paths (or None if the field was not exported).</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mapping[Field, Optional[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)">str</a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.DataSample.keys">
+<span class="sig-name descname"><span class="pre">keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">a</span> <span class="pre">set-like</span> <span class="pre">object</span> <span class="pre">providing</span> <span class="pre">a</span> <span class="pre">view</span> <span class="pre">on</span> <span class="pre">D's</span> <span class="pre">keys</span></span></span><a class="headerlink" href="#maples_dr.DataSample.keys" title="Lien vers cette définition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(disponible dans Python v3.13)"><em>List</em></a>[<a class="reference internal" href="#maples_dr.dataset.DiagnosisField" title="maples_dr.dataset.DiagnosisField"><em>DiagnosisField</em></a> | <a class="reference internal" href="#maples_dr.dataset.FundusField" title="maples_dr.dataset.FundusField"><em>FundusField</em></a> | <a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="maples_dr.DataSample.name">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#maples_dr.DataSample.name" title="Lien vers cette définition"></a></dt>
+<dd><p>The name of the sample.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.DataSample.read_biomarker">
+<span class="sig-name descname"><span class="pre">read_biomarker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">biomarkers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.DataSample.read_biomarker" title="Lien vers cette définition"></a></dt>
+<dd><p>Read a biomarker from the sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>biomarkers</strong> (<a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(disponible dans Python v3.13)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em>) – <p>Name of the biomarker(s) to read. Possible values are: <code class="docutils literal notranslate"><span class="pre">'opticCup'</span></code>, <code class="docutils literal notranslate"><span class="pre">'opticDisc'</span></code>, <code class="docutils literal notranslate"><span class="pre">'macula'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'vessels'</span></code>, <code class="docutils literal notranslate"><span class="pre">'brightLesions'</span></code>, <code class="docutils literal notranslate"><span class="pre">'cottonWoolSpots'</span></code>, <code class="docutils literal notranslate"><span class="pre">'drusens'</span></code>, <code class="docutils literal notranslate"><span class="pre">'exudates'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'brightUncertains'</span></code>, <code class="docutils literal notranslate"><span class="pre">'redLesions'</span></code>, <code class="docutils literal notranslate"><span class="pre">'hemorrhages'</span></code>, <code class="docutils literal notranslate"><span class="pre">'microaneurysms'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'neovascularization'</span></code>, <code class="docutils literal notranslate"><span class="pre">'redUncertains'</span></code> (see <a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiomarkerField</span></code></a> for more details).</p>
+<p>If multiple biomarkers are given, the corresponding masks will be merged.</p>
+</p></li>
+<li><p><strong>image_format</strong> (<a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><em>ImageFormat</em></a><em> | </em><em>None</em>) – <p>Format of the image to return. Possible values are: <code class="docutils literal notranslate"><span class="pre">'PIL'</span></code>, <code class="docutils literal notranslate"><span class="pre">'BGR'</span></code> or <code class="docutils literal notranslate"><span class="pre">'RGB'</span></code>
+(see <a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFormat</span></code></a> for more details.).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> (by default), use the format defined in the configuration.</p>
+</p></li>
+<li><p><strong>resize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em> | </em><em>None</em>) – <p>Resize the image to the given size.</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">resize</span></code> is an int, crop the image to a square ROI and resize it to the shape <code class="docutils literal notranslate"><span class="pre">(resize,</span> <span class="pre">resize)</span></code>;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, keep the original MAPLES-DR resolution of 1500x1500 px;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">False</span></code>, use the original MESSIDOR resolution if MESSIDOR path is configured, otherwise fallback to MAPLES-DR original resolution.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> (by default), use the size defined in the configuration.</p></li>
+</ul>
+</p></li>
+<li><p><strong>pre_annotation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – <p>If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, read the pre-annotation biomarkers instead of the final ones.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.</p>
+</div>
+</p></li>
+<li><p><strong>no_cache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the cache will not be used to read the biomarker, regardless of the configuration.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>The biomarker mask under the format specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.DataSample.read_field">
+<span class="sig-name descname"><span class="pre">read_field</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">field</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.DataSample.read_field" title="Lien vers cette définition"></a></dt>
+<dd><p>Read one field of the sample.</p>
+<p>This function is similar to __getitem__ but provides more options to format the result (resize, image format…).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>field</strong> (<em>Field</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a>) – <p>Any field from:</p>
+<ul>
+<li><p><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiomarkerField</span></code></a>: a biomarker name, possible values are: <code class="docutils literal notranslate"><span class="pre">'opticCup'</span></code>, <code class="docutils literal notranslate"><span class="pre">'opticDisc'</span></code>, <code class="docutils literal notranslate"><span class="pre">'macula'</span></code>, <code class="docutils literal notranslate"><span class="pre">'vessels'</span></code>, <code class="docutils literal notranslate"><span class="pre">'brightLesions'</span></code>, <code class="docutils literal notranslate"><span class="pre">'cottonWoolSpots'</span></code>, <code class="docutils literal notranslate"><span class="pre">'drusens'</span></code>, <code class="docutils literal notranslate"><span class="pre">'exudates'</span></code>, <code class="docutils literal notranslate"><span class="pre">'brightUncertains'</span></code>, <code class="docutils literal notranslate"><span class="pre">'redLesions'</span></code>, <code class="docutils literal notranslate"><span class="pre">'hemorrhages'</span></code>, <code class="docutils literal notranslate"><span class="pre">'microaneurysms'</span></code>, <code class="docutils literal notranslate"><span class="pre">'neovascularization'</span></code>, <code class="docutils literal notranslate"><span class="pre">'redUncertains'</span></code>.</p></li>
+<li><p><a class="reference internal" href="#maples_dr.dataset.DiagnosisField" title="maples_dr.dataset.DiagnosisField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiagnosisField</span></code></a>: a diagnosis name, possible values are: <code class="docutils literal notranslate"><span class="pre">'dr'</span></code>, <code class="docutils literal notranslate"><span class="pre">'me'</span></code>.</p></li>
+<li><p><a class="reference internal" href="#maples_dr.dataset.FundusField" title="maples_dr.dataset.FundusField"><code class="xref py py-class docutils literal notranslate"><span class="pre">FundusField</span></code></a>: a fundus field, possible values are: <code class="docutils literal notranslate"><span class="pre">'fundus'</span></code>, <code class="docutils literal notranslate"><span class="pre">'rawFundus'</span></code>, <code class="docutils literal notranslate"><span class="pre">'mask'</span></code>.</p></li>
+</ul>
+</p></li>
+<li><p><strong>image_format</strong> (<a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><em>ImageFormat</em></a><em> | </em><em>None</em>) – <p>Format of the image to return.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> (by default), use the format defined in the configuration.</p>
+</p></li>
+<li><p><strong>resize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em> | </em><em>None</em>) – <p>Resize the image to the given size.</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">resize</span></code> is an int, crop the image to a square ROI and resize it to the shape <code class="docutils literal notranslate"><span class="pre">(resize,</span> <span class="pre">resize)</span></code>;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, keep the original MAPLES-DR resolution of 1500x1500 px;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">False</span></code>, use the original MESSIDOR resolution if MESSIDOR path is configured, otherwise fallback to MAPLES-DR original resolution.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> (by default), use the size defined in the configuration.</p></li>
+</ul>
+</p></li>
+<li><p><strong>pre_annotation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – <p>If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, read the pre-annotation biomarkers instead of the final ones.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.</p>
+</div>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>The field under the format specified.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Image.Image | np.ndarray | <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.DataSample.read_fundus">
+<span class="sig-name descname"><span class="pre">read_fundus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preprocess</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no_cache</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.DataSample.read_fundus" title="Lien vers cette définition"></a></dt>
+<dd><p>Read the fundus image of the sample.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>preprocess</strong> (<a class="reference internal" href="config.html#maples_dr.config.Preprocessing" title="maples_dr.config.Preprocessing"><em>Preprocessing</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em> | </em><em>None</em>) – <p>Preprocessing to apply to the image.</p>
+<ul>
+<li><p>If a <a class="reference internal" href="config.html#maples_dr.config.Preprocessing" title="maples_dr.config.Preprocessing"><code class="xref py py-class docutils literal notranslate"><span class="pre">Preprocessing</span></code></a> (or an equivalent string), the image is preprocessed with the given preprocessing;</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">False</span></code>, the image is not preprocessed.</p></li>
+<li><p>if <code class="docutils literal notranslate"><span class="pre">None</span></code> (by default) or <code class="docutils literal notranslate"><span class="pre">True</span></code>, use the preprocessing defined in the configuration.</p></li>
+</ul>
+</p></li>
+<li><p><strong>image_format</strong> (<a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><em>ImageFormat</em></a><em> | </em><em>None</em>) – <p>Format of the image to return. Possible values are: <code class="docutils literal notranslate"><span class="pre">'PIL'</span></code>, <code class="docutils literal notranslate"><span class="pre">'BGR'</span></code> or <code class="docutils literal notranslate"><span class="pre">'RGB'</span></code>
+(see <a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFormat</span></code></a> for more details.).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> (by default), use the format defined in the configuration.</p>
+</p></li>
+<li><p><strong>resize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em> | </em><em>None</em>) – <p>Resize the image to the given size.</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">resize</span></code> is an int, crop the image to a square ROI and resize it to the shape <code class="docutils literal notranslate"><span class="pre">(resize,</span> <span class="pre">resize)</span></code>;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, use the original MAPLES-DR resolution of 1500x1500 px;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">False</span></code>, keep the original MESSIDOR resolution.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> (by default), use the size defined in the configuration.</p></li>
+</ul>
+</p></li>
+<li><p><strong>no_cache</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, the cache will not be used to read the fundus image, regardless of the configuration.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-even"><p>The fundus image under the format specified.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.DataSample.read_multiple_biomarkers">
+<span class="sig-name descname"><span class="pre">read_multiple_biomarkers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">biomarkers</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pre_annotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.DataSample.read_multiple_biomarkers" title="Lien vers cette définition"></a></dt>
+<dd><p>Read multiple biomarkers at once, assigning a class to a biomarker or a group of them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>biomarkers</strong> (<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Mapping" title="(disponible dans Python v3.13)"><em>Mapping</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a><em>, </em><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(disponible dans Python v3.13)"><em>List</em></a><em>[</em><a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><em>BiomarkerField</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(disponible dans Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – Name of the biomarker(s) to read. Possible values are: <code class="docutils literal notranslate"><span class="pre">'opticCup'</span></code>, <code class="docutils literal notranslate"><span class="pre">'opticDisc'</span></code>, <code class="docutils literal notranslate"><span class="pre">'macula'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'vessels'</span></code>, <code class="docutils literal notranslate"><span class="pre">'brightLesions'</span></code>, <code class="docutils literal notranslate"><span class="pre">'cottonWoolSpots'</span></code>, <code class="docutils literal notranslate"><span class="pre">'drusens'</span></code>, <code class="docutils literal notranslate"><span class="pre">'exudates'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'brightUncertains'</span></code>, <code class="docutils literal notranslate"><span class="pre">'redLesions'</span></code>, <code class="docutils literal notranslate"><span class="pre">'hemorrhages'</span></code>, <code class="docutils literal notranslate"><span class="pre">'microaneurysms'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'neovascularization'</span></code>, <code class="docutils literal notranslate"><span class="pre">'redUncertains'</span></code> (see <a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiomarkerField</span></code></a> for more details).</p></li>
+<li><p><strong>image_format</strong> (<a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><em>ImageFormat</em></a><em> | </em><em>None</em>) – <p>Format of the image to return. Possible values are: <code class="docutils literal notranslate"><span class="pre">'PIL'</span></code>, <code class="docutils literal notranslate"><span class="pre">'BGR'</span></code> or <code class="docutils literal notranslate"><span class="pre">'RGB'</span></code>
+(see <a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFormat</span></code></a> for more details.).</p>
+<p>If None (by default), use the format defined in the configuration.</p>
+</p></li>
+<li><p><strong>pre_annotation</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a>) – <p>If set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, read the pre-annotation biomarkers instead of the final ones.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.</p>
+</div>
+</p></li>
+<li><p><strong>resize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.DataSample.read_roi_mask">
+<span class="sig-name descname"><span class="pre">read_roi_mask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.DataSample.read_roi_mask" title="Lien vers cette définition"></a></dt>
+<dd><p>Read the region of interest of the fundus image.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Paramètres<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_format</strong> (<a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><em>ImageFormat</em></a><em> | </em><em>None</em>) – <p>Format of the image to return. Possible values are: <code class="docutils literal notranslate"><span class="pre">'PIL'</span></code>, <code class="docutils literal notranslate"><span class="pre">'BGR'</span></code> or <code class="docutils literal notranslate"><span class="pre">'RGB'</span></code>
+(see <a class="reference internal" href="config.html#maples_dr.config.ImageFormat" title="maples_dr.config.ImageFormat"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImageFormat</span></code></a> for more details.).</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> (by default), use the format defined in the configuration.</p>
+</p></li>
+<li><p><strong>resize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(disponible dans Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(disponible dans Python v3.13)"><em>bool</em></a><em> | </em><em>None</em>) – <p>Resize the image to the given size.</p>
+<ul>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">resize</span></code> is an int, crop the image to a square ROI and resize it to the shape <code class="docutils literal notranslate"><span class="pre">(resize,</span> <span class="pre">resize)</span></code>;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, use the original MAPLES-DR resolution of 1500x1500 px;</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">False</span></code>, keep the original MESSIDOR resolution.</p></li>
+<li><p>If <code class="docutils literal notranslate"><span class="pre">None</span></code> (by default), use the size defined in the configuration.</p></li>
+</ul>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Renvoie<span class="colon">:</span></dt>
+<dd class="field-even"><p>The region of interest of the fundus image.</p>
+</dd>
+<dt class="field-odd">Type renvoyé<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<hr class="docutils" />
+<section id="datasets-fields">
+<h2>Datasets Fields<a class="headerlink" href="#datasets-fields" title="Lien vers cette rubrique"></a></h2>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.Field">
+<span class="sig-name descname"><span class="pre">Field</span></span><a class="headerlink" href="#maples_dr.dataset.Field" title="Lien vers cette définition"></a></dt>
+<dd><p>The name of a valid field in MAPLES-DR.</p>
+<p>This type alias is a union of <a class="reference internal" href="#maples_dr.dataset.DiagnosisField" title="maples_dr.dataset.DiagnosisField"><code class="xref py py-class docutils literal notranslate"><span class="pre">DiagnosisField</span></code></a>, <a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiomarkerField</span></code></a>, and <a class="reference internal" href="#maples_dr.dataset.FundusField" title="maples_dr.dataset.FundusField"><code class="xref py py-class docutils literal notranslate"><span class="pre">FundusField</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.dataset.DiagnosisField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DiagnosisField</span></span><a class="headerlink" href="#maples_dr.dataset.DiagnosisField" title="Lien vers cette définition"></a></dt>
+<dd><p>String Enum of MAPLES-DR diagnosis fields.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.DiagnosisField.DR">
+<span class="sig-name descname"><span class="pre">DR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'dr'</span></em><a class="headerlink" href="#maples_dr.dataset.DiagnosisField.DR" title="Lien vers cette définition"></a></dt>
+<dd><p>The Diabetic Retinopathy grade.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">R0</span></code> : No DR.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R1</span></code> : Mild Non-Proliferative DR.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R2</span></code> : Moderate Non-Proliferative DR.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R3</span></code> : Severe Non-Proliferative DR.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R4A</span></code> : Proliferative DR.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R4S</span></code> : Treated and Stable Proliferative DR.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">R6</span></code> : Insufficient quality to grade.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.DiagnosisField.ME">
+<span class="sig-name descname"><span class="pre">ME</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'me'</span></em><a class="headerlink" href="#maples_dr.dataset.DiagnosisField.ME" title="Lien vers cette définition"></a></dt>
+<dd><p>The Macular Edema grade.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">M0</span></code> : No ME.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">M1</span></code> : ME without center involvement.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">M2</span></code> : ME with center involvement.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">M6</span></code> : Insufficient quality to grade.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.dataset.DiagnosisField.__new__">
+<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.dataset.DiagnosisField.__new__" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.ImageField">
+<span class="sig-name descname"><span class="pre">ImageField</span></span><a class="headerlink" href="#maples_dr.dataset.ImageField" title="Lien vers cette définition"></a></dt>
+<dd><p>The name of a valid image field in MAPLES-DR.</p>
+<p>This type alias is a union of <a class="reference internal" href="#maples_dr.dataset.BiomarkerField" title="maples_dr.dataset.BiomarkerField"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiomarkerField</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">FundusField</span></code>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.dataset.FundusField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FundusField</span></span><a class="headerlink" href="#maples_dr.dataset.FundusField" title="Lien vers cette définition"></a></dt>
+<dd><p>String Enum of MAPLES-DR fields associated with fundus images.</p>
+<div class="admonition warning">
+<p class="admonition-title">Avertissement</p>
+<p>Path to MESSIDOR fundus images <strong>must</strong> be configured to use these fields!
+See <a class="reference internal" href="quick_api.html#maples_dr.configure" title="maples_dr.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.configure()</span></code></a> for more information.</p>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.FundusField.FUNDUS">
+<span class="sig-name descname"><span class="pre">FUNDUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'fundus'</span></em><a class="headerlink" href="#maples_dr.dataset.FundusField.FUNDUS" title="Lien vers cette définition"></a></dt>
+<dd><p>The preprocessed fundus image (or the original fundus image if no preprocessing is applied).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.FundusField.RAW_FUNDUS">
+<span class="sig-name descname"><span class="pre">RAW_FUNDUS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'rawFundus'</span></em><a class="headerlink" href="#maples_dr.dataset.FundusField.RAW_FUNDUS" title="Lien vers cette définition"></a></dt>
+<dd><p>The raw fundus image. (If no preprocessing is applied, this is the same as <a class="reference internal" href="#maples_dr.dataset.FundusField.FUNDUS" title="maples_dr.dataset.FundusField.FUNDUS"><code class="xref py py-attr docutils literal notranslate"><span class="pre">FundusField.FUNDUS</span></code></a>.)</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.FundusField.MASK">
+<span class="sig-name descname"><span class="pre">MASK</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'mask'</span></em><a class="headerlink" href="#maples_dr.dataset.FundusField.MASK" title="Lien vers cette définition"></a></dt>
+<dd><p>The mask of the fundus image.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.dataset.FundusField.__new__">
+<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.dataset.FundusField.__new__" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">BiomarkerField</span></span><a class="headerlink" href="#maples_dr.dataset.BiomarkerField" title="Lien vers cette définition"></a></dt>
+<dd><p>String Enum of MAPLES-DR biomarkers fields.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.OPTIC_CUP">
+<span class="sig-name descname"><span class="pre">OPTIC_CUP</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'opticCup'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.OPTIC_CUP" title="Lien vers cette définition"></a></dt>
+<dd><p>The optic cup mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.OPTIC_DISC">
+<span class="sig-name descname"><span class="pre">OPTIC_DISC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'opticDisc'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.OPTIC_DISC" title="Lien vers cette définition"></a></dt>
+<dd><p>The optic disc mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.MACULA">
+<span class="sig-name descname"><span class="pre">MACULA</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'macula'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.MACULA" title="Lien vers cette définition"></a></dt>
+<dd><p>The macula mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.VESSELS">
+<span class="sig-name descname"><span class="pre">VESSELS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'vessels'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.VESSELS" title="Lien vers cette définition"></a></dt>
+<dd><p>The vessels mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.BRIGHT_LESIONS">
+<span class="sig-name descname"><span class="pre">BRIGHT_LESIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'brightLesions'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.BRIGHT_LESIONS" title="Lien vers cette définition"></a></dt>
+<dd><p>Union of all the bright lesions masks (CWS, exudates, drusens and uncertain).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.COTTON_WOOL_SPOTS">
+<span class="sig-name descname"><span class="pre">COTTON_WOOL_SPOTS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'cottonWoolSpots'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.COTTON_WOOL_SPOTS" title="Lien vers cette définition"></a></dt>
+<dd><p>The cotton wool spots mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.DRUSENS">
+<span class="sig-name descname"><span class="pre">DRUSENS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'drusens'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.DRUSENS" title="Lien vers cette définition"></a></dt>
+<dd><p>The drusens mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.EXUDATES">
+<span class="sig-name descname"><span class="pre">EXUDATES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'exudates'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.EXUDATES" title="Lien vers cette définition"></a></dt>
+<dd><p>The exudates mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.BRIGHT_UNCERTAINS">
+<span class="sig-name descname"><span class="pre">BRIGHT_UNCERTAINS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'brightUncertains'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.BRIGHT_UNCERTAINS" title="Lien vers cette définition"></a></dt>
+<dd><p>The mask of bright lesions with uncertain type (either CWS, exudates or drusens).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.RED_LESIONS">
+<span class="sig-name descname"><span class="pre">RED_LESIONS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'redLesions'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.RED_LESIONS" title="Lien vers cette définition"></a></dt>
+<dd><p>Union of all the red lesions masks (microaneurysm, hemorrhages and uncertain).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.HEMORRHAGES">
+<span class="sig-name descname"><span class="pre">HEMORRHAGES</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'hemorrhages'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.HEMORRHAGES" title="Lien vers cette définition"></a></dt>
+<dd><p>The hemorrhages mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.MICROANEURYSMS">
+<span class="sig-name descname"><span class="pre">MICROANEURYSMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'microaneurysms'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.MICROANEURYSMS" title="Lien vers cette définition"></a></dt>
+<dd><p>The microaneurysms mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.NEOVASCULARIZATION">
+<span class="sig-name descname"><span class="pre">NEOVASCULARIZATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'neovascularization'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.NEOVASCULARIZATION" title="Lien vers cette définition"></a></dt>
+<dd><p>The neovascularization mask.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.RED_UNCERTAINS">
+<span class="sig-name descname"><span class="pre">RED_UNCERTAINS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'redUncertains'</span></em><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.RED_UNCERTAINS" title="Lien vers cette définition"></a></dt>
+<dd><p>The mask of red lesions with uncertain type (either microaneurysm or hemorrhages).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="maples_dr.dataset.BiomarkerField.__new__">
+<span class="sig-name descname"><span class="pre">__new__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#maples_dr.dataset.BiomarkerField.__new__" title="Lien vers cette définition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="config.html" class="btn btn-neutral float-left" title="MAPLES-DR Configuration" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="loader.html" class="btn btn-neutral float-right" title="Datasets Loader" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    fr
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Langages</dt>
+      
+        
+        <dd><a href="../../en/api_reference/dataset.html">en</a></dd>
+        
+      
+         <strong> 
+        <dd><a href="../../fr/api_reference/dataset.html">fr</a></dd>
+         </strong> 
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>
