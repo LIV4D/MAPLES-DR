@@ -696,7 +696,7 @@ msgstr ""
 "annotées par les rétinologues (entraînement, test et doublons "
 "confondues). Une carte de segmentation a été retirée du dossier "
 "``Macula`` et 6 ont été retirées du dossier ``OpticCup`` (voir "
-"avertissement ci-dessus).  Toutes les cartes de segmentation sont "
+"avertissement ci-dessus).  Toutes les cartes de segmentation sont "Dataset
 "stockées sous forme de masques binaires png dans la résolution à laquelle"
 " elles furent annotées (1500x1500 pixels) et en utilisant les régions "
 "d’intérêt décrites dans le fichier ``MESSIDOR-ROIs.csv``."
