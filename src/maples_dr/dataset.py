@@ -323,9 +323,9 @@ class Dataset(Sequence):
 
         assert isinstance(data, pd.DataFrame), "Invalid type for 'data'."
         assert all(isinstance(_, str) for _ in data.index), "Invalid index type for 'data'."
-        assert all(
-            col.value in data.columns for col in BiomarkerField if col not in AGGREGATED_BIOMARKERS
-        ), "Missing biomarker columns in the dataset."
+        assert all(col.value in data.columns for col in BiomarkerField if col not in AGGREGATED_BIOMARKERS), (
+            "Missing biomarker columns in the dataset."
+        )
         assert all(col.value in data.columns for col in DiagnosisField), "Missing diagnosis columns in the dataset."
         self._data: pd.DataFrame = data
 
@@ -392,7 +392,7 @@ class Dataset(Sequence):
             - ``dr_{A|B|C}``: the DR grade given by one retinologist.
             - ``me_{A|B|C}``: the ME grade given by one retinologist.
             - ``dr_{A|B|C}_comment``: comments from the retinologist when grading the DR diagnosis.
-        """
+        """  # noqa: E501
         return self._data
 
     def keys(self) -> List[str]:
@@ -552,13 +552,29 @@ class Dataset(Sequence):
             return infos.iloc[0]
 
     def annotations_infos(self) -> pd.DataFrame:
-        """Get the annotations information of the dataset.
+        """Get the annotations information of the dataset as a DataFrame with multi-index columns organized by task and annotation infos. Each row corresponds to a sample and use its name as index.
+
+        Check the :class:`BiomarkersAnnotationTasks <maples_dr.BiomarkersAnnotationTasks>` and :class:`BiomarkersAnnotationInfos <maples_dr.BiomarkersAnnotationInfos>` for the available tasks and infos.
+
+        Example:
+        --------
+        Print the vessels annotation time of the first sample:
+        .. code-block:: python
+
+            >>> dataset.annotations_infos().iloc[0]['vessels', 'annotationTime']
+            Timedelta('0 days 00:06:53')
+
+        Print the comment written by the retinologist when annotating bright lesions:
+        .. code-block:: python
+
+            >>> dataset.annotations_infos().loc['20051208_42322_0400_PP']['brightLesions', 'comment']
+            'Very difficult to annotate since image is dark. Exudates pre-annotation seems adequate, but again hard to  confirm'
 
         Returns
         -------
         pd.DataFrame
             The annotations information of the dataset.
-        """
+        """  # noqa: E501
         tasks = [_.value for _ in BiomarkersAnnotationTasks]
         infos = [_.value for _ in BiomarkersAnnotationInfos]
         columns = pd.MultiIndex.from_product([tasks, infos], names=["Task", "Infos"])
@@ -592,8 +608,8 @@ class Dataset(Sequence):
 
             - If None, export the whole dataset.
             - If ``fields`` is a string or list, export only the given fields.
-            - If ``fields`` is a dictionary, export the fields given by the keys
-            and rename their folder to their corresponding dictionary values.
+            - If ``fields`` is a dictionary, export the fields given by the keys and rename their folder to their corresponding dictionary values.
+
         fundus_as_jpg :
             If True, save the fundus images (raw and preprocessed) as JPEG images. This format will drastically reduce load times but may introduce compression artifacts.
         pre_annotation :
@@ -604,7 +620,7 @@ class Dataset(Sequence):
             The number of workers to use for the export.
 
             If None, use the number of CPUs available.
-        """
+        """  # noqa: E501
         # === Parse the fields argument ===
         if fields is None:
             fields = {
@@ -801,7 +817,7 @@ class DataSample(Mapping):
         -------
         Image.Image | np.ndarray | str
             The field under the format specified.
-        """
+        """  # noqa: E501
         field = check_field(field)
         if isinstance(field, BiomarkerField):
             return self.read_biomarker(field, image_format=image_format, resize=resize, pre_annotation=pre_annotation)
@@ -860,7 +876,7 @@ class DataSample(Mapping):
         Returns
         -------
             The biomarker mask under the format specified.
-        """
+        """  # noqa: E501
         # Check arguments validity
         image_format = self._check_image_format(image_format)
         target_size, crop = self._target_size(resize)
@@ -986,7 +1002,7 @@ class DataSample(Mapping):
             .. warning::
                 Only hemorrhages, microaneurysms, exudates and vessels have pre-annotations.
 
-        """
+        """  # noqa: E501
         image_format = self._check_image_format(image_format)
         target_size, _ = self._target_size(resize)
 
@@ -1038,7 +1054,7 @@ class DataSample(Mapping):
         Returns
         -------
             The fundus image under the format specified.
-        """
+        """  # noqa: E501
 
         assert "fundus" in self._data, "Impossible to read fundus images, path to MESSIDOR dataset is unknown."
 
@@ -1152,8 +1168,8 @@ class DataSample(Mapping):
 
             - If None, export all available fields.
             - If ``fields`` is a string or list, export only the given fields.
-            - If ``fields`` is a dictionary, export the fields given by the keys
-            and rename their folder to their corresponding dictionary values.
+            - If ``fields`` is a dictionary, export the fields given by the keys and rename their folder to their corresponding dictionary values.
+
         fundus_as_jpg :
             If True, save the fundus images (raw and preprocessed) as JPEG images. This format will drastically reduce load times but may introduce compression artifacts.
         pre_annotation :
@@ -1165,7 +1181,7 @@ class DataSample(Mapping):
         -------
         Mapping[Field, Optional[str]]
             A mapping of the exported fields to their paths (or None if the field was not exported).
-        """
+        """  # noqa: E501
 
         # === Parse the fields argument ===
         if fields is None:

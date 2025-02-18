@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-11 10:03-0400\n"
+"POT-Creation-Date: 2025-02-18 15:33-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -696,10 +696,10 @@ msgstr ""
 "annotées par les rétinologues (entraînement, test et doublons "
 "confondues). Une carte de segmentation a été retirée du dossier "
 "``Macula`` et 6 ont été retirées du dossier ``OpticCup`` (voir "
-"avertissement ci-dessus).  Toutes les cartes de segmentation sont "Dataset
-"stockées sous forme de masques binaires png dans la résolution à laquelle"
-" elles furent annotées (1500x1500 pixels) et en utilisant les régions "
-"d’intérêt décrites dans le fichier ``MESSIDOR-ROIs.csv``."
+"avertissement ci-dessus).  Toutes les cartes de segmentation sont "
+"\"Datasestockées sous forme de masques binaires png dans la résolution à "
+"laquelle elles furent annotées (1500x1500 pixels) et en utilisant les "
+"régions d’intérêt décrites dans le fichier ``MESSIDOR-ROIs.csv``."
 
 #: ../../source/welcome/dataset_description.rst:134
 #: 36b43f151ab34469933f21319cfe3907
@@ -790,10 +790,11 @@ msgstr ""
 #: 9f2a83e41493458191d3d5df51443f41
 msgid ""
 "For more details on the annotation process please refer to the `MAPLES-DR"
-" paper <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr`."
+" paper <https://doi.org/10.1038/s41597-024-03739-6>`_ "
+":footcite:`maples_dr`."
 msgstr ""
 "Pour plus de détails sur le processus d'annotation, veuillez vous référer"
-" à l'article `MAPLES-DR <https://arxiv.org/abs/2402.04258>`_ "
+" à l'article `MAPLES-DR <https://doi.org/10.1038/s41597-024-03739-6>`_ "
 ":footcite:`maples_dr`."
 
 #: ../../source/welcome/dataset_description.rst:149

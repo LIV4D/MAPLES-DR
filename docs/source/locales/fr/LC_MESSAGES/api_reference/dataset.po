@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: MAPLES-DR \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-11 09:54-0400\n"
+"POT-Creation-Date: 2025-02-18 15:45-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -85,10 +85,9 @@ msgstr ""
 msgid "The sample."
 msgstr ""
 
-#: 476921688f3244c89879f303cc5da29f 4b2723e4d8bf4e908a5ced2c2ce131f1
-#: 79721f86bdf9446dbd99db66bfc90e13 9a1f0e179f7c4d42a4cecdd275fb91ca
-#: a3488be6225648c183b82fb4b3047534 maples_dr.dataset.DataSample.export
-#: maples_dr.dataset.DataSample.keys
+#: 4b2723e4d8bf4e908a5ced2c2ce131f1 79721f86bdf9446dbd99db66bfc90e13
+#: 9a1f0e179f7c4d42a4cecdd275fb91ca a3488be6225648c183b82fb4b3047534
+#: maples_dr.dataset.DataSample.export maples_dr.dataset.DataSample.keys
 #: maples_dr.dataset.DataSample.read_biomarker
 #: maples_dr.dataset.DataSample.read_field
 #: maples_dr.dataset.DataSample.read_fundus
@@ -218,48 +217,44 @@ msgstr ""
 msgid "If ``fields`` is a string or list, export only the given fields."
 msgstr ""
 
-#: 57b60d44e68d40d1b17b757db7f9d3ee 62995238f28e4bdfbfdf026668b93496
-#: maples_dr.dataset.DataSample.export:8 maples_dr.dataset.Dataset.export:8 of
-msgid "If ``fields`` is a dictionary, export the fields given by the keys"
+#: 7d771044e7ee471ba3293531ef32a24e maples_dr.dataset.DataSample.export:8
+#: maples_dr.dataset.Dataset.export:8 of
+msgid ""
+"If ``fields`` is a dictionary, export the fields given by the keys and "
+"rename their folder to their corresponding dictionary values."
 msgstr ""
 
-#: 64c14ab1bfec4cf48e0cf3a1c4522a43 7ee88edb59cb4a68b96b5b829448cd8d
-#: maples_dr.dataset.DataSample.export:9 maples_dr.dataset.Dataset.export:9 of
-msgid "and rename their folder to their corresponding dictionary values."
-msgstr ""
-
-#: 1f05469ebee740e794a200aaee640357 88b4afa2961846d780b8d6e224f02927
-#: maples_dr.dataset.DataSample.export:10 maples_dr.dataset.Dataset.export:10
-#: of
+#: 88b4afa2961846d780b8d6e224f02927 maples_dr.dataset.DataSample.export:9
+#: maples_dr.dataset.Dataset.export:9 of
 msgid ""
 "If True, save the fundus images (raw and preprocessed) as JPEG images. "
 "This format will drastically reduce load times but may introduce "
 "compression artifacts."
 msgstr ""
 
-#: 9e5797d7f1b749698dbb058138b39b2d maples_dr.dataset.DataSample.export:11
-#: maples_dr.dataset.Dataset.export:11 of
+#: 9e5797d7f1b749698dbb058138b39b2d maples_dr.dataset.DataSample.export:10
+#: maples_dr.dataset.Dataset.export:10 of
 msgid ""
 "If set to ``True``, write the pre-annotation biomarkers instead of the "
 "reviewed ones."
 msgstr ""
 
-#: 9e5797d7f1b749698dbb058138b39b2d maples_dr.dataset.DataSample.export:12
-#: maples_dr.dataset.Dataset.export:12 of
+#: 9e5797d7f1b749698dbb058138b39b2d maples_dr.dataset.DataSample.export:11
+#: maples_dr.dataset.Dataset.export:11 of
 msgid "If set to ``True``, missing biomarkers will be exported as blank images."
 msgstr ""
 
-#: 5c39c3d5e6cc434a995a47606f3c589f maples_dr.dataset.Dataset.export:13 of
+#: 5c39c3d5e6cc434a995a47606f3c589f maples_dr.dataset.Dataset.export:12 of
 msgid ""
 "The number of workers to use for the export.  If None, use the number of "
 "CPUs available."
 msgstr ""
 
-#: 9eb2cea9e7bc461fa179d5f5be2236d9 maples_dr.dataset.Dataset.export:13 of
+#: 9eb2cea9e7bc461fa179d5f5be2236d9 maples_dr.dataset.Dataset.export:12 of
 msgid "The number of workers to use for the export."
 msgstr ""
 
-#: 687fa4418f3c4fa3903ffd3b0fa20e59 maples_dr.dataset.Dataset.export:15 of
+#: 687fa4418f3c4fa3903ffd3b0fa20e59 maples_dr.dataset.Dataset.export:14 of
 msgid "If None, use the number of CPUs available."
 msgstr ""
 
@@ -360,7 +355,7 @@ msgstr ""
 msgid "If None, export all available fields."
 msgstr ""
 
-#: ebf1c17d28a0483397cfa1695d5629fd maples_dr.dataset.DataSample.export:14 of
+#: ebf1c17d28a0483397cfa1695d5629fd maples_dr.dataset.DataSample.export:13 of
 msgid ""
 "A mapping of the exported fields to their paths (or None if the field was"
 " not exported)."
@@ -904,6 +899,78 @@ msgid ""
 "hemorrhages)."
 msgstr ""
 
+#: ../../source/api_reference/dataset.rst:46 b68705557d8d470e9840d35141da36bd
+msgid "Annotation Information"
+msgstr ""
+
+#: a9f12b8032dc4665ad4e281fe2b0f662
+#: maples_dr.dataset.BiomarkersAnnotationInfos:1 of
+msgid ""
+"Valid name for the additional information collected during the biomarkers"
+" annotations process."
+msgstr ""
+
+#: ../../docstring 451b87d8de8648cf9c204d67b131dcb9
+#: maples_dr.BiomarkersAnnotationInfos.RETINOLOGIST:1 of
+msgid "The name of the retinologist who annotated the series of biomarkers."
+msgstr ""
+
+#: ../../docstring 7584c886cacf426792a404fadc9e0909
+#: maples_dr.BiomarkersAnnotationInfos.COMMENT:1 of
+msgid "A comment from the retinologist."
+msgstr ""
+
+#: ../../docstring 9e5797d7f1b749698dbb058138b39b2d
+#: maples_dr.BiomarkersAnnotationInfos.ANNOTATION_TIME:1 of
+msgid "The time at which the annotation was made."
+msgstr ""
+
+#: ../../docstring c1f79bfe2f484b389fcfa28dc37b93e8
+#: maples_dr.BiomarkersAnnotationInfos.ANNOTATION_ID:1 of
+msgid ""
+"The id of the annotation. (1 is the first image to be annotated, 200 is "
+"the last one.)"
+msgstr ""
+
+#: 98b1fdd28a6049388a696ab80f8a4f32
+#: maples_dr.dataset.BiomarkersAnnotationTasks:1 of
+msgid "Valid name for the different annotation tasks in MAPLES-DR."
+msgstr ""
+
+#: ../../docstring 51686c551e054bc9b62b7689affafb0e
+#: maples_dr.BiomarkersAnnotationTasks.BRIGHT:1 of
+msgid "The annotation task for bright lesions (CWS, exudates, drusens)."
+msgstr ""
+
+#: ../../docstring 65370847d80142cd9a2e7c9a61c6153f
+#: maples_dr.BiomarkersAnnotationTasks.RED:1 of
+msgid ""
+"The annotation task for red lesions (microaneurysm, hemorrhages, "
+"neovessels)."
+msgstr ""
+
+#: ../../docstring c147a923934c486eb1ea968590faadc4
+#: maples_dr.BiomarkersAnnotationTasks.DISC_MACULA:1 of
+msgid "The annotation task for the optic disc, optic cup and the macula."
+msgstr ""
+
+#: ../../docstring fbc7defb191749ce897bf2e38a485922
+#: maples_dr.BiomarkersAnnotationTasks.VESSELS:1 of
+msgid "The annotation task for the vessels."
+msgstr ""
+
+#: b826a075f6b845df8e49f866eccae691 maples_dr.dataset.Pathology:1 of
+msgid "Valid name for the different pathology in MAPLES-DR."
+msgstr ""
+
+#: ../../docstring 26daab7e0f724b9f95143a1284817717 maples_dr.Pathology.DR:1 of
+msgid "The Diabetic Retinopathy."
+msgstr ""
+
+#: ../../docstring efff54c8874b436991e7dab50c8711ab maples_dr.Pathology.ME:1 of
+msgid "The Macular Edema."
+msgstr ""
+
 #~ msgid "Get the annotations informations of the dataset."
 #~ msgstr ""
 
@@ -1096,5 +1163,11 @@ msgstr ""
 #~ msgstr ""
 
 #~ msgid "If True, optimize the images when exporting them."
+#~ msgstr ""
+
+#~ msgid "If ``fields`` is a dictionary, export the fields given by the keys"
+#~ msgstr ""
+
+#~ msgid "and rename their folder to their corresponding dictionary values."
 #~ msgstr ""
 

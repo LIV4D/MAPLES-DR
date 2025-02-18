@@ -13,7 +13,16 @@ if os.environ.get("MAPLES-DR_SILENT_IMPORT", None) is None:
     )
 
 from .config import ImageFormat, InvalidConfigError, Preprocessing
-from .dataset import BiomarkerField, DataSample, Dataset, DiagnosisField, FundusField
+from .dataset import (
+    BiomarkerField,
+    BiomarkersAnnotationInfos,
+    BiomarkersAnnotationTasks,
+    DataSample,
+    Dataset,
+    DiagnosisField,
+    FundusField,
+    Pathology,
+)
 from .quick_api import (
     clear_cache,
     clear_download_cache,

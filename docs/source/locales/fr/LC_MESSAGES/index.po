@@ -112,8 +112,6 @@ msgstr ""
 "structures rétiniennes, ainsi que sur un outils d'annotation hébergé sur "
 "le web. Le protocole d'annotation est documenté en détail dans `ce papier"
 " <https://doi.org/10.1038/s41597-024-03739-6>`_ :footcite:`maples_dr` "
-"*(l'URL pointe vers un preprint ArXiv, le temps que notre manuscrit suive"
-" son processus de révision)*."
 
 #: ../../source/index.rst:23 953f90f3ab604b77ab155bab77d84f30
 msgid "Usage"

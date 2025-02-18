@@ -143,7 +143,7 @@ The annotation procedure was co-designed with the team of retinologists to meet 
 
 To meet these challenges, we developed a custom web-based annotation platform allowing the following workflow: expert annotators can access the Web portal at any time to consult and edit annotations with specialized drawing tools; these annotations and the related information (annotation times, comments) are centralized and stored in a secure database hosted on our laboratory server; as the research team, we assign tasks to annotators, monitor progress, and export annotations via a Python API. The annotation platform (portal, annotation tools, server backend, and Python API) as well as training material for annotators is available on `GitHub <https://github.com/LIV4D/AnnotationPlatform>`_.
 
-For more details on the annotation process please refer to the `MAPLES-DR paper <https://arxiv.org/abs/2402.04258>`_ :footcite:`maples_dr`.
+For more details on the annotation process please refer to the `MAPLES-DR paper <https://doi.org/10.1038/s41597-024-03739-6>`_ :footcite:`maples_dr`.
 
 References
 ==========

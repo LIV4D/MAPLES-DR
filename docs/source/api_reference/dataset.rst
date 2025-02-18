@@ -25,16 +25,37 @@ Datasets Fields
 .. autoclass:: maples_dr.dataset.DiagnosisField
     :members:
     :member-order: bysource
-    :exclude-members: __init__
+    :exclude-members: __init__, __new__
 
 .. autoclass:: maples_dr.dataset.ImageField
 
 .. autoclass:: maples_dr.dataset.FundusField
     :members:
     :member-order: bysource
-    :exclude-members: __init__
+    :exclude-members: __init__, __new__
 
 .. autoclass:: maples_dr.dataset.BiomarkerField
     :members:
     :member-order: bysource
-    :exclude-members: __init__
+    :exclude-members: __init__, __new__
+
+
+----------
+
+Annotation Information
+======================
+
+.. autoclass:: maples_dr.BiomarkersAnnotationInfos
+    :members:
+    :member-order: bysource
+    :exclude-members: __init__, __new__
+
+.. autoclass:: maples_dr.BiomarkersAnnotationTasks
+    :members:
+    :member-order: bysource
+    :exclude-members: __init__, __new__
+
+.. autoclass:: maples_dr.Pathology
+    :members:
+    :member-order: bysource
+    :exclude-members: __init__, __new__
