@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Start &mdash; MAPLES-DR 0.1alpha documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7afaf4de"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using MESSIDOR fundus images" href="messidor.html" />
+    <link rel="prev" title="MAPLES-DR Python Library" href="python_library.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">MAPLES-DR Dataset</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_library.html">Python library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-the-datasets-behavior">Configure the datasets behavior</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="messidor.html">Using MESSIDOR fundus images</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Visualisation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/welcome/quickstart.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<h1>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h1>
+<p>The MAPLES-DR dataset is available for download on <a class="reference external" href="https://doi.org/10.6084/m9.figshare.24328660">Figshare</a>. But in the context of training machine learning algorithms we strongly recommend users to install the <cite>maples_dr</cite> python package to easily download, format and manipulate the dataset.</p>
+<p>This page will guide you through the installation process and basic usage of the package: loading the dataset in memory or saving it in a local folder.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h2>
+<p>The <cite>maples-dr</cite> package is available on PyPI and can be installed using pip:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>maples-dr
+</pre></div>
+</div>
+</section>
+<section id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h2>
+<p>Once imported, MAPLES-DR train or test sets can be loaded in memory with a single line of Python code.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">maples_dr</span>
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">maples_dr</span><span class="o">.</span><span class="n">load_train_set</span><span class="p">()</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">maples_dr</span><span class="o">.</span><span class="n">load_test_set</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If necessary, the dataset archive is automatically downloaded from <a class="reference external" href="https://doi.org/10.6084/m9.figshare.24328660">Figshare</a>, extracted and cached locally. The data is then returned as a <a class="reference internal" href="../api_reference/dataset.html#maples_dr.Dataset" title="maples_dr.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">maples_dr.Dataset</span></code></a> which takes the form of a list of dictionaries containing all MAPLES-DR labels. (For more information, see the <a class="reference internal" href="../api_reference/dataset.html"><span class="doc">Datasets</span></a> class documentation).</p>
+<p>For example, the vessel map of the first sample of the train set can be accessed with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vessel_map</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;vessels&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Alternatively, if you’d rather rely on your own code for data loading, MAPLES-DR images can be saved in local folders:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maples_dr</span><span class="o">.</span><span class="n">export_train_set</span><span class="p">(</span><span class="s1">&#39;MAPLES-DR/train/&#39;</span><span class="p">)</span>
+<span class="n">maples_dr</span><span class="o">.</span><span class="n">export_test_set</span><span class="p">(</span><span class="s1">&#39;MAPLES-DR/test/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As a result of these commands, all the labels of MAPLES-DR are saved as image files in their appropriate folders:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MAPLES-DR/train/
+├── bright_uncertains/
+│    ├── 20051019_38557_0100_PP.png
+│    ├── 20051020_55346_0100_PP.png
+│    └── ... (138 image files)
+├── cotton_wool_spots/
+│    └── ... (138 image files)
+├── drusens/
+├── exudates/
+├── hemorrhages/
+├── macula/
+├── microaneurysms/
+├── neovascularization/
+├── optic_cup/
+├── optic_disc/
+├── red_uncertains/
+└── vessels/
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MAPLES-DR/test/
+├── bright_uncertains/
+│    ├── 20051019_38557_0100_PP.png
+│    └── ... (60 image files)
+├── cotton_wool_spots/
+└── ...
+</pre></div>
+</div>
+</section>
+<section id="configure-the-datasets-behavior">
+<h2>Configure the datasets behavior<a class="headerlink" href="#configure-the-datasets-behavior" title="Link to this heading"></a></h2>
+<p>The dataset behavior can be tailored to ease the integration with your code or specific application. For instance, you might need the images and biomarker maps to have a specific resolution, a specific format (PIL image or numpy array), a specific channel order (<cite>rgb</cite> or <cite>bgr</cite>)…  The default behavior of the library is configured with the <a class="reference internal" href="../api_reference/quick_api.html#maples_dr.configure" title="maples_dr.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.configure()</span></code></a> method, and the configuration options are detailed in <a class="reference internal" href="../api_reference/config.html#maples_dr.config.DatasetConfig" title="maples_dr.config.DatasetConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">maples_dr.config.DatasetConfig</span></code></a> documentation.</p>
+<p>The following example shows how to configure the dataset to return images as numpy arrays (instead of PIL images) and with a resolution of 512x512 pixels:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maples_dr</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">resize</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">image_format</span><span class="o">=</span><span class="s2">&quot;rgb&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same method can be used to specify a local path where the library should read MAPLES-DR data, instead of downloading them from Figshare.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maples_dr</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span>
+    <span class="n">maples_dr_path</span><span class="o">=</span><span class="s2">&quot;path/to/MAPLES-DR/AdditionalData.zip&quot;</span><span class="p">,</span>
+    <span class="n">maples_dr_diagnosis_path</span><span class="o">=</span><span class="s2">&quot;path/to/MAPLES-DR/diagnosis.xls&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, a local path to the MESSIDOR dataset can also be specified with this function in order to include the fundus images from MESSIDOR along with the MAPLES-DR labels. (See <a class="reference internal" href="messidor.html"><span class="doc">Using MESSIDOR fundus images</span></a> for more details.)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maples_dr</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">messidor_path</span><span class="o">=</span><span class="s2">&quot;path/to/Messidor/directory/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>For more information on all the methods presented in this quick start, please refer to <a class="reference internal" href="../api_reference/quick_api.html"><span class="doc">MAPLES-DR Quick API</span></a> documentation.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="python_library.html" class="btn btn-neutral float-left" title="MAPLES-DR Python Library" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="messidor.html" class="btn btn-neutral float-right" title="Using MESSIDOR fundus images" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    en
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Languages</dt>
+      
+         <strong> 
+        <dd><a href="../../en/welcome/quickstart.html">en</a></dd>
+         </strong> 
+      
+        
+        <dd><a href="../../fr/welcome/quickstart.html">fr</a></dd>
+        
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

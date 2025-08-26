@@ -1,0 +1,464 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exemple de visualisation &mdash; Documentation MAPLES-DR 0.1alpha</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f27618dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="MAPLES-DR Quick API" href="../api_reference/quick_api.html" />
+    <link rel="prev" title="Utiliser les images de MESSIDOR" href="../welcome/messidor.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Le jeu de données MAPLES-DR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/python_library.html">Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/quickstart.html">Démarrage Rapide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../welcome/messidor.html">Utiliser les images de MESSIDOR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Exemples</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Exemple de visualisation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Configurer-Maples-DR">Configurer Maples-DR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Charger-le-jeu-de-données">Charger le jeu de données</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Visualiser-les-biomarqueurs-anatomiques">Visualiser les biomarqueurs anatomiques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Vaisseaux">Vaisseaux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Disque-optique">Disque optique</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Macula">Macula</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Visualiser-les-biomarqueurs-pathologiques">Visualiser les biomarqueurs pathologiques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Hémorragies">Hémorragies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Micro-anévrismes">Micro-anévrismes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Exsudats">Exsudats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Nodules-cotonneux">Nodules cotonneux</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Définition de l'API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Exemple de visualisation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/examples/visualisation.ipynb.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <style>
+    .document p,
+    .document h2,
+    .document h3,
+    .document h4,
+    .document h5,
+    .document h6 {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .document .rendered_html pre{
+        font-size: 12px;
+    }
+</style><section id="Exemple-de-visualisation">
+<h1>Exemple de visualisation<a class="headerlink" href="#Exemple-de-visualisation" title="Lien vers cette rubrique"></a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">maples_dr</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rich</span><span class="w"> </span><span class="kn">import</span> <span class="nb">print</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold">Thanks for using MAPLES-DR!</span>
+  When using this dataset in academic works,
+  please cite: <a href="https://doi.org/10.1038/s41597-024-03739-6" target="_blank"><span style="color: #008080; text-decoration-color: #008080; text-decoration: underline">https://doi.org/10.1038/s41597-024-03739-6</span></a>
+</pre></div>
+</div>
+<section id="Configurer-Maples-DR">
+<h2>Configurer Maples-DR<a class="headerlink" href="#Configurer-Maples-DR" title="Lien vers cette rubrique"></a></h2>
+<p>Configurer la résolution et le format des images.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">maples_dr</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span>
+    <span class="n">resize</span><span class="o">=</span><span class="mi">1024</span><span class="p">,</span>
+    <span class="n">image_format</span><span class="o">=</span><span class="s2">&quot;PIL&quot;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Charger-le-jeu-de-données">
+<h2>Charger le jeu de données<a class="headerlink" href="#Charger-le-jeu-de-données" title="Lien vers cette rubrique"></a></h2>
+<p>Charger l’ensemble d’entraînement en mémoire.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset</span> <span class="o">=</span> <span class="n">maples_dr</span><span class="o">.</span><span class="n">load_train_set</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<p>Lire le premier échantillon</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sample name: [i bold]</span><span class="si">{</span><span class="w"> </span><span class="n">sample</span><span class="o">.</span><span class="n">name</span><span class="w"> </span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Diabetic Retinopathy grade: [i bold]</span><span class="si">{</span><span class="w"> </span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;dr&#39;</span><span class="p">]</span><span class="w"> </span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Macular Edema grade: [i bold]</span><span class="si">{</span><span class="w"> </span><span class="n">sample</span><span class="p">[</span><span class="s1">&#39;me&#39;</span><span class="p">]</span><span class="w"> </span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">Sample name: <span style="font-weight: bold; font-style: italic">20060411_61478_0200_PP</span>
+</pre></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">Diabetic Retinopathy grade: <span style="font-weight: bold; font-style: italic">R2</span>
+</pre></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">Macular Edema grade: <span style="font-weight: bold; font-style: italic">M2</span>
+</pre></div>
+</div>
+</section>
+<section id="Visualiser-les-biomarqueurs-anatomiques">
+<h2>Visualiser les biomarqueurs anatomiques<a class="headerlink" href="#Visualiser-les-biomarqueurs-anatomiques" title="Lien vers cette rubrique"></a></h2>
+<section id="Vaisseaux">
+<h3>Vaisseaux<a class="headerlink" href="#Vaisseaux" title="Lien vers cette rubrique"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;vessels&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_visualisation_12_0.png" src="../_images/examples_visualisation_12_0.png" />
+</div>
+</div>
+</section>
+<section id="Disque-optique">
+<h3>Disque optique<a class="headerlink" href="#Disque-optique" title="Lien vers cette rubrique"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;optic_disc&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_visualisation_14_0.png" src="../_images/examples_visualisation_14_0.png" />
+</div>
+</div>
+</section>
+<section id="Macula">
+<h3>Macula<a class="headerlink" href="#Macula" title="Lien vers cette rubrique"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;macula&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_visualisation_16_0.png" src="../_images/examples_visualisation_16_0.png" />
+</div>
+</div>
+<hr class="docutils" />
+</section>
+</section>
+<section id="Visualiser-les-biomarqueurs-pathologiques">
+<h2>Visualiser les biomarqueurs pathologiques<a class="headerlink" href="#Visualiser-les-biomarqueurs-pathologiques" title="Lien vers cette rubrique"></a></h2>
+<section id="Hémorragies">
+<h3>Hémorragies<a class="headerlink" href="#Hémorragies" title="Lien vers cette rubrique"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;hemorrhages&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_visualisation_20_0.png" src="../_images/examples_visualisation_20_0.png" />
+</div>
+</div>
+</section>
+<section id="Micro-anévrismes">
+<h3>Micro-anévrismes<a class="headerlink" href="#Micro-anévrismes" title="Lien vers cette rubrique"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;microaneurysms&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_visualisation_22_0.png" src="../_images/examples_visualisation_22_0.png" />
+</div>
+</div>
+</section>
+<section id="Exsudats">
+<h3>Exsudats<a class="headerlink" href="#Exsudats" title="Lien vers cette rubrique"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;exudates&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_visualisation_24_0.png" src="../_images/examples_visualisation_24_0.png" />
+</div>
+</div>
+</section>
+<section id="Nodules-cotonneux">
+<h3>Nodules cotonneux<a class="headerlink" href="#Nodules-cotonneux" title="Lien vers cette rubrique"></a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample</span><span class="p">[</span><span class="s2">&quot;cotton_wool_spots&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_visualisation_26_0.png" src="../_images/examples_visualisation_26_0.png" />
+</div>
+</div>
+<script type="application/vnd.jupyter.widget-state+json">
+{"state": {"5f67107c5ab34ca284736443e2ebf608": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_be29781895b941ec86a57efb28573f10", "outputs": [{"data": {"text/html": "<pre style=\"white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace\">Downloading MAPLES-DR labels... <span style=\"color: #008000; text-decoration-color: #008000\">40.2/40.8 MB</span> <span style=\"color: #800000; text-decoration-color: #800000\">11.8 MB/s</span> <span style=\"color: #008080; text-decoration-color: #008080\">0:00:01</span>\n</pre>\n", "text/plain": "Downloading MAPLES-DR labels... \u001b[32m40.2/40.8 MB\u001b[0m \u001b[31m11.8 MB/s\u001b[0m \u001b[36m0:00:01\u001b[0m\n"}, "metadata": {}, "output_type": "display_data"}]}}, "be29781895b941ec86a57efb28573f10": {"model_module": "@jupyter-widgets/base", "model_module_version": "2.0.0", "model_name": "LayoutModel", "state": {}}}, "version_major": 2, "version_minor": 0}
+</script></section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="../welcome/messidor.html" class="btn btn-neutral float-left" title="Utiliser les images de MESSIDOR" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="../api_reference/quick_api.html" class="btn btn-neutral float-right" title="MAPLES-DR Quick API" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    fr
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Langages</dt>
+      
+        
+        <dd><a href="../../en/examples/visualisation.html">en</a></dd>
+        
+      
+         <strong> 
+        <dd><a href="../../fr/examples/visualisation.html">fr</a></dd>
+         </strong> 
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

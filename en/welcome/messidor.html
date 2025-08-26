@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Using MESSIDOR fundus images &mdash; MAPLES-DR 0.1alpha documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=7afaf4de"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Visualisation Example" href="../examples/visualisation.html" />
+    <link rel="prev" title="Quick Start" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">MAPLES-DR Dataset</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_library.html">Python library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Using MESSIDOR fundus images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#download-messidor-fundus-images">Download MESSIDOR fundus images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-messidor-local-path">Configure MESSIDOR local path</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#acknowledgements">Acknowledgements</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Visualisation Example</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Using MESSIDOR fundus images</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/welcome/messidor.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="using-messidor-fundus-images">
+<h1>Using MESSIDOR fundus images<a class="headerlink" href="#using-messidor-fundus-images" title="Link to this heading"></a></h1>
+<p>The fundus images used to create MAPLES-DR are the property of the MESSIDOR consortium and are therefore not included in the dataset. However, they are freely available to any research team who requires them on the <a class="reference external" href="https://www.adcis.net/en/third-party/messidor/">Consortium’s website</a>. This page will guide you through the steps to include the MESSIDOR fundus images along with MAPLES-DR labels.</p>
+<section id="download-messidor-fundus-images">
+<h2>Download MESSIDOR fundus images<a class="headerlink" href="#download-messidor-fundus-images" title="Link to this heading"></a></h2>
+<p>The MESSIDOR fundus images can be downloaded from the <a class="reference external" href="https://www.adcis.net/en/third-party/messidor/">Consortium’s website</a>. The Consortium requires you to fill a form with your personal information, agree to the terms of the license agreement, and verify your email address before downloading the images.</p>
+<p>The download page contains links to several files. The fundus images are divided into 12 zip archives named <code class="docutils literal notranslate"><span class="pre">Base__</span> <span class="pre">images</span> <span class="pre">(zip)</span></code>. Make sure to download all 12 archives (<cite>Base11.zip</cite>, <cite>Base12.zip</cite>, …,  <cite>Base34.zip</cite>) to the same directory.</p>
+</section>
+<section id="configure-messidor-local-path">
+<h2>Configure MESSIDOR local path<a class="headerlink" href="#configure-messidor-local-path" title="Link to this heading"></a></h2>
+<p>Once you have downloaded the images, you can include them in the dataset by calling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">maples_dr</span><span class="w"> </span><span class="kn">import</span> <span class="n">configure</span>
+<span class="n">configure</span><span class="p">(</span><span class="n">messidor_path</span><span class="o">=</span><span class="s1">&#39;/path/to/messidor/download/directory/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Upon calling <a class="reference internal" href="../api_reference/quick_api.html#maples_dr.load_train_set" title="maples_dr.load_train_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.load_train_set()</span></code></a> or <a class="reference internal" href="../api_reference/quick_api.html#maples_dr.load_test_set" title="maples_dr.load_test_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.load_test_set()</span></code></a>, the 200 fundus images related to MAPLES-DR will be extracted, cropped and resized to match MAPLES-DR resolution. They will be accessible under the field <code class="docutils literal notranslate"><span class="pre">&quot;fundus&quot;</span></code> similarly to the MAPLES-DR biomarkers.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">maples_dr</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_train_set</span>
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">load_train_set</span><span class="p">()</span>
+<span class="n">fundus</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;fundus&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Similarly, if you export the dataset to local files with <a class="reference internal" href="../api_reference/quick_api.html#maples_dr.export_train_set" title="maples_dr.export_train_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.export_train_set()</span></code></a> or  <a class="reference internal" href="../api_reference/quick_api.html#maples_dr.export_test_set" title="maples_dr.export_test_set"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.export_test_set()</span></code></a>, a folder named <code class="docutils literal notranslate"><span class="pre">fundus</span></code> will be created in the same directory as the other biomarkers, containing the fundus images at the appropriate resolution.</p>
+</section>
+<section id="acknowledgements">
+<h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading"></a></h2>
+<p>The MESSIDOR dataset was kindly provided by the Messidor program partners (see <a class="reference external" href="https://www.adcis.net/en/third-party/messidor/">https://www.adcis.net/en/third-party/messidor/</a>).</p>
+<p>We remind that users of the MESSIDOR database (and therefore MAPLES-DR users) are encouraged to reference the following article:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Decencière</span> <span class="n">et</span> <span class="n">al</span><span class="o">..</span> <span class="n">Feedback</span> <span class="n">on</span> <span class="n">a</span> <span class="n">publicly</span> <span class="n">distributed</span> <span class="n">database</span><span class="p">:</span> <span class="n">the</span> <span class="n">Messidor</span> <span class="n">database</span><span class="o">.</span>
+<span class="n">Image</span> <span class="n">Analysis</span> <span class="o">&amp;</span> <span class="n">Stereology</span><span class="p">,</span> <span class="n">v</span><span class="o">.</span> <span class="mi">33</span><span class="p">,</span> <span class="n">n</span><span class="o">.</span> <span class="mi">3</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span> <span class="mi">231</span><span class="o">-</span><span class="mi">234</span><span class="p">,</span> <span class="n">aug</span><span class="o">.</span> <span class="mf">2014.</span> <span class="n">ISSN</span> <span class="mi">1854</span><span class="o">-</span><span class="mf">5165.</span>
+<span class="n">Available</span> <span class="n">at</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">ias</span><span class="o">-</span><span class="n">iss</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">ojs</span><span class="o">/</span><span class="n">IAS</span><span class="o">/</span><span class="n">article</span><span class="o">/</span><span class="n">view</span><span class="o">/</span><span class="mi">1155</span> <span class="ow">or</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">dx</span><span class="o">.</span><span class="n">doi</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="mf">10.5566</span><span class="o">/</span><span class="n">ias</span><span class="mf">.1155</span><span class="o">.</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick Start" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../examples/visualisation.html" class="btn btn-neutral float-right" title="Visualisation Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    en
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Languages</dt>
+      
+         <strong> 
+        <dd><a href="../../en/welcome/messidor.html">en</a></dd>
+         </strong> 
+      
+        
+        <dd><a href="../../fr/welcome/messidor.html">fr</a></dd>
+        
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="fr" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Démarrage Rapide &mdash; Documentation MAPLES-DR 0.1alpha</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=f27618dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=f281be69"></script>
+      <script src="../_static/translations.js?v=e6b791cb"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Recherche" href="../search.html" />
+    <link rel="next" title="Utiliser les images de MESSIDOR" href="messidor.html" />
+    <link rel="prev" title="API Python pour MAPLES-DR" href="python_library.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/icon.svg" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Rechercher docs" aria-label="Rechercher docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Le jeu de données MAPLES-DR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Documentation</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="dataset_description.html">Dataset Description</a></li>
+<li class="toctree-l1"><a class="reference internal" href="python_library.html">Python library</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Démarrage Rapide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Utilisation Simple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configure-the-datasets-behavior">Configurer le comportement de la bibliothèque python</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="messidor.html">Utiliser les images de MESSIDOR</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Exemples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/visualisation.html">Exemple de visualisation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Définition de l'API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/quick_api.html">MAPLES-DR Quick API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/dataset.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/loader.html">Datasets Loader</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference/preprocessing.html">Fundus Preprocessing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLES-DR</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Démarrage Rapide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/welcome/quickstart.rst.txt" rel="nofollow"> Afficher la source de la page</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="quick-start">
+<h1>Démarrage Rapide<a class="headerlink" href="#quick-start" title="Lien vers cette rubrique"></a></h1>
+<p>Le jeu de données <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> est disponible en téléchargement sur <a class="reference external" href="https://doi.org/10.6084/m9.figshare.24328660">Figshare</a>. Cependant, pour les applications de l’entraînement d’algorithmes d’apprentissage automatique, nous recommandons fortement d’utiliser directement le paquet python <cite>maples_dr</cite> pour télécharger, formater et manipuler facilement ce jeu de données.</p>
+<p>Cette page vous guidera à travers le processus d’installation et les cas d’utilisation courants du paquet: charger le jeu de données en mémoire ou le sauvegarder localement.</p>
+<section id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Lien vers cette rubrique"></a></h2>
+<p>Le paquet <cite>maples-dr</cite> est disponible sur PyPI et s’installe avec la commande:</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$ </span>pip<span class="w"> </span>install<span class="w"> </span>maples-dr
+</pre></div>
+</div>
+</section>
+<section id="basic-usage">
+<h2>Utilisation Simple<a class="headerlink" href="#basic-usage" title="Lien vers cette rubrique"></a></h2>
+<p>Une fois importé, les ensembles d’entraînement ou de test de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> peuvent être chargés en mémoire avec une seule ligne de code Python.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">maples_dr</span>
+<span class="n">train_set</span> <span class="o">=</span> <span class="n">maples_dr</span><span class="o">.</span><span class="n">load_train_set</span><span class="p">()</span>
+<span class="n">test_set</span> <span class="o">=</span> <span class="n">maples_dr</span><span class="o">.</span><span class="n">load_test_set</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Si nécessaire, l’archive du jeu de données est automatiquement téléchargée depuis <a class="reference external" href="https://doi.org/10.6084/m9.figshare.24328660">Figshare</a>, extraite et mise en cache localement. Les données sont ensuite retournées sous forme d’un <a class="reference internal" href="../api_reference/dataset.html#maples_dr.Dataset" title="maples_dr.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">maples_dr.Dataset</span></code></a> (assimilable à une liste de dictionnaires contenant toutes les étiquettes de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>, voir <a class="reference internal" href="../api_reference/dataset.html"><span class="doc">Datasets</span></a> pour plus de détails).</p>
+<p>Par exemple, la carte des vaisseaux de la première image de l’ensemble d’entraînement est accessible avec le code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vessel_map</span> <span class="o">=</span> <span class="n">train_set</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;vessels&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Sinon, si vous préférez utiliser votre propre code pour le chargement des données, les images de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> peuvent être sauvegardées dans des dossiers locaux:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maples_dr</span><span class="o">.</span><span class="n">export_train_set</span><span class="p">(</span><span class="s1">&#39;MAPLES-DR/train/&#39;</span><span class="p">)</span>
+<span class="n">maples_dr</span><span class="o">.</span><span class="n">export_test_set</span><span class="p">(</span><span class="s1">&#39;MAPLES-DR/test/&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Suite à ces commandes, toutes les cartes de segmentations de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr> seront sauvegardées sous forme d’image png, chaque structure rétinienne ayant son dossier dédié:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MAPLES-DR/train/
+├── bright_uncertains/
+│    ├── 20051019_38557_0100_PP.png
+│    ├── 20051020_55346_0100_PP.png
+│    └── ... (138 image files)
+├── cotton_wool_spots/
+│    └── ... (138 image files)
+├── drusens/
+├── exudates/
+├── hemorrhages/
+├── macula/
+├── microaneurysms/
+├── neovascularization/
+├── optic_cup/
+├── optic_disc/
+├── red_uncertains/
+└── vessels/
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MAPLES-DR/test/
+├── bright_uncertains/
+│    ├── 20051019_38557_0100_PP.png
+│    └── ... (60 image files)
+├── cotton_wool_spots/
+└── ...
+</pre></div>
+</div>
+</section>
+<section id="configure-the-datasets-behavior">
+<h2>Configurer le comportement de la bibliothèque python<a class="headerlink" href="#configure-the-datasets-behavior" title="Lien vers cette rubrique"></a></h2>
+<p>Le comportement de <cite>maples_dr</cite> est ajustable pour s’adapter aux besoins de votre code. Par exemple, vous pourriez avoir besoin que les images et les cartes de biomarqueurs aient une résolution spécifique, un format spécifique (image PIL ou tableau numpy), un ordre spécifique des canaux de couleurs (<cite>rgb</cite> ou <cite>bgr</cite>)… Le comportement par défaut de la bibliothèque est configuré avec la méthode <a class="reference internal" href="../api_reference/quick_api.html#maples_dr.configure" title="maples_dr.configure"><code class="xref py py-func docutils literal notranslate"><span class="pre">maples_dr.configure()</span></code></a>, et les options de configuration sont documentées en détail dans la documentation de <a class="reference internal" href="../api_reference/config.html#maples_dr.config.DatasetConfig" title="maples_dr.config.DatasetConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">maples_dr.config.DatasetConfig</span></code></a>.</p>
+<p>L’exemple suivant montre comment configurer le jeu de données pour retourner les images sous forme de tableaux numpy (au lieu d’images PIL) et avec une résolution de 512x512 pixels:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maples_dr</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">resize</span><span class="o">=</span><span class="mi">512</span><span class="p">,</span> <span class="n">image_format</span><span class="o">=</span><span class="s2">&quot;rgb&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La même méthode permet de spécifier un chemin local où seront lues les données de <abbr title="MESSIDOR Anatomical and Pathological Labels for Explainable Screening of Diabetic Retinopathy">MAPLES-DR</abbr>, au lieu de les télécharger depuis Figshare.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maples_dr</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span>
+    <span class="n">maples_dr_path</span><span class="o">=</span><span class="s2">&quot;path/to/MAPLES-DR/AdditionalData.zip&quot;</span><span class="p">,</span>
+    <span class="n">maples_dr_diagnosis_path</span><span class="o">=</span><span class="s2">&quot;path/to/MAPLES-DR/diagnosis.xls&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Enfin, un chemin local vers le jeu de données MESSIDOR peut également être spécifié avec cette fonction pour inclure les images de fond d’œil de MESSIDOR. (Voir <a class="reference internal" href="messidor.html"><span class="doc">Utiliser les images de MESSIDOR</span></a> pour plus de détails.)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">maples_dr</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">messidor_path</span><span class="o">=</span><span class="s2">&quot;path/to/Messidor/directory/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>Pour plus d’informations sur toutes les méthodes présentées dans ce guide de démarrage, veuillez vous référer à la documentation de <a class="reference internal" href="../api_reference/quick_api.html"><span class="doc">MAPLES-DR Quick API</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pied de page">
+        <a href="python_library.html" class="btn btn-neutral float-left" title="API Python pour MAPLES-DR" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Précédent</a>
+        <a href="messidor.html" class="btn btn-neutral float-right" title="Utiliser les images de MESSIDOR" accesskey="n" rel="next">Suivant <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Droits d'auteur 2024, Gabriel Lepetit-Aimon.</p>
+  </div>
+
+  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
+    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  
+
+<div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    <span class="fa fa-book"> Language </span>
+    fr
+    <span class="fa fa-caret-down"></span>
+  </span>
+  <div class="rst-other-versions">
+    <dl>
+      <dt>Langages</dt>
+      
+        
+        <dd><a href="../../en/welcome/quickstart.html">en</a></dd>
+        
+      
+         <strong> 
+        <dd><a href="../../fr/welcome/quickstart.html">fr</a></dd>
+         </strong> 
+      
+    </dl>
+
+  </div>
+</div>
+<script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>  
+
+  <style>
+    :root {
+      --primary-color: #67136b;
+      --primary-light-color: #97469b;
+      --primary-dim-color: #4f2552;
+      --background-primary-dark: #382f38;
+      --background-primary: #ae86b8;
+      --background-primary-dim: #704e75;
+      --background-primary-light: #f4eef6;
+    }
+    /* Sidebar header (and topbar for mobile) */
+    .wy-side-nav-search, .wy-nav-top {
+      background: var(--primary-color);
+    }
+    /* Sidebar */
+    .wy-nav-side {
+      background: var(--background-primary-dark);
+    }
+
+    .wy-menu-vertical p.caption{
+        color: var(--primary-light-color);
+    }
+
+    .wy-menu-vertical a{
+        color: #fff;
+    }
+
+    .wy-menu-vertical a:hover{
+        background-color: var(--background-primary-dim);
+    }
+
+    .wy-menu-vertical a:active{
+        background-color: var(--primary-color);
+    }
+    
+    .wy-menu-vertical li.current,
+    .wy-menu-vertical li.toctree-l1.current
+    .wy-menu-vertical li.toctree-l2.current,
+    .wy-menu-vertical li.toctree-l2.current>a,
+    .wy-menu-vertical li.toctree-l2.current li.toctree-l3>a {
+        background: var(--background-primary-light);
+    }
+
+    /* Documentation Item header */
+    html.writer-html4 .rst-content dl:not(.docutils)>dt, html.writer-html5 .rst-content dl[class]:not(.option-list):not(.field-list):not(.footnote):not(.citation):not(.glossary):not(.simple)>dt {
+        background-color: var(--background-primary-light);
+        border-top-color: var(--primary-dim-color);
+        color: var(--primary-dim-color);
+    }
+  </style>
+
+
+</body>
+</html>
